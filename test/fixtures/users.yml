@@ -1,0 +1,43 @@
+rich:
+  type: Student
+  site: nda
+  short_name: 119
+  first_name: Richard
+  last_name: Hurt
+  email: rnhurt@kangaroobox.com
+  class_of: 2008
+  
+bob:
+  type: Teacher
+  site: stlaw
+  short_name: 273
+  first_name: Bob
+  last_name: Smith
+  email: bob@bob.xom
+  
+kim:
+  type: Teacher
+  site: nda
+  short_name: 23
+  first_name: Kimmy
+  last_name: Jones
+  email: kimy@asdf.xom
+
+tom:
+  type: Admin
+  site: nda
+  short_name: 32
+  first_name: Tom
+  last_name: Rec
+  email: tomrec@aklsdf.com
+
+<% for i in 1..100 %>
+user_<%= i %>:
+  type: Student
+  site: nda
+  short_name: <%= i * i %>
+  first_name: First <%= i %>
+  last_name: Last <%= i %>
+  class_of: 2018
+<% end %>
+

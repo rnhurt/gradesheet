@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  course_id: 1
+  possible_points: 1.5
+
+two:
+  name: MyString
+  course_id: 1
+  possible_points: 1.5

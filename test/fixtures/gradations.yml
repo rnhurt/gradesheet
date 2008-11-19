@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  student_id: 1
+  assignment_id: 1
+  points_earned: 1.5
+
+two:
+  student_id: 1
+  assignment_id: 1
+  points_earned: 1.5

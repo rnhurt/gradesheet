@@ -1,0 +1,13 @@
+<p>
+  <b>School:</b>
+  <%=h @campus.school_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @campus.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_campus_path(@campus) %> |
+<%= link_to 'Back', campus_path %>

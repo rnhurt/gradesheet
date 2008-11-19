@@ -1,0 +1,21 @@
+<h1>Editing Campus</h1>
+
+<%= error_messages_for :campus %>
+
+<% form_for :campus, @campus do |f| %>
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>School</b><br />
+    <%= f.text_field :school_id %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+

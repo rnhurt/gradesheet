@@ -1,0 +1,12 @@
+*~
+DELETEME/*
+log/*
+tmp/*
+coverage.data
+coverage/*
+database.yml
+*.sqlite
+*.sqlite3
+doc/api
+.DS_Store
+.svn

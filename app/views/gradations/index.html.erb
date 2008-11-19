@@ -1,0 +1,24 @@
+<h1>Listing gradations</h1>
+
+<table>
+  <tr>
+    <th>Student</th>
+    <th>Assignment</th>
+    <th>Points earned</th>
+  </tr>
+
+<% for gradation in @gradations %>
+  <tr>
+    <td><%=h gradation.student_id %></td>
+    <td><%=h gradation.assignment_id %></td>
+    <td><%=h gradation.points_earned %></td>
+    <td><%= link_to 'Show', gradation %></td>
+    <td><%= link_to 'Edit', edit_gradation_path(gradation) %></td>
+    <td><%= link_to 'Destroy', gradation, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New gradation', new_gradation_path %>

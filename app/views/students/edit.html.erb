@@ -1,0 +1,12 @@
+
+<%= title "Editing Student: #{@student.first_name} #{@student.last_name}" %>
+
+<%= error_messages_for :student %>
+
+<% form_for(@student) do |f| %>
+	<%= render :partial => 'student' , :locals => {:f => f} %>
+	<%= submit_tag 'Update' %>
+<% end %>
+
+<%= link_to 'Show', @student %> |
+<%= link_to 'Back', students_path %>

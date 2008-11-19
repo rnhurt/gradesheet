@@ -1,0 +1,33 @@
+<p>
+  <b>Name:</b>
+  <%=h @course.name %>
+</p>
+
+<p>
+  <b>Teacher:</b>
+  <%=h @course.teacher_id %>
+</p>
+
+<p>
+  <b>Term:</b>
+  <%=h @course.term_id %>
+</p>
+
+<p>
+  <b>Grade scale:</b>
+  <%=h @course.grade_scale_id %>
+</p>
+
+<p>
+  <b>Course att:</b>
+  <%=h @course.course_att_id %>
+</p>
+
+<p>
+  <b>Course type:</b>
+  <%=h @course.course_type_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_course_path(@course) %> |
+<%= link_to 'Back', courses_path %>

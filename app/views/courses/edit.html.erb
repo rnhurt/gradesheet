@@ -1,0 +1,42 @@
+<h1>Editing course</h1>
+
+<%= error_messages_for :course %>
+
+<% form_for(@course) do |f| %>
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>Teacher</b><br />
+    <%= f.text_field :teacher_id %>
+  </p>
+
+  <p>
+    <b>Term</b><br />
+    <%= f.text_field :term_id %>
+  </p>
+
+  <p>
+    <b>Grade scale</b><br />
+    <%= f.text_field :grade_scale_id %>
+  </p>
+
+  <p>
+    <b>Course att</b><br />
+    <%= f.text_field :course_att_id %>
+  </p>
+
+  <p>
+    <b>Course type</b><br />
+    <%= f.text_field :course_type_id %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @course %> |
+<%= link_to 'Back', courses_path %>

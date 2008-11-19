@@ -1,0 +1,22 @@
+<h1>Listing campus</h1>
+
+<table>
+  <tr>
+    <th>School</th>
+    <th>Name</th>
+  </tr>
+
+<% for campus in @campuses %>
+  <tr>
+    <td><%=h campus.school_id %></td>
+    <td><%=h campus.name %></td>
+    <td><%= link_to 'Show', campus %></td>
+    <td><%= link_to 'Edit', edit_campus_path(campuses) %></td>
+    <td><%= link_to 'Destroy', campuses, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New campus', new_campuses_path %>

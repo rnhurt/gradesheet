@@ -1,0 +1,18 @@
+<p>
+  <b>Student:</b>
+  <%=h @gradation.student_id %>
+</p>
+
+<p>
+  <b>Assignment:</b>
+  <%=h @gradation.assignment_id %>
+</p>
+
+<p>
+  <b>Points earned:</b>
+  <%=h @gradation.points_earned %>
+</p>
+
+
+<%= link_to 'Edit', edit_gradation_path(@gradation) %> |
+<%= link_to 'Back', gradations_path %>

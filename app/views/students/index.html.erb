@@ -1,0 +1,30 @@
+<p>
+<form name="sform" action="" style="display:inline;">
+	<label for="item_name">Filter on Student name  : </label>
+	<%= text_field_tag("query", params['query'], :size => 10 ) %>
+</form>
+
+<%= image_tag("spinner.gif",
+        :align => "absmiddle",
+        :border => 0,
+        :id => "spinner",
+        :style =>"display: none;" ) %>
+</p>
+
+<%= observe_field :query,  :frequency => 2,
+				:update => "table",
+				:before => "Element.hide('table')",
+				:success => "Element.show('table')",
+				:url => {:action => :update_list },
+				:with => "query",
+				:on => "blur" %>
+
+<div id="table">
+	<%= render :partial => "student_list" %>
+</div>
+
+
+<br />
+
+<%= link_to 'New Student', new_student_path %>
+
