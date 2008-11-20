@@ -1,16 +1,6 @@
-<% form_tag students_path, :method => 'get' do %>
-  <p><% content_tag :label do %>
-    Find Name:
-    <%= text_field_tag :search, params[:search] %>
-	<% end %>
-	</p>
-<% end %>  
-
 <div id="table">
-	<%= render :partial => "student_list" %>
+	<%= render :partial => "users/user_list", :locals => { :users => @students }  %>
 </div>
-
-<%= will_paginate @students %>
 
 <br />
 

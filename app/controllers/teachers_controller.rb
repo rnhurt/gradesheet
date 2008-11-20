@@ -1,10 +1,8 @@
 class TeachersController < ApplicationController
 	layout "standard"
 	
-  # GET /teachers
-  # GET /teachers.xml
   def index
-    @teachers = Teacher.find(:all)
+    @teachers = Teacher.search(params[:search], params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

@@ -73,6 +73,10 @@ body {
   left: 150px;           /* RC fullwidth */
 }
 
+.paginate {
+	text-align: center;
+	
+}
 /*** Scaffold ***/
 .fieldWithErrors {
   padding: 2px;

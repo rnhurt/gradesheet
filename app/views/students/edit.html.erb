@@ -1,7 +1,7 @@
 
 <%= title "Editing Student: #{@student.first_name} #{@student.last_name}" %>
 
-<%= error_messages_for :student %>
+<%= error_messages_for :student, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
 <% form_for(@student) do |f| %>
 	<%= render :partial => 'student' , :locals => {:f => f} %>

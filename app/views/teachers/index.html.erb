@@ -1,8 +1,7 @@
-
 <div id="table">
-	<%= render :partial => "teacher_list" %>
+	<%= render :partial => "users/user_list", :locals => { :users => @teachers }  %>
 </div>
 
 <br />
 
-<%= link_to 'New teacher', new_teacher_path %>
+<%= link_to 'New Teacher', new_teacher_path %>

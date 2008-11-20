@@ -15,4 +15,9 @@ module ApplicationHelper
     html << content_tag("li", link_to(link_text, path, options))
   end
 
+	## Set the focus on the page
+	def set_focus_to_id(id)
+		javascript_tag("$('#{id}').focus()");
+		javascript_tag("$('#{id}').select()");
+	end
 end

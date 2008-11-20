@@ -1,3 +1,9 @@
+<%- form_tag students_path, :method => 'get' do -%>
+  <%- content_tag :label do -%>
+    Find Name: <%= text_field_tag :search, params[:search] %>
+	<%- end -%>
+<%- end -%> 
+
 <table id="students" class="master">
   <thead>
     <th>ID</th>
@@ -26,3 +32,5 @@
 		<% end %>
   </tbody>
 </table>
+
+<%= will_paginate @students %>

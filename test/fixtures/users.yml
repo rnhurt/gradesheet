@@ -65,7 +65,16 @@ tom:
   last_name: Rec
   email: tomrec@aklsdf.com
 
-<% for i in 1..100 %>
+<% for i in 1..30 %>
+user_<%= i %>:
+  type: Teacher
+  site: nda
+  short_name: <%= i * i %>
+  first_name: <%= random_words(1).capitalize %> 
+  last_name: <%= random_words(1).capitalize %>
+<% end %>
+
+<% for i in 100..200 %>
 user_<%= i %>:
   type: Student
   site: nda

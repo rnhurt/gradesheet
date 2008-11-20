@@ -1,0 +1,45 @@
+<%- ## Is this a student
+student = true if users[1].class.to_s == "Student" 
+-%>
+
+<span class="paginate">
+<%= will_paginate @students %>
+</span>
+<table id="users" class="master">
+  <thead>
+    <th>ID</th>
+    <%- form_tag students_path, :method => 'get' do -%>
+	    <th>Name <%= text_field_tag :search, params[:search], :class => "search" %></th>
+	  <%- end -%>
+    <th>Email Address</th>
+    <th>Campus</th>
+    <%- if student -%><th>Class Of</th><%- end -%>
+  </thead>
+	<tfoot>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email Address</th>
+    <th>Campus</th>
+    <%- if student -%><th>Class Of</th><%- end -%>
+	</tfoot>
+
+	<tbody>
+		<%- for u in users -%>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%#= edit_u_path(u) %>'">
+				<td><%=h u.short_name %></td>
+				<td><%=h u.last_name %>, <%=h u.first_name %></td>
+				<td><%=h u.email %></td>
+				<td><%=h Site.find(u.site_id).name %></td>
+				<%- if student -%>
+					<td><%=h u.class_of %></td>
+				<%- end -%>
+			</tr>
+		<%- end -%>
+  </tbody>
+</table>
+
+<span class="paginate">
+<%= will_paginate @students %>
+</span>
+
+<%= set_focus_to_id 'search' %>
