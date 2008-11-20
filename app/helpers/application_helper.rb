@@ -14,5 +14,5 @@ module ApplicationHelper
     options = path == curl ? {:class => 'current'} : {}
     html << content_tag("li", link_to(link_text, path, options))
   end
- 
+
 end

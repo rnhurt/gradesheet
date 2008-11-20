@@ -1,4 +1,3 @@
-<% %>
 <table id="students" class="master">
   <thead>
     <th>ID</th>
@@ -17,7 +16,7 @@
 
 	<tbody>
 		<% for student in @students %>
-			<tr class="<%= cycle ('odd', 'even') %>" onclick="location.href='<%= edit_student_path(student) %>'">
+			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= edit_student_path(student) %>'">
 				<td><%=h student.short_name %></td>
 				<td><%=h student.last_name %>, <%=h student.first_name %></td>
 				<td><%=h student.email %></td>
@@ -27,4 +26,3 @@
 		<% end %>
   </tbody>
 </table>
-
