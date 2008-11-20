@@ -1,3 +1,19 @@
+<%
+  @@words = File.open("/usr/share/dict/words").collect do |line|
+    line.strip
+  end
+  
+  # provide a string with num random words in it.
+  def self.random_words(num = 1)
+    w = []
+    num.times do
+      w << @@words[rand(@@words.size)]
+    end
+    w.join(" ")
+  end
+
+%>
+  
 rich:
   type: Student
   site: nda
@@ -6,7 +22,25 @@ rich:
   last_name: Hurt
   email: rnhurt@kangaroobox.com
   class_of: 2008
+
+andrew:
+  type: Student
+  site: nda
+  short_name: 119
+  first_name: Andrew
+  last_name: Hurt
+  email: andrew@kangaroobox.com
+  class_of: 2010
   
+tabatha:
+  type: Student
+  site: nda
+  short_name: 119
+  first_name: Tabatha
+  last_name: Hurt
+  email: tabatha@kangaroobox.com
+  class_of: 2013
+
 bob:
   type: Teacher
   site: stlaw
@@ -36,8 +70,8 @@ user_<%= i %>:
   type: Student
   site: nda
   short_name: <%= i * i %>
-  first_name: First <%= i %>
-  last_name: Last <%= i %>
-  class_of: 2018
+  first_name: <%= random_words(1).capitalize %> 
+  last_name: <%= random_words(1).capitalize %>
+  class_of: <%= 2000 + rand (2018-2000) %>
 <% end %>
 

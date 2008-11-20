@@ -1,37 +1,9 @@
 class StudentsController < ApplicationController
 	layout "standard"
 	
-  def list
-
-		items_per_page = 10
-
-		sort = case params['sort']
-		       when "name"  then "name"
-		       when "qty"   then "quantity"
-		       when "price" then "price"
-		       when "name_reverse"  then "name DESC"
-		       when "qty_reverse"   then "quantity DESC"
-		       when "price_reverse" then "price DESC"
-		       end
-
-		conditions = ["name LIKE ?", "%#{params[:query]}%"] unless params[:query].nil?
-
-		@total = Item.count(:conditions => conditions)
-		@items_pages, @items = paginate :items, :order => sort, :conditions => conditions, :per_page => items_per_page
-
-		if request.xml_http_request?
-		  render :partial => "items_list", :layout => false
-		end
-
-	end
-
-
-
-
-
 
   def index
-    @students = Student.find(:all)
+    @students = Student.search(params[:search], params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
