@@ -9,8 +9,8 @@ student = true if users[1].class.to_s == "Student"
 <table id="users" class="master">
   <thead>
     <th>ID</th>
-    <%- form_for users.class.to_s do -%>
-	    <th>Name <%= text_field_tag :search, params[:search], :class => "search" %></th>
+    <%- form_for users.class.to_s, :html => { :method => :get } do -%>
+	    <th>Name<%= text_field_tag :search, params[:search], :class => "search" %></th>
 	  <%- end -%>
     <th>Email Address</th>
     <th>Campus</th>
@@ -26,11 +26,12 @@ student = true if users[1].class.to_s == "Student"
 
 	<tbody>
 		<%- for u in users -%>
-			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%#= edit_u_path(u) %>'">
+		<% link_path = url_for( :action => :edit, :escape => true ) + "/" + u.id.to_s %>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= link_path %>'"/>
 				<td><%=h u.short_name %></td>
-				<td><%=h u.last_name %>, <%=h u.first_name %></td>
+				<td><%= link_to ( u.full_name, link_path ) %></td>
 				<td><%=h u.email %></td>
-				<td><%=h Site.find(u.site_id).name %></td>
+				<td><%=h Site.find( u.site_id ).name %></td>
 				<%- if student -%>
 					<td><%=h u.class_of %></td>
 				<%- end -%>
