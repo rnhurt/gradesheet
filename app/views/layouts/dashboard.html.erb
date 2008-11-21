@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Gradesheet<%#= controller.action_name.capitalize + "ing" %></title>
+  <%#= stylesheet_link_tag 'scaffold' %>
+  <%= stylesheet_link_tag 'layout' %>
+  <%= stylesheet_link_tag 'dashboard' %>
+  <%= stylesheet_link_tag 'tables' %>
+  <%= stylesheet_link_tag 'menu' %>
+  <%= javascript_include_tag 'prototype' %>
+</head>
+<body>
+
+<div id="header">
+	<div class="login"><a href="/login">Login</a></div>
+	<div class="tagline">GradeSheet</div>
+	<img src="/images/rails.png">
+
+	<div class="flash"><%= flash[:notice] %></div>
+
+	<div id="menucontainer">
+		<ul id="menu">
+      <%= layout_link_to "Home", "/" %>
+      <%= layout_link_to "Teachers", teachers_path %>
+      <%= layout_link_to "Students", students_path %>
+      <%= layout_link_to "Courses", courses_path %>
+      <%= layout_link_to "Assignments", assignments_path %>
+		</ul>
+	</div>
+                    
+</div>
+
+
+<div id="container">
+  <div id="center" class="column">
+    <%= yield  %>
+  </div>
+
+  <div id="left" class="column">
+    <%= yield :left  %>
+  </div>
+
+  <div id="right" class="column">
+    <%= yield :right %>
+  </div>
+  
+</div>
+
+<div id="footer">
+		&copy; 2005 - 2008 <a href="http://www.kangaroobox.com">KangarooBox</a>, LLC.  All rights reserved.
+</div>
+</body>
+</html>
+
