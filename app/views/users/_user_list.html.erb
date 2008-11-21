@@ -3,12 +3,13 @@ student = true if users[1].class.to_s == "Student"
 -%>
 
 <span class="paginate">
-<%= will_paginate @students %>
+<%= will_paginate users %>
 </span>
+
 <table id="users" class="master">
   <thead>
     <th>ID</th>
-    <%- form_tag students_path, :method => 'get' do -%>
+    <%- form_for users.class.to_s do -%>
 	    <th>Name <%= text_field_tag :search, params[:search], :class => "search" %></th>
 	  <%- end -%>
     <th>Email Address</th>
@@ -39,7 +40,7 @@ student = true if users[1].class.to_s == "Student"
 </table>
 
 <span class="paginate">
-<%= will_paginate @students %>
+<%= will_paginate users %>
 </span>
 
 <%= set_focus_to_id 'search' %>
