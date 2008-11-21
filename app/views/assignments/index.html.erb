@@ -1,23 +1,32 @@
-<h1>Listing assignments</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Course</th>
-    <th>Possible points</th>
-  </tr>
+<table class="master">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Course</th>
+      <th>Possible points</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>Name</th>
+      <th>Course</th>
+      <th>Possible points</th>
+    </tr>
+  </tfoot>
 
 <% for assignment in @assignments %>
   <tr>
     <td><%=h assignment.name %></td>
     <td><%=h assignment.course_id %></td>
     <td><%=h assignment.possible_points %></td>
-    <td><%= link_to 'Show', assignment %></td>
-    <td><%= link_to 'Edit', edit_assignment_path(assignment) %></td>
-    <td><%= link_to 'Destroy', assignment, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
+
+    <td><%#= link_to 'Show', assignment %></td>
+    <td><%#= link_to 'Edit', edit_assignment_path(assignment) %></td>
+    <td><%#= link_to 'Destroy', assignment, :confirm => 'Are you sure?', :method => :delete %></td>
 
 <br />
 

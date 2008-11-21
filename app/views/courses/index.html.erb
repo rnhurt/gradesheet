@@ -1,15 +1,27 @@
-<h1>Listing courses</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Teacher</th>
-    <th>Term</th>
-    <th>Grade scale</th>
-    <th>Course att</th>
-    <th>Course type</th>
-  </tr>
+<table class="master">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Teacher</th>
+      <th>Term</th>
+      <th>Grade scale</th>
+      <th>Course att</th>
+      <th>Course type</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>Name</th>
+      <th>Teacher</th>
+      <th>Term</th>
+      <th>Grade scale</th>
+      <th>Course att</th>
+      <th>Course type</th>
+    </tr>
+  </tfoot>
 
+  <tbody>
 <% for course in @courses %>
   <tr>
     <td><%=h course.name %></td>
@@ -18,12 +30,14 @@
     <td><%=h course.grade_scale_id %></td>
     <td><%=h course.course_att_id %></td>
     <td><%=h course.course_type_id %></td>
-    <td><%= link_to 'Show', course %></td>
-    <td><%= link_to 'Edit', edit_course_path(course) %></td>
-    <td><%= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
+  </tbody>
 </table>
+
+    <td><%#= link_to 'Show', course %></td>
+    <td><%#= link_to 'Edit', edit_course_path(course) %></td>
+    <td><%#= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %></td>
 
 <br />
 

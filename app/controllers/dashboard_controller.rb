@@ -1,3 +1,3 @@
 class DashboardController < ApplicationController
-	layout "standard"
+	layout "dashboard"
 end

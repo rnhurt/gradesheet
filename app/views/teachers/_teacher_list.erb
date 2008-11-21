@@ -23,7 +23,7 @@
 	<tbody>
 		<% for teacher in @teachers %>
 			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= edit_teacher_path(teacher) %>'">
-				<td><%=h teacher.short_name %></a></td>
+				<td><a href=""><%=h teacher.short_name %></a></td>
 				<td><%= link_to teacher.full_name, edit_teacher_path(teacher) %></td>
 				<td><%=h teacher.email %></td>
 				<td><%=h Site.find(teacher.site_id).name %></td>

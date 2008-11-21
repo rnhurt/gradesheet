@@ -16,7 +16,7 @@ class Fuzz
       User.transaction do
         size.times do
           student = Student.find(:first, :order => "rand()")
-          student.create!(:first_name => random_words(rand(5))
+          student.create!(:first_name => random_words(rand(5)))
         end
         puts "Created #{size} students"
       end
