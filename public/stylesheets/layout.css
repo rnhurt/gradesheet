@@ -53,6 +53,9 @@ text-align: center;
 font-size: 0.8em;
 clear: both;
 }
+.clear {
+	clear: both;
+}
 /*** IE Fix ***/
 * html #left {
 left: 150px;/* RC fullwidth */

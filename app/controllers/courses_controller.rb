@@ -1,9 +1,8 @@
 class CoursesController < ApplicationController
 	layout "standard"
 	
-
   def index
-    @courses = Course.find(:all)
+    @courses = Course.find(:all, :conditions => { :teacher_id => current_user })
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +12,7 @@ class CoursesController < ApplicationController
 
 
   def show
-    @course = Course.find(params[:id])
+    @courses = Course.find(:all, :conditions => { :teacher_id => params[:id] })
 
     respond_to do |format|
       format.html # show.html.erb

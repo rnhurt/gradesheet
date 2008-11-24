@@ -51,10 +51,10 @@ bob:
   
 kim:
   type: Teacher
-  site: nda
+  site: NDA
   short_name: 23
-  first_name: Kimmy
-  last_name: Jones
+  first_name: Kim
+  last_name: Hurt
   email: kimy@asdf.xom
 
 tom:

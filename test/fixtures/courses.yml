@@ -1,15 +1,47 @@
-math:
-  name: Math
-  teacher_id: kim
-  term_id: t1
+math7s:
+  name: Math 7S
+  teacher: kim
+  term: t1
   grade_scale_id: 1
   course_att_id: 1
   course_type_id: 1
 
-english:
+math8h:
+  name: Math 8H
+  teacher: kim
+  term: t1
+  grade_scale_id: 1
+  course_att_id: 1
+  course_type_id: 1
+
+math8s-t1:
+  name: Math 8S
+  teacher: kim
+  term: t1
+  grade_scale_id: 1
+  course_att_id: 1
+  course_type_id: 1
+
+math8s-t2:
+  name: Math 8S
+  teacher: kim
+  term: t2
+  grade_scale_id: 1
+  course_att_id: 1
+  course_type_id: 1
+
+english-t1:
   name: English
-  teacher_id: bob
-  term_id: t2
+  teacher: bob
+  term: t1
+  grade_scale_id: 1
+  course_att_id: 1
+  course_type_id: 1
+  
+english-t2:
+  name: English
+  teacher: bob
+  term: t2
   grade_scale_id: 1
   course_att_id: 1
   course_type_id: 1

@@ -1,9 +1,17 @@
 table.master {
-	width: 90%;
+	width: 79%;
 	margin: auto;
 	cursor: pointer;
 }
-
+table.detail {
+	margin: auto;	
+}
+table.list {
+	width: 19%;
+	margin: 0px 5px 0px 5px;
+	float: left;
+	cursor: pointer;
+}
 /* roScripts
 Table Design by Mihalcea Romeo
 www.roscripts.com

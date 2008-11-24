@@ -3,21 +3,21 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Teacher</th>
       <th>Term</th>
       <th>Grade scale</th>
       <th>Course att</th>
       <th>Course type</th>
+      <th>Teacher</th>
     </tr>
   </thead>
   <tfoot>
     <tr>
       <th>Name</th>
-      <th>Teacher</th>
       <th>Term</th>
       <th>Grade scale</th>
       <th>Course att</th>
       <th>Course type</th>
+      <th>Teacher</th>
     </tr>
   </tfoot>
 
@@ -25,11 +25,11 @@
 <% for course in @courses %>
   <tr>
     <td><%=h course.name %></td>
-    <td><%=h course.teacher_id %></td>
     <td><%=h course.term_id %></td>
     <td><%=h course.grade_scale_id %></td>
     <td><%=h course.course_att_id %></td>
     <td><%=h course.course_type_id %></td>
+    <td><%=h course.teacher_id %></td>
   </tr>
 <% end %>
   </tbody>

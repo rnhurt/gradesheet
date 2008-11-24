@@ -1,31 +1,43 @@
+<table>
+<% for course in @courses %>
+  <tr>
+    <td><%=h course.name %></td>
+    <td><%=h course.term_id %></td>
+    <td><%=h course.grade_scale_id %></td>
+    <td><%=h course.course_att_id %></td>
+    <td><%=h course.course_type_id %></td>
+  </tr>
+<% end %>
+</table>
+
 <p>
   <b>Name:</b>
-  <%=h @course.name %>
+  <%#=h @course.name %>
 </p>
 
 <p>
   <b>Teacher:</b>
-  <%=h @course.teacher_id %>
+  <%#=h @course.teacher_id %>
 </p>
 
 <p>
   <b>Term:</b>
-  <%=h @course.term_id %>
+  <%#=h @course.term_id %>
 </p>
 
 <p>
   <b>Grade scale:</b>
-  <%=h @course.grade_scale_id %>
+  <%#=h @course.grade_scale_id %>
 </p>
 
 <p>
   <b>Course att:</b>
-  <%=h @course.course_att_id %>
+  <%#=h @course.course_att_id %>
 </p>
 
 <p>
   <b>Course type:</b>
-  <%=h @course.course_type_id %>
+  <%#=h @course.course_type_id %>
 </p>
 
 

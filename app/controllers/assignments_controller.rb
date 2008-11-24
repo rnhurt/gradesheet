@@ -1,14 +1,6 @@
 class AssignmentsController < ApplicationController
 	layout "standard"
 	
-	def inplace
-		@assignment = Assignment.find(params[:id])
-		
-		respond_to do |format|
-			format.html { render :partial => "inplace" }
-		end
-	end
-
   def index
     @assignments = Assignment.find(:all)
 

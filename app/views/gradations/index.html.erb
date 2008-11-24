@@ -1,3 +1,74 @@
+<table class="list">
+	<thead>
+		<th>Assigment</th>
+	</thead>
+	<tfoot>
+		<th>Assigment</th>
+	</tfoot>
+	<tbody>
+		<tr><td>Assignment 1</td></tr>
+		<tr><td>Assignment 1</td></tr>
+		<tr><td>Assignment 1</td></tr>
+		<tr><td>Assignment 1</td></tr>
+	</tbody>
+</table>
+
+<% form_for :assignment, @assignments do |f| %>
+  <p>
+    <b>Name</b><br />
+    <%#= f.text_field %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<div class="detail">
+</div>
+
+<table class="master">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Course</th>
+      <th>Possible points</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>Name</th>
+      <th>Course</th>
+      <th>Possible points</th>
+    </tr>
+  </tfoot>
+
+<% for assignment in @assignments %>
+	<% link_path = url_for( :action => :edit, :escape => true ) + "/" + assignment.id.to_s %>
+	<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= link_path %>'"/>
+
+    <td><%=h assignment.name %></td>
+    <td><%=h assignment.course_id %></td>
+    <td><%=h assignment.possible_points %></td>
+  </tr>
+<% end %>
+</table>
+
+    <td><%#= link_to 'Show', assignment %></td>
+    <td><%#= link_to 'Edit', edit_assignment_path(assignment) %></td>
+    <td><%#= link_to 'Destroy', assignment, :confirm => 'Are you sure?', :method => :delete %></td>
+
+<br />
+
+
+<div class="buttons clear">
+	<%= link_to 'New assignment', new_assignment_path, :class=> "positive" %>
+</div>
+
+
+
+
+
 <h1>Listing gradations</h1>
 
 <table>
