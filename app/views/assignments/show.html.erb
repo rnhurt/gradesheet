@@ -13,6 +13,7 @@
   <%=h @assignment.possible_points %>
 </p>
 
-
-<%= link_to 'Edit', edit_assignment_path(@assignment) %> |
-<%= link_to 'Back', assignments_path %>
+<div class="buttons">
+	<%= link_to 'Edit', edit_assignment_path(@assignment), :class => :positive %>
+	<%= link_to 'Back', assignments_path %>
+</div>

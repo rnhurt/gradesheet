@@ -1,11 +1,14 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+fractions_quiz:
+  name: Fractions quiz
+  course: math
+  possible_points: 10
 
-one:
-  name: MyString
-  course_id: 1
-  possible_points: 1.5
+division_test:
+  name: Test on Division
+  course: math
+  possible_points: 75
 
-two:
-  name: MyString
-  course_id: 1
-  possible_points: 1.5
+spelling_test:
+  name: Spelling Test
+  course: english
+  possible_points: 10

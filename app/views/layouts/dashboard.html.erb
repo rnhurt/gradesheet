@@ -21,16 +21,8 @@
 
 	<div class="flash"><%= flash[:notice] %></div>
 
-	<div id="menucontainer">
-		<ul id="menu">
-      <%= layout_link_to "Home", "/" %>
-      <%= layout_link_to "Teachers", teachers_path %>
-      <%= layout_link_to "Students", students_path %>
-      <%= layout_link_to "Courses", courses_path %>
-      <%= layout_link_to "Assignments", assignments_path %>
-		</ul>
-	</div>
-                    
+	<%= menu_builder(controller.controller_name) %>
+	                    
 </div>
 
 

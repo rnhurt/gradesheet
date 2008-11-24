@@ -7,13 +7,21 @@ module ApplicationHelper
   end
 
 	## Generate the MENU html
-  def layout_link_to(link_text, path)
-    curl = url_for(:controller => request.path_parameters['controller'],
-                          :action => request.path_parameters['action'])
-    html = ''
-    options = path == curl ? {:class => 'current'} : {}
-    html << content_tag("li", link_to(link_text, path, options))
-  end
+	def menu_builder(page_id)
+		tabs = [ 'Home:dashboard', 'Teachers:teachers', 'Students:students', 
+						'Courses:courses', 'Assignments:assignments', 'Enrollments:enrollments' ]
+		content = ""
+		tabs.each do |tab|
+			t = tab.split(':')
+			content << if page_id == t[1]
+				content_tag('li', content_tag('a', t[0], :href => nil, :class => 'current' )) + " "
+			else
+				content_tag('li', content_tag('a', t[0], :href => "/#{t[1]}" )) + " "
+			end
+		end
+		content_tag(:div, content_tag(:ul, content, :id => 'menu'), :class => 'menucontainer')
+	end
+
 
 	## Set the focus on the page
 	def set_focus_to_id(id)

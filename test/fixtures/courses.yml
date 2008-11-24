@@ -1,14 +1,14 @@
-one:
+math:
   name: Math
-  teacher_id: two
+  teacher_id: kim
   term_id: t1
   grade_scale_id: 1
   course_att_id: 1
   course_type_id: 1
 
-two:
+english:
   name: English
-  teacher_id: two
+  teacher_id: bob
   term_id: t2
   grade_scale_id: 1
   course_att_id: 1

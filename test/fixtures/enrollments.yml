@@ -1,9 +1,16 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 one:
-  student_id: 1
-  course_id: 1
+  student: rich
+  course: math
 
 two:
-  student_id: 1
-  course_id: 1
+  student: rich
+  course: english
+
+three:
+  student: andrew
+  course: math
+  
+four:
+  student: tabatha
+  course: math
+  

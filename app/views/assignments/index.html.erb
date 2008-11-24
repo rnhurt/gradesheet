@@ -1,3 +1,10 @@
+<div id="inplace" style=""></div>
+
+
+<div class="buttons">
+<%= link_to_remote 'Generate Random Number', :url => '/assignments/inplace/235610955', :update => 'inplace', :html => {:class => "positive"} %>
+</div>
+
 
 <table class="master">
   <thead>
@@ -16,7 +23,9 @@
   </tfoot>
 
 <% for assignment in @assignments %>
-  <tr>
+	<% link_path = url_for( :action => :edit, :escape => true ) + "/" + assignment.id.to_s %>
+	<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= link_path %>'"/>
+
     <td><%=h assignment.name %></td>
     <td><%=h assignment.course_id %></td>
     <td><%=h assignment.possible_points %></td>
@@ -30,4 +39,17 @@
 
 <br />
 
-<%= link_to 'New assignment', new_assignment_path %>
+
+<div class="buttons">
+	<%= link_to 'New assignment', new_assignment_path, :class=> "positive" %>
+
+    <a href="/password/reset/">
+        <im src="/images/icons/textfield_key.png" alt=""/> 
+        Change Password
+    </a>
+
+    <a href="#" class="negative">
+        <im src="/images/icons/cross.png" alt=""/>
+        Cancel
+    </a>
+</div>

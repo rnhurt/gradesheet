@@ -1,13 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :sites
-
-#  map.resources :dashboard
-
-  map.resources :campuses
-
-  map.resources :user_types
-
-#  map.resources :campus
   map.resources :assignments
   map.resources :gradations
   map.resources :enrollments

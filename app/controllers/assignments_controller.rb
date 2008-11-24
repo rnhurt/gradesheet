@@ -1,8 +1,14 @@
 class AssignmentsController < ApplicationController
 	layout "standard"
 	
-  # GET /assignments
-  # GET /assignments.xml
+	def inplace
+		@assignment = Assignment.find(params[:id])
+		
+		respond_to do |format|
+			format.html { render :partial => "inplace" }
+		end
+	end
+
   def index
     @assignments = Assignment.find(:all)
 
@@ -17,10 +23,15 @@ class AssignmentsController < ApplicationController
   def show
     @assignment = Assignment.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @assignment }
-    end
+   # Is this an XmlHttpRequest request?
+   if (request.xhr?)
+     render :text => @assignment.to_s
+   else
+	    respond_to do |format|
+	      format.html # show.html.erb
+	      format.xml  { render :xml => @assignment }
+	    end
+		end
   end
 
   # GET /assignments/new

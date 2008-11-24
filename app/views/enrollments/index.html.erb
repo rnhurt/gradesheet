@@ -1,23 +1,28 @@
-<h1>Listing enrollments</h1>
 
-<table border='1'>
-  <tr>
-    <th>Student</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Course</th>
-    <th>Course Name</th>
-  </tr>
-
+<table class="master">
+	<thead>
+	  <tr>
+	    <th>Student</th>
+	    <th>Full Name</th>
+	    <th>Course</th>
+	    <th>Course Name</th>
+	  </tr>
+	</thead>
+	<tfoot>
+	  <tr>
+	    <th>Student</th>
+	    <th>Full Name</th>
+	    <th>Course</th>
+	    <th>Course Name</th>
+	  </tr>
+	</tfoot>
+	
 <% for enrollment in @enrollments %>
   <tr>
     <td><%=h enrollment.student_id %></td>
-    <td><%=h User.find(enrollment.student_id).first_name %></td>
+    <td><%=h User.find(enrollment.student_id).full_name %></td>
     <td><%=h enrollment.course_id %></td>
     <td><%=h Course.find(enrollment.course_id).name %></td>
-    <td><%= link_to 'Show', enrollment %></td>
-    <td><%= link_to 'Edit', edit_enrollment_path(enrollment) %></td>
-    <td><%= link_to 'Destroy', enrollment, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
@@ -25,3 +30,8 @@
 <br />
 
 <%= link_to 'New enrollment', new_enrollment_path %>
+
+
+<%#= link_to 'Show', enrollment %>
+<%#= link_to 'Edit', edit_enrollment_path(enrollment) %>
+<%#= link_to 'Destroy', enrollment, :confirm => 'Are you sure?', :method => :delete %>

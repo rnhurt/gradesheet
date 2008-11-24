@@ -2,8 +2,8 @@
   @@words = File.open("/usr/share/dict/words").collect do |line|
     line.strip
   end
-  
-  # provide a string with num random words in it.
+
+# provide a string with num random words in it.
   def self.random_words(num = 1)
     w = []
     num.times do
@@ -13,7 +13,7 @@
   end
 
 %>
-  
+
 rich:
   type: Student
   site: nda
@@ -66,7 +66,7 @@ tom:
   email: tomrec@aklsdf.com
 
 <% for t in 1..30 %>
-user_<%= i %>:
+user_<%= t %>:
   type: Teacher
   site: nda
   short_name: <%= t * t %>
@@ -83,4 +83,3 @@ user_<%= i %>:
   last_name: <%= random_words(1).capitalize %>
   class_of: <%= 2000 + rand(2018-2000) %>
 <% end %>
-
