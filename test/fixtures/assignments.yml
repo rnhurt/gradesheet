@@ -1,14 +1,14 @@
 fractions_quiz:
   name: Fractions quiz
-  course: math
+  course: math7s
   possible_points: 10
 
 division_test:
   name: Test on Division
-  course: math
+  course: math7s
   possible_points: 75
 
 spelling_test:
   name: Spelling Test
-  course: english
+  course: english-t1
   possible_points: 10

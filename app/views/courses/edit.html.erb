@@ -1,42 +1,32 @@
-<h1>Editing course</h1>
+<%= error_messages_for :course, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<%= error_messages_for :course %>
-
+<div class="entryform">
 <% form_for(@course) do |f| %>
-  <p>
-    <b>Name</b><br />
+			<%= content_tag( :h1, "#{@course.name}" ) %>
+			<p>Change the information and hit SAVE</p>
+
+    <label>Name</label>
     <%= f.text_field :name %>
-  </p>
 
-  <p>
-    <b>Teacher</b><br />
-    <%= f.text_field :teacher_id %>
-  </p>
+    <label>Type</label>
+		<%= collection_select :course, :course_type_id, CourseType.find(:all), :id, :name %>
 
-  <p>
-    <b>Term</b><br />
-    <%= f.text_field :term_id %>
-  </p>
+    <label>Teacher</label>
+		<%= collection_select :course, :teacher_id, Teacher.find(:all), :id, :full_name %>
 
-  <p>
-    <b>Grade scale</b><br />
-    <%= f.text_field :grade_scale_id %>
-  </p>
+    <label>Term</label>
+		<%= collection_select :course, :term_id, Term.find(:all), :id, :name %>
 
-  <p>
-    <b>Course att</b><br />
+    <label>Grading Scale</label>
+		<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
+
+    <label>Attributes</label>
     <%= f.text_field :course_att_id %>
-  </p>
 
-  <p>
-    <b>Course type</b><br />
-    <%= f.text_field :course_type_id %>
-  </p>
+   <%= f.submit "Save" %>
 
-  <p>
-    <%= f.submit "Update" %>
-  </p>
 <% end %>
+</div>
 
-<%= link_to 'Show', @course %> |
 <%= link_to 'Back', courses_path %>
+

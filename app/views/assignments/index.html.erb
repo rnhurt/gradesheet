@@ -1,29 +1,36 @@
 
-<table class="master">
+<table class="list">
+	<thead>
+		<tr><th>Course</th></tr>
+	</thead>
+	<tbody>
+		<% for course in @courses -%>
+		<tr class="<%= cycle('odd', 'even') %>" onclick="<%= 
+					remote_function(
+								:update => 'master', 
+								:url => "/assignments/show/" + course.id.to_s, 
+								:update => "master",
+								:loading => "Element.show('spinner')",
+								:complete => "Element.hide('spinner')") %>" />
+			<td><%= course.name %></td>
+		</tr>
+		<% end -%>
+	</tbody>
+</table>
+
+<table id="master" class="master">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Course</th>
       <th>Possible points</th>
     </tr>
   </thead>
   <tfoot>
     <tr>
       <th>Name</th>
-      <th>Course</th>
       <th>Possible points</th>
     </tr>
   </tfoot>
-
-<% for assignment in @assignments %>
-	<% link_path = url_for( :action => :edit, :escape => true ) + "/" + assignment.id.to_s %>
-	<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= link_path %>'"/>
-
-    <td><%=h assignment.name %></td>
-    <td><%=h assignment.course_id %></td>
-    <td><%=h assignment.possible_points %></td>
-  </tr>
-<% end %>
 </table>
 
     <td><%#= link_to 'Show', assignment %></td>

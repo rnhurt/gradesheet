@@ -11,6 +11,10 @@ table.list {
 	margin: 0px 5px 0px 5px;
 	float: left;
 	cursor: pointer;
+	text-align: center;
+}
+table.list th {
+		text-align: center;
 }
 /* roScripts
 Table Design by Mihalcea Romeo

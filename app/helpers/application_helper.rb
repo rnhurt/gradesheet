@@ -19,6 +19,11 @@ module ApplicationHelper
 				content_tag('li', content_tag('a', t[0], :href => "/#{t[1]}" )) + " "
 			end
 		end
+		
+		## Add in the spinner to the end of the list
+		content << 	'<div id="spinner" class="spinner"><img src="/images/spinner.gif" alt=""></div>'
+
+		## Close up the tags
 		content_tag(:div, content_tag(:ul, content, :id => 'menu'), :class => 'menucontainer')
 	end
 

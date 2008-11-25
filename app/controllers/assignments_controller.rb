@@ -1,8 +1,9 @@
 class AssignmentsController < ApplicationController
 	layout "standard"
+
 	
   def index
-    @assignments = Assignment.find(:all)
+    @courses = Course.find(:all, :conditions => { :teacher_id => current_user })
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,24 +11,19 @@ class AssignmentsController < ApplicationController
     end
   end
 
-  # GET /assignments/1
-  # GET /assignments/1.xml
-  def show
-    @assignment = Assignment.find(params[:id])
 
-   # Is this an XmlHttpRequest request?
-   if (request.xhr?)
-     render :text => @assignment.to_s
-   else
-	    respond_to do |format|
-	      format.html # show.html.erb
-	      format.xml  { render :xml => @assignment }
-	    end
-		end
+  def show
+		@assignments = Assignment.find(:all, :include => [:course],
+													:conditions => { :course_id => params[:id]})
+
+	  respond_to do |format|
+	    format.html # show.html.erb
+	    format.xml  { render :xml => @assignment }
+	    format.js		{ render :partial => "assignment_list" }
+	  end
   end
 
-  # GET /assignments/new
-  # GET /assignments/new.xml
+
   def new
     @assignment = Assignment.new
 
@@ -37,13 +33,12 @@ class AssignmentsController < ApplicationController
     end
   end
 
-  # GET /assignments/1/edit
+
   def edit
     @assignment = Assignment.find(params[:id])
   end
 
-  # POST /assignments
-  # POST /assignments.xml
+
   def create
     @assignment = Assignment.new(params[:assignment])
 
@@ -67,7 +62,7 @@ class AssignmentsController < ApplicationController
     respond_to do |format|
       if @assignment.update_attributes(params[:assignment])
         flash[:notice] = 'Assignment was successfully updated.'
-        format.html { redirect_to(@assignment) }
+        format.html { redirect_to(assignments_url) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

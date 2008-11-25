@@ -3,7 +3,7 @@ class CoursesController < ApplicationController
 	
   def index
     @courses = Course.find(:all, 
-    												:include => [:teacher, :term, :course_type], 
+    												:include => [:teacher, :term, :course_type, :grading_scale], 
     												:conditions => { :teacher_id => current_user })
 
     respond_to do |format|
@@ -14,7 +14,8 @@ class CoursesController < ApplicationController
 
 
   def show
-    @courses = Course.find(:all, :conditions => { :teacher_id => params[:id] })
+    @course = Course.find(params[:id],
+    												:include => [:course_type, :teacher])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -60,7 +61,7 @@ class CoursesController < ApplicationController
     respond_to do |format|
       if @course.update_attributes(params[:course])
         flash[:notice] = 'Course was successfully updated.'
-        format.html { redirect_to(@course) }
+        format.html { redirect_to(courses_url) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

@@ -1,6 +1,22 @@
-<h1>BLAH</h1>
+<%= error_messages_for :assignment, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div class="buttons">
-	<%= link_to 'Show', @assignment, :class=> "positive" %>
-	<%= link_to 'Back', assignments_path %>
+<div class="entryform">
+	<% form_for(@assignment) do |f| %>
+			<%= content_tag( :h1, "#{@assignment.name}" ) %>
+			<p>Change the information and hit SAVE</p>
+		
+			<label>Name</label>
+			<%= f.text_field :name %>
+
+			<label>Course</label>
+			<%= collection_select :assignment, :course_id, Course.find(:all), :id, :name %>
+
+			<label>Possible Points</label>
+			<%= f.text_field :possible_points %>
+			
+			<div class="buttons">
+			<%= submit_tag 'Save', :class=>"positive" %><%= link_to 'Cancel', assignments_path, :class => "positive" %>		
+			</div>
+	<% end %>
 </div>
+

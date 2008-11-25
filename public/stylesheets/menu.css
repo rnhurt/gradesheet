@@ -31,5 +31,7 @@ ul#menu li a.current{
 	background: #FFF url("/images/current-bg.gif") top left repeat-x; 
 	padding: 5px 15px 0; 
 	}
-                    
-                    
+.spinner {
+	float: right;
+	display: none;
+}

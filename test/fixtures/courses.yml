@@ -6,7 +6,7 @@ math7s:
   course_att_id: 1
   course_type: s
 
-math8h:
+math8hs:
   name: Homeroom
   teacher: kim
   term: t1
@@ -14,7 +14,7 @@ math8h:
   course_att_id: 1
   course_type: h
 
-math8h:
+math8hpf:
   name: Math 8H
   teacher: kim
   term: t1

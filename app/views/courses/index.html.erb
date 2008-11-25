@@ -1,4 +1,4 @@
-
+<%#= debug @courses %>
 
 <table class="master">
 	<caption>Teacher: <%= @courses[0].teacher.full_name %></caption>
@@ -20,14 +20,14 @@
   </tfoot>
 
   <tbody>
-<% for course in @courses %>
-  <tr>
-    <td><%=h course.name %></td>
-    <td><%=h course.term.name %></td>
-    <td><%=h course.grading_scale.name %></td>
-    <td><%=h course.course_type.name %></td>
-  </tr>
-<% end %>
+		<% for course in @courses %>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= edit_course_path(course) %>'">
+				<td><%=h course.name %></td>
+				<td><%=h course.term.name %></td>
+				<td><%=h course.grading_scale.name %></td>
+				<td><%=h course.course_type.name %></td>
+			</tr>
+		<% end %>
   </tbody>
 </table>
 

@@ -6,5 +6,10 @@ class Course < ActiveRecord::Base
 	has_many		:assignments
 	has_many		:enrollments
 	
-	validates_presence_of :teacher, :message => "%s wasn't found"
+	validates_existence_of :teacher, :message => "%s wasn't found"
+	validates_existence_of :term
+	validates_existence_of :course_type
+	validates_existence_of :grading_scale
+	
+	validates_presence_of :name
 end
