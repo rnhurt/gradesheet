@@ -2,7 +2,9 @@ class CoursesController < ApplicationController
 	layout "standard"
 	
   def index
-    @courses = Course.find(:all, :conditions => { :teacher_id => current_user })
+    @courses = Course.find(:all, 
+    												:include => [:teacher, :term, :course_type], 
+    												:conditions => { :teacher_id => current_user })
 
     respond_to do |format|
       format.html # index.html.erb

@@ -2,46 +2,62 @@ math7s:
   name: Math 7S
   teacher: kim
   term: t1
-  grade_scale_id: 1
+  grading_scale: s
   course_att_id: 1
-  course_type_id: 1
+  course_type: s
+
+math8h:
+  name: Homeroom
+  teacher: kim
+  term: t1
+  grading_scale: s
+  course_att_id: 1
+  course_type: h
 
 math8h:
   name: Math 8H
   teacher: kim
   term: t1
-  grade_scale_id: 1
+  grading_scale: pf
   course_att_id: 1
-  course_type_id: 1
+  course_type: s
 
 math8s-t1:
   name: Math 8S
   teacher: kim
   term: t1
-  grade_scale_id: 1
+  grading_scale: s
   course_att_id: 1
-  course_type_id: 1
+  course_type: s
 
 math8s-t2:
   name: Math 8S
   teacher: kim
   term: t2
-  grade_scale_id: 1
+  grading_scale: s
   course_att_id: 1
-  course_type_id: 1
+  course_type: s
 
 english-t1:
   name: English
   teacher: bob
   term: t1
-  grade_scale_id: 1
+  grading_scale: s
   course_att_id: 1
-  course_type_id: 1
+  course_type: s
   
 english-t2:
   name: English
   teacher: bob
   term: t2
-  grade_scale_id: 1
+  grading_scale: s
   course_att_id: 1
-  course_type_id: 1
+  course_type: s
+
+music-t1:
+  name: Music
+  teacher: bob
+  term: t1
+  grading_scale: s
+  course_att_id: 1
+  course_type: i

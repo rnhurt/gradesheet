@@ -4,7 +4,7 @@ class CreateCourses < ActiveRecord::Migration
       t.string :name
       t.integer :teacher_id
       t.integer :term_id
-      t.integer :grade_scale_id
+      t.integer :grading_scale_id
       t.integer :course_att_id
       t.integer :course_type_id
 

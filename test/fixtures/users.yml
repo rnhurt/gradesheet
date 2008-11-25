@@ -51,7 +51,7 @@ bob:
   
 kim:
   type: Teacher
-  site: NDA
+  site: nda
   short_name: 23
   first_name: Kim
   last_name: Hurt

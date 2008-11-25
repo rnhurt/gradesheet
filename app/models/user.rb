@@ -12,7 +12,8 @@ class User < ActiveRecord::Base
 	def self.search(search, page)
 		paginate :per_page => 10, :page => page,
 							:conditions => ['first_name like ? or last_name like ?', "%#{search}%", "%#{search}%"], 
-							:order => 'first_name'
+							:order => 'first_name',
+							:include => :site
 	end
 		
 	## Display the users full name

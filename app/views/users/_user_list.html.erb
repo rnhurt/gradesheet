@@ -31,7 +31,7 @@ student = true if users[1].class.to_s == "Student"
 				<td><%=h u.short_name %></td>
 				<td><%= link_to ( u.full_name, link_path ) %></td>
 				<td><%=h u.email %></td>
-				<td><%=h Site.find( u.site_id ).name %></td>
+				<td><%=h u.site.name %></td>
 				<%- if student -%>
 					<td><%=h u.class_of %></td>
 				<%- end -%>

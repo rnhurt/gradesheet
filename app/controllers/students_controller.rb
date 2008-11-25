@@ -12,7 +12,7 @@ class StudentsController < ApplicationController
 
 
   def show
-    @student = Student.find(params[:id])
+    @student = Student.find(params[:id], :include => :site)
 
     respond_to do |format|
       format.html # show.html.erb
