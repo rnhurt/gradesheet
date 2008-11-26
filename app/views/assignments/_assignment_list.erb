@@ -1,0 +1,30 @@
+	<% if !@assignments.blank? -%>
+		<caption><%= @assignments[0].course.name %></caption>
+	<% end -%>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Possible points</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>Name</th>
+      <th>Possible points</th>
+    </tr>
+  </tfoot>
+	<tbody>
+	<% if !@assignments.blank? %>
+		<% for assignment in @assignments %>
+			<%# link_path = url_for( :action => :edit, :escape => true ) + "/" + assignment.id.to_s %>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%#= link_path %>'"/>
+
+				<td><%=h assignment.name %></td>
+				<td><%=h assignment.possible_points %></td>
+			</tr>
+		<% end %>
+	<% else %>
+		<tr><td>No Assignments Found</td></tr>
+	<% end %>
+	</tbody>
+
