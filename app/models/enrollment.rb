@@ -4,4 +4,8 @@ class Enrollment < ActiveRecord::Base
 
 	validates_presence_of :student, :message => "is not in the database"
 	validates_presence_of :course, :message => "is not in the database"
+	
+	validates_existence_of	:course
+	validates_existence_of	:student
+	
 end

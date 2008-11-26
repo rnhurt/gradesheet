@@ -1,30 +1,29 @@
 class EnrollmentsController < ApplicationController
 	layout "standard"
+
 	
-  # GET /enrollments
-  # GET /enrollments.xml
   def index
     @enrollments = Enrollment.find(:all)
-
+		@courses = Course.find_by_owner(:all, current_user)
+		
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @enrollments }
     end
   end
 
-  # GET /enrollments/1
-  # GET /enrollments/1.xml
+
   def show
     @enrollment = Enrollment.find(params[:id])
-
+		@courses = Course.find_by_owner(:all, current_user)
+		
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @enrollment }
     end
   end
 
-  # GET /enrollments/new
-  # GET /enrollments/new.xml
+
   def new
     @enrollment = Enrollment.new
 
@@ -34,13 +33,13 @@ class EnrollmentsController < ApplicationController
     end
   end
 
-  # GET /enrollments/1/edit
+
   def edit
     @enrollment = Enrollment.find(params[:id])
+		@courses = Course.find_by_owner(:all, current_user)
   end
 
-  # POST /enrollments
-  # POST /enrollments.xml
+
   def create
     @enrollment = Enrollment.new(params[:enrollment])
 

@@ -18,7 +18,7 @@
   </tfoot>
 	<tbody>
 	<% if @assignments.blank? %>
-		<tr><td colspan="5">No Assignments Found</td></tr>
+		<tr><td colspan="4">No Assignments Found</td></tr>
 	<% else %>
 		<% for assignment in @assignments %>
 			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for( :action => :edit, :id => assignment.id ) %>'"/>

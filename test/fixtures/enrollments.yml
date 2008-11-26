@@ -1,16 +1,16 @@
 one:
   student: rich
-  course: math
+  course: math8hs
 
 two:
   student: rich
-  course: english
+  course: english-t1
 
 three:
   student: andrew
-  course: math
+  course: math7s
   
 four:
   student: tabatha
-  course: math
+  course: math7s
   

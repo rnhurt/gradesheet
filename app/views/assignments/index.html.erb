@@ -1,7 +1,8 @@
 
 <table class="list">
 	<thead>
-		<tr><th>Course</th></tr>
+		<th>Course</th>
+		<th>Term</th>
 	</thead>
 	<tbody>
 		<% for course in @courses -%>
@@ -11,7 +12,8 @@
 								:url => assignment_url(course), :action => :show, :method => :get,
 								:loading => "Element.show('busy')",
 								:complete => "Element.hide('busy')") %>" />
-			<td><%= course.name %></td>
+			<%= content_tag :td, course.name %>
+			<%= content_tag :td, course.term.name %>			
 		</tr>
 		<% end -%>
 	</tbody>

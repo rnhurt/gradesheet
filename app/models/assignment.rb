@@ -7,14 +7,15 @@ class Assignment < ActiveRecord::Base
 	validates_numericality_of	:possible_points
 	validates_presence_of			:possible_points
 	
-	validates_existence_of	:course
+	validates_existence_of		:course
+	
 	
 	def due_date_formated
 		due_date.strftime("%a %b %e, %Y") if due_date?
 	end
 	
 	def due_date_formated=(due_at_str)
-		self.due_date = Date.parse(due_at_str)
+		self.due_date = Date.parse(due_at_str) if due_date?
 	rescue ArgumentError
 		@due_date_invalid = true
 	end

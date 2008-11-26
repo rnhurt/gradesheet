@@ -4,7 +4,7 @@ class Course < ActiveRecord::Base
 	belongs_to	:course_type
 	belongs_to	:grading_scale
 	has_many		:assignments
-	has_many		:enrollments
+	has_many		:students, :through => :enrollments
 	
 	validates_existence_of :teacher, :message => "%s wasn't found"
 	validates_existence_of :term
