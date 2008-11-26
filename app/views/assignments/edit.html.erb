@@ -14,6 +14,9 @@
 			<label>Possible Points</label>
 			<%= f.text_field :possible_points %>
 			
+			<label>Due Date</label>
+			<%= f.text_field :due_date_formated %>
+
 			<div class="buttons">
 			<%= submit_tag 'Save', :class=>"positive" %><%= link_to 'Cancel', assignments_path, :class => "positive" %>		
 			</div>

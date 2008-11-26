@@ -12,3 +12,9 @@ spelling_test:
   name: Spelling Test
   course: english-t1
   possible_points: 10
+  
+long_term_project:
+  name: Long Term Project
+  course: english-t1
+  possible_points: 50
+  due_date: 2008-12-31

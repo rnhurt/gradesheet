@@ -14,8 +14,9 @@ table.list {
 	text-align: center;
 }
 table.list th {
-		text-align: center;
+	text-align: center;
 }
+
 /* roScripts
 Table Design by Mihalcea Romeo
 www.roscripts.com
@@ -99,7 +100,9 @@ tbody th a {
 tbody .odd {
 	background-color: #E4E8F1;
 }
-
+tbody .highlight {
+	border: 2px solid red;
+}
 tbody tr:hover {
 	background:#fafafa
 

@@ -7,7 +7,7 @@
 		<% for course in @courses -%>
 		<tr class="<%= cycle('odd', 'even') %>" onclick="<%= 
 					remote_function(
-								:update => 'master', 
+								:update => 'assignments_list', 
 								:url => assignment_url(course), :action => :show, :method => :get,
 								:loading => "Element.show('busy')",
 								:complete => "Element.hide('busy')") %>" />
@@ -17,28 +17,20 @@
 	</tbody>
 </table>
 
-<table id="master" class="master">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Possible points</th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <th>Name</th>
-      <th>Possible points</th>
-    </tr>
-  </tfoot>
-</table>
-
-    <td><%#= link_to 'Show', assignment %></td>
-    <td><%#= link_to 'Edit', edit_assignment_path(assignment) %></td>
-    <td><%#= link_to 'Destroy', assignment, :confirm => 'Are you sure?', :method => :delete %></td>
-
-<br />
-
+<div id="assignments_list">
+	<%= render :partial => "assignment_list" %>
+</div>
 
 <div class="buttons">
 	<%= link_to 'New assignment', new_assignment_path, :class=> "positive" %>
 </div>
+
+
+	<%#= link_to 'Show', assignment %>
+	<%#= link_to 'Edit', edit_assignment_path(assignment) %>
+	<%#= link_to 'Destroy', assignment, :confirm => 'Are you sure?', :method => :delete %>
+
+<br />
+
+
+

@@ -4,6 +4,7 @@ class CreateAssignments < ActiveRecord::Migration
       t.string :name
       t.integer :course_id
       t.float :possible_points
+      t.timestamp	:due_date
 
       t.timestamps
     end

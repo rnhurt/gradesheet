@@ -3,7 +3,7 @@ class AssignmentsController < ApplicationController
 
 	
   def index
-    @courses = Course.find(:all, :conditions => { :teacher_id => current_user })
+    @courses = Course.find_by_owner(:all, current_user)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +17,7 @@ class AssignmentsController < ApplicationController
 													:conditions => { :course_id => params[:id]})
 
 	  respond_to do |format|
-	    format.html { redirect_to assignments_url } 					# Dont show an individual assignment
+	    format.html #{ redirect_to assignments_url } 					# Dont show an individual assignment
 	    format.js		{ render :partial => "assignment_list" }	# Render the list of assignments for a course
 	    format.xml  { render :xml => @assignment }						# default
 	  end
