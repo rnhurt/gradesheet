@@ -33,5 +33,5 @@ ul#menu li a.current{
 	}
 .spinner {
 	float: right;
-	display: none;
+/*	display: none;*/
 }

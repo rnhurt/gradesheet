@@ -10,8 +10,8 @@
 								:update => 'master', 
 								:url => "/assignments/show/" + course.id.to_s, 
 								:update => "master",
-								:loading => "Element.show('spinner')",
-								:complete => "Element.hide('spinner')") %>" />
+								:loading => "Element.show('busy')",
+								:complete => "Element.hide('busy')") %>" />
 			<td><%= course.name %></td>
 		</tr>
 		<% end -%>
