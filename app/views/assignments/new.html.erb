@@ -1,3 +1,6 @@
+
+<% @assignment.course_id = @course %>
+
 <h1>New assignment</h1>
 
 <%= error_messages_for :assignment %>
@@ -10,8 +13,8 @@
 
   <p>
     <b>Course</b><br />
-    <%= f.text_field :course_id %>
-  </p>
+		<%= collection_select :assignment, :course_id, Course.find(:all), :id, :name %>
+	</p>
 
   <p>
     <b>Possible points</b><br />

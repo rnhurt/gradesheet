@@ -1,6 +1,4 @@
-	<% if !@assignments.blank? -%>
-		<caption><%= @assignments[0].course.name %></caption>
-	<% end -%>
+	<caption><%= Course.find(params[:id]).name %></caption>
   <thead>
     <tr>
       <th>Name</th>

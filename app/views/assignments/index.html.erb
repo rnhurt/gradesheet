@@ -8,8 +8,7 @@
 		<tr class="<%= cycle('odd', 'even') %>" onclick="<%= 
 					remote_function(
 								:update => 'master', 
-								:url => "/assignments/show/" + course.id.to_s, 
-								:update => "master",
+								:url => assignment_url(course), :action => :show, :method => :get,
 								:loading => "Element.show('busy')",
 								:complete => "Element.hide('busy')") %>" />
 			<td><%= course.name %></td>
