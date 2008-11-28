@@ -12,6 +12,10 @@ class Course < ActiveRecord::Base
 	validates_existence_of :grading_scale
 	
 	validates_presence_of :name
+	validates_length_of		:name, :in => 1..20
+
+#	validates_uniqueness_of :teacher, :scope => [:term, :course]
+
 
 	def self.find_by_owner(*args)
 		with_scope :find => { :conditions => { :teacher_id => args[1].id } } do
