@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CourseTest < ActiveSupport::TestCase
-	## TODO: Make more complete by adding in required models
 	fixtures :courses, :course_types, :terms, :users
 	
 	def setup
