@@ -3,7 +3,7 @@ class Assignment < ActiveRecord::Base
 	belongs_to	:assignment_type
 	has_many		:gradations
 	
-	validates_presence_of			:name
+	validates_length_of				:name, :within => 1..20
 	validates_numericality_of	:possible_points
 	validates_presence_of			:possible_points
 	

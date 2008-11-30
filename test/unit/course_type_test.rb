@@ -3,11 +3,10 @@ require File.dirname(__FILE__) + '/../test_helper'
 class CourseTypeTest < ActiveSupport::TestCase
 	def setup
   	@course_type = CourseType.new :name => "Home Room"
-  	assert @course_type.save	
+  	assert @course_type.save, "SAVE course_type"
 	end
-
 	def teardown
-		assert @course_type.destroy
+		assert @course_type.destroy, "DESTROY course_type"
 	end
 
 

@@ -18,12 +18,12 @@ class CourseTest < ActiveSupport::TestCase
 		grading_scale = GradingScale.find(:first)
 		@course.grading_scale = grading_scale
 		
-		assert @course.save
+		assert @course.save, "SAVE course"
+	end
+	def teardown
+		assert @course.destroy, "DESTROY course"
 	end
 	
-	def teardown
-		assert @course.destroy
-	end
 	
   def test_course_copy_and_find
     course_copy = Course.find(@course.id)
