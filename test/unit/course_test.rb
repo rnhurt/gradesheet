@@ -7,15 +7,19 @@ class CourseTest < ActiveSupport::TestCase
     @course = Course.new :name => "Math 8H"
 
     course_type = CourseType.find(:first, :conditions => "name = 'Home Room'")
+		assert_not_nil course_type
     @course.course_type = course_type
 
 		teacher = Teacher.find(:first)
+		assert_not_nil teacher
 		@course.teacher = teacher
 		
 		term = Term.find(:first)
+		assert_not_nil term
 		@course.term = term
 		
 		grading_scale = GradingScale.find(:first)
+		assert_not_nil grading_scale
 		@course.grading_scale = grading_scale
 		
 		assert @course.save, "SAVE course"
