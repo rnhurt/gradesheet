@@ -14,11 +14,11 @@ class CoursesController < ApplicationController
 
 
   def show
-    @course = Course.find(params[:id],
-    												:include => [:course_type, :teacher])
+    @course = Course.find(params[:id], :include => [:course_type, :teacher])
 
     respond_to do |format|
       format.html # show.html.erb
+#      format.js { render :partial => "course_list" }
       format.xml  { render :xml => @course }
     end
   end
@@ -36,6 +36,11 @@ class CoursesController < ApplicationController
 
   def edit
     @course = Course.find(params[:id])
+    
+    respond_to do |format|
+    	format.html
+#	    format.js { render :partial => "course_edit" }
+	  end
   end
 
 

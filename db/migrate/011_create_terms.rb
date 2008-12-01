@@ -3,6 +3,7 @@ class CreateTerms < ActiveRecord::Migration
     create_table :terms do |t|
       t.string :name
       t.date :begin_date, :end_date
+      t.boolean :active
 
       t.timestamps
     end

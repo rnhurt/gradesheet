@@ -1,40 +1,36 @@
 <%#= debug @courses %>
 
-<table class="master">
+<table class="list">
 	<caption>Teacher: <%= @courses[0].teacher.full_name %></caption>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Term</th>
-      <th>Grading Scale</th>
-      <th>Course Type</th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <th>Name</th>
-      <th>Term</th>
-      <th>Grading Scale</th>
-      <th>Course Type</th>
-    </tr>
-  </tfoot>
-
-  <tbody>
-		<% for course in @courses %>
-			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= edit_course_path(course) %>'">
-				<td><%=h course.name %></td>
-				<td><%=h course.term.name %></td>
-				<td><%=h course.grading_scale.name %></td>
-				<td><%=h course.course_type.name %></td>
-			</tr>
-		<% end %>
-  </tbody>
+	<thead>
+		<th>Course</th>
+		<th>Term</th>
+	</thead>
+	<tbody>
+		<% for course in @courses -%>
+		<tr class="<%= cycle('odd', 'even') %>" onclick="<%= 
+					remote_function(
+								:update => 'course_details', 
+								:url => edit_course_path(course) ) %>" />
+			<%= content_tag :td, course.name %>
+			<%= content_tag :td, course.term.name %>	
+		</tr>
+		<% end -%>
+	</tbody>
 </table>
 
-    <td><%#= link_to 'Show', course %></td>
-    <td><%#= link_to 'Edit', edit_course_path(course) %></td>
-    <td><%#= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %></td>
+<div id='course_details' class="course_list">
+	<%#= render :partial => 'courses/course_edit' %>
+</div>
 
-<br />
 
 <%= link_to 'New course', new_course_path %>
+
+
+
+
+<%#= link_to 'Show', course %>
+<%= link_to 'Edit', edit_course_path(course) %>
+<%#= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %>
+
+

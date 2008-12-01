@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(:version => 18) do
     t.string   "name"
     t.date     "begin_date"
     t.date     "end_date"
+    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

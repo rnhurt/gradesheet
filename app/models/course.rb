@@ -16,8 +16,8 @@ class Course < ActiveRecord::Base
 
 #	validates_uniqueness_of :teacher, :scope => [:term, :course]
 
-
 	def self.find_by_owner(*args)
+	## Find all courses belonging to a particular teacher
 		with_scope :find => { :conditions => { :teacher_id => args[1].id } } do
 			find(*args)
 		end
