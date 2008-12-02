@@ -1,7 +1,7 @@
 <%#= debug @courses %>
 
+<% content_for :left do %>
 <table class="list">
-	<caption>Teacher: <%= @courses[0].teacher.full_name %></caption>
 	<thead>
 		<th>Course</th>
 		<th>Term</th>
@@ -18,19 +18,21 @@
 		<% end -%>
 	</tbody>
 </table>
+<% end %>
+
 
 <div id='course_details' class="course_list">
 	<%#= render :partial => 'courses/course_edit' %>
 </div>
 
 
-<%= link_to 'New course', new_course_path %>
+<%#= link_to 'New course', new_course_path %>
 
 
 
 
 <%#= link_to 'Show', course %>
-<%= link_to 'Edit', edit_course_path(course) %>
+<%#= link_to 'Edit', edit_course_path(course) %>
 <%#= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %>
 
 

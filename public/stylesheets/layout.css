@@ -1,64 +1,91 @@
 * {
-margin: 0px;
+	margin: 0px;
 }
+
 body {
-font-family: verdana,arial,helvetica,sans-serif;
-font-size: 13px;
-line-height: 18px;
-min-width: 630px;/* 2x (LC fullwidth +
-CC padding) + RC fullwidth */
+	font-family: verdana,arial,helvetica,sans-serif;
+	font-size: 13px;
+	line-height: 18px;
+  min-width: 630px;      /* 2x (LC fullwidth +
+                            CC padding) + RC fullwidth */
 }
 #container {
+  padding-left: 200px;   /* LC fullwidth */
+  padding-right: 40px;  /* RC fullwidth + CC padding */
 }
 #container .column {
-float: left;
+  position: relative;
+  float: left;
 }
-#content {
-width: 100%;
+#center {
+  padding: 10px 16px;    /* CC padding */
+  width: 100%;
 }
-#header {
-background-color: #003366;
-color: white;
+#left {
+  width: 180px;          /* LC width */
+  padding: 0 10px;       /* LC padding */
+  right: 240px;          /* LC fullwidth + CC padding */
+  margin-left: -100%;
 }
-#header .tagline {
-font-size: 1.8em;
-position: absolute;
-top: 10px;
-left: 125px;
-}
-#header .login {
-float: right;
-padding: 10px;
-}
-#header .login a {
-color: #FFFF00;
-}
-#header img {
-float: none;
-padding: 10px;
-}
-#header .flash {/* border:1px solid red;*/
-background-color:green;
-color: #eee;
-/* position: absolute; */
-/* top:45px; */
-/* left: 125px; */
-/* padding:5px;*/
-/* width:300px; */
-text-align: center;
+#right {
+  width: 0px;          /* RC width */
+  padding: 0 10px;       /* RC padding */
+  margin-right: -190px;  /* RC fullwidth + CC padding */
 }
 #footer {
-margin: auto;
-text-align: center;
-font-size: 0.8em;
-clear: both;
+  clear: both;
+}
+
+/*** IE Fix ***/
+* html #left {
+  left: 150px;           /* RC fullwidth */
+}
+
+
+
+#header {
+	background-color: #003366;
+	color: white;
+}
+#header .tagline {
+	font-size: 1.8em;
+	position: absolute;
+	top: 10px;
+	left: 125px;
+}
+#header .login {
+	float: right;
+	padding: 10px;
+}
+#header .login a {
+	color: #FFFF00;
+}
+#header img {
+	float: none;
+	padding: 10px;
+}
+#header .flash {/* border:1px solid red;*/
+	background-color:green;
+	color: #eee;
+	/* position: absolute; */
+	/* top:45px; */
+	/* left: 125px; */
+	/* padding:5px;*/
+	/* width:300px; */
+	text-align: center;
+}
+#footer {
+	margin: auto;
+	text-align: center;
+	font-size: 0.8em;
+	clear: both;
 }
 .clear {
 	clear: both;
 }
 /*** IE Fix ***/
 * html #left {
-left: 150px;/* RC fullwidth */
+	left: 150px;/* RC fullwidth */
 }
 .paginate {
 text-align: center;

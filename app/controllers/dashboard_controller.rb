@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-	layout "dashboard"
+	layout "standard"
 
 	def index	
 		## Set the default teacher

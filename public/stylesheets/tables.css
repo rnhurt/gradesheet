@@ -1,5 +1,7 @@
+table {
+	width: 100%;
+}
 table.master {
-	width: 79%;
 	margin: auto;
 	cursor: pointer;
 }
@@ -7,7 +9,6 @@ table.detail {
 	margin: auto;	
 }
 table.list {
-	width: 19%;
 	margin: 0px 5px 0px 5px;
 	float: left;
 	cursor: pointer;
@@ -79,7 +80,7 @@ thead .search {
 }
 
 tfoot td {
-		text-align: left
+	text-align: left
 }
 
 /* =body
