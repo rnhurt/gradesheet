@@ -28,6 +28,7 @@ table {
 	background: #BACAF1;
 	border-left: 1px solid #686868;
 	border-right: 1px solid #686868;
+	border-bottom: 1px solid #686868;
 	font: 0.9em/145% 'Trebuchet MS',helvetica,arial,verdana;
 	color: #333;
 }

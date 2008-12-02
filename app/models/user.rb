@@ -15,7 +15,12 @@ class User < ActiveRecord::Base
 							:order => 'first_name',
 							:include => :site
 	end
-		
+	
+	## Get the user "types" avalable
+	def self.find_user_types(*args)
+		return [Teacher, Student, TeacherAssistant]
+	end
+
 	## Display the users full name
 	def full_name
 		[first_name, last_name].join(' ')

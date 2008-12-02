@@ -18,7 +18,7 @@ body {
   float: left;
 }
 #center {
-  padding: 10px 16px;    /* CC padding */
+  padding: f0px 16px;    /* CC padding */
   width: 100%;
 }
 #left {
@@ -64,15 +64,20 @@ body {
 	float: none;
 	padding: 10px;
 }
-#header .flash {/* border:1px solid red;*/
+#header .flash {
 	background-color:green;
 	color: #eee;
-	/* position: absolute; */
-	/* top:45px; */
-	/* left: 125px; */
-	/* padding:5px;*/
-	/* width:300px; */
 	text-align: center;
+	font-weight: bold;
+	padding: 2px;
+}
+#header .warning {
+	background-color: yellow;
+	color: #333;
+}
+#header .error {
+	background-color: red;
+	color: #333;
 }
 #footer {
 	margin: auto;

@@ -8,7 +8,7 @@ module ApplicationHelper
 
 	## Generate the MENU html
 	def menu_builder(page_id)
-		tabs = [ 'Home:dashboard', 'Teachers:teachers', 'Students:students', 
+		tabs = [ 'Home:dashboard', 'People:users', 
 						'Courses:courses', 'Assignments:assignments', 'Enrollments:enrollments' ]
 		content = ""
 		tabs.each do |tab|
@@ -25,6 +25,14 @@ module ApplicationHelper
 
 		## Close up the tags
 		content_tag(:div, content_tag(:ul, content, :id => 'menu'), :class => 'menucontainer')
+	end
+
+
+	## Show the FLASH div
+	def show_flash
+		result = ''
+		flash.each {|type, message| result << content_tag(:div, message, :class => "flash " + type.to_s) } 
+		return result
 	end
 
 

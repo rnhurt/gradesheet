@@ -1,9 +1,9 @@
 <%- ## Is this a student
-student = true if users[1].class.to_s == "Student" 
+student = true # if users[1].class.to_s == "Student" 
 -%>
 
 <span class="paginate">
-<%= will_paginate users %>
+<%#= will_paginate users %>
 </span>
 
 <table id="users" class="master">
@@ -26,10 +26,10 @@ student = true if users[1].class.to_s == "Student"
 
 	<tbody>
 		<%- for u in users -%>
-			<tr class="<%= cycle('odd', 'even') %>" onclick="<%= link_to(u.full_name, u) %>"/>
-				<%= link_to_function(u.full_name, u) %>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="<%#= link_to(u.full_name, u) %>"/>
+				<%#= link_to_function(u.full_name, u) %>
 				<td><%=h u.short_name %></td>
-				<td><%= link_to(u.full_name, u) %></td>
+				<td><%#= link_to(u.full_name, u) %></td>
 				<td><%=h u.email %></td>
 				<td><%=h u.site.name %></td>
 				<%- if student -%>

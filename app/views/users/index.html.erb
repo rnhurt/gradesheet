@@ -1,27 +1,24 @@
-<h1>Listing users</h1>
+<% content_for :left do %>
+<%= debug @types %>
 
-<table>
-  <tr>
-    <th>Short name</th>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Email</th>
-    <th>Campus</th>
-  </tr>
-
-<% for user in @users %>
-  <tr>
-    <td><%=h user.short_name %></td>
-    <td><%=h user.first_name %></td>
-    <td><%=h user.last_name %></td>
-    <td><%=h user.email %></td>
-    <td><%=h user.site_id %></td>
-    <td><%#= link_to 'Show', user %></td>
-    <td><%#= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%#= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+<table id="types" class="master">
+  <thead>
+    <th>Type</th>
+  </thead>
+	<tbody>
+		<% for t in @types -%>
+			<tr><%#= link_to t ,user_path(t), :class => cycle('odd', 'even') %>
+				<td><%= link_to_function t , t %></td>
+			</tr>
+		<% end -%>
+  </tbody>
 </table>
+
+<% end %>
+
+<div id="users">
+	<%= render :partial => "users/user_list", :locals => { :users => @users }  %>
+</div>
 
 <br />
 
