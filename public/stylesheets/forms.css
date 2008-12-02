@@ -51,6 +51,11 @@
 	margin: 0px 0 10px 10px;
 }
 
+.detailform{
+	margin: 0 auto;
+	padding: 14px;
+	border: 2px solid blue;
+}
 
 /* ----------- stylized ----------- */
 #stylized{

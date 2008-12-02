@@ -11,7 +11,7 @@
 		<tr class="<%= cycle('odd', 'even') %>" onclick="<%= 
 					remote_function(
 								:update => 'course_details', 
-								:url => edit_course_path(course) ) %>" />
+								:url => edit_course_path(course), :method => :get ) %>" />
 			<%= content_tag :td, course.name %>
 			<%= content_tag :td, course.term.name %>	
 		</tr>

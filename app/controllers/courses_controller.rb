@@ -18,7 +18,7 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-#      format.js { render :partial => "course_list" }
+      format.js { render :partial => "course_list" }
       format.xml  { render :xml => @course }
     end
   end
@@ -39,7 +39,7 @@ class CoursesController < ApplicationController
     
     respond_to do |format|
     	format.html
-#	    format.js { render :partial => "course_edit" }
+	    format.js { render :partial => "course_edit" }
 	  end
   end
 
