@@ -1,3 +1,24 @@
+<% content_for :left do %>
+<%#= debug @types %>
+
+<table id="types" class="master">
+  <thead>
+    <th>Type</th>
+  </thead>
+	<tbody>
+		<% @types.each { |key, value| -%>
+			<tr><%#= link_to t ,user_path(t), :class => cycle('odd', 'even') %>
+				<td><%= link_to_remote value.name, 
+								{:update => 'users', :method => :get, :url => { :controller => key }}, 
+								:href => url_for(:controller => key) %> <%#= debug key %>
+				</td>
+			</tr>
+		<% } -%>
+  </tbody>
+</table>
+
+<% end %>
+
 <div id="table">
 	<%= render :partial => "users/user_list", :locals => { :users => @students }  %>
 </div>

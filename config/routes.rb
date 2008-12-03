@@ -10,6 +10,5 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :teachers
   map.resources :teacher_assistants
 	
-	
   map.root :controller => "dashboard"
 end

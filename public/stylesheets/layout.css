@@ -18,7 +18,7 @@ body {
   float: left;
 }
 #center {
-  padding: f0px 16px;    /* CC padding */
+  padding: 0px 16px;    /* CC padding */
   width: 100%;
 }
 #left {
