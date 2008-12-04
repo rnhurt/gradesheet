@@ -1,0 +1,53 @@
+<div class="detail">
+	<%= Course.find(params[:id]).name if params[:id] %>
+</div>
+
+<table class="master">
+	</caption>
+  <thead>
+    <tr>
+      <th><%= link_to '+', new_assignment_path %></th>
+      <th>Name</th>
+      <th>Possible points</th>
+      <th>Due Date</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th><%= link_to '+', new_assignment_path, :class => 'positive' %></th>
+      <th>Name</th>
+      <th>Possible points</th>
+      <th>Due Date</th>
+    </tr>
+  </tfoot>
+	<tbody>
+	<% if @assignments.blank? %>
+		<tr><td colspan="4">No Assignments Found</td></tr>
+	<% else %>
+		<% for assignment in @assignments %>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for( :action => :edit, :id => assignment.id ) %>'"/>
+				<%= content_tag :td  %>
+				<%= content_tag :td, assignment.name %>
+				<%= content_tag :td, assignment.possible_points %>
+				<%= content_tag :td, assignment.due_date_formated %>
+			</tr>
+		<% end %>
+	<% end %>
+	</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%= error_messages_for :course, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
+
+

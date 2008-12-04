@@ -1,0 +1,2 @@
+class TeacherAssistant < User
+end
