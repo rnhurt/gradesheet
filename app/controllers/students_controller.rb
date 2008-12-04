@@ -7,13 +7,13 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render :partial => "users/user_list" , :locals => { :user_type => "student", :users => @students }}
+#      format.js { render :partial => "users/user_list" , :locals => { :user_type => "student", :users => @students }}
     end
   end
 
 
   def show
-#    @student = Student.find(params[:id], :include => :site)
+    @student = Student.find(params[:id], :include => :site)
 
     respond_to do |format|
       format.html { redirect_to users_path }
@@ -26,35 +26,35 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to users_path }
-      format.js
+ #     format.js
     end
   end
 
 
   def edit
-#    @student = Student.find(params[:id])
+    @student = Student.find(params[:id])
     
     respond_to do |format|
     	format.html	{ redirect_to users_path }
-    	format.js
+#    	format.js
     end
   end
 
 
-#  def create
-#    @student = Student.new(params[:student])
+  def create
+    @student = Student.new(params[:student])
 
-#    respond_to do |format|
-#      if @student.save
-#        flash[:notice] = 'Student was successfully created.'
-#        format.html { redirect_to(@student) }
-#        format.xml  { render :xml => @student, :status => :created, :location => @student }
-#      else
-#        format.html { render :action => "new" }
-#        format.xml  { render :xml => @student.errors, :status => :unprocessable_entity }
-#      end
-#    end
-#  end
+    respond_to do |format|
+      if @student.save
+        flash[:notice] = 'Student was successfully created.'
+        format.html { redirect_to(@student) }
+        format.xml  { render :xml => @student, :status => :created, :location => @student }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @student.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
 
 
   def update
