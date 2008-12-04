@@ -1,7 +1,11 @@
-<div id="table">
+<% content_for :left do %>
+	<%= render :partial => 'users/user_types' %>
+<% end %>
+
+<div id="users">
 	<%= render :partial => "users/user_list", :locals => { :users => @teachers }  %>
 </div>
 
 <br />
 
-<%= link_to 'New Teacher', new_teacher_path %>
+<%#= link_to 'New Teacher', new_teacher_path %>

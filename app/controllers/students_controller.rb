@@ -6,7 +6,7 @@ class StudentsController < ApplicationController
     @types = User.find_user_types(:all)
 
     respond_to do |format|
-      format.html # { flash[:warning] = 'Invalid Request'; redirect_to users_path }
+      format.html
       format.js { render :partial => "users/user_list", :locals => { :users => @students } }
     end
   end

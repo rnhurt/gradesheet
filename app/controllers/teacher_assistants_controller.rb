@@ -2,11 +2,12 @@ class TeacherAssistantsController < ApplicationController
   # GET /teacher_assistants
   # GET /teacher_assistants.xml
   def index
-    @teacher_assistants = TeacherAssistant.find(:all)
+    @teacher_assistants = TeacherAssistant.search(params[:search], params[:page])
+    @types = User.find_user_types(:all)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @teacher_assistants }
+      format.js { render :partial => "users/user_list", :locals => { :users => @teacher_assistants } }
     end
   end
 

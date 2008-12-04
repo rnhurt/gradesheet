@@ -3,10 +3,11 @@ class TeachersController < ApplicationController
 	
   def index
     @teachers = Teacher.search(params[:search], params[:page])
+    @types = User.find_user_types(:all)
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @teachers }
+      format.html
+      format.js { render :partial => "users/user_list", :locals => { :users => @teachers } }
     end
   end
 
