@@ -7,11 +7,11 @@
   </thead>
 	<tbody>
 		<% @types.each { |key, value| -%>
-			<tr><%#= link_to t ,user_path(t), :class => cycle('odd', 'even') %>
-				<td><%= link_to_remote value.name, 
-								{:update => 'users', :method => :get, :url => { :controller => key }}, 
-								:href => url_for(:controller => key) %> <%#= debug key %>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="<%= remote_function(:update => 'users', :method => :get, :url => { :controller => key }) %>"/>
+				<td><%= link_to_remote value.name, {:update => 'users', :method => :get, :url => { :controller => key }}, 
+								:href => url_for(:controller => key) %> <%#= debug link_path %>
 				</td>
+				<td><%#= value_path(value) %></td>
 			</tr>
 		<% } -%>
   </tbody>
