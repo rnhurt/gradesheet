@@ -1,6 +1,6 @@
 class TeacherAssistantsController < ApplicationController
-  # GET /teacher_assistants
-  # GET /teacher_assistants.xml
+	layout "standard"
+
   def index
     @teacher_assistants = TeacherAssistant.search(params[:search], params[:page])
     @types = User.find_user_types(:all)

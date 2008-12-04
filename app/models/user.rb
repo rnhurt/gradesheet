@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
 	## Search for a user (will_paginate)
 	def self.search(search, page)
-		paginate :per_page => 10, :page => page,
+		paginate :per_page => 15, :page => page,
 							:conditions => ['first_name like ? or last_name like ?', "%#{search}%", "%#{search}%"], 
 							:order => 'first_name',
 							:include => :site

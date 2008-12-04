@@ -1,42 +1,35 @@
-<%- ## Is this a student
-student = true # if users[1].class.to_s == "Student" 
--%>
-
-<span class="paginate">
-<%#= will_paginate users %>
-</span>
+<% user_type = "student" %>
 
 <table id="users" class="master">
   <thead>
     <th>ID</th>
-    <%- form_for users.class.to_s, :html => { :method => :get } do -%>
-	    <th>Name<%= text_field_tag :search, params[:search], :class => "search" %></th>
-	  <%- end -%>
+    <% form_for users.class.to_s, :html => { :method => :get } do |s| %>
+	    <th>Name <%= text_field_tag :search, params[:search], :class => "search" %></th>
+	  <% end %>
     <th>Email Address</th>
     <th>Campus</th>
-    <%- if student -%><th>Class Of</th><%- end -%>
+    <th>Class Of</th>
   </thead>
 	<tfoot>
     <th>ID</th>
     <th>Name</th>
     <th>Email Address</th>
     <th>Campus</th>
-    <%- if student -%><th>Class Of</th><%- end -%>
+    <% if user_type == "student" %><th>Class Of</th><% end %>
 	</tfoot>
 
 	<tbody>
-		<%- for u in users -%>
+		<% for u in users %>
 			<tr class="<%= cycle('odd', 'even') %>" onclick="<%#= link_to(u.full_name, u) %>"/>
-				<%#= link_to_function(u.full_name, u) %>
-				<td><%=h u.short_name %></td>
-				<td><%#= link_to(u.full_name, u) %></td>
-				<td><%=h u.email %></td>
-				<td><%=h u.site.name %></td>
-				<%- if student -%>
-					<td><%=h u.class_of %></td>
-				<%- end -%>
+				<%= content_tag :td, u.short_name %>
+				<%= content_tag :td, link_to_function(u.full_name, u) %>
+				<%= content_tag :td, u.email %>
+				<%= content_tag :td, u.site.name %>
+				<% if user_type == "student" %>
+					<%= content_tag :td, u.class_of %>
+				<% end %>
 			</tr>
-		<%- end -%>
+		<% end %>
   </tbody>
 </table>
 

@@ -7,7 +7,7 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render :partial => "users/user_list", :locals => { :users => @students } }
+      format.js { render :partial => "users/user_list" , :locals => { :user_type => "student", :users => @students }}
     end
   end
 

@@ -1,3 +1,4 @@
+
 <table id="types" class="master">
   <thead>
     <th>Type</th>
@@ -5,8 +6,10 @@
 	<tbody>
 		<% @types.each { |key, value| -%>
 			<tr class="<%= cycle('odd', 'even') %>" onclick="<%= remote_function(:update => 'users', :method => :get, :url => { :controller => key }) %>"/>
-				<td><%= link_to_remote value.name, {:update => 'users', :method => :get, :url => { :controller => key }}, 
-								:href => url_for(:controller => key) %> <%#= debug link_path %>
+				<td>
+					<%= link_to_remote value.name, 
+								{:update => 'users', :method => :get, :url => { :controller => key }}, 
+								:href => url_for(:controller => key) %>
 				</td>
 			</tr>
 		<% } -%>

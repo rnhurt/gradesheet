@@ -1,18 +1,12 @@
-<h1>Listing teacher_assistants</h1>
-
-<table>
-  <tr>
-  </tr>
-
-<% for teacher_assistant in @teacher_assistants %>
-  <tr>
-    <td><%= link_to 'Show', teacher_assistant %></td>
-    <td><%= link_to 'Edit', edit_teacher_assistant_path(teacher_assistant) %></td>
-    <td><%= link_to 'Destroy', teacher_assistant, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% content_for :left do %>
+	<%= render :partial => 'users/user_types' %>
 <% end %>
-</table>
+
+<div id="users">
+	<%= render :partial => "users/user_list", :locals => { :users => @teacher_assistants }  %>
+</div>
 
 <br />
 
-<%= link_to 'New teacher_assistant', new_teacher_assistant_path %>
+<%#= link_to 'New Teacher Assistant', new_teacher_assistant_path %>
+
