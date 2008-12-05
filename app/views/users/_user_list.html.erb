@@ -1,4 +1,4 @@
-<% user_type = "student" %>
+<% user_type ||= "student" %>
 
 <table id="users" class="master">
   <thead>
@@ -22,7 +22,7 @@
 		<% for u in users %>
 			<tr class="<%= cycle('odd', 'even') %>" onclick="<%#= link_to(u.full_name, u) %>"/>
 				<%= content_tag :td, u.short_name %>
-				<%= content_tag :td, link_to_function(u.full_name, u) %>
+				<%= content_tag :td, link_to(u.full_name, u) %>
 				<%= content_tag :td, u.email %>
 				<%= content_tag :td, u.site.name %>
 				<% if user_type == "student" %>

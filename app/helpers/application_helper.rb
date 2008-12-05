@@ -22,7 +22,7 @@ module ApplicationHelper
 		end
 		
 		## Add in the spinner to the end of the list
-		content << 	'<div id="busy" class="spinner"><img src="/images/spinner.gif" alt=""></div>'
+#		content << 	'<div id="busy" class="spinner"><img src="/images/spinner.gif" alt=""></div>'
 
 		## Close up the tags
 		content_tag(:div, content_tag(:ul, content, :id => 'menu'), :class => 'menucontainer')
@@ -37,7 +37,7 @@ module ApplicationHelper
 	end
 
 
-	## Set the focus on the page
+	## Set the focus to a specific element on the page
 	def set_focus_to_id(id)
 		javascript_tag("$('#{id}').focus()");
 		javascript_tag("$('#{id}').select()");

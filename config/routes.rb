@@ -1,8 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
 	map.namespace :users do |u|
-	  u.resources :students
-	  u.resources :teachers
-	  u.resources :teacher_assistants
+	  u.resources :students, :name_prefix => nil
+	  u.resources :teachers, :name_prefix => nil
+	  u.resources :teacher_assistants, :name_prefix => nil
 	end
 
 	map.resources	:users

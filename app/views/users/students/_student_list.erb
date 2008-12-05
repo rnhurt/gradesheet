@@ -1,13 +1,10 @@
-<%- form_tag students_path, :method => 'get' do -%>
-  <%- content_tag :label do -%>
-    Find Name: <%= text_field_tag :search, params[:search] %>
-	<%- end -%>
-<%- end -%> 
 
-<table id="students" class="master">
+<table id="users" class="master">
   <thead>
     <th>ID</th>
-    <th>Name</th>
+    <% form_for @students.class.to_s, :html => { :method => :get } do |s| %>
+	    <th>Name <%= text_field_tag :search, params[:search], :class => "search" %></th>
+	  <% end %>
     <th>Email Address</th>
     <th>Campus</th>
     <th>Class Of</th>
@@ -17,20 +14,24 @@
     <th>Name</th>
     <th>Email Address</th>
     <th>Campus</th>
-    <th>Class Of</th>
+		<th>Class Of</th>
 	</tfoot>
 
 	<tbody>
-		<% for student in @students %>
-			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= edit_student_path(student) %>'">
-				<td><%=h student.short_name %></td>
-				<td><%=h student.last_name %>, <%=h student.first_name %></td>
-				<td><%=h student.email %></td>
-				<td><%=h Site.find(student.site_id).name %></td>
-				<td><%=h student.class_of %></td>
+		<% for u in @students %>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="<%#= link_to(u.full_name, u) %>"/>
+				<%= content_tag :td, u.short_name %>
+				<%= content_tag :td, link_to(u.full_name, edit_users_student_path(u)) %>
+				<%= content_tag :td, u.email %>
+				<%= content_tag :td, u.site.name %>
+				<%= content_tag :td, u.class_of %>
 			</tr>
 		<% end %>
   </tbody>
 </table>
 
+<span class="paginate">
 <%= will_paginate @students %>
+</span>
+
+<%= set_focus_to_id 'search' %>

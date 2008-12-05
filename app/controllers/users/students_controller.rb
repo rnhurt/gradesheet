@@ -16,7 +16,7 @@ class Users::StudentsController < ApplicationController
     @student = Student.find(params[:id], :include => :site)
 
     respond_to do |format|
-      format.html { redirect_to users_path }
+      format.html # { redirect_to users_path }
     end
   end
 
@@ -25,7 +25,7 @@ class Users::StudentsController < ApplicationController
     @student = Student.new
 
     respond_to do |format|
-      format.html { redirect_to users_path }
+      format.html # { redirect_to users_path }
     end
   end
 
@@ -34,7 +34,7 @@ class Users::StudentsController < ApplicationController
     @student = Student.find(params[:id])
     
     respond_to do |format|
-    	format.html	{ redirect_to users_path }
+    	format.html #	{ redirect_to users_path }
     end
   end
 
