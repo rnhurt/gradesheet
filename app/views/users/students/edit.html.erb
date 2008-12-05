@@ -1,7 +1,7 @@
 <%= error_messages_for :student, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
 <div class="entryform">
-	<% form_for @student, :url => { :controller => 'users/students' } do |f| %>
+	<% form_for @student do |f| %>
 			<%= content_tag( :h1, "#{@student.full_name}" ) %>
 			<p>Change the information and hit SAVE</p>
 		
@@ -24,7 +24,7 @@
 			<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a) %>
 		
 			<div class="buttons">
-			<%= submit_tag 'Save', :class=>"positive" %><%= link_to 'Cancel', users_student_path, :class => "positive" %>		
+			<%= submit_tag 'Save', :class=>"positive" %><%= link_to 'Cancel', student_path, :class => "positive" %>		
 			</div>
 	<% end %>
 </div>
