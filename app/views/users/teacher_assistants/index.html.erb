@@ -1,0 +1,12 @@
+<% content_for :left do %>
+	<%= render :partial => 'users/user_types' %>
+<% end %>
+
+<div id="users">
+	<%= render :partial => "users/user_list", :locals => { :users => @teacher_assistants }  %>
+</div>
+
+<br />
+
+<%#= link_to 'New Teacher Assistant', new_teacher_assistant_path %>
+

@@ -1,0 +1,36 @@
+<%- form_tag teachers_path, :method => 'get' do -%>
+  <%- content_tag :label do -%>
+    Find Name: <%= text_field_tag :search, params[:search] %>
+	<%- end -%>
+<%- end -%>  
+        
+<table id="teachers" class="master">
+  <thead>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email Address</th>
+    <th>Campus</th>
+    <th>Class Of</th>
+  </thead>
+	<tfoot>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email Address</th>
+    <th>Campus</th>
+    <th>Class Of</th>
+	</tfoot>
+
+	<tbody>
+		<% for teacher in @teachers %>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= edit_teacher_path(teacher) %>'">
+				<td><a href=""><%=h teacher.short_name %></a></td>
+				<td><%= link_to teacher.full_name, edit_teacher_path(teacher) %></td>
+				<td><%=h teacher.email %></td>
+				<td><%=h Site.find(teacher.site_id).name %></td>
+				<td><%=h teacher.class_of %></td>
+			</tr>
+		<% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @teachers %>

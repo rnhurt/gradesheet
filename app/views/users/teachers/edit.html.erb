@@ -1,0 +1,28 @@
+<%= error_messages_for :teacher, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
+
+<div class="entryform">
+	<% form_for(@teacher) do |f| %>
+			<%= content_tag( :h1, "#{@teacher.full_name}" ) %>
+			<p>Change the information and hit SAVE</p>
+		
+			<label>ID</label>
+			<%= f.text_field :short_name %>
+
+			<label>First Name</label>
+			<%= f.text_field :first_name %>
+
+			<label>Last Name</label>
+			<%= f.text_field :last_name %>
+			
+			<label>Email Address</label>
+			<%= f.text_field :email %>
+
+			<label>Site</label>
+			<%= collection_select :teacher, :site_id, Site.find(:all), :id, :name %>
+	
+			<div class="buttons">
+			<%= submit_tag 'Save', :class=>"positive" %><%= link_to 'Cancel', teachers_path, :class => "positive" %>		
+			</div>
+	<% end %>
+</div>
+
