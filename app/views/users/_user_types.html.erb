@@ -5,11 +5,9 @@
   </thead>
 	<tbody>
 		<% @types.each { |key, value| -%>
-			<tr class="<%= cycle('odd', 'even') %>" onclick="<%= remote_function(:update => 'users', :method => :get, :url => { :controller => key }) %>"/>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= '/users/'+ key %>'" />
 				<td>
-					<%= link_to_remote value.name, 
-								{:update => 'users', :method => :get, :url => { :controller => key }}, 
-								:href => url_for(:controller => key) %>
+					<%= link_to value.name.pluralize, :controller => '/users/' + key %>
 				</td>
 			</tr>
 		<% } -%>
