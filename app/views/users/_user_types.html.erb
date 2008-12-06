@@ -4,10 +4,11 @@
     <th>Type</th>
   </thead>
 	<tbody>
-		<% @types.each { |key, value| -%>
-			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= '/users/'+ key %>'" />
+		<% @types.sort.each { |key, value| -%>
+			<% object = value.to_s.camelize.singularize.constantize  %>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for object.new %>'" />
 				<td>
-					<%= link_to value.name.pluralize, :controller => '/users/' + key %>
+					<%= link_to key, object.new %>
 				</td>
 			</tr>
 		<% } -%>

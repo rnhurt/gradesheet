@@ -1,4 +1,4 @@
-<% user_type ||= "student" %>
+<% user_type = users[0].class.name %>
 
 <table id="users" class="master">
   <thead>
@@ -8,14 +8,14 @@
 	  <% end %>
     <th>Email Address</th>
     <th>Campus</th>
-    <th>Class Of</th>
+		<%= content_tag(:th, 'Class Of') if user_type == 'Student' %>
   </thead>
 	<tfoot>
     <th>ID</th>
     <th>Name</th>
     <th>Email Address</th>
     <th>Campus</th>
-    <% if user_type == "student" %><th>Class Of</th><% end %>
+		<%= content_tag(:th, 'Class Of') if user_type == 'Student' %>
 	</tfoot>
 
 	<tbody>
@@ -25,9 +25,7 @@
 				<%= content_tag :td, link_to(u.full_name, u) %>
 				<%= content_tag :td, u.email %>
 				<%= content_tag :td, u.site.name %>
-				<% if user_type == "student" %>
-					<%= content_tag :td, u.class_of %>
-				<% end %>
+				<%= content_tag(:td, u.class_of) if user_type == 'Student' %>
 			</tr>
 		<% end %>
   </tbody>

@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 	
 	## Get the user "types" avalable
 	def self.find_user_types(*args)
-		return {'teachers' => Teacher, 'students' => Student, 'teacher_assistants' => TeacherAssistant}
+		return {'ALL' => Users, 'Teachers' => Teacher, 'Students' => Student, 'Teacher Assistants' => TeacherAssistant}
 	end
 
 	## Display the users full name
