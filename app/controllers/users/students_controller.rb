@@ -34,7 +34,7 @@ class Users::StudentsController < ApplicationController
     @student = Student.find(params[:id])
     
     respond_to do |format|
-    	format.html #	{ redirect_to users_path }
+    	format.html
     end
   end
 

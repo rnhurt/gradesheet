@@ -13,13 +13,10 @@ class UsersController < ApplicationController
 
 
 	def show
-#		flash[:warning] = 'Invalid Request'
-#  	redirect_to :action => 'index'
-    @user = User.find(params[:id])
+  #  @user = User.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-#      format.xml  { render :xml => @user }
+      format.html { redirect_to :action => :index }
     end
   end
 

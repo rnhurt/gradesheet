@@ -1,37 +1,5 @@
 <%= error_messages_for :student, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div class="box">
-	<% form_for @student do |f| %>
-			<div class="spacer">
-			<%= content_tag( :h1, "#{@student.full_name}" ) %>
-			</div>
-			
-			<label><span>ID</span>
-			<%= f.text_field :short_name, :class=>'input-text'  %>
-			</label>
-		
-			<label><span>First Name</span>
-			<%= f.text_field :first_name, :class=>'input-text'  %>
-			</label>
+<%= render :partial => "users/edit", :locals => { :user => @student } %>
 
-			<label><span>Last Name</span>
-			<%= f.text_field :last_name, :class=>'input-text'  %>
-			</label>
-			
-			<label><span>Email Address</span>
-			<%= f.text_field :email, :class=>'input-text' %><br>
-			</label>
 
-			<label><span>Site</span>
-			<%= collection_select :student, :site_id, Site.find(:all), :id, :name %>
-			</label>
-
-			<label><span>Class Of</span>
-			<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a) %>
-			</label>
-		
-			<div class="spacer">
-				<%= submit_tag 'Save', :class=>"positive" %><%= link_to 'Cancel', student_path, :class => "standard" %>
-			</div>
-	<% end %>
-</div>

@@ -11,14 +11,12 @@ class Users::TeacherAssistantsController < ApplicationController
     end
   end
 
-  # GET /teacher_assistants/1
-  # GET /teacher_assistants/1.xml
+
   def show
-    @teacher_assistant = TeacherAssistant.find(params[:id])
+  #  @teacher_assistant = TeacherAssistant.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @teacher_assistant }
+      format.html	{ redirect_to :action => :index }
     end
   end
 

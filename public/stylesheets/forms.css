@@ -1,4 +1,6 @@
-a{color:#0033CC;}
+a{
+	color:#0033CC;
+}
 h1, h2, p, form{
   border:0px; 
   margin:0px; 
@@ -13,7 +15,6 @@ h2 {
 	margin-bottom:20px;
 	font-size:16px;
 }
-
 div.main{
 	margin:30px auto; 
 	width:350px;
@@ -34,19 +35,16 @@ div.box h1 {
 div.box p{
 	padding-bottom:14px;
 }
-
 div.box input .input-text{
   border:1px solid #3b6e22;
   color:#666666;
   width:190px;
 }
-
 div.box label{
   display:block;
   margin-bottom:10px;
   color:#555555;
 }
-
 div.box label span{
   display:block;
   float:left;
@@ -63,45 +61,45 @@ div.box label span{
 	padding: 4px;
 }
 .positive{
-        background-color: green;
-        padding:0px 6px;
-        border:1px outset #3b6e22;
-        height:24px; 
-        line-height:24px;
-        color:#FFFFFF;
-        font-size:12px;
-        margin-right:10px;
-        display:inline-block;
-        text-decoration:none;
-        width: 100px;
-        text-align: center;
+  background-color: green;
+  padding:0px 6px;
+  border:1px outset #3b6e22;
+  height:24px; 
+  line-height:24px;
+  color:#FFFFFF;
+  font-size:12px;
+  margin-right:10px;
+  display:inline-block;
+  text-decoration:none;
+  width: 100px;
+  text-align: center;
 }
 .negative{
-        background: red;
-        padding:0px 6px;
-        border:1px outset #3b6e22;
-        height:24px; 
-        line-height:24px;
-        color:#FFFFFF;
-        font-size:12px;
-        margin-right:10px;
-        display:inline-block;
-        text-decoration:none;
-        width: 100px;
-        text-align: center;
+  background: red;
+  padding:0px 6px;
+  border:1px outset #3b6e22;
+  height:24px; 
+  line-height:24px;
+  color:#FFFFFF;
+  font-size:12px;
+  margin-right:10px;
+  display:inline-block;
+  text-decoration:none;
+  width: 100px;
+  text-align: center;
 }
 .standard{
-        background: grey;
-        padding:0px 6px;
-        border:1px outset #3b6e22;
-        height:24px; 
-        line-height:24px;
-        color:#FFFFFF;
-        font-size:12px;
-        margin-right:10px;
-        display:inline-block;
-        text-decoration:none;
-        width: 100px;
-        text-align: center;
+  background: grey;
+  padding:0px 6px;
+  border:1px outset #3b6e22;
+  height:24px; 
+  line-height:24px;
+  color:#FFFFFF;
+  font-size:12px;
+  margin-right:10px;
+  display:inline-block;
+  text-decoration:none;
+  width: 100px;
+  text-align: center;
 }
 

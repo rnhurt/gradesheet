@@ -1,12 +1,3 @@
-<h1>Editing teacher_assistant</h1>
+<%= error_messages_for :teacher_assistant, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<% form_for(@teacher_assistant) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
-
-<%= link_to 'Show', @teacher_assistant %> |
-<%= link_to 'Back', teacher_assistants_path %>
+<%= render :partial => "users/edit", :locals => { :user => @teacher_assistant } %>
