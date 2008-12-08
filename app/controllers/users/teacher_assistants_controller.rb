@@ -14,7 +14,6 @@ class Users::TeacherAssistantsController < ApplicationController
 
   def show
   #  @teacher_assistant = TeacherAssistant.find(params[:id])
-
     respond_to do |format|
       format.html	{ redirect_to :action => :index }
     end
