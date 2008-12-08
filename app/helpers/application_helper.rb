@@ -44,11 +44,4 @@ module ApplicationHelper
 	end
 
 
-	## Use the block_tag as a replacement for content_tag
-	def block_tag(tag, options = {}, &block)
-		concat(content_tag(tag, capture(&block), options), block.binding)
-	end
-
-
-
 end
