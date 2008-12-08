@@ -1,119 +1,107 @@
-.spacer{clear:both; height:1px;}
-/* ----------- My Form ----------- */
-.entryform{
-	margin:0 auto;
-	width:400px;
-	padding:14px;
-	background-color: #ebf4fb;
-	border: 2px solid #b7ddf2;
+a{color:#0033CC;}
+h1, h2, p, form{
+  border:0px; 
+  margin:0px; 
+  padding:0px;
 }
-.entryform h1 {
-	font-size: 14px;
-	font-weight: bold;
-	margin-bottom: 8px;
+input{  
+	font-family:"Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif; 
+  font-size:12px;
 }
-.entryform p {
-	font-size: 11px;
-	color:#666666;
+h2 {
+	color:#666666; 
 	margin-bottom:20px;
-	border-bottom:solid 1px #b7ddf2;
-	padding-bottom:10px;	
+	font-size:16px;
 }
-.entryform label {
-	display:block;
-	font-weight:bold;
-	text-align:right;
-	width:130px;
-	float:left;
+
+div.main{
+	margin:30px auto; 
+	width:350px;
 }
-.small {
-	color:#666666;
-	display:block;
+div.box{
+  border:solid 1px #c6cfe1;
+  background:#dfe4ee;
+  padding:10px;
+  color:#333333;
+  margin-bottom:20px;
+  width: 400px;
+}
+div.box h1 {
+  font-size:14px;
+  color:#000000;
+  padding-bottom:4px;
+}
+div.box p{
+	padding-bottom:14px;
+}
+
+div.box input .input-text{
+  border:1px solid #3b6e22;
+  color:#666666;
+  width:190px;
+}
+
+div.box label{
+  display:block;
+  margin-bottom:10px;
+  color:#555555;
+}
+
+div.box label span{
+  display:block;
+  float:left;
+  padding-right:6px;
+  width:140px;
+  text-align:right;
+  font-weight:bold;
+}
+.spacer{
+	margin-left:80px; 
+	margin-bottom:10px;
 	font-size:11px;
-	font-weight:normal;
-	text-align:right;
-	width:140px;	
+	color:#555555;
+	padding: 4px;
 }
-.entryform input {
-/*	float:left;*/
-	font-size:12px;
-	padding:4px 2px;
-	border:solid 1px #aacfe4;
-	width: 200px;
-	margin: 0px 0 10px 10px;
+.positive{
+        background-color: green;
+        padding:0px 6px;
+        border:1px outset #3b6e22;
+        height:24px; 
+        line-height:24px;
+        color:#FFFFFF;
+        font-size:12px;
+        margin-right:10px;
+        display:inline-block;
+        text-decoration:none;
+        width: 100px;
+        text-align: center;
 }
-.entryform select {
-	float: left;
-	font-size: 12px;
-	padding: 4px 2px;
-/*	border: solid 1px #aacfe4;*/
-	width: 205px;
-	margin: 0px 0 10px 10px;
+.negative{
+        background: red;
+        padding:0px 6px;
+        border:1px outset #3b6e22;
+        height:24px; 
+        line-height:24px;
+        color:#FFFFFF;
+        font-size:12px;
+        margin-right:10px;
+        display:inline-block;
+        text-decoration:none;
+        width: 100px;
+        text-align: center;
 }
-
-.detailform{
-	margin: 0 auto;
-	padding: 14px;
-	border: 2px solid blue;
-}
-
-/* ----------- stylized ----------- */
-#stylized{
-border:solid 2px #b7ddf2;
-background:#ebf4fb;
-}
-#stylized h1 {
-font-size:14px;
-font-weight:bold;
-margin-bottom:8px;
-}
-#stylized p{
-font-size:11px;
-color:#666666;
-margin-bottom:20px;
-border-bottom:solid 1px #b7ddf2;
-padding-bottom:10px;
-}
-#stylized label{
-display:block;
-font-weight:bold;
-text-align:right;
-width:140px;
-float:left;
-}
-#stylized .small{
-color:#666666;
-display:block;
-font-size:11px;
-font-weight:normal;
-text-align:right;
-width:140px;
-}
-#stylized input{
-float:left;
-font-size:12px;
-padding:4px 2px;
-border:solid 1px #aacfe4;
-width:200px;
-margin:2px 0 20px 10px;
-}
-#stylized buton{
-clear:both;
-margin-left:150px;
-width:125px;
-height:31px;
-background:#666666 url(img/button.png) no-repeat;
-text-align:center;
-line-height:31px;
-color:#FFFFFF;
-font-size:11px;
-font-weight:bold;
-}
-#stylized select{
-font-size:12px;
-padding:4px 2px;
-border:solid 1px #aacfe4;
-width:205px;
-margin:2px 0 20px 10px;
+.standard{
+        background: grey;
+        padding:0px 6px;
+        border:1px outset #3b6e22;
+        height:24px; 
+        line-height:24px;
+        color:#FFFFFF;
+        font-size:12px;
+        margin-right:10px;
+        display:inline-block;
+        text-decoration:none;
+        width: 100px;
+        text-align: center;
 }
 

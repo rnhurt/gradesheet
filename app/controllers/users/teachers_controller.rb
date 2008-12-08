@@ -13,10 +13,11 @@ class Users::TeachersController < ApplicationController
 
 
   def show
-   	@teacher = Teacher.find(params[:id], :include => :site)
+  ## We don't really want to show an individual teacher.
+  # 	@teacher = Teacher.find(params[:id], :include => :site)
 
     respond_to do |format|
-      format.html # { redirect_to users_path }
+      format.html { redirect_to :action=>:index }
     end
   end
 

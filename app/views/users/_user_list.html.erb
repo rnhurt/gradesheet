@@ -20,9 +20,9 @@
 
 	<tbody>
 		<% for u in users %>
-			<tr class="<%= cycle('odd', 'even') %>" onclick="<%#= link_to(u.full_name, u) %>"/>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for(u)+'/edit' %>'" />
 				<%= content_tag :td, u.short_name %>
-				<%= content_tag :td, link_to(u.full_name, u) %>
+				<td><%= link_to u.full_name, { :controller => 'users/'+u.class.name.tableize, :action => "edit", :id => u.id } %></td>
 				<%= content_tag :td, u.email %>
 				<%= content_tag :td, u.site.name %>
 				<%= content_tag(:td, u.class_of) if user_type == 'Student' %>
