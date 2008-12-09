@@ -26,6 +26,7 @@ tabatha:
   class_of: 2013
 
 bob:
+  id: 1070
   type: Teacher
   site: stlaw
   short_name: 273
@@ -34,6 +35,7 @@ bob:
   email: bob@bob.xom
   
 kim:
+  id: 1069
   type: Teacher
   site: nda
   short_name: 23

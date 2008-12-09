@@ -10,8 +10,8 @@ class Users::StudentsController < ApplicationController
     end
   end
 
-	# We dont need to show an individual student
   def show
+	# We dont need to show an individual student
   #  @student = Student.find(params[:id], :include => :site)
 
     respond_to do |format|
