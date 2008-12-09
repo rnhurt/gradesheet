@@ -42,7 +42,7 @@ class Users::TeacherAssistantsController < ApplicationController
 
     respond_to do |format|
       if @teacher_assistant.save
-        flash[:notice] = 'TeacherAssistant was successfully created.'
+        flash[:notice] = "Teacher Assistant '#{@teacher_assistant.full_name}' was successfully created."
         format.html { redirect_to(@teacher_assistant) }
         format.xml  { render :xml => @teacher_assistant, :status => :created, :location => @teacher_assistant }
       else
