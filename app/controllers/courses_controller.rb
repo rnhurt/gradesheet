@@ -25,6 +25,7 @@ class CoursesController < ApplicationController
 
   def edit
     @course = Course.find(params[:id])
+    @students = Course.find_all_students(params[:id])
     
     respond_to do |format|
     	format.html

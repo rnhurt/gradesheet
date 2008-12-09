@@ -22,4 +22,11 @@ class Course < ActiveRecord::Base
 		end
 	end
 
+	def self.find_students(*args)
+	## Find all students enrolled in a particular course
+		with_scope :find => { :conditions => { :student_id => args[1].id } } do
+			find(*args)
+		end
+	end
+
 end
