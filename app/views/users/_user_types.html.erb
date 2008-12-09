@@ -1,6 +1,10 @@
 <% 
-	# NOTE: I'm 'not sure why using 'object.new' works, but it does :/  
+	# NOTE: I'm 'not sure why using 'object.new' works here, but it does :/  
 %>
+
+<% 	# I know hitting the DB from a view is not proper, but it beats 
+		# calling it from every method on every user controller in the land. %>
+<% types = User.find_user_types(:all) %>
 
 <table id="types" class="master">
   <thead>
@@ -8,7 +12,7 @@
     <th></th>
   </thead>
 	<tbody>
-		<% @types.sort.each { |key, value| %>
+		<% types.sort.each { |key, value| %>
 			<% object = value.to_s.camelize.singularize.constantize  %>
 			<% object_path = url_for object.new %>
 			<tr class="<%= cycle('odd', 'even') %>" />

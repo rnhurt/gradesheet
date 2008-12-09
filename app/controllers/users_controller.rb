@@ -3,7 +3,6 @@ class UsersController < ApplicationController
 	
   def index
     @users = User.search(params[:search], params[:page])
-    @types = User.find_user_types(:all)
 
     respond_to do |format|
       format.html # index.html.erb

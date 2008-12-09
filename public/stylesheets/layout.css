@@ -25,7 +25,7 @@ body {
   width: 180px;          /* LC width */
   padding: 0 10px;       /* LC padding */
   right: 240px;          /* LC fullwidth + CC padding */
-  margin-left: -100%;
+  margin-left: -98%;
 }
 #right {
   width: 0px;          /* RC width */
@@ -88,58 +88,56 @@ body {
 .clear {
 	clear: both;
 }
-/*** IE Fix ***/
-* html #left {
-	left: 150px;/* RC fullwidth */
-}
+
 .paginate {
-text-align: center;
+	text-align: center;
 }
+
 /*** Scaffold ***/
 .fieldWithErrors {
-padding: 2px;
-background-color: red;
-display: table;
+	padding: 2px;
+	background-color: red;
+	display: table;
 }
 #errorExplanation {
-width: 400px;
-border: 2px solid red;
-padding: 7px;
-padding-bottom: 12px;
-margin-bottom: 20px;
-background-color: #f0f0f0;
+	width: 400px;
+	border: 2px solid red;
+	padding: 7px;
+	padding-bottom: 12px;
+	margin-bottom: 20px;
+	background-color: #f0f0f0;
 }
 #errorExplanation h2 {
-text-align: left;
-font-weight: bold;
-padding: 5px 5px 5px 15px;
-font-size: 12px;
-margin: -7px;
-background-color: #c00;
-color: #fff;
+	text-align: left;
+	font-weight: bold;
+	padding: 5px 5px 5px 15px;
+	font-size: 12px;
+	margin: -7px;
+	background-color: #c00;
+	color: #fff;
 }
 #errorExplanation p {
-color: #333;
-margin-bottom: 0;
-padding: 5px;
+	color: #333;
+	margin-bottom: 0;
+	padding: 5px;
 }
 #errorExplanation ul li {
-font-size: 12px;
-list-style: square;
+	font-size: 12px;
+	list-style: square;
 }
 div.uploadStatus {
-margin: 5px;
+	margin: 5px;
 }
 div.progressBar {
-margin: 5px;
+	margin: 5px;
 }
 div.progressBar div.border {
-background-color: #fff;
-border: 1px solid gray;
-width: 100%;
+	background-color: #fff;
+	border: 1px solid gray;
+	width: 100%;
 }
 div.progressBar div.background {
-background-color: #333;
-height: 18px;
-width: 0%;
+	background-color: #333;
+	height: 18px;
+	width: 0%;
 }

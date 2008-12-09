@@ -3,7 +3,6 @@ class Users::StudentsController < ApplicationController
 
   def index
     @students = Student.search(params[:search], params[:page])
-    @types = User.find_user_types(:all)
 
     respond_to do |format|
       format.html

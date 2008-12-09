@@ -3,7 +3,6 @@ class Users::TeacherAssistantsController < ApplicationController
 
   def index
     @teacher_assistants = TeacherAssistant.search(params[:search], params[:page])
-    @types = User.find_user_types(:all)
 
     respond_to do |format|
       format.html # index.html.erb
