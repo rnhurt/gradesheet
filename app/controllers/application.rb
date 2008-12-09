@@ -12,5 +12,15 @@ class ApplicationController < ActionController::Base
 		session[:user_id] ? @current_user ||= User.find(session[:user_id]) : nil
 	end
 
+  # Declare exception to handler methods
+  rescue_from ActiveRecord::RecordNotFound, :with => :bad_record
+#  rescue_from NoMethodError, :with => :show_error
+
+  def bad_record
+    flash[:warning] = 'Record could not be found.  Please try again.'
+    redirect_to :action => :index
+  end
+  def show_error(exception); render :text => exception.message; end
+
 
 end

@@ -6,23 +6,16 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-#      format.xml  { render :xml => @users }
     end
   end
 
 
 	def show
-  #  @user = User.find(params[:id])
-
-    respond_to do |format|
-      format.html { redirect_to :action => :index }
-    end
+		redirect_to :action => :index
   end
 
 
   def new
-#		flash[:warning] = 'Invalid Request'
-#  	redirect_to :action => 'index'
     @user = User.new
 
     respond_to do |format|
@@ -33,10 +26,9 @@ class UsersController < ApplicationController
 
 
   def edit
-#		flash[:warning] = 'Invalid Request'
-#  	redirect_to :action => 'index'
     @user = User.find(params[:id])
   end
+
 
   def create
     @user = User.new(params[:user])

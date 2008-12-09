@@ -1,43 +1,7 @@
-
-<%= error_messages_for :teacher %>
-
-<% form_for(@teacher) do |f| %>
-	render_partial 'teacher', @teachers
-	
-	<p>
-    <b>Short Name</b><br />
-    <%= f.text_field :short_name %>
-  </p>
-
-  <p>
-    <b>First Name</b><br />
-    <%= f.text_field :first_name %>
-  </p>
-
-	<p>
-    <b>Last Name</b><br />
-    <%= f.text_field :last_name %>
-  </p>
-
-	<p>
-    <b>Email Address</b><br />
-    <%= f.text_field :email %>
-  </p>
-
-  <p>
-    <b>Class of</b><br />
-    <%= f.text_field :class_of %>
-  </p>
-
-	<p>
-    <b>Site</b><br />
-		<%= collection_select :teacher, :site, Site.find(:all), :id, :name %>
-  </p>
-	
-	
-	<%= submit_tag 'Create' %>
-
+<% content_for :left do %>
+	<%= render :partial => 'users/user_types' %>
 <% end %>
 
-<%= link_to 'Back', teachers_path %>
+<%= error_messages_for :teacher, :header_message => "Please Try Again!", :message => "We had some problems creating the new user:" %>
 
+<%= render :partial => "users/new", :locals => { :user => @teacher } %>

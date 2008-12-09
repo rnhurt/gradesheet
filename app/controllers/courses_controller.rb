@@ -2,9 +2,7 @@ class CoursesController < ApplicationController
 	layout "standard"
 	
   def index
-    @courses = Course.find(:all, 
-    												:include => [:teacher, :term, :course_type, :grading_scale], 
-    												:conditions => { :teacher_id => current_user })
+    @courses = Course.find_by_owner(:all, current_user, :include => [:term])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,19 +11,10 @@ class CoursesController < ApplicationController
   end
 
 
-  def show
-    @course = Course.find(params[:id], :include => [:course_type, :teacher])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.js { render :partial => "course_list" }
-      format.xml  { render :xml => @course }
-    end
-  end
-
-
   def new
     @course = Course.new
+    @teacher = Teacher.find(current_user)
+    @courses = Course.find_by_owner(:all, current_user)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -46,11 +35,14 @@ class CoursesController < ApplicationController
 
   def create
     @course = Course.new(params[:course])
+    
+    ## Force the course to be created by the current user
+		@course.teacher_id = current_user.id
 
     respond_to do |format|
       if @course.save
-        flash[:notice] = 'Course was successfully created.'
-        format.html { redirect_to(@course) }
+        flash[:notice] = "Course '#{@course.name}' was successfully created."
+	      format.html { redirect_to(courses_url) }
         format.xml  { render :xml => @course, :status => :created, :location => @course }
       else
         format.html { render :action => "new" }
@@ -65,8 +57,8 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       if @course.update_attributes(params[:course])
-        flash[:notice] = 'Course was successfully updated.'
-        format.html { redirect_to(courses_url) }
+        flash[:notice] = "Course '#{@course.name}' was successfully updated."
+	      format.html { redirect_to(courses_url) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

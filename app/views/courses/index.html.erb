@@ -1,38 +1,15 @@
-<%#= debug @courses %>
-
 <% content_for :left do %>
-<table class="list">
-	<thead>
-		<th>Course</th>
-		<th>Term</th>
-	</thead>
-	<tbody>
-		<% for course in @courses -%>
-		<tr class="<%= cycle('odd', 'even') %>" onclick="<%= 
-					remote_function(
-								:update => 'course_details', 
-								:url => edit_course_path(course), :method => :get ) %>" />
-			<%= content_tag :td, course.name %>
-			<%= content_tag :td, course.term.name %>	
-		</tr>
-		<% end -%>
-	</tbody>
-</table>
+	<%= render :partial => 'course_list' %>
 <% end %>
 
 
-<div id='course_details' class="course_list">
-	<%#= render :partial => 'courses/course_edit' %>
+<div id='edit_course'>
+</div>
+
+<div id='course_details' class='course_list'>
+	<%= render :partial => 'courses/course_edit' %>
 </div>
 
 
-<%#= link_to 'New course', new_course_path %>
-
-
-
-
-<%#= link_to 'Show', course %>
-<%#= link_to 'Edit', edit_course_path(course) %>
-<%#= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %>
-
+<%#= debug @courses %>
 

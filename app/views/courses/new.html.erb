@@ -1,32 +1,41 @@
+<% content_for :left do %>
+	<%= render :partial => 'course_list' %>
+<% end %>
+
 <%= error_messages_for :course, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div class="entryform">
-<% form_for(@course) do |f| %>
-			<%= content_tag( :h1, "#{@course.name}New Course" ) %>
-			<p>Change the information and hit SAVE</p>
+<div class="box">
+	<% form_for (@course) do |f| %>
+			<div class="spacer">
+			<%= content_tag( :h1, "New Course" ) %>
+			</div>
 
-    <label>Name</label>
-    <%= f.text_field :name %>
+			<label><span>Name</span>
+			<%= f.text_field :name, :class=>'input-text'  %>
+			</label>
 
-    <label>Type</label>
-		<%= collection_select :course, :course_type_id, CourseType.find(:all), :id, :name %>
+			<label><span>Type</span>
+			<%= collection_select :course, :course_type_id, CourseType.find(:all), :id, :name %>
+			</label>
 
-    <label>Teacher</label>
-		<%= collection_select :course, :teacher_id, Teacher.find(:all), :id, :full_name %>
+			<label><span>Teacher</span>
+			<%= @teacher.full_name %>
+			</label>
 
-    <label>Term</label>
-		<%= collection_select :course, :term_id, Term.find(:all), :id, :name %>
+			<label><span>Grading Term</span>
+			<%= collection_select :course, :term_id, Term.find(:all), :id, :name %>
+			</label>
 
-    <label>Grading Scale</label>
-		<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
+			<label><span>Grading Scale</span>
+			<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
+			</label>
 
-    <label>Attributes</label>
-    <%= f.text_field :course_att_id %>
+			<%#= content_tag :label, '<span>Class Of</span>' if user.class.name == 'Student' %>
+			<%#= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a) if user.class.name == 'Student' %>
+			</label>
 
-
-   <%= f.submit "Create" %>
-
-<% end %>
+			<div class="spacer">
+				<%= f.submit 'Create', :class=>"positive" %><%#= link_to 'Cancel', user_path, :class => "standard" %>
+			</div>
+	<% end %>
 </div>
-
-<%= link_to 'Back', courses_path %>

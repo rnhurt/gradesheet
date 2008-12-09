@@ -1,6 +1,7 @@
 class Users::StudentsController < ApplicationController
 	layout "standard"
 
+
   def index
     @students = Student.search(params[:search], params[:page])
 
