@@ -7,7 +7,7 @@ class Course < ActiveRecord::Base
 	has_many		:enrollments
 	has_many		:students, :through => :enrollments
 	
-	validates_existence_of :teacher, :message => "isn't a known teacher found"
+	validates_existence_of :teacher, :message => "isn't a known teacher."
 	validates_existence_of :term
 	validates_existence_of :course_type
 	validates_existence_of :grading_scale
@@ -17,16 +17,9 @@ class Course < ActiveRecord::Base
 #	validates_uniqueness_of :teacher, :scope => [:term, :course]
 
 
-	def self.find_by_owner(*args)
 	## Find all courses belonging to a particular teacher
-		with_scope :find => { :conditions => { :teacher_id => args[1].id }, :order => "name DESC" } do
-			find(*args)
-		end
-	end
-
-	def self.find_students(*args)
-	## Find all students enrolled in a particular course
-		with_scope :find => { :conditions => { :student_id => args[1].id } } do
+	def self.find_by_owner(*args)
+		with_scope :find => { :conditions => { :teacher_id => args[1].id }, :order => "name ASC" } do
 			find(*args)
 		end
 	end

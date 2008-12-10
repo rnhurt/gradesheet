@@ -6,7 +6,7 @@ math7s:
   course_att_id: 1
   course_type: s
 
-math8hs:
+homeroom-t1:
   name: Homeroom
   teacher_id: 1069
   term: t1
@@ -61,3 +61,4 @@ music-t1:
   grading_scale: s
   course_att_id: 1
   course_type: i
+

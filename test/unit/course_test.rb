@@ -44,7 +44,12 @@ class CourseTest < ActiveSupport::TestCase
 	 	@course.name = "Math 8H"
 	 	assert @course.valid?, "Name just right" 	
   end
-  
+
+	def test_one_active_homeroom_course_per_term_per_teacher
+		# TODO: test to make sure a teacher cannot have multiple homeroom courses
+		# in the same term.
+	end  
+	
   def test_course_uniqueness
 		# TODO: test to make sure a teacher cannot be in multiple courses with
 		# the same name in the same term.

@@ -1,6 +1,6 @@
 one:
   student: rich
-  course: math8hs
+  course: homeroom-t1
 
 two:
   student: rich
@@ -8,9 +8,9 @@ two:
 
 three:
   student: andrew
-  course: math7s
+  course: homeroom-t1
   
 four:
   student: tabatha
-  course: math7s
-  
+  course: homeroom-t1
+

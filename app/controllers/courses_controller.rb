@@ -25,7 +25,7 @@ class CoursesController < ApplicationController
 
   def edit
     @course = Course.find(params[:id])
-    @students = Course.find_all_students(params[:id])
+    @courses = Course.find_by_owner(:all, current_user, :include => [:term])
     
     respond_to do |format|
     	format.html

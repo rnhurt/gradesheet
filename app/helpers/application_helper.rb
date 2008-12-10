@@ -44,4 +44,11 @@ module ApplicationHelper
 	end
 
 
+	## Return the valid class_of date range
+	def class_range
+		current_year = Time.now.year
+		return { :from_year => current_year - 1, :to_year => current_year + 13 } 
+	end
+
+
 end

@@ -8,11 +8,13 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'e09cdc0512f2d77a60d7ccb4c46775c1'
 
+	## TESTING - return the 'current' user
 	def current_user
 		session[:user_id] ? @current_user ||= User.find(session[:user_id]) : nil
 	end
-
-  # Declare exception to handler methods
+	
+	
+  ## Declare exception to handler methods
   rescue_from ActiveRecord::RecordNotFound, :with => :bad_record
 #  rescue_from NoMethodError, :with => :show_error
 
