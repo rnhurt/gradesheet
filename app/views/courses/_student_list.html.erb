@@ -1,0 +1,17 @@
+	<table class='master list' id='students'>
+		<thead>
+			<th>Name</th>
+		</thead>
+		<tbody>
+			<% if @students.blank? %>
+				<tr><td></td></tr>
+			<% else %>
+				<% for student in @students %>
+					<tr class="<%= cycle('odd', 'even') %>" onclick="location.href=''"/>
+						<%= content_tag :td, student.full_name %>
+					</tr>
+				<% end %>
+			<% end %>
+		</tbody>
+	</table>
+
