@@ -4,6 +4,7 @@ class Course < ActiveRecord::Base
 	belongs_to	:course_type
 	belongs_to	:grading_scale
 	has_many		:assignments
+	has_many		:enrollments
 	has_many		:students, :through => :enrollments
 	
 	validates_existence_of :teacher, :message => "isn't a known teacher found"
@@ -14,6 +15,7 @@ class Course < ActiveRecord::Base
 	validates_length_of		:name, :in => 1..20
 
 #	validates_uniqueness_of :teacher, :scope => [:term, :course]
+
 
 	def self.find_by_owner(*args)
 	## Find all courses belonging to a particular teacher

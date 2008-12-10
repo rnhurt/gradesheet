@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
 	validates_presence_of :last_name, :message => " is required"
 	validates_existence_of :site
 
+
 	## Search for a user (will_paginate)
 	def self.search(search, page)
 		paginate :per_page => 15, :page => page,

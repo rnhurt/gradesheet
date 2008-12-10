@@ -1,8 +1,17 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class EnrollmentTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
-  end
+	def setup
+		@course = Course.first()
+		@student = Student.first()
+	end
+	
+	def teardown
+		
+	end
+	
+	def test_unique_course_student_combination
+		@course
+	end
+	
 end
