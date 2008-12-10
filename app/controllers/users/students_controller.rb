@@ -11,6 +11,7 @@ class Users::StudentsController < ApplicationController
     end
   end
 
+
   def show
 		redirect_to :action => :index
   end

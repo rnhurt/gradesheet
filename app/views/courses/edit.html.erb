@@ -4,22 +4,22 @@
 
 <%= error_messages_for :course, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div style='float: right;'>
-<table class='master'>
-	<thead>
-		<th>Class Of</th>
-	</thead>
-	<tbody>
-		<% for year in class_range[:from_year]..class_range[:to_year] %>
-			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%#= url_for( :action => :edit, :id => course.id ) %>'"/>
-				<%= content_tag :td, year %>
-			</tr>
-		<% end %>
-	</tbody>
-</table>
+<div style='float: right; width: 19%;'>
+	<form id='class_of_form'>
+		<%= select_tag 'class_of', options_for_select(class_range, Time.now.year), 
+				:onchange => 
+					remote_function(
+						:update => 'student_list', 
+						:url => { :action => :show }, 
+						:with => "'value='+value",
+						:method => :get) %>
+	</form>
+	<div id='student_list'>	
+		<%= render :partial => 'student_list' %>
+	</div>
 </div>
 
-<div style='float: left; width: 90%;'>
+<div style='float: right; width: 80%;'>
 
 <% form_for(@course) do |f| %>
 	<%= content_tag( :h1, "#{@course.name}" ) %>
@@ -47,12 +47,6 @@
 <% end %>
 
 
-<% student = Student.first() %>
-<% form_for(student) do |s| %>
-	
-	<%= s.select(:class_of, (class_range[:from_year]..(class_range[:to_year])).to_a) %>
-<% end %>
-
 
 <table class='master'>
 	<thead>
@@ -67,3 +61,4 @@
 	</tbody>
 </table>
 </div>
+

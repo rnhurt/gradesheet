@@ -10,6 +10,15 @@ class CoursesController < ApplicationController
     end
   end
 
+	def show
+		respond_to do |format|
+			format.html	{ redirect_to :action => :index }
+			format.js {
+				@students = Student.find_all_by_class_of(params[:value])
+				render :partial => "student_list"
+			}
+		end
+	end	
 
   def new
     @course = Course.new
