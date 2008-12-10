@@ -25,7 +25,7 @@ div.box{
   padding:10px;
   color:#333333;
   margin-bottom:20px;
-  width: 400px;
+  width: 420px;
 }
 div.box h1 {
   font-size:14px;
@@ -48,7 +48,7 @@ div.box label{
 div.box label span{
   display:block;
   float:left;
-  padding-right:6px;
+  padding-right:15px;
   width:140px;
   text-align:right;
   font-weight:bold;
@@ -101,5 +101,9 @@ div.box label span{
   text-decoration:none;
   width: 100px;
   text-align: center;
+}
+.required {
+/*	border-right: solid 2px red;*/
+	background: transparent url(/images/bullet_red.png) no-repeat scroll right center;
 }
 

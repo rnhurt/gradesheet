@@ -2,18 +2,18 @@
 <div class="box">
 	<% form_for user do |f| %>
 			<div class="spacer">
-			<%= content_tag( :h1, "#{user.full_name}" ) %>
+			<%= content_tag( :h1, "Editing: #{user.full_name}" ) %>
 			</div>
 			
 			<label><span>ID</span>
 			<%= f.text_field :short_name, :class=>'input-text'  %>
 			</label>
 		
-			<label><span>First Name</span>
+			<label><span class='required'>First Name</span>
 			<%= f.text_field :first_name, :class=>'input-text'  %>
 			</label>
 
-			<label><span>Last Name</span>
+			<label><span class='required'>Last Name</span>
 			<%= f.text_field :last_name, :class=>'input-text'  %>
 			</label>
 			
@@ -21,11 +21,11 @@
 			<%= f.text_field :email, :class=>'input-text' %><br>
 			</label>
 
-			<label><span>Site</span>
+			<label><span class='required'>Site</span>
 			<%= collection_select :student, :site_id, Site.find(:all), :id, :name %>
 			</label>
 
-			<label><span>Class Of</span>
+			<label><span class='required'>Class Of</span>
 			<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a) %>
 			</label>
 		

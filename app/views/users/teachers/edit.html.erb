@@ -1,3 +1,7 @@
+<% content_for :left do %>
+	<%= render :partial => 'users/user_types' %>
+<% end %>
+
 <%= error_messages_for :teacher, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
 <%= render :partial => "users/edit", :locals => { :user => @teacher } %>

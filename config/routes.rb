@@ -10,7 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :sites
   map.resources :assignments
   map.resources :gradations
-  map.resources :enrollments
+#  map.resources :enrollments
   map.resources :courses
 	
   map.root :controller => "dashboard"

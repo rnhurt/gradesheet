@@ -12,12 +12,7 @@ class Users::StudentsController < ApplicationController
   end
 
   def show
-	# We dont need to show an individual student
-  #  @student = Student.find(params[:id], :include => :site)
-
-    respond_to do |format|
-      format.html { redirect_to :action => :index }
-    end
+		redirect_to :action => :index
   end
 
 
