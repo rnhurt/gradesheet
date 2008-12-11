@@ -1,6 +1,8 @@
+<% params[:value] ||= '||Name'  %>
+
 	<table class='master list' id='students'>
 		<thead>
-			<th>Name</th>
+			<th><%= params[:value].split('||')[1] %></th>
 		</thead>
 		<tbody>
 			<% if @students.blank? %>

@@ -6,21 +6,21 @@
 
 <div style='float: right; width: 19%;'>
 	<form id='class_of_form'>
-		<%= select_tag 'class_of', options_for_select(class_range, Time.now.year), 
+		<%= select_tag 'class_of', options_for_select(class_range.insert(0, ''), ' '), 
 				:onchange => 
 					remote_function(
 						:update => 'student_list', 
 						:url => { :action => :show }, 
-						:with => "'value='+value",
+						:with => "'value=' + value + '||Class Of ' + value",
 						:method => :get) %>
 	</form>
 	<form id='homeroom_form'>
-		<%= collection_select :yomama, :name, @homerooms, :id, :name, {}, {
+		<%= collection_select :homeroom, :name, @homerooms, :id, :name, {:include_blank => :true,}, {
 				:onchange => 
 					remote_function(
 						:update => 'student_list', 
 						:url => { :action => :show }, 
-						:with => "'value='+value",
+						:with => "'value=' + value + '||' + options[selectedIndex].text",
 						:method => :get) } %>
 	</form>
 
