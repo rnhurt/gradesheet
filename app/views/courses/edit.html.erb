@@ -14,10 +14,22 @@
 						:with => "'value='+value",
 						:method => :get) %>
 	</form>
+	<form id='homeroom_form'>
+		<%= collection_select :yomama, :name, @homerooms, :id, :name, {}, {
+				:onchange => 
+					remote_function(
+						:update => 'student_list', 
+						:url => { :action => :show }, 
+						:with => "'value='+value",
+						:method => :get) } %>
+	</form>
+
 	<div id='student_list'>	
 		<%= render :partial => 'student_list' %>
 	</div>
 </div>
+
+
 
 <div style='float: right; width: 80%;'>
 

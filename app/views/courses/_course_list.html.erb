@@ -1,7 +1,3 @@
-<% 
-	# List all the active courses for the current user(Teacher).
-%>
-
 <table id='courses' class='master'>
   <thead>
     <th>Name</th>
@@ -10,7 +6,8 @@
 	<tbody>
 	
 		<% for course in @courses %>
-			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for( :action => :edit, :id => course.id ) %>'"/>
+			<tr class="<%= cycle('odd', 'even') + (current_page?(:id => course) ? ' current' : '') %>" 
+					onclick="location.href='<%= url_for( :action => :edit, :id => course.id ) %>'"/>
 				<%= content_tag :td, course.name %>
 				<%= content_tag :td, course.term.name %>
 			</tr>
@@ -18,10 +15,4 @@
 	
   </tbody>
 </table>
-
-
-			<%# object = value.to_s.camelize.singularize.constantize  %>
-			<%# object_path = url_for object.new %>
-				<%#= content_tag :td, link_to(key, object_path) , :onclick => "location.href='" + url_for(object_path) + "'" %>
-				<%#= button_to( '+', object_path + '/new', :method => :get ) if key != 'ALL'  %>
 

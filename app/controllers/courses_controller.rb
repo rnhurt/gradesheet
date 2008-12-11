@@ -35,6 +35,7 @@ class CoursesController < ApplicationController
   def edit
     @course = Course.find(params[:id])
     @courses = Course.find_by_owner(:all, current_user, :include => [:term])
+    @homerooms = Course.find_all_by_course_type_id(CourseType.find_all_by_name('Home Room'))
     
     respond_to do |format|
     	format.html

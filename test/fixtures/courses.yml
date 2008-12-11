@@ -6,9 +6,17 @@ math7s:
   course_att_id: 1
   course_type: s
 
-homeroom-t1:
-  name: Homeroom
+homeroom-k-t1:
+  name: 8H Homeroom
   teacher_id: 1069
+  term: t1
+  grading_scale: s
+  course_att_id: 1
+  course_type: h
+
+homeroom-b-t1:
+  name: 1B Homeroom
+  teacher_id: 1070
   term: t1
   grading_scale: s
   course_att_id: 1

@@ -103,6 +103,10 @@ tbody th a {
 tbody .odd {
 	background-color: #E4E8F1;
 }
+tbody .current{
+	background-color: yellow;
+	font-style: oblique;
+}
 tbody .highlight {
 	border: 2px solid red;
 }
