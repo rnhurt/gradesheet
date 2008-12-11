@@ -4,9 +4,9 @@ class User < ActiveRecord::Base
 	has_many		:gradations
 	has_many		:comments
 	
-	validates_presence_of :first_name, :message => " is required"
-	validates_presence_of :last_name, :message => " is required"
-	validates_existence_of :site
+	validates_length_of			:first_name, :in => 1..20
+	validates_length_of			:last_name, :in => 1..20
+	validates_existence_of 	:site
 
 
 	## Search for a user (will_paginate)

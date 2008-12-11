@@ -9,11 +9,11 @@
 			<%= f.text_field :short_name, :class=>'input-text'  %>
 			</label>
 
-			<label><span>First Name</span>
+			<label><span class='required'>First Name</span>
 			<%= f.text_field :first_name, :class=>'input-text'  %>
 			</label>
 
-			<label><span>Last Name</span>
+			<label><span class='required'>Last Name</span>
 			<%= f.text_field :last_name, :class=>'input-text'  %>
 			</label>
 
@@ -21,11 +21,11 @@
 			<%= f.text_field :email, :class=>'input-text' %><br>
 			</label>
 
-			<label><span>Site</span>
+			<label><span class='required'>Site</span>
 			<%= collection_select user.class.name.underscore, :site_id, Site.find(:all), :id, :name %>
 			</label>
 
-			<%= content_tag :label, '<span>Class Of</span>' if user.class.name == 'Student' %>
+			<%= content_tag :label, "<span class='required'>Class Of</span>" if user.class.name == 'Student' %>
 			<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a) if user.class.name == 'Student' %>
 			</label>
 
