@@ -24,4 +24,14 @@ class Course < ActiveRecord::Base
 		end
 	end
 
+	## Add a student to a course
+	def self.add_student(*params)
+		puts "#################################################### I got you " + params[0]
+debugger		
+	end
+	
+	## Remove a student from a course
+	def self.rm_student
+debugger		
+	end
 end

@@ -1,4 +1,4 @@
-<% params[:value] ||= '||Name'  %>
+<% params[:value] ||= '||Students'  %>
 
 	<table class='master list' id='students'>
 		<thead>
@@ -9,11 +9,18 @@
 				<tr><td></td></tr>
 			<% else %>
 				<% for student in @students %>
-					<tr class="<%= cycle('odd', 'even') %>" onclick="location.href=''"/>
+					<tr class="<%= cycle('odd', 'even') %>"/>
 						<%= content_tag :td, student.full_name %>
+						<td><%= link_to_remote( "+", 
+								:update => "enrolled_students", 
+								:url => { :action => "update"  },
+								:with => "'student=" + student.id.to_s + "'",
+								:method => :put ) %></td>
 					</tr>
 				<% end %>
 			<% end %>
 		</tbody>
 	</table>
+	
+	
 

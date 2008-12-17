@@ -64,16 +64,20 @@ class CoursesController < ApplicationController
 
 
   def update
+debugger
     @course = Course.find(params[:id])
+  #  Course.add_student(params[:student])
 
     respond_to do |format|
       if @course.update_attributes(params[:course])
         flash[:notice] = "Course '#{@course.name}' was successfully updated."
 	      format.html { redirect_to(courses_url) }
         format.xml  { head :ok }
+        format.js
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+        format.js
       end
     end
   end

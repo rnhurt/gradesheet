@@ -59,18 +59,11 @@
 <% end %>
 
 
-
-<table class='master'>
-	<thead>
-		<th>Name</th>
-	</thead>
-	<tbody>
-		<% for student in @course.students %>
-		<tr>
-			<%= content_tag :td, student.full_name %>
-		</tr>
-		<% end %>
-	</tbody>
-</table>
+<%= render :partial => 'enrolled_students' %>
+<div id='test'>
 </div>
+
+</div>
+
+
 
