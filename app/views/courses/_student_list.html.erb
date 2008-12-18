@@ -2,7 +2,7 @@
 
 	<table class='master list' id='students'>
 		<thead>
-			<th><%= params[:value].split('||')[1] %></th>
+			<th><%= params[:value].split('||')[1] %> <%= "(#{@students.length})" unless @students.blank? %></th>
 		</thead>
 		<tbody>
 			<% if @students.blank? %>
@@ -11,7 +11,11 @@
 				<% students = @students.sort_by &:last_name %>
 				<% for student in students %>
 					<tr class="<%= cycle('odd', 'even') %>"/>
-						<td><%= link_to_remote student.full_name, :url => add_course_student_path(student) %></td>
+						<td><%= link_to_remote student.full_name, 
+											:url => { :action => 'add_student', :student_id => student.id },
+											:loading => "Element.show('spinner')",
+											:complete => "Element.hide('spinner')"
+								%></td>
 					</tr>
 				<% end %>
 			<% end %>

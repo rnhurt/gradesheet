@@ -22,7 +22,7 @@ module ApplicationHelper
 		end
 		
 		## Add in the spinner to the end of the list
-#		content << 	'<div id="busy" class="spinner"><img src="/images/spinner.gif" alt=""></div>'
+		content << 	"<div id='spinner' class='spinner' style='display: none;'><img src='/images/spinner.gif' alt=''></div>"
 
 		## Close up the tags
 		content_tag(:div, content_tag(:ul, content, :id => 'menu'), :class => 'menucontainer')
@@ -32,7 +32,7 @@ module ApplicationHelper
 	## Show the FLASH div
 	def show_flash
 		result = ''
-		flash.each {|type, message| result << content_tag(:div, message, :class => "flash " + type.to_s) } 
+		flash.each {|type, message| result << content_tag(:div, message, :id => 'notice', :class => 'flash ' + type.to_s) } 
 		return result
 	end
 

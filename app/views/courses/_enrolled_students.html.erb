@@ -1,0 +1,27 @@
+<% students = @course.students.sort_by &:last_name %>
+
+	<table class='master'>
+		<thead>
+			<th>Enrolled Students (<%= students.length %>)</th>
+			<th></th>
+		</thead>
+		<tbody>
+			<% if students.blank? %>
+				<tr><td>No Students</td></tr>
+			<% else %>
+				<% for student in students %>
+					<tr class="<%= cycle ('odd', 'even') %>" id="<%= student.id %>">
+						<%= content_tag :td, student.full_name %>
+						<td><%= link_to_remote 'X', 
+												:url => { :action => 'remove_student', :student_id => student.id }, 
+												:method => :delete,
+												:loading => "Element.show('spinner')",
+												:complete => "Element.hide('spinner')"
+								 %></td>
+					</tr>
+				<% end %>
+			<% end %>
+		</tbody>
+	</table>
+	
+

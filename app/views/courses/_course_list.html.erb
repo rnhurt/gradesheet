@@ -1,6 +1,6 @@
 <table id='courses' class='master'>
   <thead>
-    <th>Name</th>
+    <th>Name <%= "(#{@courses.length})" unless @courses.blank? %></th>
     <th>Term</th>
   </thead>
 	<tbody>

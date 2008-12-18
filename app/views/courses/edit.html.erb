@@ -31,7 +31,7 @@
 
 
 
-<div style='float: right; width: 80%;'>
+<div class='flat' style='float: right; width: 80%;'>
 
 <% form_for(@course) do |f| %>
 	<%= content_tag( :h1, "#{@course.name}" ) %>
@@ -57,7 +57,6 @@
 	<%= f.submit "Save" %>
 
 <% end %>
-
 
 <div id='enrolled_students'>
 	<%= render :partial => 'enrolled_students' %>

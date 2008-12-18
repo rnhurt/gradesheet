@@ -78,21 +78,4 @@ class Users::StudentsController < ApplicationController
 			end
     end
   end
-  
- 	## Add a student to a course  
-  def add
-		@course = Course.find(params[:id])
-    @course.students << Student.find(params[:student_id])
-    @course.save
-   	render :action => "modify"
-  end
-
-  ## Remove a student from a course
-  def remove
- 		@course = Course.find(params[:id])
-    @course.students -= [Student.find(params[:student_id])]
-    @course.save
-    render :action => "modify"
-  end
-
 end

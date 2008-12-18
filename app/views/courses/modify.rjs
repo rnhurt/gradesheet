@@ -1,0 +1,6 @@
+page.replace_html 'enrolled_students', { :partial => 'enrolled_students' }
+
+## Only highlight a student when we add it, not when we remove it
+page.visual_effect :highlight, @student.id.to_s, :duration => 3 if @add
+
+

@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :sites
   map.resources :assignments
   map.resources :gradations
-#  map.resources :courses
+  map.resources :courses, :member => { :add_student => :post, :remove_student => :delete }
 	
   map.root :controller => "dashboard"
 end
