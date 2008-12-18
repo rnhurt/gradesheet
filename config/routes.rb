@@ -5,13 +5,16 @@ ActionController::Routing::Routes.draw do |map|
 	  u.resources :teacher_assistants, :name_prefix => nil
 	end
 
+#  map.resources :student do |c|
+#		  c.resources :courses, :member => { :add => :post, :remove => :delete }
+#  end
+	
 	map.resources	:users
   map.resources :dashboard
   map.resources :sites
   map.resources :assignments
   map.resources :gradations
-#  map.resources :enrollments
-  map.resources :courses
+#  map.resources :courses
 	
   map.root :controller => "dashboard"
 end

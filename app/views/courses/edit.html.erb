@@ -53,14 +53,14 @@
 
 	<label>Attributes</label>
 	<%= f.text_field :course_att_id %>
-
+	
 	<%= f.submit "Save" %>
 
 <% end %>
 
 
-<%= render :partial => 'enrolled_students' %>
-<div id='test'>
+<div id='enrolled_students'>
+	<%= render :partial => 'enrolled_students' %>
 </div>
 
 </div>
