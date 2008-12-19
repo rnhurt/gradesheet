@@ -1,45 +1,64 @@
-* {
-	margin: 0px;
-}
-
+/* <!-- */
+/* General styles */
 body {
-	font-family: verdana,arial,helvetica,sans-serif;
-	font-size: 13px;
-	line-height: 18px;
-  min-width: 630px;      /* 2x (LC fullwidth +
-                            CC padding) + RC fullwidth */
-}
-#container {
-  padding-left: 200px;   /* LC fullwidth */
-  padding-right: 40px;  /* RC fullwidth + CC padding */
-}
-#container .column {
-  position: relative;
-  float: left;
-}
-#center {
-  padding: 0px 16px;    /* CC padding */
-  width: 100%;
-}
-#left {
-  width: 180px;          /* LC width */
-  padding: 0 10px;       /* LC padding */
-  right: 240px;          /* LC fullwidth + CC padding */
-  margin-left: -98%;
-}
-#right {
-  width: 0px;          /* RC width */
-  padding: 0 10px;       /* RC padding */
-  margin-right: -190px;  /* RC fullwidth + CC padding */
-}
-#footer {
-  clear: both;
+  margin:0;
+  padding:0;
+  border:0;			/* This removes the border around the viewport in old versions of IE */
+  width:100%;
+  background:#fff;
+  min-width:600px;    /* Minimum width of layout - remove line if not required */
+                      /* The min-width property does not work in old versions of Internet Explorer */
+  font-size:90%;
 }
 
-/*** IE Fix ***/
-* html #left {
-  left: 150px;           /* RC fullwidth */
+/* 'widths' sub menu */
+#layoutdims {
+  clear:both;
+  background:#eee;
+  border-top:4px solid #000;
+  margin:0;
+  padding:6px 15px !important;
+  text-align:right;
 }
+/* column container */
+.colmask {
+  position:relative;		/* This fixes the IE7 overflow hidden bug and stops the layout jumping out of place */
+  clear:both;
+  float:left;
+  width:100%;			/* width of whole page */
+  overflow:hidden;	/* This chops off any overhanging divs */
+}
+/* 2 column left menu settings */
+.leftmenu {
+  background:#DDD;
+}
+.leftmenu .colright {
+  float:left;
+  width:200%;
+  position:relative;
+  left:200px;
+  background:#CCC;
+}
+.leftmenu .col1wrap {
+  float:right;
+  width:50%;
+  position:relative;
+  right:200px;
+  padding-bottom:1em;
+}
+.leftmenu .col1 {
+	margin:0 15px 0 215px;
+	position:relative;
+	right:100%;
+	overflow:hidden;
+}
+.leftmenu .col2 {
+	float:left;
+	width:170px;
+	position:relative;
+	right:185px;
+}
+
 #header {
 	background-color: #003366;
 	color: white;
@@ -48,7 +67,7 @@ body {
 	font-size: 1.8em;
 	position: absolute;
 	top: 10px;
-	left: 125px;
+  left: 125px;
 }
 #header .login {
 	float: right;
@@ -82,16 +101,13 @@ body {
 	font-size: 0.8em;
 	clear: both;
 }
-.clear {
-	clear: both;
-}
 
 .paginate {
 	text-align: center;
 }
 
 h2 {
-	color:#666; 
+	color:#666;
 	margin: 7px 0px 5px;
 	font-size:16px;
 }

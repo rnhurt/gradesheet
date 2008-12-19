@@ -19,7 +19,7 @@ class Course < ActiveRecord::Base
 
 	## Find all courses belonging to a particular teacher
 	def self.find_by_owner(*args)
-		with_scope :find => { :conditions => { :teacher_id => args[1].id }, :order => "name ASC" } do
+		with_scope :find => { :conditions => { :teacher_id => args[1].id }} do
 			find(*args)
 		end
 	end

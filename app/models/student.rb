@@ -11,7 +11,7 @@ class Student < User
 
 	## Find all students in a particular class
 	def self.find_by_class(*args)
-		with_scope :find => { :conditions => { :class_of => args[1] }, :order => "name ASC" } do
+		with_scope :find => { :conditions => { :class_of => args[1] }, :order => "user.name ASC" } do
 			find(*args)
 		end
 	end
