@@ -1,4 +1,6 @@
-/* <!-- */
+/* The 'Left Menu' 2 column Liquid Layout																	*/
+/* http://matthewjamestaylor.com/blog/ultimate-2-column-left-menu-ems.htm */
+
 /* General styles */
 body {
   margin:0;
@@ -59,6 +61,7 @@ body {
 	right:185px;
 }
 
+/*** Local layout ***/
 #header {
 	background-color: #003366;
 	color: white;
@@ -112,7 +115,7 @@ h2 {
 	font-size:16px;
 }
 
-/*** Scaffold ***/
+/*** Scaffold defaults ***/
 .fieldWithErrors {
 	padding: 2px;
 	background-color: red;
