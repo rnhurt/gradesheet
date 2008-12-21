@@ -18,7 +18,7 @@ class AssignmentsController < ApplicationController
 													:conditions => { :course_id => params[:id]})
 
 	  respond_to do |format|
-	    format.html { redirect_to assignments_url } 					# Dont show an individual assignment
+	    format.html #{ redirect_to assignments_url } 					# Dont show an individual assignment
 	    format.js		{ render :partial => "assignment_list" }	# Render the list of assignments for a course
 	    format.xml  { render :xml => @assignment }						# default
 	  end

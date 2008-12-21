@@ -1,24 +1,6 @@
-<% content_for :left do -%>
-<table class="list">
-	<thead>
-		<th>Course</th>
-		<th>Term</th>
-	</thead>
-	<tbody>
-		<% for course in @courses -%>
-		<tr class="<%= cycle('odd', 'even') %>" onclick="<%= 
-					remote_function(
-								:update => 'assignments_list', 
-								:url => assignment_url(course), :action => :show, :method => :get,
-								:loading => "Element.show('busy')",
-								:complete => "Element.hide('busy')") %>" />
-			<%= content_tag :td, course.name %>
-			<%= content_tag :td, course.term.name %>			
-		</tr>
-		<% end -%>
-	</tbody>
-</table>
-<% end -%>
+<% content_for :left do %>
+	<%= render :partial => 'course_list' %>
+<% end %>
 
 <div id="assignments_list">
 	<%= render :partial => "assignment_list" %>
@@ -32,8 +14,3 @@
 	<%#= link_to 'Show', assignment %>
 	<%#= link_to 'Edit', edit_assignment_path(assignment) %>
 	<%#= link_to 'Destroy', assignment, :confirm => 'Are you sure?', :method => :delete %>
-
-<br />
-
-
-
