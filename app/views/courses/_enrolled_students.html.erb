@@ -3,7 +3,6 @@
 	<table class='master'>
 		<thead>
 			<th>Enrolled Students (<%= students.length %>)</th>
-			<th></th>
 		</thead>
 		<tbody>
 			<% if students.blank? %>
@@ -11,13 +10,16 @@
 			<% else %>
 				<% for student in students %>
 					<tr class="<%= cycle ('odd', 'even') %>" id="<%= student.id %>">
-						<%= content_tag :td, student.full_name %>
-						<td><%= link_to_remote 'X', 
-												:url => { :action => 'remove_student', :student_id => student.id }, 
-												:method => :delete,
-												:loading => "Element.show('spinner')",
-												:complete => "Element.hide('spinner')"
-								 %></td>
+						<td>
+							<% form_remote_tag :url => { :action => 'remove_student', :student_id => student.id },
+										:method => :delete,
+										:confirm => 'Are you sure you want to remove this student from this course?',
+										:loading => "Element.show('spinner')",	
+										:complete => "Element.hide('spinner')" do %>
+								<%= submit_tag 'X' %>
+								&nbsp;&nbsp;<%= h student.full_name %>
+							<% end %>
+						</td>
 					</tr>
 				<% end %>
 			<% end %>

@@ -39,7 +39,7 @@ body {
   width:200%;
   position:relative;
   left:200px;
-  background:#CCC;
+  background:#FFF;
 }
 .leftmenu .col1wrap {
   float:right;
@@ -100,6 +100,7 @@ body {
 }
 #footer {
 	margin: auto;
+	padding-top: 20px;
 	text-align: center;
 	font-size: 0.8em;
 	clear: both;
@@ -113,6 +114,9 @@ h2 {
 	color:#666;
 	margin: 7px 0px 5px;
 	font-size:16px;
+}
+p {
+	margin-top: 1px;
 }
 
 /*** Scaffold defaults ***/

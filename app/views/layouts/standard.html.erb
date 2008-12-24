@@ -4,7 +4,7 @@
 <html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
 <head>
   <meta http-equiv='content-type' content='text/html;charset=UTF-8' />
-  <title>Gradesheet<%#= controller.action_name.capitalize + 'ing' %></title>
+  <title>Gradesheet - <%= controller.controller_name.humanize %></title>
   <%= stylesheet_link_tag 'layout' %>
   <%= stylesheet_link_tag 'menu' %>
   <%= stylesheet_link_tag 'forms' %>
@@ -15,7 +15,7 @@
 
 
 <div id='header'>
-	<div class='login'><a href='/login'>Login</a></div>
+	<div class='login'>Welcome <a href='/login'>Kim Hurt</a></div>
 	<div class='tagline'>GradeSheet</div>
 	<img src='/images/rails.png' alt='Logo'/>
 

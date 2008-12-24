@@ -1,19 +1,9 @@
 a{
 	color:#0033CC;
 }
-h1, h2, p, form{
-  border:0px; 
-  margin:0px; 
-  padding:0px;
-}
 input{  
 	font-family:"Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif; 
   font-size:12px;
-}
-h2 {
-	color:#666666; 
-	margin-bottom:20px;
-	font-size:16px;
 }
 div.main{
 	margin:30px auto; 
