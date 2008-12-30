@@ -8,8 +8,8 @@ module ApplicationHelper
 
 	## Generate the MENU html
 	def menu_builder(page_id)
-		tabs = [ 'Home:dashboard', 'People:users', 'Courses:courses', 
-						'Assignments:assignments' ]
+		tabs = [ 'Home:dashboard', 'Users:users', 'Courses:courses', 
+						'Assignments:assignments', 'Grades:gradations' ]
 
 		content = ""
 		tabs.each do |tab|

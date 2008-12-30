@@ -1,9 +1,14 @@
 <% content_for :left do %>
-<p><script type="text/javascript" src="http://cdn.widgetserver.com/syndication/subscriber/InsertWidget.js"></script><script>if (WIDGETBOX) WIDGETBOX.renderWidget('d415ebdc-7cd4-4d7a-9d40-1722ab7c9b3e');</script></p>
 
-<p><script type="text/javascript" src="http://cdn.widgetserver.com/syndication/subscriber/InsertWidget.js"></script><script>if (WIDGETBOX) WIDGETBOX.renderWidget('1d11ea8b-a3a4-47e6-b389-0c814a50c898');</script></p>
+<% new_years = Date.new(Date.today.year + 1, 1, 1) - Date.today %>
 
-<p><script type="text/javascript" src="http://cdn.widgetserver.com/syndication/subscriber/InsertWidget.js"></script><script>if (WIDGETBOX) WIDGETBOX.renderWidget('0935f110-a1f6-40c4-8643-50eb0535ed23');</script></p>
+<h2>How much time do we have left?</h2>
+<ul>
+	<%= content_tag :li, (new_years).to_s + (new_years == 1 ? ' day' : ' days') + ' until the New Year.' %>
+	<%= content_tag :li, '21 days until the end of this grading period.' %>
+	<%= content_tag :li, '91 days until the end of the school year.' %>
+</ul>
+
 <% end %>
 
 <h2>Welcome to the Gradesheet program.</h2>
