@@ -43,7 +43,7 @@
 					remote_function(
 						:update => 'student_list', 
 						:url => { :action => :show }, 
-						:with => "'value=' + value + '||Class Of ' + value",
+						:with => "'value=' + value + '||Class Of ' + value + '||C'",
 						:method => :get) %>
 	</form>
 	<form id='homeroom_form'>
@@ -52,7 +52,7 @@
 					remote_function(
 						:update => 'student_list', 
 						:url => { :action => :show }, 
-						:with => "'value=' + value + '||' + options[selectedIndex].text",
+						:with => "'value=' + value + '||' + options[selectedIndex].text + '||H'",
 						:method => :get) } %>
 	</form>
 

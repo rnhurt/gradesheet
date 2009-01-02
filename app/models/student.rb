@@ -6,14 +6,16 @@ class Student < User
 	to_year = from_year + 10
 	validates_inclusion_of :class_of, :in => from_year..to_year, 
 												:message => "must be in the range of #{from_year} to #{to_year}"
+												
+#	named_scope	:course_id, :joins => :enrollments, :conditions => { :id => :student_id }
 
-
-
-	## Find all students in a particular class
-	def self.find_by_class(*args)
-		with_scope :find => { :conditions => { :class_of => args[1] }, :order => "user.name ASC" } do
-			find(*args)
-		end
-	end
+	named_scope	:courses, :joins => :courses
+	
+#	## Find all students enrolled in a particular course	
+#	def self.find_by_course(*args)
+#		with_scope :find => { :conditions => { :course_id => args[0] } } do
+#			find(*args)
+#		end
+#	end	
 
 end

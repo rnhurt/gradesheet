@@ -113,13 +113,14 @@ tbody tr:hover {
 	background:#fafafa
 }
 tbody .help {
-	background-color: #009900;
+	background-color: #006600;
 	color: #EEE;
 	font-weight: bold;
 	font-variant: small-caps;
 	text-align: center;
+	cursor: default;
 }
 tbody .help:hover {
-	background-color: #006600;
+	background-color: #009900;
 }
 

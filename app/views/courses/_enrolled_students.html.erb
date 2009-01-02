@@ -1,4 +1,6 @@
+<%#= debug @course %>
 <% if @course then students = @course.students.sort_by &:last_name end %>
+<% students ||= [] %>
 
 	<table class='master'>
 		<thead>
@@ -6,8 +8,7 @@
 		</thead>
 		<tbody>
 			<% if students.blank? %>
-				<tr><td>No Students.</td></tr>
-				<tr class='help'><td>Add students to this course from the list of students at the right --></td></tr>
+				<tr class='help'><td>Add students to this course from the list of students &nbsp;--></td></tr>
 			<% else %>
 				<% for student in students %>
 					<tr class="<%= cycle ('odd', 'even') %>" id="<%= student.id %>">

@@ -14,7 +14,20 @@ class CoursesController < ApplicationController
 		respond_to do |format|
 			format.html	{ redirect_to :action => :index }
 			format.js {
-				@students = Student.find_all_by_class_of(params[:value].split('||')[0])
+				# The format of the params[value] is studentid||header name||type.  This
+				# allows us to load the proper list of students and label the table
+				# header with something appropriate.  It is a hack and I'm sure there
+				# is a better way to do this.
+				value = params[:value].split('||')
+				if value.pop == 'H' then
+#debugger
+					# Find students by Home Room
+#					@students = Student.find_by_course(value[0])
+					@students = Student.courses
+				else
+					# Find students by Class Of
+					@students = Student.find_all_by_class_of(value[0])
+				end
 				render :partial => "student_list"
 			}
 		end
