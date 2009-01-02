@@ -47,7 +47,7 @@
 						:method => :get) %>
 	</form>
 	<form id='homeroom_form'>
-		<%= collection_select :homeroom, :name, @homerooms, :id, :name, {:include_blank => :true,}, {
+		<%= collection_select :homeroom, :name, @homerooms, :id, :name, {:include_blank => 'Home Room'}, {
 				:onchange => 
 					remote_function(
 						:update => 'student_list', 
