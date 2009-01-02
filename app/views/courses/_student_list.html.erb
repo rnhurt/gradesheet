@@ -1,12 +1,12 @@
 <% params[:value] ||= '||Students'  %>
 
-	<table class='master list' id='students'>
+	<table class='master' id='students'>
 		<thead>
 			<th><%= params[:value].split('||')[1] %> <%= "(#{@students.length})" unless @students.blank? %></th>
 		</thead>
 		<tbody>
 			<% if @students.blank? %>
-				<tr><td>Choose a "Homeroom" or a "Class Of Year" above.</td></tr>
+				<tr class='help'><td>Choose a "Homeroom" or a "Class Of Year" above.</td></tr>
 			<% else %>
 				<% students = @students.sort_by &:last_name %>
 				<% for student in students %>

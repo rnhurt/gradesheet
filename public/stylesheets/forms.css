@@ -97,3 +97,18 @@ div.box label span{
 	background: transparent url(/images/bullet_red.png) no-repeat scroll right center;
 }
 
+.select_form {
+	float: right; 
+	width: 35%; 
+	padding-left: 10px;
+}
+.select_form select {
+	width: 85%;
+	margin: auto;
+	display: block;
+}
+.main_form{
+	width: 60%; 
+	float: left;
+}
+

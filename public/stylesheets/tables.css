@@ -99,7 +99,6 @@ tbody th {
 tbody th a {
 	color:#333;
 }
-
 tbody .odd {
 	background-color: #E4E8F1;
 }
@@ -112,6 +111,15 @@ tbody .highlight {
 }
 tbody tr:hover {
 	background:#fafafa
-
+}
+tbody .help {
+	background-color: #009900;
+	color: #EEE;
+	font-weight: bold;
+	font-variant: small-caps;
+	text-align: center;
+}
+tbody .help:hover {
+	background-color: #006600;
 }
 

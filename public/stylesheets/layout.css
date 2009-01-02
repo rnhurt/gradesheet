@@ -105,11 +105,9 @@ body {
 	font-size: 0.8em;
 	clear: both;
 }
-
 .paginate {
 	text-align: center;
 }
-
 h2 {
 	color:#666;
 	margin: 7px 0px 5px;
@@ -118,7 +116,6 @@ h2 {
 p {
 	margin-top: 1px;
 }
-
 /*** Scaffold defaults ***/
 .fieldWithErrors {
 	padding: 2px;
