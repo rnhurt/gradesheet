@@ -9,6 +9,7 @@ class Student < User
 												
 #	named_scope	:course_id, :joins => :enrollments, :conditions => { :id => :student_id }
 
+	# FIXME
 	named_scope	:courses, :joins => :courses
 	
 #	## Find all students enrolled in a particular course	

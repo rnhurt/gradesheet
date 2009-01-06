@@ -20,7 +20,7 @@ class CoursesController < ApplicationController
 				# is a better way to do this.
 				value = params[:value].split('||')
 				if value.pop == 'H' then
-#debugger
+					# FIXME
 					# Find students by Home Room
 #					@students = Student.find_by_course(value[0])
 					@students = Student.courses
