@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
 
 	def show
 		respond_to do |format|
-			format.html	{ redirect_to :action => :index }
+			format.html	{ redirect_to :action => :index }	# Don't show an individual course
 			format.js {
 				# The format of the params[value] is studentid||header name||type.  This
 				# allows us to load the proper list of students and label the table

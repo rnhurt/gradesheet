@@ -8,26 +8,26 @@ class AssignmentsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @assignments }
     end
   end
 
 
   def show
-		@assignments = Assignment.find(:all, :include => [:course],
-													:conditions => { :course_id => params[:id]})
+  	@course	= Course.find(:course_id)
+		@assignments = Assignment.find(:all, :include => [:course], :conditions => { :course_id => params[:id]})
 
 	  respond_to do |format|
-	    format.html #{ redirect_to assignments_url } 					# Dont show an individual assignment
+			format.html	#{ redirect_to :action => :index }					# Don't show an individual assignment
 	    format.js		{ render :partial => "assignment_list" }	# Render the list of assignments for a course
-	    format.xml  { render :xml => @assignment }						# default
 	  end
   end
 
 
   def new
     @assignment = Assignment.new
-    @course = params[:id]
+    @courses = Course.find_by_owner(:all, current_user, :include => [:term])
+    @course = Course.find(params[:course_id])
+#    @course = params[:id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,8 +37,13 @@ class AssignmentsController < ApplicationController
 
 
   def edit
-    @assignment = Assignment.find(params[:id])
-    @courses = Course.find_by_owner(:all, current_user)
+    @course = Course.find(params[:id])
+    @courses = Course.find_by_owner(:all, current_user, :include => [:term])
+    @assignments = @course.assignments
+
+    respond_to do |format|
+    	format.html
+	  end
   end
 
 
@@ -47,8 +52,9 @@ class AssignmentsController < ApplicationController
 
     respond_to do |format|
       if @assignment.save
-        flash[:notice] = 'Assignment was successfully created.'
-        format.html { redirect_to(assignments_url) }
+        flash[:notice] = 'Assignment #{@assignment.name} was created successfully.'
+#        format.html { redirect_to(assignments_url) }
+        format.html { redirect_to :action => :edit, :id => @assignment.course_id }
         format.xml  { render :xml => @assignment, :status => :created, :location => @assignment }
       else
         format.html { render :action => "new" }
@@ -57,14 +63,14 @@ class AssignmentsController < ApplicationController
     end
   end
 
-  # PUT /assignments/1
-  # PUT /assignments/1.xml
+=begin
+	# FIXME - I dont think this is used at all.  Please remove.
   def update
     @assignment = Assignment.find(params[:id])
 
     respond_to do |format|
       if @assignment.update_attributes(params[:assignment])
-        flash[:notice] = 'Assignment was successfully updated.'
+        flash[:notice] = 'Assignment #{@assignment.name} was updated successfully.'
         format.html { redirect_to(assignments_url) }
         format.xml  { head :ok }
       else
@@ -73,9 +79,8 @@ class AssignmentsController < ApplicationController
       end
     end
   end
+=end
 
-  # DELETE /assignments/1
-  # DELETE /assignments/1.xml
   def destroy
     @assignment = Assignment.find(params[:id])
     @assignment.destroy
@@ -85,4 +90,5 @@ class AssignmentsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
 end

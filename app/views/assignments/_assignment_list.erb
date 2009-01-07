@@ -1,29 +1,19 @@
-<table class="master">
-	<caption><%= Course.find(params[:id]).name if params[:id] %></caption>
+<table class='master'>
   <thead>
     <tr>
-      <th><%= link_to '+', new_assignment_path %></th>
-      <th>Name</th>
+      <th><%= button_to( '+', new_assignment_path( :course_id => @course.id ), :method => :get ) %></th>
+      <th>Assignment Name</th>
       <th>Possible points</th>
       <th>Due Date</th>
     </tr>
   </thead>
-  <tfoot>
-    <tr>
-      <th><%= link_to '+', new_assignment_path, :class => 'positive' %></th>
-      <th>Name</th>
-      <th>Possible points</th>
-      <th>Due Date</th>
-    </tr>
-  </tfoot>
 	<tbody>
 	<% if @assignments.blank? %>
-		<tr><td colspan="4">No Assignments Found</td></tr>
+		<tr><td colspan='4'>No Assignments Found</td></tr>
 	<% else %>
 		<% for assignment in @assignments %>
 			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for( :action => :edit, :id => assignment.id ) %>'"/>
-				<%= content_tag :td  %>
-				<%= content_tag :td, assignment.name %>
+				<%= content_tag :td, assignment.name, :colspan => '2' %>
 				<%= content_tag :td, assignment.possible_points %>
 				<%= content_tag :td, assignment.due_date_formated %>
 			</tr>

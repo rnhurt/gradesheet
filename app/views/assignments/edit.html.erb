@@ -1,26 +1,28 @@
+<% content_for :left do %>
+	<%= render :partial => 'courses/course_list' %>
+<% end %>
+
 <%= error_messages_for :assignment, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div class="entryform">
-	<% form_for(@assignment) do |f| %>
-			<%= content_tag( :h1, "#{@assignment.name}" ) %>
-			<p>Change the information and hit SAVE</p>
+<div>
+	<%# form_for(@assignment) do |f| %>
+			<%#= content_tag( :h1, "#{@assignment.name}" ) %>
 		
-			<label>Name</label>
-			<%= f.text_field :name %>
+			<%#= f.text_field :name %>
 
-			<label>Course</label>
-			<%= collection_select :assignment, :course_id, @courses, :id, :name %>
+			<%#= collection_select :assignment, :course_id, @courses, :id, :name %>
 
-			<label>Possible Points</label>
-			<%= f.text_field :possible_points %>
+			<%#= f.text_field :possible_points %>
 			
-			<label>Due Date</label>
-			<%= f.text_field :due_date_formated %>
+			<%#= f.text_field :due_date_formated %>
 
-			<div class="buttons">
-			<%= submit_tag 'Save', :class=>"positive" %><%= link_to 'Cancel', assignments_path, :class => "positive" %>		
-			</div>
-	<% end %>
+			<%#= submit_tag 'Save', :class=>"positive" %>
+			<%#= link_to 'Cancel', assignments_path, :class => "positive" %>		
+	<%# end %>
 </div>
 
-<%#= debug session %>
+<div id='assignment_list' class='main_form'>
+	<%= render :partial => 'assignment_list' %>
+</div>
+
+<%#= debug @assignments %>

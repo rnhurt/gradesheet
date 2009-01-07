@@ -5,13 +5,9 @@
   </thead>
 	<tbody>
 		<% for course in @courses %>
-		<tr class="<%= cycle('odd', 'even') + (current_page?(:id => course) ? ' current' : '') %>"
-				onclick="<%= remote_function(
-								:update => 'assignments_list', 
-								:url => assignment_url(course), :action => :show, :method => :get,
-								:loading => "Element.show('spinner')",
-								:complete => "Element.hide('spinner')") %>" />
-				<%= content_tag :td, link_to( course.name, :action => :show, :id => course.id ) %>
+			<tr class="<%= cycle('odd', 'even') + (current_page?(:id => course) ? ' current' : '') %>" 
+					onclick="location.href='<%= url_for( :action => :show, :id => course.id ) %>'"/>
+				<%= content_tag :td, link_to( course.name, :action => :edit, :id => course.id ) %>
 				<%= content_tag :td, course.term.name %>
 			</tr>
 		<% end %>
