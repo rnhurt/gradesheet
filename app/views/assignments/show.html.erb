@@ -1,21 +1,28 @@
-<h1>YOU SHOULDN'T SEE THIS</h1>
+<% content_for :left do %>
+	<%= render :partial => 'courses/course_list' %>
+<% end %>
 
-<p>
-  <b>Name:</b>
-  <%#=h @assignment.name %>
-</p>
+<%= error_messages_for :assignment, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<p>
-  <b>Course:</b>
-  <%#=h @assignment.course_id %>
-</p>
+<div>
+	<%# form_for(@assignment) do |f| %>
+			<%#= content_tag( :h1, "#{@assignment.name}" ) %>
+		
+			<%#= f.text_field :name %>
 
-<p>
-  <b>Possible points:</b>
-  <%#=h @assignment.possible_points %>
-</p>
+			<%#= collection_select :assignment, :course_id, @courses, :id, :name %>
 
-<div class="buttons">
-	<%= link_to 'Edit', edit_assignment_path(@assignment), :class => :positive %>
-	<%= link_to 'Back', assignments_path %>
+			<%#= f.text_field :possible_points %>
+			
+			<%#= f.text_field :due_date_formated %>
+
+			<%#= submit_tag 'Save', :class=>"positive" %>
+			<%#= link_to 'Cancel', assignments_path, :class => "positive" %>		
+	<%# end %>
 </div>
+
+<div id='assignment_list'>
+	<%= render :partial => 'assignment_list' %>
+</div>
+
+<%#= debug @assignments %>

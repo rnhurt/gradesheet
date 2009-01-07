@@ -5,14 +5,18 @@ class CoursesController < ApplicationController
     @courses = Course.find_by_owner(:all, current_user, :include => [:term])
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @courses }
+      format.html
     end
   end
 
 	def show
+		# Displays the students enrolled in each course.
+    @course = Course.find(params[:id])
+    @courses = Course.find_by_owner(:all, current_user, :include => [:term])
+    @homerooms = Course.find_all_by_course_type_id(CourseType.find_all_by_name('Home Room'))
+
 		respond_to do |format|
-			format.html	{ redirect_to :action => :index }	# Don't show an individual course
+			format.html
 			format.js {
 				# The format of the params[value] is studentid||header name||type.  This
 				# allows us to load the proper list of students and label the table
@@ -52,7 +56,6 @@ class CoursesController < ApplicationController
     
     respond_to do |format|
     	format.html
-#	    format.js { render :partial => "course_edit" }
 	  end
   end
 
@@ -77,7 +80,6 @@ class CoursesController < ApplicationController
 
 
   def update
- debugger
     @course = Course.find(params[:id])
 
     respond_to do |format|
@@ -102,6 +104,7 @@ class CoursesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
   
  	## Add a student to a course  
   def add_student

@@ -2,27 +2,31 @@
 	<%= render :partial => 'courses/course_list' %>
 <% end %>
 
+<%# @assignment.course_id = @course %>
 <%= error_messages_for :assignment, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div>
-	<%# form_for(@assignment) do |f| %>
-			<%#= content_tag( :h1, "#{@assignment.name}" ) %>
+<div class='box'>
+	<% form_for(@assignment) do |f| %>
+			<div class='spacer'>
+				<%= content_tag( :h1, "Editing: #{@assignment.name}" ) %>
+			</div>
 		
-			<%#= f.text_field :name %>
+			<label><span>Name</span>
+				<%= f.text_field :name %>
+			</label>
 
-			<%#= collection_select :assignment, :course_id, @courses, :id, :name %>
+			<label><span>Possible Points</span>
+		    <%= f.text_field :possible_points %>
+			</label>
+		
+			<label><span>Due Date</span>
+				<%= f.date_select :due_date %>
+			</label>
 
-			<%#= f.text_field :possible_points %>
-			
-			<%#= f.text_field :due_date_formated %>
-
-			<%#= submit_tag 'Save', :class=>"positive" %>
-			<%#= link_to 'Cancel', assignments_path, :class => "positive" %>		
-	<%# end %>
+			<div class='spacer'>
+				<%= submit_tag 'Save', :class=>"positive" %>
+				<%= link_to 'Cancel', assignment_path(@course.id), :class => "standard" %>
+			</div>
+	<% end %>
 </div>
 
-<div id='assignment_list' class='main_form'>
-	<%= render :partial => 'assignment_list' %>
-</div>
-
-<%#= debug @assignments %>

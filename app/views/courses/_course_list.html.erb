@@ -6,8 +6,8 @@
 	<tbody>
 		<% for course in @courses %>
 			<tr class="<%= cycle('odd', 'even') + (current_page?(:id => course) ? ' current' : '') %>" 
-					onclick="location.href='<%= url_for( :action => :edit, :id => course.id ) %>'"/>
-				<%= content_tag :td, link_to( course.name, :action => :edit, :id => course.id ) %>
+					onclick="location.href='<%= url_for( :action => :show, :id => course.id ) %>'"/>
+				<%= content_tag :td, link_to( course.name, :action => :show, :id => course.id ) %>
 				<%= content_tag :td, course.term.name %>
 			</tr>
 		<% end %>

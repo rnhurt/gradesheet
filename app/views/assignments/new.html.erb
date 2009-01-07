@@ -2,7 +2,6 @@
 	<%= render :partial => 'courses/course_list' %>
 <% end %>
 
-<%# @assignment.course_id = @course %>
 <%= error_messages_for :assignment, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
 <div class='box'>
@@ -26,7 +25,7 @@
 
 			<div class='spacer'>
 				<%= submit_tag 'Save', :class=>"positive" %>
-				<%= link_to 'Cancel', edit_assignment_path(@course.id), :class => "standard" %>
+				<%= link_to 'Cancel', assignment_path(@course), :class => "standard" %>
 			</div>
 	<% end %>
 </div>
