@@ -70,7 +70,7 @@ div.box label span{
   border:1px outset #3b6e22;
   height:24px; 
   line-height:24px;
-  color:#FFFFFF;
+  color: #111;
   font-size:12px;
   margin-right:10px;
   display:inline-block;
@@ -91,6 +91,10 @@ div.box label span{
   text-decoration:none;
   width: 100px;
   text-align: center;
+}
+.mini {
+	width: auto;
+	height: auto;
 }
 .required {
 /*	border-right: solid 2px red;*/

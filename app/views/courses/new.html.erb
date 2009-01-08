@@ -35,7 +35,8 @@
 			</label>
 
 			<div class="spacer">
-				<%= f.submit 'Create', :class=>"positive" %><%#= link_to 'Cancel', user_path, :class => "standard" %>
+				<%= f.submit 'Create', :class=> 'positive' %>
+				<%= link_to 'Cancel', {:action=> 'index', :controller=> 'courses'}, :class => 'standard' %>
 			</div>
 	<% end %>
 </div>
