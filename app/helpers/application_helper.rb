@@ -29,13 +29,15 @@ module ApplicationHelper
 		tabs.each do |tab|
 			t = tab.split(':')
 			content << if page_id == t[1]
-				content_tag('li', content_tag('a', t[0], :href => nil, :class => 'current' )) + " "
+				## This is the current page, so give it a unique CSS class
+				content_tag('li', content_tag('a', t[0], :href => "/#{t[1]}", :class => 'current' )) + " "
 			else
+				## This is not the current page.
 				content_tag('li', content_tag('a', t[0], :href => "/#{t[1]}" )) + " "
 			end
 		end
 		
-		## Add in the spinner to the end of the list
+		## Add in the spinner to the end of the menu
 		content << 	"<div id='spinner' class='spinner' style='display: none;'><img src='/images/spinner.gif' alt=''></div>"
 
 		## Close up the tags
