@@ -2,7 +2,7 @@ class CoursesController < ApplicationController
 	layout "standard"
 	
   def index
-    @courses = Course.find_by_owner(:all, current_user, :include => [:term])
+    @courses = Course.find_by_teacher_id(:all, current_user, :include => [:term])
 
     respond_to do |format|
       format.html
@@ -12,7 +12,6 @@ class CoursesController < ApplicationController
 	def show
 		# Displays the students enrolled in each course.
     @course = Course.find(params[:id])
-    @courses = Course.find_by_owner(:all, current_user, :include => [:term])
     @homerooms = Course.find_all_by_course_type_id(CourseType.find_all_by_name('Home Room'))
 
 		respond_to do |format|
@@ -40,7 +39,6 @@ class CoursesController < ApplicationController
   def new
     @course = Course.new
     @teacher = Teacher.find(current_user)
-    @courses = Course.find_by_owner(:all, current_user)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -51,7 +49,6 @@ class CoursesController < ApplicationController
 
   def edit
     @course = Course.find(params[:id])
-    @courses = Course.find_by_owner(:all, current_user, :include => [:term])
     @homerooms = Course.find_all_by_course_type_id(CourseType.find_all_by_name('Home Room'))
     
     respond_to do |format|

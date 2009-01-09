@@ -6,6 +6,20 @@ module ApplicationHelper
   	content_tag('h2', new_title, :class => 'page_title') if new_title
   end
 
+
+	## FIXME - Get the current user.  This will probably change when we add real auth capabilities
+	def current_user
+		session[:user_id] ? @current_user ||= User.find(session[:user_id]) : nil
+	end
+
+
+	## Render the list of courses for the current user.
+	def show_course_list
+		@courses = Course.find_all_by_teacher_id(current_user, :include => [:term])
+		render :partial => 'courses/course_list', :object => @courses
+	end
+
+
 	## Generate the MENU html
 	def menu_builder(page_id)
 		tabs = [ 'Home:dashboard', 'Users:users', 'Courses:courses', 
@@ -49,6 +63,5 @@ module ApplicationHelper
 		current_year = Time.now.year
 		return (current_year - 1..current_year + 13).to_a
 	end
-
 
 end

@@ -3,7 +3,6 @@ class AssignmentsController < ApplicationController
 
 	
   def index
-    @courses = Course.find_by_owner(:all, current_user)
     @terms = Term.find(:all)
 
     respond_to do |format|
@@ -14,7 +13,6 @@ class AssignmentsController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
-    @courses = Course.find_by_owner(:all, current_user, :include => [:term])
     @assignments = @course.assignments
 
 	  respond_to do |format|
@@ -26,7 +24,6 @@ class AssignmentsController < ApplicationController
 
   def new
     @assignment = Assignment.new
-    @courses = Course.find_by_owner(:all, current_user, :include => [:term])
     @course = Course.find(params[:course_id])
 #    @assignment.course_id = params[:course_id]
 
@@ -38,7 +35,6 @@ class AssignmentsController < ApplicationController
 
   def edit
     @assignment = Assignment.find(params[:id])
-    @courses = Course.find_by_owner(:all, current_user, :include => [:term])
 	  @course = Course.find(@assignment.course_id)
 
     respond_to do |format|
@@ -50,7 +46,6 @@ class AssignmentsController < ApplicationController
   def create
     @assignment = Assignment.new(params[:assignment])
    	@course = Course.find(params[:assignment][:course_id])
-    @courses = Course.find_by_owner(:all, current_user)
     @terms = Term.find(:all)
 
     respond_to do |format|

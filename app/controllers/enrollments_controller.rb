@@ -4,7 +4,6 @@ class EnrollmentsController < ApplicationController
 	
   def index
     @enrollments = Enrollment.find(:all)
-		@courses = Course.find_by_owner(:all, current_user)
 		
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +14,6 @@ class EnrollmentsController < ApplicationController
 
   def show
     @enrollment = Enrollment.find(params[:id])
-		@courses = Course.find_by_owner(:all, current_user)
 		
     respond_to do |format|
       format.html # show.html.erb
@@ -36,7 +34,6 @@ class EnrollmentsController < ApplicationController
 
   def edit
     @enrollment = Enrollment.find(params[:id])
-		@courses = Course.find_by_owner(:all, current_user)
   end
 
 
@@ -55,8 +52,6 @@ class EnrollmentsController < ApplicationController
     end
   end
 
-  # PUT /enrollments/1
-  # PUT /enrollments/1.xml
   def update
     @enrollment = Enrollment.find(params[:id])
 
@@ -72,8 +67,7 @@ class EnrollmentsController < ApplicationController
     end
   end
 
-  # DELETE /enrollments/1
-  # DELETE /enrollments/1.xml
+
   def destroy
     @enrollment = Enrollment.find(params[:id])
     @enrollment.destroy

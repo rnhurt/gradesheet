@@ -1,95 +1,16 @@
-<table class="list">
-	<thead>
-		<th>Assigment</th>
-	</thead>
-	<tfoot>
-		<th>Assigment</th>
-	</tfoot>
-	<tbody>
-		<tr><td>Assignment 1</td></tr>
-		<tr><td>Assignment 1</td></tr>
-		<tr><td>Assignment 1</td></tr>
-		<tr><td>Assignment 1</td></tr>
-	</tbody>
-</table>
-
-<% form_for :assignment, @assignments do |f| %>
-  <p>
-    <b>Name</b><br />
-    <%#= f.text_field %>
-  </p>
-
-  <p>
-    <%= f.submit "Update" %>
-  </p>
+<% content_for :left do %>
+	<%= show_course_list %>
 <% end %>
 
-<div class="detail">
+
+<div id='details' class='course_list'>
+	<table class='master'>
+		<thead>
+			<th>Enrolled Students</th>
+		</thead>
+		<tbody>
+				<tr class='help'><td><--&nbsp; Choose a course from the list at the left</td></tr>
+		</tbody>
+	</table>
 </div>
 
-<table class="master">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Course</th>
-      <th>Possible points</th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <th>Name</th>
-      <th>Course</th>
-      <th>Possible points</th>
-    </tr>
-  </tfoot>
-
-<% for assignment in @assignments %>
-	<% link_path = url_for( :action => :edit, :escape => true ) + "/" + assignment.id.to_s %>
-	<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= link_path %>'"/>
-
-    <td><%=h assignment.name %></td>
-    <td><%=h assignment.course_id %></td>
-    <td><%=h assignment.possible_points %></td>
-  </tr>
-<% end %>
-</table>
-
-    <td><%#= link_to 'Show', assignment %></td>
-    <td><%#= link_to 'Edit', edit_assignment_path(assignment) %></td>
-    <td><%#= link_to 'Destroy', assignment, :confirm => 'Are you sure?', :method => :delete %></td>
-
-<br />
-
-
-<div class="buttons clear">
-	<%= link_to 'New assignment', new_assignment_path, :class=> "positive" %>
-</div>
-
-
-
-
-
-<h1>Listing gradations</h1>
-
-<table>
-  <tr>
-    <th>Student</th>
-    <th>Assignment</th>
-    <th>Points earned</th>
-  </tr>
-
-<% for gradation in @gradations %>
-  <tr>
-    <td><%=h gradation.student_id %></td>
-    <td><%=h gradation.assignment_id %></td>
-    <td><%=h gradation.points_earned %></td>
-    <td><%= link_to 'Show', gradation %></td>
-    <td><%= link_to 'Edit', edit_gradation_path(gradation) %></td>
-    <td><%= link_to 'Destroy', gradation, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New gradation', new_gradation_path %>
