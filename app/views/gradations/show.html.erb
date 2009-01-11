@@ -1,18 +1,40 @@
-<p>
-  <b>Student:</b>
-  <%=h @gradation.student_id %>
-</p>
-
-<p>
-  <b>Assignment:</b>
-  <%=h @gradation.assignment_id %>
-</p>
-
-<p>
-  <b>Points earned:</b>
-  <%=h @gradation.points_earned %>
-</p>
+<% content_for :left do %>
+	<%= show_course_list %>
+<% end %>
 
 
-<%= link_to 'Edit', edit_gradation_path(@gradation) %> |
-<%= link_to 'Back', gradations_path %>
+<table id='courses' class='master'>
+	<thead>
+		<th>Student<br />Name</th>
+		<% for assignment in @gradation.assignments %>
+			<th>
+				<%= h assignment.name %><br />
+				Possible Points: <%= h assignment.possible_points %><br />
+				Due Date: <%= h assignment.due_date.to_s(:due_date) if assignment.due_date %><br />
+			</th>
+		<% end %>
+	</thead>
+	<tbody>
+		<% counter = 0 %>
+		<% for student in @gradation.students %>
+			<tr class="<%= cycle('odd', 'even') %>" />
+				<%= content_tag :td, student.full_name %>
+
+				<% for assignment in @gradation.assignments %>
+					<td>
+						<%= h assignment.gradations[counter].points_earned if assignment.gradations[0]%>
+					</td>
+				<% end %>
+			</tr>
+			<% counter += 1 %>
+		<% end %>
+	
+  </tbody>
+</table>
+
+
+<%#= debug @gradation	%>
+
+<%#= link_to 'Edit', edit_gradation_path(@gradation) %>
+<%#= link_to 'Back', gradations_path %>
+

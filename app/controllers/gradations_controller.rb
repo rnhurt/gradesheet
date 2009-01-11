@@ -1,21 +1,8 @@
 class GradationsController < ApplicationController
 	layout "standard"
 	
-	# GET /gradations
-  # GET /gradations.xml
-  def index
-    @gradations = Gradation.find(:all)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @gradations }
-    end
-  end
-
-  # GET /gradations/1
-  # GET /gradations/1.xml
   def show
-    @gradation = Gradation.find(params[:id])
+    @gradation = Course.find(params[:id], :include => :assignments, :include => :students, :include => :gradations)
 
     respond_to do |format|
       format.html # show.html.erb

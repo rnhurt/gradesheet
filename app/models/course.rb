@@ -6,6 +6,7 @@ class Course < ActiveRecord::Base
 	has_many		:assignments
 	has_many		:enrollments
 	has_many		:students, :through => :enrollments
+	has_many		:gradations, :through => :assignments
 	
 	validates_existence_of :teacher, :message => "isn't a known teacher."
 	validates_existence_of :term

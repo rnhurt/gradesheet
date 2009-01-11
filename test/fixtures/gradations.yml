@@ -1,11 +1,21 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  student_id: 1
-  assignment_id: 1
-  points_earned: 1.5
+  student: rich
+  assignment: fractions_quiz
+  points_earned: 10
 
 two:
-  student_id: 1
-  assignment_id: 1
-  points_earned: 1.5
+  student: andrew
+  assignment: fractions_quiz
+  points_earned: 7
+  
+three:
+  student: rich
+  assignment: division_test
+  points_earned: 60
+
+four:
+  student: andrew
+  assignment: division_test
+  points_earned: 75
