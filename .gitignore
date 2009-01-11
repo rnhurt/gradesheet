@@ -2,11 +2,13 @@
 DELETEME/*
 log/*
 tmp/*
+rdoc
 coverage.data
 coverage/*
 database.yml
 *.sqlite
 *.sqlite3
+schema.rb
 doc/api
 .DS_Store
 .svn
