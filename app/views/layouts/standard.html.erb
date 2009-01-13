@@ -11,13 +11,16 @@
   <%= stylesheet_link_tag 'tables' %>
   <%= javascript_include_tag :defaults %>
 
+  <%#= javascript_include_tag 'tablekit' %>
 
   <%= calendar_date_select_includes %>
-  <%= stylesheet_link_tag 'wice_grid' %>
-  
-</head>
-<body>
 
+  <script type="text/javascript">
+    <%= @content_for_page_scripts %>
+  </script>  
+</head>
+
+<body>
 
 <div id='header'>
 	<div class='login'>Welcome <a href='/login'>Kim Hurt</a></div>

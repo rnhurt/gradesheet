@@ -2,32 +2,6 @@
 	<%= render :partial => 'users/user_types' %>
 <% end %>
 
-
-<%= grid(@users_grid) do |u|
-
-	u.column :column_name => 'ID', :attribute_name => 'short_name' do |account|
-		account.short_name
-	end
-	
-	u.column :column_name => 'Name', :attribute_name => 'last_name' do |account|
-		account.full_name
-	end
-
-	u.column :column_name => 'Email Address' do |account|
-		account.email
-	end
-	
-	u.column :column_name => 'Campus' do |account|
-		account.site
-	end
-
-	u.column :column_name => 'Class of' do |account|
-		account.class
-	end
-
-end %>
-
-
 <div id="users">
 	<%= render :partial => "users/user_list", :locals => { :users => @users }  %>
 </div>

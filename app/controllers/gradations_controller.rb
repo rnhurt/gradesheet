@@ -71,4 +71,7 @@ class GradationsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def update_grade
+  end
 end

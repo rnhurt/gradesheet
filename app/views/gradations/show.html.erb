@@ -2,39 +2,99 @@
 	<%= show_course_list %>
 <% end %>
 
+<script type="text/javascript">
+	new Ajax.InPlaceEditor('editme', '/demoajaxreturn.html');
+</script>
 
-<table id='courses' class='master'>
+
+<form id='grade_grid'>
+<table lass='sortable editable'>
 	<thead>
-		<th>Student<br />Name</th>
+		<tr>
+			<th width='150' class='noedit'>Student<br />Name</th>
+			<th width='10' class='noedit'>%</th>
 		<% for assignment in @gradation.assignments %>
-			<th>
+			<th width='50' class='grade' id='<%= assignment.id %>'>
 				<%= h assignment.name %><br />
 				Possible Points: <%= h assignment.possible_points %><br />
 				Due Date: <%= h assignment.due_date.to_s(:due_date) if assignment.due_date %><br />
 			</th>
 		<% end %>
+			<th width='auto'></th>
+		</tr>
 	</thead>
 	<tbody>
 		<% counter = 0 %>
 		<% for student in @gradation.students %>
-			<tr class="<%= cycle('odd', 'even') %>" />
-				<%= content_tag :td, student.full_name %>
+			<tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
+				<%= content_tag :td, student.full_name, :id => student.id %>
+				<td class='avg'>0.0</td>
 
 				<% for assignment in @gradation.assignments %>
-					<td>
-						<%= h assignment.gradations[counter].points_earned if assignment.gradations[0]%>
+					<td class='relevant'>
+						<%= text_field 'score', assignment.gradations[counter].points_earned, :size => '10' if assignment.gradations[0]%>
 					</td>
 				<% end %>
+				<td></td>
 			</tr>
 			<% counter += 1 %>
 		<% end %>
 	
   </tbody>
 </table>
-
+</form>
 
 <%#= debug @gradation	%>
 
 <%#= link_to 'Edit', edit_gradation_path(@gradation) %>
 <%#= link_to 'Back', gradations_path %>
 
+<%= link_to_function "Recalculate", "calculate()" %>
+
+<script type="text/javascript">
+function calculate() {
+	$$('tr.calc').each(calcRowAverage);
+}
+
+function calcRowAverage(row) {
+  var avgcell;
+  var cells;
+  var total;
+  var count;
+  var val;
+
+  // Make sure this row has a place to put the average
+  avgcell = row.select('td.avg')[0];
+  if (avgcell) {
+    // It does, get the relevant cells
+    cells = row.select('td.relevant');
+
+    // Get the average, allowing for empty/non-numeric cells
+    total = 0;
+    count = 0;
+    cells.each(function(cell){
+    	val = cell.innerHTML
+//      val = parseInt(cell.innerHTML);
+//      if (!isNaN(val)) {
+//          total += val;
+//          ++count;
+//      }
+    });
+
+    // Show the result
+    if (count > 0) {
+      avgcell.update('' + (total / count));
+    } else {
+      avgcell.update('n/a');
+    }
+  }
+}
+
+</script>
+
+<%= observe_form :grade_grid, 
+	:url			=> { :action => :update_grade },
+	:before		=> "calculate()",
+	:with			=> "'grades[score]=' + value"
+
+  %>

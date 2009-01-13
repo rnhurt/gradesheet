@@ -2,7 +2,6 @@ class UsersController < ApplicationController
 	layout "standard"
 	
   def index
-		@users_grid = initialize_grid(User)
     @users = User.search(params[:search], params[:page])
 
     respond_to do |format|
