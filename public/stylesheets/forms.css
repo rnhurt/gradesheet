@@ -10,11 +10,11 @@ div.main{
 	width:350px;
 }
 div.box{
-  border:solid 1px #c6cfe1;
-  background:#dfe4ee;
-  padding:10px;
-  color:#333333;
-  margin-bottom:20px;
+  border: solid 2px #c6cfe1;
+  background: #dfe4ee;
+  padding: 10px;
+  color: #333333;
+  margin-bottom: 20px;
   width: 420px;
 }
 div.box h1 {

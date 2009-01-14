@@ -35,7 +35,7 @@ table {
 }
 
 td, th {
-	padding: 4px;
+	padding: 3px;
 }
 
 caption {
@@ -52,19 +52,19 @@ caption {
 ----------------------------------------------- */
 
 table a {
-		color: #333;
-		text-decoration: none;
+	color: #333;
+	text-decoration: none;
 }
 
 table a:link {}
 
 table a:visited {
-		font-weight: normal;
+	font-weight: normal;
 /*		color: #666;*/
 }
 
 table a:hover {
-		border-bottom: 1px dashed #bbb;
+	border-bottom: 1px dashed #bbb;
 }
 
 /* =head =foot

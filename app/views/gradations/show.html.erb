@@ -3,7 +3,7 @@
 <% end %>
 
 <form id='grade_grid'>
-<table lass='sortable'>
+<table class='sortable'>
 	<thead>
 		<tr>
 			<th width='150'>Student<br />Name</th>
@@ -107,3 +107,8 @@ function calcRowAverage(row) {
 	:with			=> "'grades[score]=' + value"
 
   %>
+
+<script type="text/javascript">
+	// Force a recalculation as soon as the HTML is loaded
+  //document.observe('dom:loaded', calculate());
+</script>

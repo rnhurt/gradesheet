@@ -10,8 +10,7 @@ class GradationsController < ApplicationController
     end
   end
 
-  # GET /gradations/new
-  # GET /gradations/new.xml
+
   def new
     @gradation = Gradation.new
 
@@ -21,13 +20,12 @@ class GradationsController < ApplicationController
     end
   end
 
-  # GET /gradations/1/edit
+
   def edit
     @gradation = Gradation.find(params[:id])
   end
 
-  # POST /gradations
-  # POST /gradations.xml
+
   def create
     @gradation = Gradation.new(params[:gradation])
 
@@ -43,8 +41,7 @@ class GradationsController < ApplicationController
     end
   end
 
-  # PUT /gradations/1
-  # PUT /gradations/1.xml
+
   def update
     @gradation = Gradation.find(params[:id])
 
@@ -60,8 +57,7 @@ class GradationsController < ApplicationController
     end
   end
 
-  # DELETE /gradations/1
-  # DELETE /gradations/1.xml
+
   def destroy
     @gradation = Gradation.find(params[:id])
     @gradation.destroy
