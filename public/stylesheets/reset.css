@@ -1,6 +1,5 @@
-/* Eric Meyer - CSS Reset
-   http://meyerweb.com/eric/thoughts/2008/01/15/resetting-again/
-*/
+/* Eric Meyer - v1.0 | 20080212 */
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -16,7 +15,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	outline: 0;
 	font-size: 100%;
 	vertical-align: baseline;
-	background: transparent;
+/*	background: transparent;*/
 }
 body {
 	line-height: 1;
@@ -26,6 +25,11 @@ ol, ul {
 }
 blockquote, q {
 	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
 }
 
 /* remember to define focus styles! */

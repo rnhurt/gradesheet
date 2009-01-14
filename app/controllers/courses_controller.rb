@@ -67,10 +67,8 @@ class CoursesController < ApplicationController
       if @course.save
         flash[:notice] = "Course '#{@course.name}' was successfully created."
 	      format.html { redirect_to(courses_url) }
-        format.xml  { render :xml => @course, :status => :created, :location => @course }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -83,10 +81,10 @@ class CoursesController < ApplicationController
       if @course.update_attributes(params[:course])
         flash[:notice] = "Course '#{@course.name}' was successfully updated."
 	      format.html { redirect_to(courses_url) }
-        format.xml  { head :ok }
+	      format.js { render :action => "update" }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+        flash[:error] = "Course '#{@course.name}' failed to update."
+        format.html { redirect_to(:action => :show) }
       end
     end
   end
@@ -98,7 +96,6 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(courses_url) }
-      format.xml  { head :ok }
     end
   end
 

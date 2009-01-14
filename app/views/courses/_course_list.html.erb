@@ -1,18 +1,18 @@
-<table id='courses' class='master'>
-  <thead>
-    <th><%= link_to '+', new_course_path, :class => 'positive mini' if current_page?( :controller => :courses )%> Name
-    	<%= "(#{@courses.length})" unless @courses.blank? %></th>
-    <th>Term</th>
-  </thead>
-	<tbody>
-		<% for course in @courses %>
-			<tr class="<%= cycle('odd', 'even') + (current_page?(:id => course) ? ' current' : '') %>" 
-					onclick="location.href='<%= url_for( :action => :show, :id => course.id ) %>'"/>
-				<%= content_tag :td, link_to( course.name, :action => :show, :id => course.id ) %>
-				<%= content_tag :td, course.term.name %>
-			</tr>
-		<% end %>
-	
-  </tbody>
-</table>
-
+<div id='course_list'>
+	<table id='courses' class='master'>
+		<thead>
+		  <th><%= link_to '+', new_course_path, :class => 'positive mini' if current_controller?("courses")%> Name
+		  	<%= "(#{@courses.length})" unless @courses.blank? %></th>
+		  <th>Term</th>
+		</thead>
+		<tbody>
+			<% for course in @courses %>
+				<tr class="<%= cycle('odd', 'even') + (current_page?(:id => course) ? ' current' : '') %>" 
+						onclick="location.href='<%= url_for( :action => :show, :id => course.id ) %>'"/>
+					<%= content_tag :td, link_to( course.name, :action => :show, :id => course.id ) %>
+					<%= content_tag :td, course.term.name %>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

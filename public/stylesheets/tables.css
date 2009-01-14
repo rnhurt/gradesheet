@@ -75,6 +75,7 @@ thead th, tfoot th, tfoot td {
 	color: #fff;
 	cursor: default;
 	text-align: left;
+	font-size: 0.9em;
 }
 thead .search {
 	font-size: 0.8em;

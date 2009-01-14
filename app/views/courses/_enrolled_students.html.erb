@@ -4,7 +4,10 @@
 
 	<table class='master'>
 		<thead>
-			<th>Enrolled Students (<%= students.length %>)</th>
+			<tr>
+				<th width='100%'>Enrolled Students (<%= students.length %>)</th>
+				<th width='1px'></th>
+			</tr>
 		</thead>
 		<tbody>
 			<% if students.blank? %>
@@ -12,14 +15,14 @@
 			<% else %>
 				<% for student in students %>
 					<tr class="<%= cycle ('odd', 'even') %>" id="<%= student.id %>">
+						<%= content_tag :td, student.full_name %>
 						<td>
 							<% form_remote_tag :url => { :action => 'remove_student', :student_id => student.id },
 										:method => :delete,
-										:confirm => 'Are you sure you want to remove this student from this course?',
+										:confirm => "Are you sure you want to remove this '#{student.full_name}' from this course?",
 										:loading => "Element.show('spinner')",	
 										:complete => "Element.hide('spinner')" do %>
-								<%= submit_tag 'X' %>
-								&nbsp;&nbsp;<%= h student.full_name %>
+								<%= submit_tag 'Remove' %>
 							<% end %>
 						</td>
 					</tr>

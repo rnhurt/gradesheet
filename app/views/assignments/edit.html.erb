@@ -1,21 +1,21 @@
 <% content_for :left do %>
-		<%= show_course_list %>
+	<%= show_course_list %>
 <% end %>
 
-<%# @assignment.course_id = @course %>
 <%= error_messages_for :assignment, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
 <div class='box'>
 	<% form_for(@assignment) do |f| %>
 			<div class='spacer'>
 				<%= content_tag( :h1, "Editing: #{@assignment.name}" ) %>
+				<%= f.hidden_field :course_id, :value => @course.id %>
 			</div>
 		
-			<label><span>Name</span>
+			<label><span class='required'>Name</span>
 				<%= f.text_field :name %>
 			</label>
 
-			<label><span>Possible Points</span>
+			<label><span class='required'>Possible Points</span>
 		    <%= f.text_field :possible_points %>
 			</label>
 		

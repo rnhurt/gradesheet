@@ -1,7 +1,7 @@
-<table class='master'>
+<table class='master sortable'>
   <thead>
     <tr>
-      <th><%= link_to '+', new_assignment_path( :course_id => @course.id ), :class => 'positive mini' %>
+      <th><%= link_to 'New', new_assignment_path( :course_id => @course.id ), :class => 'positive mini' %>
       Assignment Name</th>
       <th>Possible points</th>
       <th>Due Date</th>
