@@ -24,14 +24,20 @@
 			<tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
 				<%= content_tag :td, student.full_name, :id => student.id %>
 				<td class='score'>0.0</td>
-
 				<% for assignment in @gradation.assignments %>
 					<td class='grades'>
-						<%= text_field 'score', assignment.gradations[counter].points_earned, 
-								:points => assignment.possible_points,
-								:name => 'grade', 
-								:value => '10', 
-								:size => '10' if assignment.gradations[0]%>
+						<% if assignment.gradations[counter] %>
+							<%= text_field 'score', assignment.gradations[counter].points_earned, 
+									:points => assignment.possible_points,
+									:name => 'grade', 
+									:value => '10', 
+									:size => '10' %>
+						<% else %>
+							<%= text_field_tag 'score', '', 
+									:points => assignment.possible_points,
+									:name => 'grade', 
+									:size => '10' %>
+						<% end %>
 					</td>
 				<% end %>
 				<td></td>
@@ -42,8 +48,6 @@
   </tbody>
 </table>
 </form>
-
-<%#= debug @gradation	%>
 
 <%#= link_to 'Edit', edit_gradation_path(@gradation) %>
 <%#= link_to 'Back', gradations_path %>
@@ -78,14 +82,13 @@ function calcRowAverage(row) {
     	points	= parseFloat(grade.readAttribute('points'));
     	
     	// Make sure they didn't score more points than possible
-    	if (score > points) {
-    		alert ("You can't get more points than possible!'")
+    	if (score > points || isNaN(score)) {
+    		grade.addClassName('error');
     	} else {    	
+    		grade.removeClassName('error');
 		  	// Total up the percentage
-		    if (!isNaN(score)) {
-		        total += score / points;
-		        ++count;
-		    }
+        total += score / points;
+        ++count;
 		  }
     });
 

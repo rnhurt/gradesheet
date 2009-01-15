@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
 	def show
 		# Displays the students enrolled in each course.
     @course = Course.find(params[:id])
-    @homerooms = Course.find_all_by_course_type_id(CourseType.find_all_by_name('Home Room'))
+#    @homerooms = Course.find_all_by_course_type_id(CourseType.find_all_by_name('Home Room'))
 
 		respond_to do |format|
 			format.html
@@ -49,7 +49,7 @@ class CoursesController < ApplicationController
 
   def edit
     @course = Course.find(params[:id])
-    @homerooms = Course.find_all_by_course_type_id(CourseType.find_all_by_name('Home Room'))
+#    @homerooms = Course.find_all_by_course_type_id(CourseType.find_all_by_name('Home Room'))
     
     respond_to do |format|
     	format.html
@@ -123,5 +123,4 @@ class CoursesController < ApplicationController
   	end
    	render :action => "modify", :locals => { :add => false }
   end
-
 end

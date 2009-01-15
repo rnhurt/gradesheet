@@ -6,6 +6,7 @@ rich:
   last_name: Hurt
   email: rnhurt@kangaroobox.com
   class_of: 2008
+  homeroom: 8H
 
 andrew:
   type: Student
@@ -15,6 +16,7 @@ andrew:
   last_name: Hurt
   email: andrew@kangaroobox.com
   class_of: 2010
+  homeroom: 7S
   
 tabatha:
   type: Student
@@ -24,6 +26,7 @@ tabatha:
   last_name: Hurt
   email: tabatha@kangaroobox.com
   class_of: 2013
+  homeroom: 3S
 
 bob:
   id: 1070
@@ -84,7 +87,7 @@ user_<%= t %>:
   last_name: <%= random_words(1).capitalize %>
 <% end %>
 
-<% for i in 100..200 %>
+<% for i in 100..125 %>
 user_<%= i %>:
   type: Student
   site: nda
@@ -92,4 +95,16 @@ user_<%= i %>:
   first_name: <%= random_words(1).capitalize %> 
   last_name: <%= random_words(1).capitalize %>
   class_of: <%= 2000 + rand(2018-2000) %>
+  homeroom: 8P
+<% end %>
+
+<% for i in 126..150 %>
+user_<%= i %>:
+  type: Student
+  site: nda
+  short_name: <%= i * i %>
+  first_name: <%= random_words(1).capitalize %> 
+  last_name: <%= random_words(1).capitalize %>
+  class_of: <%= 2000 + rand(2018-2000) %>
+  homeroom: 7S
 <% end %>

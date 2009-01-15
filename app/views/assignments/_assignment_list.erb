@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th><%= link_to 'New', new_assignment_path( :course_id => @course.id ), :class => 'positive mini' %>
-      Assignment Name</th>
+      Assignment Name <%= h '(' + @assignments.count.to_s + ')'%></th>
       <th>Possible points</th>
       <th>Due Date</th>
     </tr>

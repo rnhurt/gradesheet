@@ -9,6 +9,7 @@
     <th>Email Address</th>
     <th>Campus</th>
 		<%= content_tag(:th, 'Class Of') if user_type == 'Student' %>
+		<%= content_tag(:th, 'Homeroom') if user_type == 'Student' %>
 		<th width='1'></th>
   </thead>
 	<tfoot>
@@ -17,6 +18,7 @@
     <th>Email Address</th>
     <th>Campus</th>
 		<%= content_tag(:th, 'Class Of') if user_type == 'Student' %>
+		<%= content_tag(:th, 'Homeroom') if user_type == 'Student' %>
 		<th width='1'></th>
 	</tfoot>
 
@@ -28,6 +30,7 @@
 				<%= content_tag :td, u.email %>
 				<%= content_tag :td, u.site.name %>
 				<%= content_tag(:td, u.class_of) if user_type == 'Student' %>
+				<%= content_tag(:td, u.homeroom) if user_type == 'Student' %>
 				<td><%= button_to 'Delete', u, :method => :delete, :confirm => "Are you sure you want to delete\n\n '" + u.full_name + "'?" %></td>
 			</tr>
 		<% end %>

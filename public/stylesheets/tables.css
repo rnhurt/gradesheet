@@ -124,4 +124,6 @@ tbody .help {
 tbody .help:hover {
 	background-color: #009900;
 }
-
+.error {
+	border: 2px solid red;
+}

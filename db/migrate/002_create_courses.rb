@@ -6,7 +6,6 @@ class CreateCourses < ActiveRecord::Migration
       t.integer :term_id
       t.integer :grading_scale_id
       t.integer :course_att_id
-      t.integer :course_type_id
 
       t.timestamps
     end

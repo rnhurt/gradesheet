@@ -4,25 +4,7 @@
 
 <%= error_messages_for :assignment, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div>
-	<%# form_for(@assignment) do |f| %>
-			<%#= content_tag( :h1, "#{@assignment.name}" ) %>
-		
-			<%#= f.text_field :name %>
-
-			<%#= collection_select :assignment, :course_id, @courses, :id, :name %>
-
-			<%#= f.text_field :possible_points %>
-			
-			<%#= f.text_field :due_date_formated %>
-
-			<%#= submit_tag 'Save', :class=>"positive" %>
-			<%#= link_to 'Cancel', assignments_path, :class => "positive" %>		
-	<%# end %>
-</div>
-
 <div id='assignment_list'>
 	<%= render :partial => 'assignment_list' %>
 </div>
 
-<%#= debug @assignments %>

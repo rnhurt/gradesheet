@@ -1,6 +1,8 @@
 class Student < User
 	has_many	:enrollments
 	has_many	:courses, :through => :enrollments
+
+	validates_length_of	:homeroom, :maximum => 20
 	
 	from_year = Time.now.year - 1
 	to_year = from_year + 10
@@ -12,11 +14,5 @@ class Student < User
 	# FIXME
 	named_scope	:courses, :joins => :courses
 	
-#	## Find all students enrolled in a particular course	
-#	def self.find_by_course(*args)
-#		with_scope :find => { :conditions => { :course_id => args[0] } } do
-#			find(*args)
-#		end
-#	end	
 
 end

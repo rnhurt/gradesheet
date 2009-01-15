@@ -19,7 +19,8 @@ class Users::StudentsController < ApplicationController
 
   def new
     @student = Student.new
-
+		@homerooms = Student.find(:all, :group => "homeroom", :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
+		
     respond_to do |format|
       format.html # { redirect_to users_path }
     end
@@ -28,6 +29,7 @@ class Users::StudentsController < ApplicationController
 
   def edit
     @student = Student.find(params[:id])
+		@homerooms = Student.find(:all, :group => "homeroom", :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
     
     respond_to do |format|
     	format.html
@@ -53,15 +55,19 @@ class Users::StudentsController < ApplicationController
 
   def update
     @student = Student.find(params[:id])
+    
+		## If an alternate HOMEROOM is provided then use it instead
+		if !params[:homeroom1].empty?
+			params[:student][:homeroom] = params[:homeroom1]
+		end
 
     respond_to do |format|
       if @student.update_attributes(params[:student])
 	    	flash[:notice] = "Student  '" + @student.full_name + "'  was successfully updated."
         format.html { redirect_to(students_url) }
-        format.xml  { head :ok }
       else
+				@homerooms = Student.find(:all, :group => "homeroom", :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @student.errors, :status => :unprocessable_entity }
       end
     end
   end

@@ -1,3 +1,4 @@
+<%# FIXME - This should be merged with _new.html.erb %>
 <div class='box'>
 	<% form_for user do |f| %>
 			<div class="spacer">
@@ -21,15 +22,25 @@
 			</label>
 
 			<label><span class='required'>Site</span>
-			<%= collection_select :student, :site_id, Site.find(:all), :id, :name %>
+			<%= collection_select user.class.name.underscore, :site_id, Site.find(:all), :id, :name %>
 			</label>
 
-			<label><span class='required'>Class Of</span>
-			<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a) %>
-			</label>
+			<% if user.class.name == 'Student' %>
+				<label><span class='required'>Class Of</span>
+					<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a) %>
+				</label>
+
+				<label><span>Homeroom</span>
+						<%= text_field_tag :homeroom1, {}, :maxlength => 20 %>
+						<%= f.select :homeroom, @homerooms, :include_blank => true %>
+				</label>
+			<% end %>
 		
 			<div class="spacer">
-				<%= submit_tag 'Save', :class=>"positive" %><%= link_to 'Cancel', user_path, :class => "standard" %>
+				<%= submit_tag 'Save', :class=>"positive" %>
+				<%= link_to 'Cancel', {:action=> 'index', :controller=> 'users/'+user.class.name.tableize}, :class => 'standard' %>
 			</div>
 	<% end %>
 </div>
+
+<%= set_focus_to_id 'student_short_name' %>

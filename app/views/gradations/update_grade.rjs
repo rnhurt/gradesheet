@@ -1,2 +1,1 @@
 #page.insert_html :bottom, 'footer', content_tag("li", "value: #{params[:grades]}")
-

@@ -14,24 +14,12 @@
 			<%= f.text_field :name, :class=>'input-text'  %>
 			</label>
 
-			<label><span>Type</span>
-			<%= collection_select :course, :course_type_id, CourseType.find(:all), :id, :name %>
-			</label>
-
-			<label><span>Teacher</span>
-			<%= @teacher.full_name %>
-			</label>
-
 			<label><span>Grading Term</span>
 			<%= collection_select :course, :term_id, Term.find(:all), :id, :name %>
 			</label>
 
 			<label><span>Grading Scale</span>
 			<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
-			</label>
-
-			<%#= content_tag :label, '<span>Class Of</span>' if user.class.name == 'Student' %>
-			<%#= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a) if user.class.name == 'Student' %>
 			</label>
 
 			<div class="spacer">

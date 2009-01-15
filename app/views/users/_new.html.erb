@@ -1,5 +1,5 @@
-
-<div class="box">
+<%# FIXME - This should be merged with _edit.html.erb %>
+<div class='box'>
 	<% form_for user do |f| %>
 			<div class="spacer">
 			<%= content_tag( :h1, "New #{user.class.name.titleize}" ) %>
@@ -25,9 +25,16 @@
 			<%= collection_select user.class.name.underscore, :site_id, Site.find(:all), :id, :name %>
 			</label>
 
-			<%= content_tag :label, "<span class='required'>Class Of</span>" if user.class.name == 'Student' %>
-			<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a) if user.class.name == 'Student' %>
-			</label>
+			<% if user.class.name == 'Student' %>
+				<label><span class='required'>Class Of</span>
+					<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a) %>
+				</label>
+
+				<label><span>Homeroom</span>
+						<%= text_field_tag :homeroom1, {}, :maxlength => 20 %>
+						<%= f.select :homeroom, @homerooms, :include_blank => true %>
+				</label>
+			<% end %>
 
 			<div class="spacer">
 				<%= f.submit 'Create', :class=>"positive" %>
@@ -35,3 +42,5 @@
 			</div>
 	<% end %>
 </div>
+
+<%= set_focus_to_id 'student_short_name' %>
