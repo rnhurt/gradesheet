@@ -2,8 +2,6 @@ class CoursesController < ApplicationController
 	layout "standard"
 	
   def index
-    @courses = Course.find_by_teacher_id(:all, current_user, :include => [:term])
-
     respond_to do |format|
       format.html
     end

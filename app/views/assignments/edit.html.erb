@@ -25,8 +25,9 @@
 
 			<div class='spacer'>
 				<%= submit_tag 'Save', :class=>"positive" %>
-				<%= link_to 'Cancel', assignment_path(@course.id), :class => 'standard' %>
+				<%= link_to 'Cancel', assignment_path(@course), :class => 'standard' %>
 			</div>
 	<% end %>
 </div>
 
+<%= set_focus_to_id 'assignment_name' %>
