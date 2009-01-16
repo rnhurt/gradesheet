@@ -24,21 +24,26 @@
 			<tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
 				<%= content_tag :td, student.full_name, :id => student.id %>
 				<td class='score'>0.0</td>
+				<% a_counter = 2 %>
 				<% for assignment in @gradation.assignments %>
+					<% ## Calculate the tab index that allows vertical movement %>
+					<% tabindex = @gradation.students.count ** a_counter %>
 					<td class='grades'>
 						<% if assignment.gradations[counter] %>
 							<%= text_field 'score', assignment.gradations[counter].points_earned, 
 									:points => assignment.possible_points,
 									:name => 'grade', 
-									:value => '10', 
-									:size => '10' %>
+									:size => '10',
+									:tabindex => tabindex %>
 						<% else %>
 							<%= text_field_tag 'score', '', 
 									:points => assignment.possible_points,
 									:name => 'grade', 
-									:size => '10' %>
+									:size => '10',
+									:tabindex => tabindex %>
 						<% end %>
 					</td>
+				<% a_counter += 1 %>
 				<% end %>
 				<td></td>
 			</tr>
@@ -49,17 +54,14 @@
 </table>
 </form>
 
-<%#= link_to 'Edit', edit_gradation_path(@gradation) %>
-<%#= link_to 'Back', gradations_path %>
-
-<%= link_to_function "Recalculate", "calculate()" %>
 
 <script type="text/javascript">
 function calculate() {
-	$$('tr.calc').each(calcRowAverage);
+	// Calculate each grade
+	$$('tr.calc').each(calcGrades);
 }
 
-function calcRowAverage(row) {
+function calcGrades(row) {
   var totalscore;
   var grades;
   var total;
@@ -82,13 +84,15 @@ function calcRowAverage(row) {
     	points	= parseFloat(grade.readAttribute('points'));
     	
     	// Make sure they didn't score more points than possible
-    	if (score > points || isNaN(score)) {
+    	if (score > points && !isNaN(score)) {
     		grade.addClassName('error');
     	} else {    	
     		grade.removeClassName('error');
-		  	// Total up the percentage
-        total += score / points;
-        ++count;
+				if (!isNaN(score)) {
+					// Total up the percentage
+		      total += score / points;
+		      ++count;
+        }
 		  }
     });
 
