@@ -3,16 +3,16 @@
 <% end %>
 
 <form id='grade_grid'>
-<table class='sortable'>
+<table class='grade_grid sortable'>
 	<thead>
 		<tr>
-			<th width='150'>Student<br />Name</th>
+			<th>Student Name</th>
 			<th width='60'>%</th>
 		<% for assignment in @gradation.assignments %>
 			<th width='50' class='grade' id='<%= assignment.id %>'>
-				<%= h assignment.name %><br />
-				Possible Points: <%= h assignment.possible_points %><br />
-				Due Date: <%= h assignment.due_date.to_s(:due_date) if assignment.due_date %><br />
+				<span class='assign-name'><%= h assignment.name %></span><br />
+				<span class='assign-points'><%= h assignment.possible_points %></span><br />
+				<span class='assign-date'><%= h assignment.due_date.to_s(:due_date) if assignment.due_date %></span><br />
 			</th>
 		<% end %>
 			<th width='auto'></th>
@@ -24,26 +24,20 @@
 			<tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
 				<%= content_tag :td, student.full_name, :id => student.id %>
 				<td class='score'>0.0</td>
-				<% a_counter = 2 %>
 				<% for assignment in @gradation.assignments %>
-					<% ## Calculate the tab index that allows vertical movement %>
-					<% tabindex = @gradation.students.count ** a_counter %>
 					<td class='grades'>
 						<% if assignment.gradations[counter] %>
 							<%= text_field 'score', assignment.gradations[counter].points_earned, 
 									:points => assignment.possible_points,
 									:name => 'grade', 
-									:size => '10',
-									:tabindex => tabindex %>
+									:size => '10' %>
 						<% else %>
 							<%= text_field_tag 'score', '', 
 									:points => assignment.possible_points,
 									:name => 'grade', 
-									:size => '10',
-									:tabindex => tabindex %>
+									:size => '10' %>
 						<% end %>
 					</td>
-				<% a_counter += 1 %>
 				<% end %>
 				<td></td>
 			</tr>
@@ -105,7 +99,7 @@ function calcGrades(row) {
     // Show the result
     if (count > 0) {
     	original = (total / count)*100
-      totalscore.update(Math.round(original*100)/100 + ' %');
+      totalscore.update(Math.round(original*100)/100 + '%');
     } else {
       totalscore.update('n/a');
     }
@@ -113,6 +107,7 @@ function calcGrades(row) {
 }
 
 function onMyTextKeypress(event) {
+	alert('pressed: ' + event.keyCode)
 	if (Event.KEY_RETURN == event.keyCode) {
 		// do something usefull
 		alert('Enter key was pressed.');
@@ -120,6 +115,14 @@ function onMyTextKeypress(event) {
 }
 
 
+Event.observe('grade_grid', 'keypress', function(event){ 
+	if (event.keyCode == Event.KEY_TAB) {
+		alert('Tab Pressed');
+	} else if (event.keyCode == Event.KEY_RETURN) {
+		alert('Return Pressed');	
+	}
+		
+});
 
 </script>
 
@@ -129,9 +132,11 @@ function onMyTextKeypress(event) {
 	:with			=> "'grades[score]=' + value"
 %>
 
-<%= observe_form :grade_grid,	:function	=> "onMyTextKeypress(event)" %>
+<%#= observe_form :grade_grid,	:function	=> "onMyTextKeypress(Event)" %>
 
 <script type="text/javascript">
 	// Force a recalculation as soon as the HTML is loaded
   document.observe('dom:loaded', calculate());
 </script>
+
+

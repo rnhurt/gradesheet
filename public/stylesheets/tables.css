@@ -127,3 +127,15 @@ tbody .help:hover {
 .error {
 	border: 2px solid red;
 }
+
+/* Grade Grid		*/
+#grade_grid {
+	overflow: auto;
+}
+#grade_grid .grade {
+	text-align: center;
+}
+.assign-name, .assign-points, .assign-date {
+	font-size: xx-small;
+	line-height: 10px;
+}
