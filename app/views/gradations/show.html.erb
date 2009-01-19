@@ -128,7 +128,7 @@ Event.observe('grade_grid', 'keypress', function(event){
 
 <%#= observe_form :grade_grid, 
 	:url			=> { :action => :update_grade },
-	:before		=> "calculate()",
+	:before		=> "calculate",
 	:with			=> "'grades[score]=' + value"
 %>
 
@@ -136,7 +136,7 @@ Event.observe('grade_grid', 'keypress', function(event){
 
 <script type="text/javascript">
 	// Force a recalculation as soon as the HTML is loaded
-  document.observe('dom:loaded', calculate());
+  document.observe('dom:loaded', calculate);
 </script>
 
 
