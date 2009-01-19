@@ -7,7 +7,7 @@
 	<thead>
 		<tr>
 			<th width='150'>Student<br />Name</th>
-			<th width='50'>%</th>
+			<th width='60'>%</th>
 		<% for assignment in @gradation.assignments %>
 			<th width='50' class='grade' id='<%= assignment.id %>'>
 				<%= h assignment.name %><br />
@@ -55,6 +55,7 @@
 </form>
 
 
+
 <script type="text/javascript">
 function calculate() {
 	// Calculate each grade
@@ -84,8 +85,13 @@ function calcGrades(row) {
     	points	= parseFloat(grade.readAttribute('points'));
     	
     	// Make sure they didn't score more points than possible
-    	if (score > points && !isNaN(score)) {
+    	if (score > points) {
     		grade.addClassName('error');
+				if (!isNaN(score)) {
+					// Total up the percentage
+		      total += score / points;
+		      ++count;
+		     }			
     	} else {    	
     		grade.removeClassName('error');
 				if (!isNaN(score)) {
@@ -106,14 +112,24 @@ function calcGrades(row) {
   }
 }
 
+function onMyTextKeypress(event) {
+	if (Event.KEY_RETURN == event.keyCode) {
+		// do something usefull
+		alert('Enter key was pressed.');
+	}
+}
+
+
+
 </script>
 
-<%= observe_form :grade_grid, 
+<%#= observe_form :grade_grid, 
 	:url			=> { :action => :update_grade },
 	:before		=> "calculate()",
 	:with			=> "'grades[score]=' + value"
+%>
 
-  %>
+<%= observe_form :grade_grid,	:function	=> "onMyTextKeypress(event)" %>
 
 <script type="text/javascript">
 	// Force a recalculation as soon as the HTML is loaded
