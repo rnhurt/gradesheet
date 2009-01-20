@@ -26,17 +26,25 @@
 				<td class='score'>0.0</td>
 				<% for assignment in @gradation.assignments %>
 					<td class='grades'>
+						<% master_id = { :s => student.id, :a => assignment.id }.to_json %>
 						<% if assignment.gradations[counter] %>
 							<%= text_field 'score', assignment.gradations[counter].points_earned, 
-									:points => assignment.possible_points,
-									:name => 'grade', 
-									:size => '10' %>
+									:points	=> assignment.possible_points,
+									:name		=> 'grade',
+									:id			=> [:s => student.id, :a => assignment.id],
+									:size		=> '10' %>
 						<% else %>
 							<%= text_field_tag 'score', '', 
-									:points => assignment.possible_points,
-									:name => 'grade', 
-									:size => '10' %>
+									:points	=> assignment.possible_points,
+									:name		=> 'grade', 
+									:id			=> [:s => student.id, :a => assignment.id],
+									:size		=> '10' %>
 						<% end %>
+						<%= observe_field [:s => student.id, :a => assignment.id], 
+									:url			=> { :action => :update_grade },
+									:before		=> "calculate()",
+									:with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"
+						%>
 					</td>
 				<% end %>
 				<td></td>
@@ -115,21 +123,21 @@ function onMyTextKeypress(event) {
 }
 
 
-Event.observe('grade_grid', 'keypress', function(event){ 
-	if (event.keyCode == Event.KEY_TAB) {
-		alert('Tab Pressed');
-	} else if (event.keyCode == Event.KEY_RETURN) {
-		alert('Return Pressed');	
-	}
+//Event.observe('grade_grid', 'keypress', function(event){ 
+//	if (event.keyCode == Event.KEY_TAB) {
+//		alert('Tab Pressed');
+//	} else if (event.keyCode == Event.KEY_RETURN) {
+//		alert('Return Pressed');	
+//	}
 		
-});
+//});
 
 </script>
 
 <%#= observe_form :grade_grid, 
 	:url			=> { :action => :update_grade },
-	:before		=> "calculate",
-	:with			=> "'grades[score]=' + value"
+	:before		=> "calculate()",
+	:with			=> "'value='+value"
 %>
 
 <%#= observe_form :grade_grid,	:function	=> "onMyTextKeypress(Event)" %>

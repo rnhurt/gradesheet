@@ -10,64 +10,36 @@ class GradationsController < ApplicationController
     end
   end
 
-
-  def new
-    @gradation = Gradation.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @gradation }
-    end
-  end
-
-
-  def edit
-    @gradation = Gradation.find(params[:id])
-  end
-
-
-  def create
-    @gradation = Gradation.new(params[:gradation])
-
-    respond_to do |format|
-      if @gradation.save
-        flash[:notice] = 'Gradation was successfully created.'
-        format.html { redirect_to(@gradation) }
-        format.xml  { render :xml => @gradation, :status => :created, :location => @gradation }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @gradation.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-
   def update
-    @gradation = Gradation.find(params[:id])
+  	## This functionality is handled in update_grade
+#    @gradation = Gradation.find(params[:id])
 
-    respond_to do |format|
-      if @gradation.update_attributes(params[:gradation])
-        flash[:notice] = 'Gradation was successfully updated.'
-        format.html { redirect_to(@gradation) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @gradation.errors, :status => :unprocessable_entity }
-      end
-    end
+#    respond_to do |format|
+#      if @gradation.update_attributes(params[:gradation])
+#        flash[:notice] = 'Gradation was successfully updated.'
+#        format.html { redirect_to(@gradation) }
+#      else
+#        format.html { render :action => "edit" }
+#      end
+#    end
   end
 
 
-  def destroy
-    @gradation = Gradation.find(params[:id])
-    @gradation.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(gradations_url) }
-      format.xml  { head :ok }
-    end
-  end
-  
+	## Update a students grade
   def update_grade
+  	# Find any existing gradation for this student/assignment
+#  	@gradation = Gradation.find(:all, :conditions => {
+#  					:student_id			=> params[:student], 
+#  					:assignment_id	=> params[:assignment]
+# 					})
+		@gradation = Gradation.find_or_create_by_student_id_and_assignment_id(params[:student], params[:assignment])
+		@gradation.points_earned = params[:score]
+
+		# Save the record 		
+		if !@gradation.save
+			flash[:error] = 'Gradation failed to save'
+			render :action => "edit"
+		end
+ 		
   end
 end

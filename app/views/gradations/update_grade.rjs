@@ -1,1 +1,3 @@
-#page.insert_html :bottom, 'footer', content_tag("li", "value: #{params[:grades]}")
+#master_id = params[:grade].
+
+#page.insert_html :bottom, 'footer', content_tag("li", "Assignment: #{@assignment_id} | Student: #{@student_id}")
