@@ -1,14 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CourseTest < ActiveSupport::TestCase
-	fixtures :courses, :course_types, :terms, :users
+	fixtures :courses, :terms, :users
 	
 	def setup
     @course = Course.new :name => "Math 8H"
-
-    course_type = CourseType.find(:first, :conditions => "name = 'Home Room'")
-		assert_not_nil course_type
-    @course.course_type = course_type
 
 		teacher = Teacher.find(:first)
 		assert_not_nil teacher

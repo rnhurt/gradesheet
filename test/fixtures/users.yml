@@ -1,3 +1,13 @@
+tabatha:
+  type: Student
+  site: nda
+  short_name: 119
+  first_name: Tabatha
+  last_name: Hurt
+  email: tabatha@kangaroobox.com
+  class_of: 2013
+  homeroom: 3S
+
 rich:
   type: Student
   site: nda
@@ -18,16 +28,6 @@ andrew:
   class_of: 2010
   homeroom: 7S
   
-tabatha:
-  type: Student
-  site: nda
-  short_name: 119
-  first_name: Tabatha
-  last_name: Hurt
-  email: tabatha@kangaroobox.com
-  class_of: 2013
-  homeroom: 3S
-
 bob:
   id: 1070
   type: Teacher

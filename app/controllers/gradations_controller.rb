@@ -27,13 +27,24 @@ class GradationsController < ApplicationController
 
 	## Update a students grade
   def update_grade
-  	# Find any existing gradation for this student/assignment
-#  	@gradation = Gradation.find(:all, :conditions => {
-#  					:student_id			=> params[:student], 
-#  					:assignment_id	=> params[:assignment]
-# 					})
+  	# Find or create a new grade
 		@gradation = Gradation.find_or_create_by_student_id_and_assignment_id(params[:student], params[:assignment])
-		@gradation.points_earned = params[:score]
+
+debugger
+		
+		# Compute the points
+		if params[:score].is_a? Numeric
+			# Just store the points
+			@gradation.points_earned = params[:score].abs
+		else case params[:score].upcase
+			when 'M'
+				# This is a missing assignment
+				@gradation.points_earned = -1
+			when 'E'
+				# This is an exhusade absense
+				@gradation.points_earned = -2
+			end
+		end
 
 		# Save the record 		
 		if !@gradation.save

@@ -1,19 +1,19 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  student: rich
+  student: tabatha
   assignment: fractions_quiz
-  points_earned: 10
+  flag: M
 
 two:
   student: andrew
   assignment: fractions_quiz
   points_earned: 7
-  
+
 three:
   student: rich
   assignment: division_test
-  points_earned: 60
+  flag: E
 
 four:
   student: andrew

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AssignmentTest < ActiveSupport::TestCase
-	fixtures :courses, :course_types, :assignment_types
+	fixtures :courses, :assignment_types
 
   def setup 
  		@assignment = Assignment.find(:first)

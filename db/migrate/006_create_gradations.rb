@@ -4,9 +4,13 @@ class CreateGradations < ActiveRecord::Migration
       t.integer :student_id
       t.integer :assignment_id
       t.float :points_earned
+      t.string :flag
 
       t.timestamps
     end
+    
+    # Add a UNIQUE index since thier is a race condition in Rails
+		add_index(:gradations, [:student_id, :assignment_id], :unique => true)
   end
 
   def self.down
