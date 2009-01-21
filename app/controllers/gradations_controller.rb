@@ -2,7 +2,7 @@ class GradationsController < ApplicationController
 	layout "standard"
 	
   def show
-    @gradation = Course.find(params[:id], :include => :assignments, :include => :students, :include => :gradations)
+    @gradation = Course.find(params[:id], :include => [:assignments, :students, :gradations])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -28,28 +28,26 @@ class GradationsController < ApplicationController
 	## Update a students grade
   def update_grade
   	# Find or create a new grade
-		@gradation = Gradation.find_or_create_by_student_id_and_assignment_id(params[:student], params[:assignment])
-
-debugger
+		@gradation = Gradation.find_or_create_by_student_id_and_assignment_id(
+									params[:student], params[:assignment], :include => [:students, :assignments])
+#debugger
 		
-		# Compute the points
+		# Compute the points earned
 		if params[:score].is_a? Numeric
-			# Just store the points
-			@gradation.points_earned = params[:score].abs
-		else case params[:score].upcase
-			when 'M'
-				# This is a missing assignment
-				@gradation.points_earned = -1
-			when 'E'
-				# This is an exhusade absense
-				@gradation.points_earned = -2
-			end
+			# The user entered a real number
+			@gradation.points_earned = params[:score].abs	# Remove any negatives
+			@gradation.flag = nil													# Reset the flag
+		else
+			@gradation.points_earned = nil					# Reset the points earned
+			@gradation.flag = params[:score].upcase	# Force upper case
 		end
 
 		# Save the record 		
 		if !@gradation.save
 			flash[:error] = 'Gradation failed to save'
-			render :action => "edit"
+			respond_to do |format|
+				format.js	{ redirect_to :action => :show }
+			end
 		end
  		
   end

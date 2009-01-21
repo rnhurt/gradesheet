@@ -20,10 +20,12 @@
 	</thead>
 	<tbody>
 		<% counter = 0 %>
+		<% number_of_students = @gradation.students.count %>
 		<% for student in @gradation.students %>
 			<tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
 				<%= content_tag :td, student.full_name, :id => student.id %>
 				<td class='score'>0.0</td>
+				<% a_counter = counter + 1 %>
 				<% for assignment in @gradation.assignments %>
 					<td class='grades'>
 						<% master_id = { :s => student.id, :a => assignment.id }.to_json %>
@@ -32,20 +34,24 @@
 									:points	=> assignment.possible_points,
 									:name		=> 'grade',
 									:id			=> [:s => student.id, :a => assignment.id],
+									:tabindex	=> a_counter,
 									:size		=> '10' %>
 						<% else %>
 							<%= text_field_tag 'score', '', 
 									:points	=> assignment.possible_points,
 									:name		=> 'grade', 
 									:id			=> [:s => student.id, :a => assignment.id],
+									:tabindex	=> a_counter,
 									:size		=> '10' %>
 						<% end %>
 						<%= observe_field [:s => student.id, :a => assignment.id], 
 									:url			=> { :action => :update_grade },
+									:frequency	=> 2.0,
 									:before		=> "calculate()",
 									:with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"
 						%>
 					</td>
+					<% a_counter += number_of_students %>
 				<% end %>
 				<td></td>
 			</tr>
@@ -114,13 +120,13 @@ function calcGrades(row) {
   }
 }
 
-function onMyTextKeypress(event) {
-	alert('pressed: ' + event.keyCode)
-	if (Event.KEY_RETURN == event.keyCode) {
-		// do something usefull
-		alert('Enter key was pressed.');
-	}
-}
+//function onMyTextKeypress(event) {
+//	alert('pressed: ' + event.keyCode)
+//	if (Event.KEY_RETURN == event.keyCode) {
+//		// do something usefull
+//		alert('Enter key was pressed.');
+//	}
+//}
 
 
 //Event.observe('grade_grid', 'keypress', function(event){ 
