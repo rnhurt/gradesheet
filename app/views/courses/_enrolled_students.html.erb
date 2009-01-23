@@ -5,13 +5,13 @@
 	<table class='master'>
 		<thead>
 			<tr>
-				<th width='100%'>Enrolled Students (<%= students.length %>)</th>
+				<th>Enrolled Students (<%= students.length %>)</th>
 				<th width='1px'></th>
 			</tr>
 		</thead>
 		<tbody>
 			<% if students.blank? %>
-				<tr class='help'><td>Add students to this course from the list of students &nbsp;--></td></tr>
+				<tr class='help'><td>Add students to this course from the list of students &nbsp;--></td><td></td></tr>
 			<% else %>
 				<% for student in students %>
 					<tr class="<%= cycle ('odd', 'even') %>" id="<%= student.id %>">

@@ -1,6 +1,6 @@
 <% params[:value] ||= '||Students'  %>
 
-	<table class='master' id='students'>
+	<table id='students' class='master'>
 		<thead>
 			<th><%= params[:value].split('||')[1] %> <%= "(#{@students.length})" unless @students.blank? %></th>
 		</thead>
