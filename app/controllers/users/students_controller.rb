@@ -19,7 +19,7 @@ class Users::StudentsController < ApplicationController
 
   def new
     @student = Student.new
-		@homerooms = Student.find(:all, :group => "homeroom", :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
+		@homerooms = Student.find(:all, :select => 'homeroom', :group => 'homeroom', :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
 		
     respond_to do |format|
       format.html # { redirect_to users_path }
@@ -29,7 +29,7 @@ class Users::StudentsController < ApplicationController
 
   def edit
     @student = Student.find(params[:id])
-		@homerooms = Student.find(:all, :group => "homeroom", :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
+		@homerooms = Student.find(:all, :select => 'homeroom', :group => 'homeroom', :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
     
     respond_to do |format|
     	format.html
@@ -66,7 +66,7 @@ class Users::StudentsController < ApplicationController
 	    	flash[:notice] = "Student  '" + @student.full_name + "'  was successfully updated."
         format.html { redirect_to(students_url) }
       else
-				@homerooms = Student.find(:all, :group => "homeroom", :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
+				@homerooms = Student.find(:all, :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
         format.html { render :action => "edit" }
       end
     end
