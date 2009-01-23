@@ -22,7 +22,7 @@ class Users::StudentsController < ApplicationController
 		@homerooms = Student.find(:all, :select => 'homeroom', :group => 'homeroom', :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
 		
     respond_to do |format|
-      format.html # { redirect_to users_path }
+      format.html
     end
   end
 
@@ -39,6 +39,7 @@ class Users::StudentsController < ApplicationController
 
   def create
     @student = Student.new(params[:student])
+		@homerooms = Student.find(:all, :select => 'homeroom', :group => 'homeroom', :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
 
     respond_to do |format|
       if @student.save
