@@ -11,8 +11,9 @@ class User < ActiveRecord::Base
 
 	## Search for a user (will_paginate)
 	def self.search(search, page)
+		search.downcase!	# Make sure we don't have any case sensitivity problems
 		paginate	:per_page => 15, :page => page,
-							:conditions => ['first_name like ? or last_name like ?', "%#{search}%", "%#{search}%"], 
+							:conditions => ['LOWER(first_name) like ? or LOWER(last_name) like ?', "%#{search}%", "%#{search}%"], 
 							:order => 'first_name',
 							:include => :site
 	end
