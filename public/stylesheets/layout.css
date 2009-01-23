@@ -114,8 +114,16 @@ h2 {
 	font-size:16px;
 }
 p {
-	margin-top: 1px;
+	margin-top: 10px;
 }
+ul {
+	list-style-type: inherit;
+	list-style-position: outside;
+	margin-left: 10px;
+}
+li {
+	margin: 10px;
+}	
 /*** Scaffold defaults ***/
 .fieldWithErrors {
 	padding: 2px;
