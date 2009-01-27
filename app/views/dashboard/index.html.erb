@@ -2,7 +2,7 @@
 
 <% new_years = Date.new(Date.today.year + 1, 1, 1) - Date.today %>
 
-<h2>How much time do we have left?</h2>
+<h3 class='alt'>Upcoming Events</h3>
 <ul>
 	<%= content_tag :li, (new_years).to_s + (new_years == 1 ? ' day' : ' days') + ' until the New Year.' %>
 	<%= content_tag :li, '21 days until the end of this grading period.' %>

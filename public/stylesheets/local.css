@@ -1,0 +1,128 @@
+body {
+	background: #FFF url("/images/header-bg.gif") top left repeat-x; 	
+}
+#header .title {
+	font-size: x-large;
+	font-weight: bolder;
+	color: #EEE;	
+}
+#header .tagline {
+	font-size: small;
+	font-weight: bolder;
+	color: #EEE;	
+}
+#header .login {
+	color: #EEE;
+}
+#header .login a {
+	color: #FF0;
+}
+#flash {
+	text-align: center;
+}
+.container .error, .container .notice, .container .success {padding:.5em;margin-bottom:1.1em;border:2px solid #ddd;}
+.container .error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
+.container .notice {background:#FFF6BF;color:#514721;border-color:#FFD324;}
+.container .success {background:#E6EFC2;color:#264409;border-color:#C6D880;}
+.container .error a {color:#8a1f11; background:none; padding:0; margin:0; }
+.container .notice a {color:#514721; background:none; padding:0; margin:0; }
+.container .success a {color:#264409; background:none; padding:0; margin:0; }
+
+#footer {
+	margin: auto;
+	padding-top: 20px;
+	text-align: center;
+	font-size: 0.8em;
+}
+
+/*** Tables ***/
+table {
+	cursor: pointer;
+	background-color: #BACAF1;
+	border: 1px solid #686868
+}
+thead th, tfoot th, tfoot td {
+	background:#333 url("/images/llsh.gif") repeat-x;
+	color: #fff;
+	cursor: default;
+	text-align: left;
+}
+thead .search {
+	font-size: 0.8em;
+	border: medium groove;
+}
+tr.even td {background:inherit;}
+tr.odd td {background:#E4E8F1;}
+tr.current td{background: yellow;font-style: oblique;}
+tr:hover td{background-color:#777;color:#EEE;}
+tr:hover td a{color:#EEE;}
+
+tr.help td {
+	background-color: #006600;
+	color: #EEE;
+	font-weight: bold;
+	font-variant: small-caps;
+	text-align: center;
+	cursor: default;
+}
+tr.help:hover td{background-color: #009900;}
+
+
+
+
+
+
+
+
+
+/*.paginate {*/
+/*	text-align: center;*/
+/*}*/
+/*h2 {*/
+/*	color:#666;*/
+/*	margin: 7px 0px 5px;*/
+/*	font-size:16px;*/
+/*}*/
+/*p {*/
+/*	margin-top: 10px;*/
+/*}*/
+/*ul {*/
+/*	list-style-type: inherit;*/
+/*	list-style-position: outside;*/
+/*	margin-left: 10px;*/
+/*}*/
+/*li {*/
+/*	margin: 10px;*/
+/*}	*/
+/*** Scaffold defaults ***/
+.fieldWithErrors {
+	padding: 2px;
+	background-color: red;
+	display: table;
+}
+#errorExplanation {
+	width: 400px;
+	border: 2px solid red;
+	padding: 7px;
+	padding-bottom: 12px;
+	margin-bottom: 20px;
+	background-color: #f0f0f0;
+}
+#errorExplanation h2 {
+	text-align: left;
+	font-weight: bold;
+	padding: 5px 5px 5px 15px;
+	font-size: 12px;
+	margin: -7px;
+	background-color: #c00;
+	color: #fff;
+}
+#errorExplanation p {
+	color: #333;
+	margin-bottom: 0;
+	padding: 5px;
+}
+#errorExplanation ul li {
+	font-size: 12px;
+	list-style: square;
+}

@@ -9,7 +9,7 @@ div.main{
 	margin:30px auto; 
 	width:350px;
 }
-div.box{
+div.ox{
   border: solid 2px #c6cfe1;
   background: #dfe4ee;
   padding: 10px;
@@ -17,25 +17,25 @@ div.box{
   margin-bottom: 20px;
   width: 420px;
 }
-div.box h1 {
+div.ox h1 {
   font-size:14px;
   color:#000000;
   padding-bottom:4px;
 }
-div.box p{
+div.ox p{
 	padding-bottom:14px;
 }
-div.box input .input-text{
+div.ox input .input-text{
   border:1px solid #3b6e22;
   color:#666666;
   width:190px;
 }
-div.box label{
+div.ox label{
   display:block;
   margin-bottom:10px;
   color:#555555;
 }
-div.box label span{
+div.ox label span{
   display:block;
   float:left;
   padding-right:15px;

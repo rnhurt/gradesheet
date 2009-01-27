@@ -4,7 +4,7 @@
 
 <%= error_messages_for :course, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div class='box'>
+<div class='span-10 last'>
 	<% form_for( @course, :url => {}, :html => {:id => 'edit_course'} ) do |f| %>
 		<%#= content_tag( :h1, "#{@course.name}" ) %>
 
@@ -20,13 +20,13 @@
 	<%= observe_form :edit_course, :url => {:action => :update} %>
 </div>
 
-<%= button_to 'Delete Course', @course, :confirm => 'Are you sure?', :method => :delete %>
-
-<div id='enrolled_students' class='main_form'>
-	<%= render :partial => 'enrolled_students' %>
+<div class='span-3 last'>
+	<%= button_to 'Delete Course', @course, :confirm => 'Are you sure?', :method => :delete %>
 </div>
 
-<div class='select_form'>
+<hr>
+
+<div class='span-16 last'>
 	<form id='class_of_form'>
 		<%= select_tag 'class_of', options_for_select(class_range.insert(0, 'Class Of ...'), ' '), 
 				:onchange => 
@@ -46,11 +46,14 @@
 						:with => "'value=' + value + '||' + options[selectedIndex].text + '||H'",
 						:method => :get) } %>
 	</form>
-
-	<div id='student_list'>	
-		<%= render :partial => 'student_list' %>
-	</div>
 </div>
 
+<div id='student_list' class='span-7'>	
+	<%= render :partial => 'student_list' %>
+</div>
+
+<div id='enrolled_students' class='span-7 push-1 last'>
+	<%= render :partial => 'enrolled_students' %>
+</div>
 
 

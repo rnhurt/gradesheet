@@ -48,7 +48,7 @@ module ApplicationHelper
 	## Show the FLASH div
 	def show_flash
 		result = ''
-		flash.each {|type, message| result << content_tag(:div, message, :id => 'notice', :class => 'flash ' + type.to_s) } 
+		flash.each {|type, message| result << content_tag(:span, message, :id => 'notice', :class => type.to_s) } 
 		return result
 	end
 
