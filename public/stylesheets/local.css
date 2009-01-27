@@ -40,6 +40,7 @@ table {
 	cursor: pointer;
 	background-color: #BACAF1;
 	border: 1px solid #eee
+	border-collapse: collapse;
 }
 /*thead th, tfoot th, tfoot td {*/
 /*	background:#333 url("/images/llsh.gif") repeat-x;*/
