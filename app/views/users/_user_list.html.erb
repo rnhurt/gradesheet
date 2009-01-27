@@ -2,31 +2,23 @@
 
 <table id="users" class="master">
   <thead>
+  	<tr>
     <th>ID</th>
     <% form_for users.class.to_s, :html => { :method => :get } do |s| %>
-	    <th>Name <%= text_field_tag :search, params[:search], :class => "search" %></th>
+	    <th>Name <%= text_field_tag :search, params[:search], :size => 10, :class => 'search' %></th>
 	  <% end %>
     <th>Email Address</th>
     <th>Campus</th>
-		<%= content_tag(:th, 'Class Of') if user_type == 'Student' %>
+		<%= content_tag(:th, 'Class-Of') if user_type == 'Student' %>
 		<%= content_tag(:th, 'Homeroom') if user_type == 'Student' %>
 		<th width='1'></th>
+	  </tr>
   </thead>
-	<tfoot>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Email Address</th>
-    <th>Campus</th>
-		<%= content_tag(:th, 'Class Of') if user_type == 'Student' %>
-		<%= content_tag(:th, 'Homeroom') if user_type == 'Student' %>
-		<th width='1'></th>
-	</tfoot>
-
 	<tbody>
 		<% for u in users %>
 			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for(u)+'/edit' %>'" />
 				<%= content_tag :td, u.short_name %>
-				<td><%= link_to u.full_name, url_for(u)+'/edit' %></td>
+				<td width='50%'><%= link_to u.full_name, url_for(u)+'/edit' %></td>
 				<%= content_tag :td, u.email %>
 				<%= content_tag :td, u.site.name %>
 				<%= content_tag(:td, u.class_of) if user_type == 'Student' %>
