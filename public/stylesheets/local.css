@@ -39,23 +39,22 @@ body {
 table {
 	cursor: pointer;
 	background-color: #BACAF1;
-	border: 1px solid #686868
+	border: 1px solid #eee
 }
-thead th, tfoot th, tfoot td {
-	background:#333 url("/images/llsh.gif") repeat-x;
-	color: #fff;
-	cursor: default;
-	text-align: left;
-}
-thead .search {
-	font-size: 0.8em;
-	border: medium groove;
-}
+/*thead th, tfoot th, tfoot td {*/
+/*	background:#333 url("/images/llsh.gif") repeat-x;*/
+/*	color: #fff;*/
+/*	cursor: default;*/
+/*	text-align: left;*/
+/*}*/
+/*thead .search {*/
+/*	font-size: 0.8em;*/
+/*	border: medium groove;*/
+/*}*/
 tr.even td {background:inherit;}
-tr.odd td {background:#E4E8F1;}
+tbody .odd {background:#e5ecf9;}
 tr.current td{background: yellow;font-style: oblique;}
-tr:hover td{background-color:#777;color:#EEE;}
-tr:hover td a{color:#EEE;}
+tr:hover td{background-color:#FFF;}
 
 tr.help td {
 	background-color: #006600;
