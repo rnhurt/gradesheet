@@ -2,11 +2,10 @@ class GradationsController < ApplicationController
 	layout "standard"
 	
   def show
-    @gradation = Course.find(params[:id], :include => [:assignments, :students, :gradations])
+    @gradations = Course.find(params[:id], :include => [:students, :gradations])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @gradation }
     end
   end
 
@@ -30,16 +29,14 @@ class GradationsController < ApplicationController
   	# Find or create a new grade
 		@gradation = Gradation.find_or_create_by_student_id_and_assignment_id(
 									params[:student], params[:assignment], :include => [:students, :assignments])
-#debugger
-		
+
 		# Compute the points earned
 		if params[:score].is_a? Numeric
 			# The user entered a real number
-			@gradation.points_earned = params[:score].abs	# Remove any negatives
-			@gradation.flag = nil													# Reset the flag
+			@gradation.points_earned = params[:score].abs			# Remove any negatives
 		else
-			@gradation.points_earned = nil					# Reset the points earned
-			@gradation.flag = params[:score].upcase	# Force upper case
+			# The user entered a 'magic' letter instead of a grade
+			@gradation.points_earned = params[:score].upcase	# Only store UPPER CASE
 		end
 
 		# Save the record 		

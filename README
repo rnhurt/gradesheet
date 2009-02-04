@@ -1,2 +1,23 @@
 == Welcome to Gradesheet
+GradeSheet has been designed to give teachers all the tools 
+they need to record student grades.  It is web based to make 
+it easily accessible to everyone.  Students and parents can 
+log into the system to check on their grades and even 
+communicate with their teacher(s).
 
+== Installation
+On Linux (Debian Lenny/Ubuntu)
+ 1) Clone this repository
+ 2) Add these dependecies:
+  * will_paginate
+  * ruby1.8
+  * rails2.x
+ 3) Modify 'database.yml' to point to your database
+ 4) run 'rake db:migrate' to create the database schema
+ 5) run 'rake fixtures:load' to load in the test data
+
+On Macintosh
+ 1) ???
+
+On Windows
+ 1) ???

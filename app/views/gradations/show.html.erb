@@ -2,47 +2,61 @@
 	<%= show_course_list %>
 <% end %>
 
+<%# Loop through the gradations and build a table with students as the ROW
+  # and assignments in the COLUMN.  Along the way we'll also alert the user 
+  # when there are missing students or assignments. %>
 <form id='grade_grid'>
 <table class='grade_grid sortable'>
 	<thead>
 		<tr>
 			<th>Student Name</th>
 			<th width='60'>%</th>
-		<% for assignment in @gradation.assignments %>
-			<th width='50' class='grade' id='<%= assignment.id %>'>
-				<span class='assign-name'><%= h assignment.name %></span><br />
-				<span class='assign-points'><%= h assignment.possible_points %></span><br />
-				<span class='assign-date'><%= h assignment.due_date.to_s(:due_date) if assignment.due_date %></span><br />
-			</th>
-		<% end %>
+			<% if @gradations.assignments.count == 0 then %>
+				<th>No Assignments Found</th>			
+			<% else %>
+				<% for assignment in @gradations.assignments %>
+					<th width='50' class='grade' id='<%= assignment.id %>'>
+						<span class='assign-name'><%= h assignment.name %></span><br />
+						<span class='assign-points'><%= h assignment.possible_points %></span><br />
+						<span class='assign-date'><%= h assignment.due_date.to_s(:due_date) if assignment.due_date %></span><br />
+					</th>
+				<% end %>
+			<% end %>
 			<th width='auto'></th>
 		</tr>
 	</thead>
 	<tbody>
+		<% if @gradations.students.count == 0 then %>
+			<tr><td>No Students Found</td></tr>
+		<% end %>
 		<% counter = 0 %>
-		<% number_of_students = @gradation.students.count %>
-		<% for student in @gradation.students %>
+		<% number_of_students = @gradations.students.count %>
+		
+		<%# Loop through all the students to build the TR data %>
+		<% for student in @gradations.students %>
 			<tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
 				<%= content_tag :td, student.full_name, :id => student.id %>
 				<td class='score'>0.0</td>
 				<% a_counter = counter + 1 %>
-				<% for assignment in @gradation.assignments %>
+				
+				<%# Now, loop through each assignment for the current student %>
+				<% for assignment in @gradations.assignments %>
 					<td class='grades'>
-						<% master_id = { :s => student.id, :a => assignment.id }.to_json %>
+						<%# Does this student already have a grade for this assignment? %>
 						<% if assignment.gradations[counter] %>
-							<%= text_field 'score', assignment.gradations[counter].points_earned, 
+							<%= text_field_tag 'score', assignment.gradations[counter].points_earned, 
 									:points	=> assignment.possible_points,
 									:name		=> 'grade',
 									:id			=> [:s => student.id, :a => assignment.id],
 									:tabindex	=> a_counter,
-									:size		=> '10' %>
+									:size		=> '5' %>
 						<% else %>
 							<%= text_field_tag 'score', '', 
 									:points	=> assignment.possible_points,
 									:name		=> 'grade', 
 									:id			=> [:s => student.id, :a => assignment.id],
 									:tabindex	=> a_counter,
-									:size		=> '10' %>
+									:size		=> '5' %>
 						<% end %>
 						<%= observe_field [:s => student.id, :a => assignment.id], 
 									:url			=> { :action => :update_grade },
@@ -57,19 +71,18 @@
 			</tr>
 			<% counter += 1 %>
 		<% end %>
-	
   </tbody>
 </table>
 </form>
 
 
-
 <script type="text/javascript">
+// Cause all the grades in the table to be recalculated
 function calculate() {
-	// Calculate each grade
 	$$('tr.calc').each(calcGrades);
 }
 
+// Calculate the grades in the table
 function calcGrades(row) {
   var totalscore;
   var grades;
@@ -94,14 +107,14 @@ function calcGrades(row) {
     	
     	// Make sure they didn't score more points than possible
     	if (score > points) {
-    		grade.addClassName('error');
+    		grade.addClassName('bad-grade');
 				if (!isNaN(score)) {
 					// Total up the percentage
 		      total += score / points;
 		      ++count;
 		     }			
     	} else {    	
-    		grade.removeClassName('error');
+    		grade.removeClassName('bad-grade');
 				if (!isNaN(score)) {
 					// Total up the percentage
 		      total += score / points;
@@ -152,5 +165,3 @@ function calcGrades(row) {
 	// Force a recalculation as soon as the HTML is loaded
   document.observe('dom:loaded', calculate);
 </script>
-
-

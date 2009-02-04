@@ -3,17 +3,17 @@
 one:
   student: tabatha
   assignment: fractions_quiz
-  flag: M
+  points_earned: M
 
 two:
   student: andrew
   assignment: fractions_quiz
-  points_earned: 7
+  points_earned: 7.0
 
 three:
   student: rich
   assignment: division_test
-  flag: E
+  points_earned: E
 
 four:
   student: andrew

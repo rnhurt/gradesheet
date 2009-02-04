@@ -3,8 +3,7 @@ class CreateGradations < ActiveRecord::Migration
     create_table :gradations do |t|
       t.integer :student_id
       t.integer :assignment_id
-      t.float :points_earned
-      t.string :flag
+      t.string :points_earned
 
       t.timestamps
     end
