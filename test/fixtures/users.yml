@@ -55,7 +55,7 @@ tammy:
   email: tammy@lkajsd.com
 
 tom:
-  type: Admin
+  type: Teacher
   site: nda
   short_name: 32
   first_name: Tom
