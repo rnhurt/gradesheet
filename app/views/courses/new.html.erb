@@ -7,19 +7,19 @@
 <div class="box">
 	<% form_for (@course) do |f| %>
 			<div class="spacer">
-			<%= content_tag( :h1, "New Course" ) %>
+				<%= content_tag( :h1, "New Course" ) %>
 			</div>
 
 			<label><span>Name</span>
-			<%= f.text_field :name, :class=>'input-text'  %>
+				<%= f.text_field :name, :class=>'input-text'  %>
 			</label>
 
 			<label><span>Grading Term</span>
-			<%= collection_select :course, :term_id, Term.find(:all), :id, :name %>
+				<%= collection_select :course, :term_id, Term.find(:all), :id, :name %>
 			</label>
 
 			<label><span>Grading Scale</span>
-			<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
+				<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
 			</label>
 
 			<div class="spacer">

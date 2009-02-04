@@ -77,8 +77,7 @@ class AssignmentsController < ApplicationController
     @assignment.destroy
 
     respond_to do |format|
-      format.html { redirect_to(assignments_url) }
-      format.xml  { head :ok }
+      format.html { redirect_to :action => 'show', :id => @assignment.course_id }
     end
   end
   

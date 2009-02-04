@@ -4,27 +4,28 @@
 
 <%= error_messages_for :course, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div class='span-10 last'>
+<div class='span-12 last box'>
 	<% form_for( @course, :url => {}, :html => {:id => 'edit_course'} ) do |f| %>
-		<%#= content_tag( :h1, "#{@course.name}" ) %>
+		<label><span class='required'>Name</span>
+			<%= f.text_field :name %>
+		</label>
 
-		<%= f.text_field :name %>
+		<label><span class='required'>Term</span>
+			<%= collection_select :course, :term_id, Term.find(:all), :id, :name %>
+		</label>
 		
-		<%#= collection_select :course, :course_type_id, CourseType.find(:all), :id, :name %>
-
-		<%= collection_select :course, :term_id, Term.find(:all), :id, :name %>
-
-		<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
-
+		<label><span class='required'>Grading Scale</span>
+			<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
+		</label>
 	<% end %>
+	
+	<div class="spacer">
+		<%= button_to 'Delete Course', @course, :confirm => 'Are you sure?', :method => :delete, :class=>'negative' %>
+		<%#= link_to 'Cancel', {:action=> 'index', :controller=> 'users/'+user.class.name.tableize}, :class => 'standard' %>
+	</div>
+
 	<%= observe_form :edit_course, :url => {:action => :update} %>
 </div>
-
-<div class='span-3 last'>
-	<%= button_to 'Delete Course', @course, :confirm => 'Are you sure?', :method => :delete %>
-</div>
-
-<hr>
 
 <div class='span-16 last'>
 	<form id='class_of_form'>

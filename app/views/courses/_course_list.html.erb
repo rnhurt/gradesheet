@@ -1,11 +1,13 @@
 <div id='course_list'>
 	<table id='courses' class='master'>
 		<thead>
-		  <th><%= link_to '+', new_course_path, :class => 'positive mini' if current_controller?("courses")%> Name
-		  	<%= "(#{@courses.length})" unless @courses.blank? %></th>
+		  <th>Name <%= "(#{@courses.length})" unless @courses.blank? %></th>
 		  <th>Term</th>
 		</thead>
 		<tbody>
+			<% if current_controller?('courses') then %>
+				<tr><td colspan='0'><%= link_to 'Add New Course', new_course_path, :class=>'standard' %></td></tr>
+			<% end %>
 			<% for course in @courses %>
 				<tr class="<%= cycle('odd', 'even') + (current_page?(:id => course) ? ' current' : '') %>" 
 						onclick="location.href='<%= url_for( :action => :show, :id => course.id ) %>'"/>
