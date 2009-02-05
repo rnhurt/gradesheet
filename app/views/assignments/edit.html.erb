@@ -24,7 +24,11 @@
 			</label>
 		
 			<label><span>Due Date</span>
-				<%= f.calendar_date_select :due_date, :time => :false, :month_year => 'label', :buttons => :false %>
+				<%= f.calendar_date_select :due_date, 
+							:time => :false, 
+							:month_year => 'label', 
+							:buttons => :false, 
+							:embedded => false %>
 			</label>
 
 			<div class='spacer'>

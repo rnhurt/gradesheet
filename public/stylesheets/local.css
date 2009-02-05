@@ -94,7 +94,6 @@ form label span {
   font-weight:bold;
 }
 form .required {background: transparent url(/images/bullet_red.png) no-repeat scroll right center;}
-
 .bad-grade {background:#FBE3E4 none repeat scroll 0 0;border-color:#FBC2C4;color:#8A1F11;}
 
 /*** Buttons ***/

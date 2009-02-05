@@ -1,13 +1,13 @@
 <% content_for :left do %>
 
-<% new_years = Date.new(Date.today.year + 1, 1, 1) - Date.today %>
+	<% new_years = Date.new(Date.today.year + 1, 1, 1) - Date.today %>
 
-<h3 class='alt'>Upcoming Events</h3>
-<ul>
-	<%= content_tag :li, (new_years).to_s + (new_years == 1 ? ' day' : ' days') + ' until the New Year.' %>
-	<%= content_tag :li, '21 days until the end of this grading period.' %>
-	<%= content_tag :li, '91 days until the end of the school year.' %>
-</ul>
+	<h3 class='alt'>Upcoming Events</h3>
+	<ul>
+		<%= content_tag :li, (new_years).to_s + (new_years == 1 ? ' day' : ' days') + ' until the New Year.' %>
+		<%= content_tag :li, '21 days until the end of this grading period.' %>
+		<%= content_tag :li, '91 days until the end of the school year.' %>
+	</ul>
 
 <% end %>
 
