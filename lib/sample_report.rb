@@ -1,5 +1,5 @@
 class SampleReport
-	def self.draw()
+	def self.draw(params)
 
 
 poem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer purus lorem, eleifend nec, venenatis quis, congue nec, eros. Etiam odio erat, aliquam aliquam, ultricies non, interdum vehicula, ligula. Proin ut dolor vel massa interdum vulputate. Praesent ac est. Duis justo tellus, fringilla sed, suscipit id, vulputate vitae, urna. Curabitur lobortis bibendum massa. Integer tellus justo, viverra et, pulvinar ac, tempor sit amet, orci. Fusce a lacus. Etiam consectetur, lorem ac sollicitudin pharetra, mauris turpis adipiscing ante, ut faucibus dui lorem luctus erat. Sed quis justo ac tortor condimentum tincidunt. Cras ut mi at urna elementum luctus. Vivamus vel orci ac enim ultrices ullamcorper. Quisque lacinia tincidunt ipsum. Nullam ac libero et pede volutpat pretium. Nunc vulputate tristique massa. Vivamus venenatis ullamcorper arcu. Donec tincidunt, urna ac ultrices condimentum, lorem magna dignissim tellus, ac tempor lacus enim nec ligula. Sed non libero id nulla lobortis lacinia. "
