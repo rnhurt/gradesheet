@@ -19,6 +19,7 @@ class ReportsController < ApplicationController
 				redirect_to :action => :index
 			end
 
+			
 			format.pdf do
 				begin
 					# Make sure that this is a valid report
