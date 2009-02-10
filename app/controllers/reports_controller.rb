@@ -13,9 +13,14 @@ class ReportsController < ApplicationController
 	end
 	
 	def show
+	
+		params[:student] = Student.find(params[:student_id])
+		params[:grades] = Gradation.find_all_by_student_id(params[:student_id])
+		params[:courses] = Course.find_yomama(params[:student_id])
+		
 		respond_to do |format|
 			format.html	do
-				flash[:notice] = "Can't build report '#{params[:id]}'"
+				flash[:error] = "Can't build report '#{params[:id]}'"
 				redirect_to :action => :index
 			end
 
