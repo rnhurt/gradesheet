@@ -5,7 +5,7 @@ class ReportCard
 
 	<form action="/reports/report_card.pdf" method="get">
 		<label><span class='required'>Student ID</span>
-			<input class="input-text" id="student_id" name="student[short_name]" size="30" type="text" value="34389479" />
+			<input class="input-text" id="student_id" name="student_id" size="30" type="text" value="343839479" />
 		</label>
 	
 		
