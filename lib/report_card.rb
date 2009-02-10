@@ -1,4 +1,21 @@
 class ReportCard
+	def self.get_params()
+		# Build the parameter screen
+		params = <<-EOS
+
+	<form action="/reports/report_card.pdf" method="get">
+		<label><span class='required'>Student ID</span>
+			<input class="input-text" id="student_id" name="student[short_name]" size="30" type="text" value="34389479" />
+		</label>
+	
+		
+		<div class="spacer">
+			<input class="positive" name="commit" type="submit" value="Run Report" />
+		</div>
+	</form>
+EOS
+
+	end
 
 	def self.draw(params)
 

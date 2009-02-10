@@ -1,11 +1,7 @@
 <% content_for :left do %>
-	<%= show_course_list %>
+	<%= render :partial => 'report_list' %>
 <% end %>
 
 <h2>Choose your report</h2>
 
-<ul>
-	<li><a href='reports/sample_report.pdf'>Sample Report</a> - A sample report</li>
-	<li><a href='reports/sample_report.pdf'>Sample Report</a> - An example report card</li>
-	<li><a href='reports/report_card.pdf?student_id=343839479'>Report Card</a> - A report card for student 'Andrew Hurt'</li>
-</ul>	
+<p>Choose the desired report from the list at the left side of the screen.</p>
