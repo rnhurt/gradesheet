@@ -47,16 +47,30 @@ def self.draw(params)
 	# Make it so we don't have to use pdf. everywhere.  :)
 	pdf.instance_eval do
 
+	# Build the footer
+	footer margin_box.bottom_left do 
+		font "Helvetica", :size => 7
+	 	fill_color "555555"
+    stroke_horizontal_rule
+
+    move_down(5)
+    mask(:y) { text "page #{page_count}", :align => :right }
+    mask(:y) { text "#{Date.today.to_s(:long)}", :align => :left }
+	end   
+
+
 	# Build a table of students
 	students.group_by(&:homeroom).sort.each do |homeroom|
 		start_new_page
+		
 		# Print the HEADER
-		mask(:y) { text "Date: " + Date.today.to_s(:short), :align => :left, :size => 7 }	
-		mask(:y) { text "Page: " + page_count.to_s, :align => :right, :size => 7 }	
+		fill_color "000000"
+		stroke_color "000000"
+		mask(:y) {text "Student count: #{homeroom[1].count}", :align => :right, :size => 7}
 		text "Homeroom (#{homeroom[0]})", :align => :center, :size => 20
-		text "Total number of students: #{homeroom[1].count}", :align => :center, :size => 7
 		move_down 5
 		
+		# Print the table of students in this homeroom
 		data = homeroom[1].map { |h| ["#{h.first_name} #{h.last_name}"] }
 		table data, 
 				:border_style	=> :grid, 
@@ -64,7 +78,7 @@ def self.draw(params)
 				:row_colors		=> ["DBDBDB", "FFFFFF"],
 				:width				=> bounds.width
 	end 
-		
+	
 	# Render the document
 	render 
 	
