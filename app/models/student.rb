@@ -13,6 +13,9 @@ class Student < User
 
 	# FIXME
 	named_scope	:courses, :joins => :courses
-	
+
+	def self.find_homerooms(*args)
+		return Student.find(:all, :select => 'homeroom', :group => 'homeroom', :conditions => "homeroom > ''").map { |h| h.homeroom }
+	end	
 
 end

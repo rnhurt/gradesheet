@@ -1,0 +1,17 @@
+<% reports = [
+		{:name => 'Report Card (Param)', :url => '/reports/report_card'},
+		{:name => 'Student Roster', :url => '/reports/student_roster'},
+		{:name => 'Report Card', :url => '/reports/report_card?student_id=34389479'}]%>
+		
+<table>
+	<thead>
+		<th>Reports</th>
+	</thead>
+	<tbody>
+		<% reports.each do |r| %>
+			<tr class="<%= cycle('odd', 'even')%>">
+				<td><a href='<%= r[:url]%>'><%= r[:name] %></a></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
