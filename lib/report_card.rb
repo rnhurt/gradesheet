@@ -1,14 +1,49 @@
 class ReportCard
+	# This report will print a standard report card on LEGAL sized paper.  It can
+	# print a single student or an array of students (i.e. a whole class) and will
+	# separate each report into even number of pages so that duplex printing will
+	# be possible.
+	
 	def self.get_params()
 		# Build the parameter screen
-		params = <<-EOS
+		
+		# Allow the user to select a single student or multiple students.
+		students	= Student.find(:all)
+		homerooms	= Student.find_homerooms()
+		
+params = <<-EOS
 
 	<form action="/reports/report_card.pdf" method="get">
-		<label><span class='required'>Student ID</span>
-			<input class="input-text" id="student_id" name="student_id" size="30" type="text" value="343839479" />
-		</label>
-	
+		<label><span>Homeroom</span>
+		<select size='1' id="homeroom_id" name="homeroom_id">
+EOS
+
+		# List each homeroom
+		homerooms.each do |h|
+			params += "<option value='#{h}'>#{h}</option>"
+		end
 		
+params += <<-EOS
+		</select>
+		</label>
+
+		<label><span>&nbsp;</span>
+		 OR
+		</label>
+
+		<label><span>Student(s)</span>
+		<select multiple size="7" id="student_id" name="student_id">
+EOS
+
+		# List all of the students in the school
+		students.each do |s|
+			params += "<option value='#{s[:id]}'>#{s[:first_name]}</option>"
+		end
+				
+params += <<-EOS
+		</select>
+		</label>
+
 		<div class="spacer">
 			<input class="positive" name="commit" type="submit" value="Run Report" />
 		</div>
@@ -18,6 +53,14 @@ EOS
 	end
 
 	def self.draw(params)
+	
+	# Gather the required data from the database
+		# the user info
+		student = Student.find(params[:student_id], :include => :courses)
+		
+		# the courses they are enrolled in
+		# the assignments they were responsible for
+		# the grades for those assignments
 
 	# Create a new document
   pdf = Prawn::Document.new :page_size => "LEGAL", :skip_page_creation => false
@@ -89,7 +132,7 @@ EOS
 
 	# Print the grades for each class
 	course_counter = 0
-	courses = params[:courses].count
+	courses = 6
 	courses.times do
 		# We have limited space on the page so we can only print 3 sets of 
 		# grades on each page.  
@@ -104,7 +147,8 @@ EOS
 	mask(:y) {
 		# Print a class on the left side of the paper...
 		span(bounds.width/2, :position => :left) do
-			headers = ["#{params[:courses][course_counter][:name]}\n#{params[:courses][course_counter][:teacher_id]}", "1", "2", "3", "AVG"]
+#			headers = ["#{params[:courses][course_counter][:name]}\n#{params[:courses][course_counter][:teacher_id]}", "1", "2", "3", "AVG"]
+			headers = ["SPELLING/VOCABULARY\nMrs. S. Vowels", "1", "2", "3", "AVG"]
 			data = [
 				["\t\tApplication","A","B"," ","B"],
 				["\t\tTest/quizes","B","B"," ","B"],
@@ -158,7 +202,7 @@ EOS
 
 	start_new_page
 	cell [0,bounds.height-50], :width => bounds.width,
-		:text => params[:course].to_s
+		:text => 'YOMAMA'
 	
 end # instance_eval
 

@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
 	belongs_to	:site
-	has_many		:courses, :through => :enrollment
-	has_many		:gradations
+#	has_many		:gradations
 	has_many		:comments
+#	has_many		:courses, 		:through	=> :enrollment
+#	has_many		:assignments,	:through	=> :gradations
 	
 	validates_length_of			:first_name, :in => 1..20
 	validates_length_of			:last_name, :in => 1..20

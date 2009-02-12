@@ -24,5 +24,7 @@
 	<%= @report.get_params() %>
 </div>
 
+<% student = Student.find("76558238", :include => [:courses, :gradations]) %>
 
-<%= debug @cached_reports %>
+<%= debug student %>
+

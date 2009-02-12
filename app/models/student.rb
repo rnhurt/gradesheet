@@ -1,6 +1,12 @@
 class Student < User
-	has_many	:enrollments
-	has_many	:courses, :through => :enrollments
+	has_many		:enrollments
+	has_many		:gradations
+#	has_many		:comments
+	has_many		:courses, 		:through	=> :enrollments
+	has_many		:assignments,	:through	=> :gradations
+
+
+
 
 	validates_length_of	:homeroom, :maximum => 20
 	

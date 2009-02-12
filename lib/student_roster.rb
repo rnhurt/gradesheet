@@ -25,7 +25,7 @@ EOS
 		</label>
 			
 		<div class="spacer">
-			<input class="positive" name="commit" type="submit" value="Build Roster" />
+			<input class="positive" type="submit" value="Run Report" />
 		</div>
 	</form>
 EOS
@@ -42,7 +42,7 @@ def self.draw(params)
 	end	
 
 	# Create a new document
-  pdf = Prawn::Document.new (:skip_page_creation => true)
+  pdf = Prawn::Document.new (:skip_page_creation => true, :page => "LETTER")
 
 	# Make it so we don't have to use pdf. everywhere.  :)
 	pdf.instance_eval do
