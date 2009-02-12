@@ -23,15 +23,3 @@
 <div class='box last'>
 	<%= @report.get_params() %>
 </div>
-
-<% student = Student.find("76558238") %>
-
-<h2>Displaying <%#= student.courses.count %> items</h2>
-<% student.courses.each_with_index do |course, index| %>
-	<%= index %>: <%= course.name if course != nil %> <br />
-<% end %>
-
-<%= debug student.courses.each_with_index {|course, i| i} %>
-
-<%#= debug student %>
-

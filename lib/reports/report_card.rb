@@ -139,7 +139,7 @@ EOS
 	# Print the grades for each class
 	student.courses.each_with_index do |course, index|
 		# Build the header and data information for this course
-		headers = ["#{course.name}\n  #{course.teacher.full_name}", "1\nA", "2\nB", "3\n ", "AVG"]
+		headers = ["#{course.name}\n  #{course.teacher.full_name} - #{course.term.name}", "1\nA", "2\nB", "3\n ", "AVG"]
 		data = [
 			["Application","A","B"," ","B"],
 			["Test/quizes","B","B"," ","B"],

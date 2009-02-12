@@ -47,3 +47,17 @@ music-t1:
   grading_scale: s
   course_att_id: 1
 
+spelling-t1:
+  name: Spelling
+  teacher_id: 1070
+  term: t1
+  grading_scale: s
+  course_att_id: 1
+
+spelling-t2:
+  name: Spelling
+  teacher_id: 1070
+  term: t2
+  grading_scale: s
+  course_att_id: 1
+
