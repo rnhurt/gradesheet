@@ -6,19 +6,14 @@ class Term < ActiveRecord::Base
 	validates_length_of		:name, :within => 1..20	
 
 
-	def self.find_active(*args)
-		## Find all terms that are currently active
-		with_scope :find => { :conditions => { :active => true } } do
-			find(*args)
-		end
+	def self.find_active()
+		# Find all terms that are currently active
+		find(:all, { :conditions => { :active => true } })
 	end
 
-	def self.find_current(*args)
-		## Find the current term
-		with_scope :find => { :conditions => { Date.today => :begin_date .. :end_date } } do
-			find(*args)
-		end
+	def self.find_current()
+		# Find the current term
+		find(:all, :conditions => ["? BETWEEN begin_date and end_date ", Date.today])
 	end
-	
 	
 end
