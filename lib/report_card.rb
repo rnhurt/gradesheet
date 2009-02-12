@@ -10,10 +10,24 @@ class ReportCard
 		# Allow the user to select a single student or multiple students.
 		students	= Student.find(:all)
 		homerooms	= Student.find_homerooms()
+		terms	= Term.find(:all)
 		
 params = <<-EOS
 
 	<form action="/reports/report_card.pdf" method="get">
+		<label><span>Grading Period</span>
+		<select size='1' id="term_id" name="term_id">
+EOS
+
+		# List each active grading period
+		terms.each do |t|
+			params += "<option value='#{t.id}'>#{t.name}</option>"
+		end
+
+params += <<-EOS
+		</select>
+		</label>
+
 		<label><span>Homeroom</span>
 		<select size='1' id="homeroom_id" name="homeroom_id">
 EOS
@@ -55,45 +69,39 @@ EOS
 	def self.draw(params)
 	
 	# Gather the required data from the database
-		# the user info
-		student = Student.find(params[:student_id], :include => :courses)
-		
-		# the courses they are enrolled in
-		# the assignments they were responsible for
-		# the grades for those assignments
-
+	student = Student.find(params[:student_id])
+	
 	# Create a new document
   pdf = Prawn::Document.new :page_size => "LEGAL", :skip_page_creation => false
 
-	# Make it so we don't have to use pdf. everywhere.  :)
+	# Make it so we don't have to use the 'pdf.' prefix everywhere.  :)
 	pdf.instance_eval do
 
 	# Build the header
 	header margin_box.top_left do 
 		font "Helvetica", :size => 7
 		text "ARCHDIOCESE OF LOUISVILLE", :size => 9
-		text "Report Card", :align => :center, :size => 9
+		text "Report Card", :align => :center, :size => 10
 		mask(:y) { text "Grade: 7S", :align => :center }
-		mask(:y) { text "Date Run: " + Date.today.to_s, :align => :right }
-		text "Student: #{params[:student][:last_name]}, #{params[:student][:first_name]}", :align => :left
+		text "Student: #{student.full_name}", :align => :left, :size => 10
 	end
 	# Build the footer
 	footer margin_box.bottom_left do 
 		font "Helvetica", :size => 7
 	 	fill_color "555555"
+	 	stroke_color "555555"
     stroke_horizontal_rule
 
     move_down(5)
-    mask(:y) { text "footer", :align => :center }
-    mask(:y) { text "page #", :align => :right }
-    mask(:y) { text "title", :align => :left }
+    mask(:y) { text "page #{page_count}", :align => :right }
+		mask(:y) { text Date.today.to_s(:long), :align => :left }
+ 	 	fill_color "000000"
+ 	 	stroke_color "000000"
 	end   
 	
 	# Show grading keys
 	bounding_box([10,bounds.height-50], :width => bounds.width-20, :height => 85) do
-#		fill_color "C0C0C0"
 		stroke_rectangle [bounds.left-2,bounds.top+2], bounds.width, bounds.height
-#		fill_color "000000"
 
 		font "Helvetica"
 		text_options.update(:size => 7, :align => :left)
@@ -105,8 +113,6 @@ EOS
 				text "C - Understanding of subject matter and demonstration of skills is Adequate (75% and above)"
 				text "D - Difficulty understanding of subject matter and demonstration of skills (70% and above)"
 				text "U - Understanding of subject matter and demonstration of skills is Inadequate (below 70%)"
-				
-#			stroke_bounds
 		end			
 		
 		# Subheadings	
@@ -131,79 +137,53 @@ EOS
 	end	
 
 	# Print the grades for each class
-	course_counter = 0
-	courses = 6
-	courses.times do
-		# We have limited space on the page so we can only print 3 sets of 
-		# grades on each page.  
-		# TODO: The number of grades that will fit on a page should be dynamic,
-		# 			that is a hard problem to solve and this works well enough for now.
-		if course_counter.modulo(3) == 0 && course_counter > 0
-			# Start a new page and move down to avoid the header
-			start_new_page
-			move_down 50
-		end
+	student.courses.each_with_index do |course, index|
+		# Build the header and data information for this course
+		headers = ["#{course.name}\n  #{course.teacher.full_name}", "1\nA", "2\nB", "3\n ", "AVG"]
+		data = [
+			["Application","A","B"," ","B"],
+			["Test/quizes","B","B"," ","B"],
+			["Test/quizes","B","B"," ","B"],
+			["Test/quizes","B","B"," ","B"],
+			["Class participation","C","C"," ","C"],
+			["Projects/activities","A","A"," ","A"],
+			["Homework","C","C"," ","C"],
+			["Work ethic","C","C"," ","C"],
+			["Behavior","C","C"," ","C"],
+			[" "," "," "," "," "],
+			[" "," "," "," "," "]
+		]
 
-	mask(:y) {
-		# Print a class on the left side of the paper...
-		span(bounds.width/2, :position => :left) do
-#			headers = ["#{params[:courses][course_counter][:name]}\n#{params[:courses][course_counter][:teacher_id]}", "1", "2", "3", "AVG"]
-			headers = ["SPELLING/VOCABULARY\nMrs. S. Vowels", "1", "2", "3", "AVG"]
-			data = [
-				["\t\tApplication","A","B"," ","B"],
-				["\t\tTest/quizes","B","B"," ","B"],
-				["\t\tTest/quizes","B","B"," ","B"],
-				["\t\tTest/quizes","B","B"," ","B"],
-				["\t\tClass participation","C","C"," ","C"],
-				["\t\tProjects/activities","A","A"," ","A"],
-				["\t\tHomework","C","C"," ","C"],
-				["\t\tWork ethic","C","C"," ","C"],
-				["\t\tBehavior","C","C"," ","C"],
-				[" "," "," "," "," "],
-				[" "," "," "," "," "]
-			]
-
-			table data, :headers => headers,
-				:header_color => "C0C0C0",
-				:font_size	=> 7,
-				:border_style	=> :grid,
-				:border_width	=> 0.5,
-				:width	=> bounds.width-10
+		# Print even course numbers in the left column, odd numbers in the right
+		if index.even?
+			mask (:y) {
+				span(bounds.width/2, :position => :left) do
+					table data, :headers => headers,
+						:header_color => "C0C0C0",
+						:font_size	=> 7,
+						:border_style	=> :grid,
+						:border_width	=> 0.5,
+						:width	=> bounds.width-10
+				end
+		}
+		else
+			span(bounds.width/2, :position => :right) do
+				table data, :headers => headers,
+					:header_color => "C0C0C0",
+					:font_size	=> 7,
+					:border_style	=> :grid,
+					:border_width	=> 0.5,
+					:width	=> bounds.width-10
+			end
 		end
-	}
-#		break if params[:courses][course_counter+1]?
 		
-		# Now print a class on the right hand side of the paper
-		span(bounds.width/2, :position => :right) do
-			headers = ["SPELLING/VOCABULARY\nMrs. S. Vowels", "1", "2", "3", "AVG"]
-			data = [
-				["\t\tApplication","A","B"," ","B"],
-				["\t\tTest/quizes","B","B"," ","B"],
-				["\t\tTest/quizes","B","B"," ","B"],
-				["\t\tTest/quizes","B","B"," ","B"],
-				["\t\tClass participation","C","C"," ","C"],
-				["\t\tProjects/activities","A","A"," ","A"],
-				["\t\tHomework","C","C"," ","C"],
-				["\t\tWork ethic","C","C"," ","C"],
-				["\t\tBehavior","C","C"," ","C"],
-				[" "," "," "," "," "],
-				[" "," "," "," "," "]
-			]
-
-			table data, :headers => headers,
-				:header_color => "C0C0C0",
-				:font_size	=> 7,
-				:border_style	=> :grid,
-				:border_width	=> 0.5,
-				:width	=> bounds.width-10
-		end
-		course_counter += 1
+	# Try not to overflow into the next page
+	if cursor < 200
+		start_new_page
+		move_down 50 		# make room for the header
 	end
-
-	start_new_page
-	cell [0,bounds.height-50], :width => bounds.width,
-		:text => 'YOMAMA'
 	
+	end	# each course
 end # instance_eval
 
 		
