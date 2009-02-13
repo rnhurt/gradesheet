@@ -3,8 +3,6 @@ class AssignmentsController < ApplicationController
 
 	
   def index
-    @terms = Term.find(:all)
-
     respond_to do |format|
       format.html # index.html.erb
     end

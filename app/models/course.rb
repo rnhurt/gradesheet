@@ -15,13 +15,7 @@ class Course < ActiveRecord::Base
 	# FIXME
 	#	validates_uniqueness_of :teacher, :scope => [:term, :course]
 
-
-	# FIXME
-	named_scope	:students, :joins => :students, :conditions => { :course_id => 666 }
-
-	# Find all the courses for a given student
-	def self.find_yomama(student_id)
-		find_by_sql ["select * from users, gradations, assignments, courses where users.id = ? and users.id = gradations.student_id and assignments.id = gradations.assignment_id and courses.id = assignments.course_id;", student_id ]
-	end
-	
+	# Courses are considered "active" only if they are in a grading term 
+	# that is "active".
+	named_scope :active, :conditions	=> "terms.active = 't'"
 end
