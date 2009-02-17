@@ -12,6 +12,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :gradations, :member => { :update_grade => :post }
   map.resources :courses, :member => { :add_student => :post, :remove_student => :delete }
   map.resources :reports
+
+  map.connect 'settings/terms', :controller => 'settings', :action => 'terms', :conditions => { :method => :get }
+
+  map.resources :settings
 	
   map.root :controller => "dashboard"
 end

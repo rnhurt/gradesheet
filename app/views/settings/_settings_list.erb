@@ -1,0 +1,16 @@
+<% items = [
+		{:name => 'Grading Terms', :url => '/settings/terms'},
+		{:name => 'School Calendar', :url => '/settings/calendar'}]%>
+		
+<table>
+	<thead>
+		<th>Settings</th>
+	</thead>
+	<tbody>
+		<% items.each do |r| %>
+			<tr class="<%= cycle('odd', 'even')%>">
+				<td><a href='<%= r[:url]%>'><%= r[:name] %></a></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
