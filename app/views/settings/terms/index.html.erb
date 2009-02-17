@@ -1,0 +1,25 @@
+<% content_for :left do %>
+	<%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<h2>Grading Periods</h2>
+<table>
+	<thead>
+		<th>School Year</th>
+		<th>Terms</th>
+		<th>Begin Date</th>
+		<th>End Date</th>
+	</thead>
+	<tbody>
+		<% for term in @terms %>
+			<tr class="<%= cycle('odd', 'even')%>">
+				<td><%= link_to term.school_year %></td>
+				<%= content_tag :td, term.total_terms %>
+				<%= content_tag :td, term.begin_date %>
+				<%= content_tag :td, term.end_date %>
+			</tr>
+		<% end %>
+
+	</tbody>
+</table>
+

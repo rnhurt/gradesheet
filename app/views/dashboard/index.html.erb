@@ -1,14 +1,11 @@
 <% content_for :left do %>
-
-	<% new_years = Date.new(Date.today.year + 1, 1, 1) - Date.today %>
-
 	<h3 class='alt'>Upcoming Events</h3>
 	<ul>
-		<%= content_tag :li, (new_years).to_s + (new_years == 1 ? ' day' : ' days') + ' until the New Year.' %>
-		<%= content_tag :li, '21 days until the end of this grading period.' %>
-		<%= content_tag :li, '91 days until the end of the school year.' %>
+		<%= content_tag :li, "#{distance_of_time_in_words_to_now(Time.now.end_of_year).capitalize} until New Year's Day." %>
+		<%= content_tag :li, "#{distance_of_time_in_words_to_now(Term.current[0].end_date).capitalize} until the end of this grading period." %>
+		<%= content_tag :li, '&lt;unknown&gt; days until the end of the school year.' %>
 	</ul>
-
+	
 <% end %>
 
 <h2>Welcome to the Gradesheet program.</h2>
