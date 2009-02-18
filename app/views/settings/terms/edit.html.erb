@@ -1,0 +1,39 @@
+<% content_for :left do %>
+	<%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for :term, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
+
+<div class='box'>
+<% form_for "term[]", :html => {:method => :put}, :url => {:action => :update} do |f| %>
+	<label><span class='required'>School Year</span>
+		<input id="school_year" name="school_year" size="10" type="text" value="<%= @terms[0][:school_year] %>" />
+	</label>
+	
+	<div class='spacer'>&nbsp;</div>
+	
+	<table>
+		<thead>
+			<th>Term Name</th>
+			<th>Begin Date</th>
+			<th>End Date</th>
+			<th>Active</th>
+		</thead>
+		<tbody>
+			<% for @term in @terms %>
+				<tr class='<%= cycle('even', 'odd')%>'>		
+					<td><%= f.text_field :name, :size => 10 %></td>
+					<td><%= f.date_select :begin_date %></td>
+					<td><%= f.date_select :end_date %></td>
+					<td><%#= f.select('@term', 'active', [["Yes",true],["No",false]]) %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+		
+		<div class="spacer">
+			<%= submit_tag 'Save Model', :class => 'positive' %>
+			<%= link_to 'Cancel', {}, :class => 'standard' %>
+		</div>
+<% end %>
+</div>

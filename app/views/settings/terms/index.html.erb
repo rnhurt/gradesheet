@@ -13,7 +13,7 @@
 	<tbody>
 		<% for term in @terms %>
 			<tr class="<%= cycle('odd', 'even')%>">
-				<td><%= link_to term.school_year %></td>
+				<td><%= link_to term.school_year, edit_term_path(term.school_year) %></td>
 				<%= content_tag :td, term.total_terms %>
 				<%= content_tag :td, term.begin_date %>
 				<%= content_tag :td, term.end_date %>

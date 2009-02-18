@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 #	has_many		:courses, 		:through	=> :enrollment
 #	has_many		:assignments,	:through	=> :gradations
 	
+	validates_length_of			:short_name, :maximum => 20
 	validates_length_of			:first_name, :in => 1..20
 	validates_length_of			:last_name, :in => 1..20
 	validates_existence_of 	:site
