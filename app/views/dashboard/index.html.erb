@@ -8,27 +8,43 @@
 	
 <% end %>
 
-<h2>Welcome to the Gradesheet program.</h2>
+<h2>Welcome to <%= SITE_NAME %>!</h2>
 
-<p>
-This is a pre-Beta version of the GradeSheet software.  All of the data here is
+<p>This is a pre-Beta version of the <%= SITE_NAME %> software.  All of the data here is
 generated and most of it is non-sensical.  However, it is a starting point and 
 should give you enough 'things' to be able to excercise the program a little bit.
 Please, take a look around and push all the buttons.  You can't hurt anything here.
 If you find something interesting, please <a href='mailto:gradesheet@kangaroobox.com'>let us know about it</a>.</p>
 
-<p>
+<dl>
+  <dt>NOTE:<dd>You are automatically logged in as a teacher named 'Kim Hurt'.  Someday soon you
+	  will be able to log into the system as a Student, Teacher Assistant or another
+	  Teacher.</dd>
+</dl>
+
+<address>
 Thank you!<br />
 KangarooBox, LLC.
-</p>
+</address>
 
-<h2>Latest News</h2>
+
+<h3>Latest News - Feb. 19, 2009</h3>
 <ul>
-  <li>The <a href='/courses'>Courses</a> page has been heavily reworked.  Please play
-  	with it a little bit to see how it works.  </li>
-  <li>You are automatically logged in as a teacher named 'Kim Hurt'.  Someday soon you
-	  will be able to log into the system as a Student, Teacher Assistant or another
-	  Teacher.</li>
+  <li>The <%= link_to "Settings", settings_path %> section is getting heavy attention right
+  now and we hope to be fully operational within the week.  It is already looking pretty
+  good and you should be able to edit the grading period with abandon.  Notice that when
+  you deactivate a particular grading period all the courses that are in that period are
+  no longer editable.</li>
+  <li>The left side columns are actually computing real dates now based on the grading periods.
+  So if you come back tomorrow the numbers should change.  Very cool!</li>
+</ul>
+
+<h3>News - Feb. 13, 2009</h3>
+<ul>
+  <li>The <%= link_to "Reports", reports_path %> page is now up and working. 
+  		The "Student Roster" report shows a listing of every student in every class. 
+  		The "Report Card" report is in heavy development and
+  		will be available for testing in the next week or so.</li>
   <li>I am trying a couple of new things with the left side column on this page.  How do you
   	like them?  What would you like to see there?</li>
 </ul>
