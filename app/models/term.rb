@@ -13,6 +13,7 @@ class Term < ActiveRecord::Base
 	# is in order before we save any data.
 	validate do |dates|
 		dates.begin_before_end
+		# dates.period_overlap
 	end
 
 
@@ -30,18 +31,12 @@ class Term < ActiveRecord::Base
 	# Make sure that the BEGIN date is earlier than the END date
 	def begin_before_end
 		errors.add_to_base("End Date must be after the Begin Date") if begin_date >= end_date
-	end
+	end	
 	
-	# Delete the term from the database
-	def delete=(params)
-		if courses.empty?
-	    @term = Term.find(self[:id])
-  	  @term.destroy
-		else
-			errors.add_to_base "Cannot delete term because it has one or more Courses"
-			return false
-		end
-	end
-	
-	
+	# Make sure that no period date overlap another period
+	def period_overlap
+		# TODO: 
+		#errors.add_to_base("Period dates cannot overlap another period") if <some magic>
+	end	
+
 end
