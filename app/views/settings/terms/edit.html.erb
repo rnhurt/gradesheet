@@ -2,7 +2,7 @@
 	<%= render :partial => 'settings/settings_list' %>
 <% end %>
 
-<%= error_messages_for :term, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
+<%= error_messages_for "term" %>
 
 <div class='box'>
 <% form_for "term[]", :html => {:method => :put}, :url => {:action => :update} do |f| %>
@@ -18,6 +18,7 @@
 			<th>Begin Date</th>
 			<th>End Date</th>
 			<th>Active</th>
+			<th>Delete?</th>
 		</thead>
 		<tbody>
 			<% for @term in @terms %>
@@ -25,7 +26,8 @@
 					<td><%= f.text_field :name, :size => 10 %></td>
 					<td><%= f.date_select :begin_date %></td>
 					<td><%= f.date_select :end_date %></td>
-					<td><%#= f.select('@term', 'active', [["Yes",true],["No",false]]) %></td>
+					<td><%= f.check_box :active %></td>
+					<td><input type="checkbox" id="term_delete" name="term[<%= @term.id %>][delete]" value="1" /></td>
 				</tr>
 			<% end %>
 		</tbody>
@@ -33,7 +35,7 @@
 		
 		<div class="spacer">
 			<%= submit_tag 'Save Model', :class => 'positive' %>
-			<%= link_to 'Cancel', {}, :class => 'standard' %>
+			<%= link_to 'Cancel', terms_path(), :class => 'standard' %>
 		</div>
 <% end %>
 </div>

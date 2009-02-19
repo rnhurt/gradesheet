@@ -3,7 +3,7 @@ class Term < ActiveRecord::Base
 #	has_many :comments
 
 	validates_presence_of	:name
-	validates_length_of		:name, :within => 1..20	
+	validates_length_of		:name, :within => 1..20
 
 	validates_presence_of	:school_year
 	validates_length_of		:school_year, :within => 1..20	
@@ -27,16 +27,21 @@ class Term < ActiveRecord::Base
 	named_scope	:current, :conditions => ["? BETWEEN begin_date and end_date ", Date.today]
 		
 		
+	# Make sure that the BEGIN date is earlier than the END date
 	def begin_before_end
-#		errors.add_to_base("End Date must be after the Begin Date") # unless false
-		errors.add("begin_date", "must be before the End Date")
+		errors.add_to_base("End Date must be after the Begin Date") if begin_date >= end_date
 	end
-
-
-   def self.update_terms(terms)
-		terms.each do |term_id, attributes|
-			term = find(term_id.to_i)
-			return false if !term.update_attributes(attributes)
-     end
-   end	
+	
+	# Delete the term from the database
+	def delete=(params)
+		if courses.empty?
+	    @term = Term.find(self[:id])
+  	  @term.destroy
+		else
+			errors.add_to_base "Cannot delete term because it has one or more Courses"
+			return false
+		end
+	end
+	
+	
 end
