@@ -56,17 +56,28 @@ module ApplicationHelper
 	end
 
 
-	## Set the focus to a specific element on the page
+	# Set the focus to a specific element on the page
 	def set_focus_to_id(id)
 		javascript_tag("$('#{id}').focus()");
 		javascript_tag("$('#{id}').select()");
 	end
 
 
-	## Return the valid class_of date range
+	# We need to know the range of years that should be available for our users to
+	# choose from.  This application will be mainly used in schools that have
+	# a limited number of class years.  So we give the user a total of 14 years
+	# to work with; 1 before the current year, and 12 years after the current year.
 	def class_range
 		current_year = Time.now.year
 		return (current_year - 1..current_year + 13).to_a
+	end
+
+
+	# This method was built to overcome a weakness in current_page? as reported
+	# in http://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/805.
+	# Here we are overriding the controller_name, mostly used on the 'Courses' page.
+	def current_controller?(c)
+		controller.controller_name == c
 	end
 
 end

@@ -1,16 +1,17 @@
 <% items = [
 		{:name => 'Grading Periods', :url => '/settings/terms'},
 		{:name => 'Grading Scales', :url => '/settings/scales'},
-		{:name => 'School Calendar', :url => '/settings/calendar'}]%>
+		{:name => 'School Calendar', :url => '/settings/events'}]%>
 		
 <table>
 	<thead>
 		<th>Settings</th>
 	</thead>
 	<tbody>
-		<% items.each do |r| %>
-			<tr class="<%= cycle('odd', 'even')%>">
-				<td><a href='<%= r[:url]%>'><%= r[:name] %></a></td>
+		<% for item in items %>
+			<tr class="<%= cycle('odd', 'even') + (current_page?(:controller => item[:url]) ? ' current' : '') %>" 
+					onclick="location.href='<%= url_for(item[:url]) %>'">
+				<td><a href='<%= item[:url]%>'><%= item[:name] %></a></td>
 			</tr>
 		<% end %>
 	</tbody>

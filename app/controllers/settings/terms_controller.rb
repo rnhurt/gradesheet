@@ -1,6 +1,4 @@
 class Settings::TermsController < SettingsController
-  # GET /terms
-  # GET /terms.xml
   def index
     @terms = Term.find(:all, :order => "begin_date DESC")
 
@@ -9,8 +7,6 @@ class Settings::TermsController < SettingsController
     end
   end
 
-  # GET /terms/1
-  # GET /terms/1.xml
   def show
     @term = Term.find(params[:id])
 
@@ -19,30 +15,28 @@ class Settings::TermsController < SettingsController
     end
   end
 
-  # GET /terms/new
-  # GET /terms/new.xml
+
   def new
     @term = Term.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :action => :edit }
     end
   end
 
-  # GET /terms/1/edit
+
   def edit
     @term = Term.find(params[:id])
   end
 
-  # POST /terms
-  # POST /terms.xml
+
   def create
     @term = Term.new(params[:term])
 
     respond_to do |format|
       if @term.save
         flash[:notice] = 'Term was successfully created.'
-        format.html { redirect_to(@term) }
+        format.html { redirect_to :action => :index }
       else
         format.html { render :action => "new" }
       end

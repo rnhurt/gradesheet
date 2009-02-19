@@ -5,7 +5,7 @@
 <%= error_messages_for "term" %>
 
 <div class='box'>
-<% form_for @term, :html => {:method => :put}, :url => {:action => :update} do |f| %>
+<% form_for @term do |f| %>
 	<label><span class='required'>School Year</span>
 		<%= f.text_field :school_year %>
 	</label>
