@@ -10,14 +10,14 @@ t1:
   name: GP1
   begin_date: 2008/08/01
   end_date: 2008/11/17
-  active: false
+  active: true
 	
 t2:
   school_year: 2008-2009
   name: GP2
   begin_date: 2008/11/17
   end_date: 2009/03/28
-  active: false
+  active: true
 
 t3:
   school_year: 2008-2009

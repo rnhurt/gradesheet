@@ -1,4 +1,6 @@
 class Term < ActiveRecord::Base
+	before_destroy :ensure_no_children
+
 	has_many :courses
 #	has_many :comments
 
@@ -27,7 +29,7 @@ class Term < ActiveRecord::Base
 	# a new Course, running a report, etc. all show the user the current term.
 	named_scope	:current, :conditions => ["? BETWEEN begin_date and end_date ", Date.today]
 		
-		
+
 	# Make sure that the BEGIN date is earlier than the END date
 	def begin_before_end
 		errors.add_to_base("End Date must be after the Begin Date") if begin_date >= end_date
@@ -38,5 +40,21 @@ class Term < ActiveRecord::Base
 		# TODO: 
 		#errors.add_to_base("Period dates cannot overlap another period") if <some magic>
 	end	
+		
+##
+# Private Methods
+##
+private		
+
+
+	# We don't want the user to delete a grading term without first cleaning up
+	# any courses that use it.  This could cause a cascading effect wiping out
+	# a whole year of student data.	
+	def ensure_no_children
+		unless self.courses.empty?
+			self.errors.add_to_base "You must remove all Courses before deleting."
+			raise ActiveRecord::Rollback
+		end
+	end
 
 end

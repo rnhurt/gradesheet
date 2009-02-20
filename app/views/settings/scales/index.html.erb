@@ -2,5 +2,19 @@
 	<%= render :partial => 'settings/settings_list' %>
 <% end %>
 
-<h2>Grading Scales</h2>
-
+<table>
+	<thead>
+		<th>Name</th>
+		<th width='1'></th>		
+	</thead>
+	<tbody>
+		<tr><td colspan='0'><%= link_to "Add Scale", new_scale_path, :class => "positive" %></td></tr>
+		<% for scale in @scales %>
+			<tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%#= url_for(scale) + '/edit' %>'">
+				<td><%= link_to scale.name, edit_scale_path(scale) %></td>
+				<td><%= button_to 'Delete', scale_path(scale), :method => :delete, 
+										:confirm => "Are you sure you want to delete\n\n '" + scale.name + "'?" %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

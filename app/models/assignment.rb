@@ -1,4 +1,6 @@
 class Assignment < ActiveRecord::Base
+	before_destroy :ensure_no_children
+
 	belongs_to	:course
 	belongs_to	:assignment_type
 	has_many		:gradations
@@ -23,4 +25,20 @@ class Assignment < ActiveRecord::Base
 	def validate
 		errors.add(:due_date, "is invalid") if @due_date_invalid
 	end
+
+##
+# Private Methods
+##
+private		
+
+	# We don't want the user to delete an assignment without first cleaning up
+	# any grades that use it.  This could cause a cascading effect wiping out
+	# a whole year of student data.	
+	def ensure_no_children
+		unless self.gradations.empty?
+			self.errors.add_to_base "You must remove all Grades before deleting."
+			raise ActiveRecord::Rollback
+		end
+	end
+
 end

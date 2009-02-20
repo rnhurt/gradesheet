@@ -2,6 +2,8 @@
 	<%= render :partial => 'settings/settings_list' %>
 <% end %>
 
+<%= error_messages_for "term" %>
+
 <table>
 	<thead>
 		<th>School Year</th>
@@ -20,7 +22,9 @@
 				<%= content_tag :td, term.begin_date %>
 				<%= content_tag :td, term.end_date %>
 				<%= content_tag :td, ( check_box_tag :active, term.active, term.active, :disabled => true ) %>
-				<td><%= button_to 'Delete', term, :method => :delete, :confirm => "Are you sure you want to delete\n\n '" + term.name + "'?" %></td>
+				<td><%= button_to 'Delete', term, :method => :delete, 
+									:disabled => !term.courses.empty?,
+									:confirm => "Are you sure you want to delete\n\n '" + term.name + "'?" %></td>
 			</tr>
 		<% end %>
 	</tbody>
