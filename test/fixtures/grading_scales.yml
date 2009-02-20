@@ -3,3 +3,6 @@ s:
 
 pf:
   name: Pass/Fail
+  
+other:
+  name: Other

@@ -1,8 +1,8 @@
 class Course < ActiveRecord::Base
-	before_destroy :ensure_no_children
+	before_destroy 	:ensure_no_children
 
 	belongs_to	:teacher
-	belongs_to	:term, :counter_cache => true
+	belongs_to	:term
 	belongs_to	:grading_scale
 	has_many		:assignments
 	has_many		:enrollments
@@ -36,7 +36,5 @@ private
 			raise ActiveRecord::Rollback
 		end
 	end
-
-
 
 end

@@ -6,7 +6,6 @@ class CreateTerms < ActiveRecord::Migration
       t.date		:begin_date, :end_date
       t.boolean	:active
       
-			t.integer	:courses_count, :default => 0
       t.timestamps
     end
   end

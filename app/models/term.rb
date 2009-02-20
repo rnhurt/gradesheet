@@ -1,6 +1,6 @@
 class Term < ActiveRecord::Base
-	before_destroy :ensure_no_children
-
+	before_destroy	:ensure_no_children
+	
 	has_many :courses
 #	has_many :comments
 
@@ -40,7 +40,7 @@ class Term < ActiveRecord::Base
 		# TODO: 
 		#errors.add_to_base("Period dates cannot overlap another period") if <some magic>
 	end	
-		
+			
 ##
 # Private Methods
 ##
