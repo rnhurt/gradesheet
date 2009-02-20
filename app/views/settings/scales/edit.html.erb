@@ -1,0 +1,22 @@
+<% content_for :left do %>
+	<%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for "scale" %>
+
+<div class='box'>
+<% form_for :scale, @scale,
+		:url => { :action => :update }, :html => { :method => :put } do |f| %>
+	<%= f.error_messages %>
+	<label><span class='required'>Scale Name</span>
+		<%= f.text_field :name %>
+	</label>
+			
+	<div class="spacer">
+		<%= submit_tag 'Save', :class => 'positive' %>
+		<%= link_to 'Cancel', scales_path, :class => 'standard' %>
+	</div>
+<% end %>
+</div>
+
+<%= debug @scale %>
