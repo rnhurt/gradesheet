@@ -15,7 +15,7 @@
 			</label>
 
 			<label><span>Grading Term</span>
-				<%= collection_select :course, :term_id, Term.find(:all), :id, :name %>
+				<%= collection_select :course, :term_id, Term.active, :id, :name %>
 			</label>
 
 			<label><span>Grading Scale</span>
