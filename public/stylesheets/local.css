@@ -9,7 +9,8 @@ body {
 #header .tagline {
 	font-size: small;
 	font-weight: bolder;
-	color: #EEE;	
+	color: #EEE;
+	line-height: 0.5em;
 }
 #header .login {
 	color: #EEE;
@@ -27,7 +28,7 @@ body {
 	font-size: 0.8em;
 }
 
-.container .error, .container .notice, .container .success {padding:.5em;margin-bottom:1.1em;border:2px solid #ddd;}
+.container .error, .container .notice, .container .success {padding:0em;margin-bottom:1.1em;border:2px solid #ddd;}
 .container .error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
 .container .notice {background:#FFF6BF;color:#514721;border-color:#FFD324;}
 .container .success {background:#E6EFC2;color:#264409;border-color:#C6D880;}
