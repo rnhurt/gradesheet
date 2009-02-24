@@ -12,8 +12,11 @@ class CreateUsers < ActiveRecord::Migration
 
       t.timestamps
     end
-  end
 
+		# Add a UNIQUE index since there is a race condition possiblity here
+		add_index(:users, [:first_name, :last_name], :unique => true)
+  end
+	
   def self.down
     drop_table :users
   end

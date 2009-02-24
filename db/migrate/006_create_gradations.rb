@@ -8,8 +8,8 @@ class CreateGradations < ActiveRecord::Migration
       t.timestamps
     end
     
-    # Add a UNIQUE index since thier is a race condition in Rails
-		add_index(:gradations, [:student_id, :assignment_id], :unique => true)
+    # Add a UNIQUE index since there is a possible race condition here
+    add_index(:gradations, [:student_id, :assignment_id], :unique => true)
   end
 
   def self.down

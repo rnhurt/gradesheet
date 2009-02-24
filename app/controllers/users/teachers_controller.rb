@@ -40,12 +40,10 @@ class Users::TeachersController < ApplicationController
 
     respond_to do |format|
       if @teacher.save
-        flash[:notice] = 'Teacher was successfully created.'
-        format.html { redirect_to(@teacher) }
-        format.xml  { render :xml => @teacher, :status => :created, :location => @teacher }
+        flash[:notice] = "Teacher was '#{@teacher.full_name}' successfully created."
+        format.html { redirect_to(teachers_url) }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @teacher.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -56,12 +54,10 @@ class Users::TeachersController < ApplicationController
 
     respond_to do |format|
       if @teacher.update_attributes(params[:teacher])
-        flash[:notice] = 'Teacher was successfully updated.'
+        flash[:notice] = "Teacher was '#{@teacher.full_name}' successfully updated."
         format.html { redirect_to(teachers_url) }
-        format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @teacher.errors, :status => :unprocessable_entity }
       end
     end
   end
