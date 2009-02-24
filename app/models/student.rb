@@ -5,9 +5,6 @@ class Student < User
 	has_many		:courses, 		:through	=> :enrollments
 	has_many		:assignments,	:through	=> :gradations
 
-
-
-
 	validates_length_of	:homeroom, :maximum => 20
 	
 	from_year = Time.now.year - 1

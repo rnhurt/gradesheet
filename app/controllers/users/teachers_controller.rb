@@ -12,9 +12,8 @@ class Users::TeachersController < ApplicationController
 
 
   def show
-  ## We don't really want to show an individual teacher.
-  # 	@teacher = Teacher.find(params[:id], :include => :site)
-
+    # We don't really want to show an individual teacher but rather the listing
+    # of all teachers.
     respond_to do |format|
       format.html { redirect_to :action=>:index }
     end
