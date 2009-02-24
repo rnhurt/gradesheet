@@ -95,7 +95,9 @@ form label span {
   font-weight:bold;
 }
 form .required {background: transparent url(/images/bullet_red.png) no-repeat scroll right center;}
-.bad-grade {background:#FBE3E4 none repeat scroll 0 0;border-color:#FBC2C4;color:#8A1F11;}
+.grade-warning {background:#FFF6BF none repeat scroll 0 0;border-color:#FBC2C4;color:#514721;}
+               {background:#FFF6BF;color:#514721;border-color:#FFD324;}
+.grade-error {background:#FBE3E4 none repeat scroll 0 0;border-color:#FBC2C4;color:#8A1F11;}
 
 /*** Buttons ***/
 .positive{

@@ -1,5 +1,8 @@
 class GradationsController < ApplicationController
 	layout "standard"
+
+  def index
+  end
 	
   def show
     @gradations = Course.find(params[:id], :include => [:students, :gradations])

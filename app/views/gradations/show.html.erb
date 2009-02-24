@@ -26,142 +26,62 @@
 		</tr>
 	</thead>
 	<tbody>
+	  <%# Show a default message if there are no students in this course %>
 		<% if @gradations.students.count == 0 then %>
 			<tr><td>No Students Found</td></tr>
 		<% end %>
-		<% counter = 0 %>
-		<% number_of_students = @gradations.students.count %>
 		
-		<%# Loop through all the students to build the TR data %>
-		<% for student in @gradations.students %>
-			<tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
-				<%= content_tag :td, student.full_name, :id => student.id %>
-				<td class='score'>0.0</td>
-				<% a_counter = counter + 1 %>
+		  <% counter = 0 %>
+		  <% number_of_students = @gradations.students.count %>
+		
+		  <%# Loop through all the students to build the TR data %>
+		  <% for student in @gradations.students %>
+			  <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
+				  <%= content_tag :td, student.full_name, :id => student.id %>
+				  <td class='score'>0.0</td>
+				  <% a_counter = counter + 1 %>
 				
-				<%# Now, loop through each assignment for the current student %>
-				<% for assignment in @gradations.assignments %>
-					<td class='grades'>
-						<%# Does this student already have a grade for this assignment? %>
-						<% if assignment.gradations[counter] %>
-							<%= text_field_tag 'score', assignment.gradations[counter].points_earned, 
-									:points	=> assignment.possible_points,
-									:name		=> 'grade',
-									:id			=> [:s => student.id, :a => assignment.id],
-									:tabindex	=> a_counter,
-									:size		=> '5' %>
-						<% else %>
-							<%= text_field_tag 'score', '', 
-									:points	=> assignment.possible_points,
-									:name		=> 'grade', 
-									:id			=> [:s => student.id, :a => assignment.id],
-									:tabindex	=> a_counter,
-									:size		=> '5' %>
-						<% end %>
-						<%= observe_field [:s => student.id, :a => assignment.id], 
-									:url			=> { :action => :update_grade },
-									:frequency	=> 2.0,
-									:before		=> "calculate()",
-									:with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"
-						%>
-					</td>
-					<% a_counter += number_of_students %>
-				<% end %>
-				<td></td>
-			</tr>
-			<% counter += 1 %>
-		<% end %>
+				  <%# Now, loop through each assignment for the current student %>
+				  <% for assignment in @gradations.assignments %>
+					  <td class='grades'>
+						  <%# Does this student already have a grade for this assignment? %>
+						  <% if assignment.gradations[counter] %>
+							  <%= text_field_tag 'score', assignment.gradations[counter].points_earned, 
+									  :points	=> assignment.possible_points,
+									  :name		=> 'grade',
+									  :id			=> [:s => student.id, :a => assignment.id],
+									  :tabindex	=> a_counter,
+									  :size		=> '5' %>
+						  <% else %>
+							  <%= text_field_tag 'score', '', 
+									  :points	=> assignment.possible_points,
+									  :name		=> 'grade', 
+									  :id			=> [:s => student.id, :a => assignment.id],
+									  :tabindex	=> a_counter,
+									  :size		=> '5' %>
+						  <% end %>
+						  <%= observe_field [:s => student.id, :a => assignment.id], 
+									  :url        => { :action => :update_grade },
+									  :frequency  => 2.0,
+									  :before     => "calculate()",
+									  :with       => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"
+						  %>
+					  </td>
+					  <% a_counter += number_of_students %>
+				  <% end %>
+				  <td></td>
+			  </tr>
+			  <% counter += 1 %>
+		  <% end %>
   </tbody>
 </table>
 </form>
 
 
-<script type="text/javascript">
-// Cause all the grades in the table to be recalculated
-function calculate() {
-	$$('tr.calc').each(calcGrades);
-}
-
-// Calculate the grades in the table
-function calcGrades(row) {
-  var totalscore;
-  var grades;
-  var total;
-  var count;
-  var score;
-  var points;
-
-  // Make sure this row has a place to put the average
-  totalscore = row.select('td.score')[0];
-  if (totalscore) {
-    // It does, get the relevant grades
-    grades = row.select('input[name^=grade]');
-
-    // Compute the score, allowing for empty/non-numeric cells
-    total = 0.0;
-    count = 0.0;
-    grades.each(function(grade) {
-    	// Get the data from the 'grade' element
-    	score		= parseFloat(grade.getValue());
-    	points	= parseFloat(grade.readAttribute('points'));
-    	
-    	// Make sure they didn't score more points than possible
-    	if (score > points) {
-    		grade.addClassName('bad-grade');
-				if (!isNaN(score)) {
-					// Total up the percentage
-		      total += score / points;
-		      ++count;
-		     }			
-    	} else {    	
-    		grade.removeClassName('bad-grade');
-				if (!isNaN(score)) {
-					// Total up the percentage
-		      total += score / points;
-		      ++count;
-        }
-		  }
-    });
-
-    // Show the result
-    if (count > 0) {
-    	original = (total / count)*100
-      totalscore.update(Math.round(original*100)/100 + '%');
-    } else {
-      totalscore.update('n/a');
-    }
-  }
-}
-
-//function onMyTextKeypress(event) {
-//	alert('pressed: ' + event.keyCode)
-//	if (Event.KEY_RETURN == event.keyCode) {
-//		// do something usefull
-//		alert('Enter key was pressed.');
-//	}
-//}
-
-
-//Event.observe('grade_grid', 'keypress', function(event){ 
-//	if (event.keyCode == Event.KEY_TAB) {
-//		alert('Tab Pressed');
-//	} else if (event.keyCode == Event.KEY_RETURN) {
-//		alert('Return Pressed');	
-//	}
-		
-//});
-
-</script>
-
-<%#= observe_form :grade_grid, 
-	:url			=> { :action => :update_grade },
-	:before		=> "calculate()",
-	:with			=> "'value='+value"
-%>
-
-<%#= observe_form :grade_grid,	:function	=> "onMyTextKeypress(Event)" %>
+<%# Load up the JavaScript that will compute the grades for this course %>
+<%= javascript_tag render( :partial => 'compute_grades.js') %>
 
 <script type="text/javascript">
-	// Force a recalculation as soon as the HTML is loaded
+  // Force a recalculation as soon as the HTML is loaded
   document.observe('dom:loaded', calculate);
 </script>
