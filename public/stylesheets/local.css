@@ -39,6 +39,7 @@ body {
 div.box {	border: 2px solid #D2DDFE; padding: 0.5em; }
 
 /*** Tables ***/
+table, td, th {vertical-align:bottom;}
 table {
 	cursor: pointer;
 	background-color: #BACAF1;
