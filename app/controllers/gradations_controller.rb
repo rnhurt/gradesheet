@@ -36,13 +36,13 @@ class GradationsController < ApplicationController
 		@gradation = Gradation.find_or_create_by_student_id_and_assignment_id(
 									params[:student], params[:assignment], :include => [:students, :assignments])
 
-		# Compute the points earned
-		if params[:score].is_a? Numeric
-			# The user entered a real number
-			@gradation.points_earned = params[:score].abs			# Remove any negatives
-		else
+    # Format the SCORE as either a positive float or an upper case letter.
+		if params[:score].is_a? String
 			# The user entered a 'magic' letter instead of a grade
 			@gradation.points_earned = params[:score].upcase	# Only store UPPER CASE
+		else
+			# The user entered a real number
+			@gradation.points_earned = params[:score].abs			# Remove any negatives
 		end
 
 		# Save the record 		

@@ -5,16 +5,21 @@ class Gradation < ActiveRecord::Base
 	validates_existence_of :student
 	validates_existence_of :assignment
 
-
 #	validates_uniqueness_of :student_id, :scope => [:assignment_id]
 #	validates_uniqueness_of :assignment_id, :scope => [:student_id]
 
-	validates_numericality_of	:points_earned, :allow_nil => :true, :greater_than_or_equal_to => 0.0
-	
-	validates_presence_of :flag, :unless => :valid_points?
+	validates_numericality_of	:points_earned, :allow_nil => :true, 
+	      :greater_than_or_equal_to => 0.0,
+	      :unless => :valid_string?
 
-	def valid_points?
-		!self.points_earned.blank?
+
+##
+# Validations
+##
+	# Make sure the user only entered a valid 'magic' character
+	def valid_string?
+	  ['E', 'M'].include?(self.points_earned)
+		#self.points_earned :in => ['M', 'E']
 	end
 	
 end
