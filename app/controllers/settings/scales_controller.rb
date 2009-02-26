@@ -35,7 +35,7 @@ class Settings::ScalesController < SettingsController
 
     respond_to do |format|
       if @scale.save
-        flash[:notice] = 'Scale was successfully created.'
+        flash[:notice] = 'A new grading scale was successfully created.'
         format.html { redirect_to :action => :index }
       else
         format.html { render :action => "new" }
@@ -48,7 +48,7 @@ class Settings::ScalesController < SettingsController
 
     respond_to do |format|
       if @scale.update_attributes(params[:scale])
-        flash[:notice] = 'Grading Scale was successfully updated.'
+        flash[:notice] = "Grading scale '#{@scale.name}' was successfully updated."
         format.html { redirect_to :action => :index }
       else
         format.html { render :action => "edit" }
@@ -58,8 +58,12 @@ class Settings::ScalesController < SettingsController
 
   def destroy
     @scale = GradingScale.find(params[:id])
-    @scale.destroy
-
+    if @scale.destroy
+      flash[:notice] = "Grading scale '#{@scale.name}' was successfully deleted."    
+    else
+      flash[:error] = "Grading scale '#{@scale.name}' was not deleted."
+    end
+    
     respond_to do |format|
       format.html { redirect_to(scales_url) }
     end
