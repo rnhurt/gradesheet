@@ -31,7 +31,7 @@ class Settings::ScalesController < SettingsController
 
 
   def create
-    @scale = GradingScale.new(params[:grading_scale])
+    @scale = GradingScale.new(params[:scale])
 
     respond_to do |format|
       if @scale.save
@@ -47,7 +47,7 @@ class Settings::ScalesController < SettingsController
     @scale = GradingScale.find(params[:id])
 
     respond_to do |format|
-      if @scale.update_attributes(params[:grading_scale])
+      if @scale.update_attributes(params[:scale])
         flash[:notice] = 'Grading Scale was successfully updated.'
         format.html { redirect_to :action => :index }
       else

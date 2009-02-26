@@ -7,7 +7,6 @@
 <div class='box'>
 <% form_for :scale, @scale,
 		:url => { :action => :update }, :html => { :method => :put } do |f| %>
-	<%= f.error_messages %>
 	<label><span class='required'>Scale Name</span>
 		<%= f.text_field :name %>
 	</label>
