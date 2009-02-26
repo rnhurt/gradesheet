@@ -8,7 +8,7 @@
     </tr>
   </thead>
 	<tbody>
-		<tr><td colspan='0'><%= link_to 'Add Assignment', new_assignment_path( :course_id => @course.id ), :class => 'positive' %></td></tr>
+		<tr><td colspan='0'><%= link_to 'Add Assignment', new_assignment_path( :course_id => @course.id ), :class => 'btn positive' %></td></tr>
 	<% if @assignments.blank? %>
 		<tr><td colspan='0'>No Assignments Found</td></tr>
 	<% else %>
@@ -20,7 +20,8 @@
 				<td><%= button_to 'Delete', assignment, 
 									:method => :delete, 
 									:disabled => !assignment.gradations.empty?,
-									:confirm => "Are you sure you want to delete\n\n '" + assignment.name + "'?" %></td>
+									:confirm => "Are you sure you want to delete\n\n '" + assignment.name + "'?",
+									:class => 'btn negative' %></td>
 			</tr>
 		<% end %>
 	<% end %>

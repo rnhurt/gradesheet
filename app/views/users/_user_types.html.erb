@@ -19,7 +19,7 @@
 			<tr class="<%= cycle('odd', 'even') + (current_page?(:controller => object_path) ? ' current' : '') %>" 
 					onclick="location.href='<%= url_for(object_path) %>'"/>
 				<%= content_tag :td, link_to(key, object_path) %>
-				<td><%= button_to( 'Add', object_path + '/new', :method => :get ) if key != 'ALL'  %></td>
+				<td><%= button_to( 'Add', object_path + '/new', :method => :get, :class => 'btn standard sml' ) if key != 'ALL' %></td>
 			</tr>
 		<% } %>
   </tbody>

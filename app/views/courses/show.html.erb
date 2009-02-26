@@ -23,7 +23,8 @@
 		<%= button_to 'Delete Course', @course, 
 					:method => :delete,
 					:disabled => !@course.assignments.empty?,
-					:confirm => 'Are you sure?', :class=>'negative' %>
+					:class => "btn negative " + (@course.assignments.empty? ? '' : 'disabled'),
+					:confirm => "Are you sure you want to delete the '#{@course.name}' course?" %>
 	</div>
 
 	<%= observe_form :edit_course, :url => {:action => :update} %>

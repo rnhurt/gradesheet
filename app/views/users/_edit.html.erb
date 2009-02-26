@@ -37,8 +37,8 @@
 			<% end %>
 		
 			<div class="spacer">
-				<%= submit_tag 'Save', :class=>"positive" %>
-				<%= link_to 'Cancel', {:action=> 'index', :controller=> 'users/'+user.class.name.tableize}, :class => 'standard' %>
+				<%= submit_tag 'Save', :class => 'btn positive' %>
+				<%= link_to 'Cancel', {:action=> 'index', :controller=> 'users/'+user.class.name.tableize}, :class => 'btn standard' %>
 			</div>
 	<% end %>
 </div>

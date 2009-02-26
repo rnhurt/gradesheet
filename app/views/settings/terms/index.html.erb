@@ -14,7 +14,7 @@
 		<th width='1'></th>		
 	</thead>
 	<tbody>
-		<tr><td colspan='0'><%= link_to "Add Period", new_term_path(), :class => "positive" %></td></tr>
+		<tr><td colspan='0'><%= link_to "Add Period", new_term_path(), :class => 'btn positive' %></td></tr>
 		<% for term in @terms %>
 			<tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= url_for(term) + '/edit' %>'">
 				<td><%= link_to term.name, edit_term_path(term) %></td>
@@ -24,7 +24,8 @@
 				<%= content_tag :td, ( check_box_tag :active, term.active, term.active, :disabled => true ) %>
 				<td><%= button_to 'Delete', term, :method => :delete, 
 									:disabled => !term.courses.empty?,
-									:confirm => "Are you sure you want to delete\n\n '" + term.name + "'?" %></td>
+									:class => "btn negative " + (term.courses.empty? ? '' : 'disabled'),
+									:confirm => "Are you sure you want to delete the '" + term.name + "' grading period?" %></td>
 			</tr>
 		<% end %>
 	</tbody>

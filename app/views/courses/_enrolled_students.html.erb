@@ -22,7 +22,7 @@
 										:confirm => "Are you sure you want to remove this '#{student.full_name}' from this course?",
 										:loading => "Element.show('spinner')",	
 										:complete => "Element.hide('spinner')" do %>
-								<%= submit_tag 'Remove' %>
+								<%= submit_tag 'Remove', :class => 'btn negative' %>
 							<% end %>
 						</td>
 					</tr>

@@ -56,10 +56,10 @@ thead .search {
 	font-size: 0.8em;
 	border: medium groove;
 }
-tr.even td {background:inherit;}
-tbody .odd {background:#e5ecf9;}
+/*tr.even td {background:#E5ECF9;}*/
+/*tbody .even {background:#b4c8ee;}*/
 tr.current td{background: yellow;font-style: oblique;}
-tr:hover td{background-color:#FFF;}
+tr:hover td{background-color:#fff;}
 
 tr.help td {
 	background-color: #006600;
@@ -101,47 +101,25 @@ form .required {background: transparent url(/images/bullet_red.png) no-repeat sc
 .grade-error {background:#FBE3E4 none repeat scroll 0 0;border-color:#FBC2C4;color:#8A1F11;}
 
 /*** Buttons ***/
-.positive{
-  background-color: green;
-  padding:0px 6px;
+.btn {
   border:1px outset #3b6e22;
-  height:24px; 
-  line-height:24px;
-  color:#FFFFFF;
-  font-size:12px;
-  margin-right:10px;
-  display:inline-block;
-  text-decoration:none;
-  width: 100px;
-  text-align: center;
-}
-.negative{
-  border:2px outset #fbc2c4;
-	background:#FBE3E4;color:#8a1f11;
   padding:0px 6px;
-  height:24px; 
-  line-height:24px;
+/*  height:20px; */
+/*  line-height:20px;*/
   font-size:12px;
   margin-right:10px;
   display:inline-block;
   text-decoration:none;
   width: 100px;
   text-align: center;
+/*  vertical-align: text-top;*/
 }
-.standard{
-  background: grey;
-  padding:0px 6px;
-  border:1px outset #3b6e22;
-  height:24px; 
-  line-height:24px;
-  color:#FFFFFF;
-  font-size:12px;
-  margin-right:10px;
-  display:inline-block;
-  text-decoration:none;
-  width: 100px;
-  text-align: center;
-}
+/*.positive{ background-color:#007700;color:#fff; }*/
+.positive{ background-color:#f2f2f2;color:#333 }
+.negative{ background-color:#FBE3E4;color:#8a1f11; }
+.standard{ background-color:#f2f2f2;color:#333 }
+.disabled { background-color:#f2f2f2;color:#D4D4D4}
+.sml { width: 50px }
 
 /*** Scaffold defaults ***/
 .fieldWithErrors {
