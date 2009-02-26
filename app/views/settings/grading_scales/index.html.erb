@@ -1,0 +1,23 @@
+<% content_for :left do %>
+	<%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for :scale, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
+
+<table>
+	<thead>
+		<th>Name</th>
+		<th width='1'></th>		
+	</thead>
+	<tbody>
+		<tr><td colspan='0'><%= link_to "Add Scale", new_grading_scale_path, :class => "positive" %></td></tr>
+		<% for scale in @scales %>
+			<tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%#= url_for(scale) + '/edit' %>'">
+				<td><%= link_to scale.name, edit_grading_scale_path(scale) %></td>
+				<td><%= button_to 'Delete', grading_scale_path(scale), :method => :delete, 
+										:disabled => !scale.courses.empty?,
+										:confirm => "Are you sure you want to delete\n\n '" + scale.name + "'?" %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
