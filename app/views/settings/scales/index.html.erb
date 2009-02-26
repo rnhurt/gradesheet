@@ -2,6 +2,8 @@
 	<%= render :partial => 'settings/settings_list' %>
 <% end %>
 
+<%= error_messages_for "scale" %>
+
 <table>
 	<thead>
 		<th>Name</th>
@@ -19,3 +21,5 @@
 		<% end %>
 	</tbody>
 </table>
+
+<%= debug @scale %>
