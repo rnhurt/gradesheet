@@ -1,9 +1,9 @@
 class GradingScale < ActiveRecord::Base
-	before_destroy	:ensure_no_children
+#	before_destroy	:ensure_no_children
 
 	has_many	:courses
 	
-	validates_presence_of	:name
+#	validates_presence_of	:name
 	validates_length_of		:name, :within => 1..20
 
 

@@ -45,7 +45,7 @@ class Settings::ScalesController < SettingsController
 
   def update
     @scale = GradingScale.find(params[:id])
-
+debugger
     respond_to do |format|
       if @scale.update_attributes(params[:grading_scale])
         flash[:notice] = 'Grading Scale was successfully updated.'
