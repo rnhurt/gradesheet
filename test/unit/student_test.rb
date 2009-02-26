@@ -64,7 +64,7 @@ class StudentTest < ActiveSupport::TestCase
                     :site => @student.site, 
                     :email => @student.email, 
                     :short_name => @student.short_name)
-    assert !dup_user.valid?, "Duplicate Student is not valid"    
+    assert !dup_user.save, "Duplicate Student is not valid"    
   end
   
 end

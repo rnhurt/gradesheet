@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.namespace :settings do |s|
 	  s.resources :terms, :name_prefix => nil
 	  s.resources :events, :name_prefix => nil
-	  s.resources :scales, :name_prefix => nil
+	  s.resources :grading_scales, :name_prefix => nil
 	end
 
 	# Build the standard routes
