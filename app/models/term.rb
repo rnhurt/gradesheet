@@ -4,10 +4,7 @@ class Term < ActiveRecord::Base
 	has_many :courses
 #	has_many :comments
 
-	validates_presence_of	:name
 	validates_length_of		:name, :within => 1..20
-
-	validates_presence_of	:school_year
 	validates_length_of		:school_year, :within => 1..20	
 
 	# This model is pretty heavily dependant upon dates and make sure that they
@@ -45,8 +42,6 @@ class Term < ActiveRecord::Base
 # Private Methods
 ##
 private		
-
-
 	# We don't want the user to delete a grading term without first cleaning up
 	# any courses that use it.  This could cause a cascading effect wiping out
 	# a whole year of student data.	

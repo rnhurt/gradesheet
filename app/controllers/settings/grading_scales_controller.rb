@@ -1,4 +1,6 @@
 class Settings::GradingScalesController < SettingsController
+  layout 'standard'
+
   def index
     @scales = GradingScale.find(:all)
 
