@@ -25,15 +25,16 @@
 		
 			<label><span>Due Date</span>
 				<%= f.calendar_date_select :due_date, 
-							:time => :false, 
-							:month_year => 'label', 
-							:buttons => :false, 
-							:embedded => false %>
+							:time => :false,
+							:month_year => 'label',
+							:buttons => :false,
+							:class => 'my_cal',
+							:embedded => true %>
 			</label>
 
 			<div class='spacer'>
-				<%= submit_tag 'Save', :class=>"positive" %>
-				<%= link_to 'Cancel', assignment_path(@course), :class => 'standard' %>
+				<%= submit_tag 'Save', :class=> 'btn positive' %>
+				<%= link_to 'Cancel', assignment_path(@course), :class => 'btn standard' %>
 			</div>
 	<% end %>
 </div>
