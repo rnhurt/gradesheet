@@ -1,6 +1,4 @@
 class GradationsController < ApplicationController
-	layout "standard"
-
   def index
   end
 	

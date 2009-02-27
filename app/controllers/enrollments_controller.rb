@@ -1,7 +1,4 @@
 class EnrollmentsController < ApplicationController
-	layout "standard"
-
-	
   def index
     @enrollments = Enrollment.find(:all)
 		

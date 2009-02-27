@@ -1,7 +1,4 @@
 class AssignmentsController < ApplicationController
-	layout "standard"
-
-	
   def index
     respond_to do |format|
       format.html # index.html.erb

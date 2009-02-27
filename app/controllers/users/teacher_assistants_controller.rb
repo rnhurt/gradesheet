@@ -1,6 +1,4 @@
 class Users::TeacherAssistantsController < ApplicationController
-	layout "standard"
-
   def index
     @teacher_assistants = TeacherAssistant.search(params[:search], params[:page])
 

@@ -1,6 +1,4 @@
 class CoursesController < ApplicationController
-	layout "standard"
-	
   def index
     respond_to do |format|
       format.html

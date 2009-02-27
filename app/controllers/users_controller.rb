@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-	layout "standard"
-	
   def index
     @users = User.search(params[:search], params[:page])
 

@@ -1,6 +1,4 @@
 class Settings::TermsController < SettingsController
-  layout 'standard'
-  
   def index
     @terms = Term.find(:all, :order => "begin_date DESC")
 

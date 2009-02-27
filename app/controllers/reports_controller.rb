@@ -1,6 +1,4 @@
 class ReportsController < ApplicationController
-	layout "standard"
-
 	def index
 	end
 	
