@@ -1,0 +1,18 @@
+<% content_for :left do %>
+	<%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for "site" %>
+
+<div class='box'>
+<% form_for @site do |f| %>
+	<label><span class='required'>Location Name</span>
+		<%= f.text_field :name %>
+	</label>
+			
+	<div class="spacer">
+		<%= submit_tag 'Save', :class => 'btn positive' %>
+		<%= link_to 'Cancel', sites_path(), :class => 'btn standard' %>
+	</div>
+<% end %>
+</div>
