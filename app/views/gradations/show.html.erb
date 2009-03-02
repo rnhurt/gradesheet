@@ -51,6 +51,7 @@
 									  :name		=> 'grade',
 									  :id			=> [:s => student.id, :a => assignment.id],
 									  :tabindex	=> a_counter,
+									  :onchange => remote_function( :url => {:action => :update_grade}, :with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
 									  :size		=> '5' %>
 						  <% else %>
 							  <%= text_field_tag 'score', '', 
@@ -58,14 +59,9 @@
 									  :name		=> 'grade', 
 									  :id			=> [:s => student.id, :a => assignment.id],
 									  :tabindex	=> a_counter,
+									  :onchange => remote_function( :url => {:action => :update_grade}, :with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
 									  :size		=> '5' %>
 						  <% end %>
-						  <%= observe_field [:s => student.id, :a => assignment.id], 
-									  :url        => { :action => :update_grade },
-									  :frequency  => 2.0,
-									  :before     => "calculate()",
-									  :with       => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"
-						  %>
 					  </td>
 					  <% a_counter += number_of_students %>
 				  <% end %>
@@ -77,11 +73,13 @@
 </table>
 </form>
 
-
 <%# Load up the JavaScript that will compute the grades for this course %>
 <%= javascript_tag render( :partial => 'compute_grades.js') %>
 
 <script type="text/javascript">
   // Force a recalculation as soon as the HTML is loaded
   document.observe('dom:loaded', calculate);
+
+  // Watch for changes in the form
+  new Form.Observer('grade_grid', 1, calculate);
 </script>

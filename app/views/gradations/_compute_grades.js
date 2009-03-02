@@ -76,24 +76,13 @@ function calcGrades(row) {
 }
 
 
+//Event.observe('grade_grid', 'keyup', function(event){ 
+$('grade_grid').observe('keyup', function(event){ 
 
-
-
-//function onMyTextKeypress(event) {
-//	alert('pressed: ' + event.keyCode)
-//	if (Event.KEY_RETURN == event.keyCode) {
-//		// do something usefull
-//		alert('Enter key was pressed.');
-//	}
-//}
-
-
-//Event.observe('grade_grid', 'keypress', function(event){ 
-//	if (event.keyCode == Event.KEY_TAB) {
-//		alert('Tab Pressed');
-//	} else if (event.keyCode == Event.KEY_RETURN) {
-//		alert('Return Pressed');	
-//	}
+	if (event.keyCode == Event.KEY_RETURN) {
+	  Event.keyCode = Event.KEY_TAB;
+//	  Event.stop();
+	}
 		
-//});
+});
 
