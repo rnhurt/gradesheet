@@ -51,7 +51,8 @@
 									  :name		=> 'grade',
 									  :id			=> [:s => student.id, :a => assignment.id],
 									  :tabindex	=> a_counter,
-									  :onchange => remote_function( :url => {:action => :update_grade}, :with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
+									  :onchange => remote_function( :url => {:action => :update_grade}, 
+									     :with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
 									  :size		=> '5' %>
 						  <% else %>
 							  <%= text_field_tag 'score', '', 
@@ -59,7 +60,8 @@
 									  :name		=> 'grade', 
 									  :id			=> [:s => student.id, :a => assignment.id],
 									  :tabindex	=> a_counter,
-									  :onchange => remote_function( :url => {:action => :update_grade}, :with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
+									  :onchange => remote_function( :url => {:action => :update_grade}, 
+									     :with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
 									  :size		=> '5' %>
 						  <% end %>
 					  </td>

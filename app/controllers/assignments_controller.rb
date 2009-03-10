@@ -69,8 +69,14 @@ class AssignmentsController < ApplicationController
 
   def destroy
     @assignment = Assignment.find(params[:id])
-    @assignment.destroy
-
+    
+    if @assignment.destroy
+      flash[:notice] = "Assignment '#{@assignment.name}' was deleted successfully."
+    else
+      flash[:error] = "Assignment '#{@assignment.name}' was not deleted successfully.
+                        Are there assigned grades?"
+    end
+    
     respond_to do |format|
       format.html { redirect_to :action => 'show', :id => @assignment.course_id }
     end

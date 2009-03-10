@@ -34,6 +34,11 @@ class GradationsController < ApplicationController
 		@gradation = Gradation.find_or_create_by_student_id_and_assignment_id(
 									params[:student], params[:assignment], :include => [:students, :assignments])
 
+    # If the score is blank then delete the gradation row
+    if params[:score].empty? 
+      Gradation.destroy(@gradation)
+    end
+    
     # Format the SCORE as either a positive float or an upper case letter.
 		if params[:score].is_a? String
 			# The user entered a 'magic' letter instead of a grade
@@ -46,9 +51,7 @@ class GradationsController < ApplicationController
 		# Save the record 		
 		if @gradation.save
 			flash[:error] = 'Gradation failed to save'
-			respond_to do |format|
-				format.js	{ redirect_to :action => :show }
-			end
+			redirect_to :action => :show 
 		end
  		
   end
