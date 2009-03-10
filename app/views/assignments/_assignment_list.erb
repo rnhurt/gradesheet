@@ -3,12 +3,14 @@
     <tr>
       <th>Assignment Name <%= h '(' + @assignments.count.to_s + ')'%></th>
       <th>Possible points</th>
+      <th>Type</th>
       <th>Due Date</th>
 			<th width='1'></th>
     </tr>
   </thead>
 	<tbody>
 		<tr><td colspan='0'><%= link_to 'Add Assignment', new_assignment_path( :course_id => @course.id ), :class => 'btn positive' %></td></tr>
+		
 	<% if @assignments.blank? %>
 		<tr><td colspan='0'>No Assignments Found</td></tr>
 	<% else %>
@@ -16,6 +18,7 @@
 			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for( :action => :edit, :id => assignment.id ) %>'"/>
 				<%= content_tag :td, assignment.name %>
 				<%= content_tag :td, assignment.possible_points %>
+				<%= content_tag :td, assignment.type %>
 				<%= content_tag :td, assignment.due_date_formated %>
 				<td><%= button_to 'Delete', assignment, 
 									:method => :delete, 
@@ -27,3 +30,5 @@
 	<% end %>
 	</tbody>
 </table>
+
+<%= debug @assignments %>
