@@ -2,75 +2,95 @@
 	<%= show_course_list %>
 <% end %>
 
+
+<% unsorted_assignments = Array.new %>
+<% for assignment in @gradations.assignments %>
+  <% unsorted_assignments << assignment %>
+<% end %>
+<% assignments = unsorted_assignments.sort_by {|a| a.due_date || Time.now}.reverse %>
+
 <%# Loop through the gradations and build a table with students as the ROW
   # and assignments in the COLUMN.  Along the way we'll also alert the user 
   # when there are missing students or assignments. %>
 <form id='grade_grid'>
-<table class='grade_grid sortable'>
+<table class='grade-grid sortable scroll'>
 	<thead>
 		<tr>
 			<th>Student Name</th>
 			<th width='60'>%</th>
-			<% if @gradations.assignments.count == 0 then %>
+			<% if assignments.count == 0 then %>
 				<th>No Assignments Found</th>			
 			<% else %>
-				<% for assignment in @gradations.assignments %>
+				<% for assignment in assignments %>
 					<th width='50' class='grade' id='<%= assignment.id %>'>
-						<span class='assign-name'><%= h assignment.name %></span><br />
-						<span class='assign-points'><%= h assignment.possible_points %></span><br />
-						<span class='assign-date'><%= h assignment.due_date.to_s(:due_date) if assignment.due_date %></span><br />
+						<div class='assign-name'><%= h assignment.name %></div>
+						<div class='assign-points'><%= h assignment.possible_points %> pts</div>
+						<div class='assign-date'><%= h assignment.due_date ? assignment.due_date.to_s(:due_date) : '.' %></div>
 					</th>
 				<% end %>
 			<% end %>
-			<th width='auto'></th>
 		</tr>
 	</thead>
 	<tbody>
-	  <%# Show a default message if there are no students in this course %>
-		<% if @gradations.students.count == 0 then %>
+	  <% number_of_students = @gradations.students.count %>
+	  <% number_of_assignments = assignments.count %>
+	  <% counter = 0 %>
+
+	  
+	  <%# Show a default message if there are no students in this course %>	  
+		<% if number_of_students == 0 then %>
 			<tr><td>No Students Found</td></tr>
 		<% end %>
-		
-		  <% counter = 0 %>
-		  <% number_of_students = @gradations.students.count %>
-		
-		  <%# Loop through all the students to build the TR data %>
-		  <% for student in @gradations.students %>
+
+      <%# Loop through the students %>		
+      <% for student in @gradations.students %>
 			  <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
 				  <%= content_tag :td, student.full_name, :id => student.id %>
 				  <td class='score'>0.0</td>
 				  <% a_counter = counter + 1 %>
-				
-				  <%# Now, loop through each assignment for the current student %>
-				  <% for assignment in @gradations.assignments %>
-					  <td class='grades'>
-						  <%# Does this student already have a grade for this assignment? %>
-						  <% if assignment.gradations[counter] %>
-							  <%= text_field_tag 'score', assignment.gradations[counter].points_earned, 
-									  :points	=> assignment.possible_points,
-									  :name		=> 'grade',
-									  :id			=> [:s => student.id, :a => assignment.id],
-									  :tabindex	=> a_counter,
-									  :onchange => remote_function( :url => {:action => :update_grade}, 
-									     :with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
-									  :size		=> '5' %>
-						  <% else %>
-							  <%= text_field_tag 'score', '', 
-									  :points	=> assignment.possible_points,
-									  :name		=> 'grade', 
-									  :id			=> [:s => student.id, :a => assignment.id],
-									  :tabindex	=> a_counter,
-									  :onchange => remote_function( :url => {:action => :update_grade}, 
-									     :with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
-									  :size		=> '5' %>
-						  <% end %>
-					  </td>
-					  <% a_counter += number_of_students %>
+				  
+				  <%# loop through each assignment %>
+				  <% for assignment in assignments %>
+				    <td class='grades'>
+   				    <% found = nil      # reset our trigger %>
+
+				      <%# does the student have a grade for this assignment? %>
+				      <% 0.upto(number_of_assignments-1) do |index| %>
+				        <% if student.assignments[index] && student.assignments[index].id == assignment.id %>
+				          <% found = student.gradations[index] %>
+				          <% break %>
+				        <% end %>
+				      <% end %>
+				      
+				      <%# if a grade was found, then build the form out of it, if not
+				        # then build a placeholder to enter a grade. %>
+				      <% if found %>
+						    <%= text_field_tag 'score', found.points_earned, 
+								    :points	=> assignment.possible_points,
+								    :name		=> 'grade',
+								    :id			=> [:s => student.id, :a => assignment.id],
+								    :tabindex	=> a_counter,
+								    :onchange => remote_function( :url => {:action => :update_grade}, 
+								       :with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
+								    :size		=> '10' %>				      
+				      <% else %>
+						    <%= text_field_tag 'score', '', 
+								    :points	=> assignment.possible_points,
+								    :name		=> 'grade',
+								    :id			=> [:s => student.id, :a => assignment.id],
+								    :tabindex	=> a_counter,
+								    :onchange => remote_function( :url => {:action => :update_grade}, 
+								       :with => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
+								    :size		=> '10' %>				      
+				      <% end %>
+				      
+				    </td>
+				    <% a_counter += number_of_students %>
 				  <% end %>
-				  <td></td>
-			  </tr>
+				  
+				</tr>
 			  <% counter += 1 %>
-		  <% end %>
+      <% end %>
   </tbody>
 </table>
 </form>

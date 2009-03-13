@@ -79,10 +79,10 @@ function calcGrades(row) {
 //Event.observe('grade_grid', 'keyup', function(event){ 
 $('grade_grid').observe('keyup', function(event){ 
 
-	if (event.keyCode == Event.KEY_RETURN) {
-	  Event.keyCode = Event.KEY_TAB;
-//	  Event.stop();
-	}
+//	if (event.keyCode == Event.KEY_RETURN) {
+//	  event.keyCode = Event.KEY_TAB;
+//#	  event.stop();
+//	}
 		
 });
 

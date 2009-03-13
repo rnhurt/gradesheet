@@ -29,6 +29,9 @@ table {
 thead .search {font-size: 0.8em;border: medium groove;}
 tr.current td{background: yellow;font-style: oblique;}
 tr:hover td{background-color:#fff;}
+.assign-name, .assign-points, .assign-date {font-size: 0.9em;white-space:nowrap;text-align:center;}
+.assign-points {font-size: 0.8em;}
+.assign-date {font-size: 0.8em;}
 
 tr.help td {
   background-color: #006600;
@@ -62,6 +65,7 @@ form label span {
 form .required {background: transparent url(/images/bullet_red.png) no-repeat scroll right center;}
 .grade-warning {background:#FFF6BF none repeat scroll 0 0;border-color:#FBC2C4;color:#514721;}
 .grade-error {background:#FBE3E4 none repeat scroll 0 0;border-color:#FBC2C4;color:#8A1F11;}
+.grade-grid {overflow:scroll;}
 
 /*** Buttons ***/
 .btn {
