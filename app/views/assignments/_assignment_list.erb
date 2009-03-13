@@ -18,7 +18,7 @@
 			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for( :action => :edit, :id => assignment.id ) %>'"/>
 				<%= content_tag :td, assignment.name %>
 				<%= content_tag :td, assignment.possible_points %>
-				<%= content_tag :td, assignment.type %>
+				<%= content_tag :td, assignment.assignment_category.name %>
 				<%= content_tag :td, assignment.due_date_formated %>
 				<td><%= button_to 'Delete', assignment, 
 									:method => :delete, 
@@ -30,5 +30,3 @@
 	<% end %>
 	</tbody>
 </table>
-
-<%= debug @assignments %>

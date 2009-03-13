@@ -3,7 +3,7 @@ class CreateAssignments < ActiveRecord::Migration
     create_table :assignments do |t|
       t.string :name
       t.integer :course_id
-      t.integer :type_id
+      t.integer :assignment_category_id
       t.float :possible_points
       t.timestamp	:due_date
 

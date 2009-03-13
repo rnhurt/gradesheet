@@ -2,19 +2,23 @@ fractions_quiz:
   name: Fractions quiz
   course: math7s
   possible_points: 10
-
+  assignment_category: quiz
+  
 division_test:
   name: Test on Division
   course: math7s
   possible_points: 75
+  assignment_category: test
 
 spelling_test:
   name: Spelling Test
   course: english-t1
   possible_points: 10
+  assignment_category: test
   
 long_term_project:
   name: Long Term Project
   course: english-t1
   possible_points: 50
   due_date: 2008-12-31
+  assignment_category: hw

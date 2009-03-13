@@ -23,6 +23,10 @@
 		    <%= f.text_field :possible_points %>
 			</label>
 		
+			<label><span class='required'>Type</span>
+			 <%= collection_select :assignment, :assignment_category_id, AssignmentCategory.find(:all), :id, :name %>
+			</label>
+
 			<label><span>Due Date</span>
 				<%= f.calendar_date_select :due_date, :time => :false, :month_year => 'label', :buttons => :false %>
 			</label>

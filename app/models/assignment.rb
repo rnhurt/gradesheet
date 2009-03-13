@@ -2,7 +2,7 @@ class Assignment < ActiveRecord::Base
 	before_destroy :ensure_no_children
 
 	belongs_to	:course
-	belongs_to	:assignment_type
+	belongs_to	:assignment_category
 	has_many		:gradations
 	
 	validates_length_of				:name, :within => 1..20
