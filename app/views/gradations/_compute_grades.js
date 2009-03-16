@@ -82,14 +82,14 @@ $('grade_grid').observe('keyup', function(event){
 	  // Get the current tabIndex and add 1 to it
     var nextIndex = Event.element(event).tabIndex + 1;
 
-    // Find the next field in the tab order
-  	var element = $('grade_grid').select('input[tabindex="' + nextIndex + '"]')
-  	
-  	// Switch focus to it and select any existing text
-    element[0].select()
-
-    // Stop processing so that the ENTER key doesnt cause the page to refresh
-	  event.stop();
+    // Find the next field in the tab order and SELECT its contents
+    var element = $('grade_grid').down('input[tabindex="' + nextIndex + '"]')
+    element.focus()
+    element.select()
 	}
 });
 
+// Dont allow the page to be submitted as a form.
+$('grade_grid').observe('submit', function(event){
+  event.stop();
+});
