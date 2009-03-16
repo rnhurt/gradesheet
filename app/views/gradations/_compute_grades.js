@@ -75,14 +75,21 @@ function calcGrades(row) {
   }
 }
 
-
-//Event.observe('grade_grid', 'keyup', function(event){ 
+// Watch for keypresses on the form
 $('grade_grid').observe('keyup', function(event){ 
+  // Move to the next field when the user presses the ENTER key
+	if (event.keyCode == Event.KEY_RETURN) {
+	  // Get the current tabIndex and add 1 to it
+    var nextIndex = Event.element(event).tabIndex + 1;
 
-//	if (event.keyCode == Event.KEY_RETURN) {
-//	  event.keyCode = Event.KEY_TAB;
-//#	  event.stop();
-//	}
-		
+    // Find the next field in the tab order
+  	var element = $('grade_grid').select('input[tabindex="' + nextIndex + '"]')
+  	
+  	// Switch focus to it and select any existing text
+    element[0].select()
+
+    // Stop processing so that the ENTER key doesnt cause the page to refresh
+	  event.stop();
+	}
 });
 
