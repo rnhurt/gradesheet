@@ -24,6 +24,7 @@
 				<% for assignment in assignments %>
 					<th width='50' class='grade' id='<%= assignment.id %>'>
 						<div class='assign-name'><%= h assignment.name %></div>
+						<div class='assign-name'><%= h assignment.id %></div>
 						<div class='assign-points'><%= h assignment.possible_points %> pts</div>
 						<div class='assign-date'><%= h assignment.due_date ? assignment.due_date.to_s(:due_date) : '.' %></div>
 					</th>
@@ -33,7 +34,6 @@
 	</thead>
 	<tbody>
 	  <% number_of_students = @gradations.students.count %>
-	  <% number_of_assignments = assignments.count %>
 	  <% counter = 0 %>
 
 	  
@@ -54,14 +54,16 @@
 				    <td class='grades'>
    				    <% found = nil      # reset our trigger %>
 
+
 				      <%# does the student have a grade for this assignment? %>
+          	  <% number_of_assignments = student.assignments.count %>
 				      <% 0.upto(number_of_assignments-1) do |index| %>
 				        <% if student.assignments[index] && student.assignments[index].id == assignment.id %>
 				          <% found = student.gradations[index] %>
 				          <% break %>
 				        <% end %>
 				      <% end %>
-				      
+
 				      <%# if a grade was found, then build the form out of it, if not
 				        # then build a placeholder to enter a grade. %>
 				      <% if found %>
