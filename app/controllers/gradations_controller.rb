@@ -49,7 +49,7 @@ class GradationsController < ApplicationController
 		end
 
 		# Save the record 		
-		if @gradation.save
+		if !@gradation.save
 			flash[:error] = 'Gradation failed to save'
 			redirect_to :action => :show 
 		end
