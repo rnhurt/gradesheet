@@ -2,16 +2,23 @@
 
 	<table id='students' class='master'>
 		<thead>
-			<th><%= params[:value].split('||')[1] %> <%= "(#{@students.length})" unless @students.blank? %></th>
+			<th>
+			  <%= params[:value].split('||')[1] %> <%= "(#{@students.length})" unless @students.blank? %></th>
+			  <th><%= link_to_remote( "Add All", 
+			                        {:url => { :action => 'add_student', :students => @students },
+											        :loading => "Element.show('spinner')",
+											        :complete => "Element.hide('spinner')"},
+			                        {:class => 'btn sml positive'}) unless @students.blank? %>
+			  </th>
 		</thead>
 		<tbody>
 			<% if @students.blank? %>
-				<tr class='help'><td>Choose from a <br /><em>'Class Of'</em><br /> or a <br /><em>'Home Room'</em><br /> above.</td></tr>
+				<tr class='help'><td colspan='2'>Choose from a <br /><em>'Class Of'</em><br /> or a <br /><em>'Home Room'</em><br /> above.</td></tr>
 			<% else %>
 				<% students = @students.sort_by &:last_name %>
 				<% for student in students %>
 					<tr class="<%= cycle('odd', 'even') %>"/>
-						<td><%= link_to_remote student.full_name, 
+						<td colspan='2'><%= link_to_remote student.full_name, 
 											:url => { :action => 'add_student', :student_id => student.id },
 											:loading => "Element.show('spinner')",
 											:complete => "Element.hide('spinner')"

@@ -96,11 +96,6 @@ form .required {background: transparent url(/images/bullet_red.png) no-repeat sc
   z-index: 1000;
 }
 
-
-
-
-
-
 /*** Scaffold defaults ***/
 .fieldWithErrors {padding: 2px;background-color: red;display: table;}
 #errorExplanation {
