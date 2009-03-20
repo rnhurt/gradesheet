@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  # Session support
+  map.resource :user_session
+#  map.root :controller => "user_sessions", :action => "new"
+
   # Since we subclass the Users into different types,
   # we need to build routes for them.
   map.namespace :users do |u|

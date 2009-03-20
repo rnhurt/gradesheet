@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-	belongs_to	:site
+  acts_as_authentic
+  
+  belongs_to	:site
 	has_many		:comments
 	
 	validates_length_of			:short_name, :maximum => 20
