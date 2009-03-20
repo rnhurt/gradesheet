@@ -1,0 +1,18 @@
+<% content_for :left do %>
+	<%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for :type, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
+
+<div class='box'>
+<% form_for @type do |f| %>
+	<label><span class='required'>Assignment Type</span>
+		<%= f.text_field :name %>
+	</label>
+			
+	<div class="spacer">
+		<%= submit_tag 'Save', :class => 'btn positive' %>
+		<%= link_to 'Cancel', assignment_categories_path(), :class => 'btn standard' %>
+	</div>
+<% end %>
+</div>

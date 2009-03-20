@@ -1,0 +1,23 @@
+<% content_for :left do %>
+	<%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for "assignment_categories" %>
+
+<table>
+	<thead>
+		<th>Name</th>
+		<th width='1'></th>		
+	</thead>
+	<tbody>
+		<tr><td colspan='0'><%= link_to "Add Type", new_assignment_category_path(), :class => 'btn positive' %></td></tr>
+		<% for type in @types %>
+			<tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= url_for(type) + '/edit' %>'">
+				<td><%= link_to type.name, edit_assignment_category_path(type) %></td>
+				<td><%= button_to 'Delete', type, :method => :delete,
+									:class => "btn negative ",
+									:confirm => "Are you sure you want to delete the '" + type.name + "' assignment type?" %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
