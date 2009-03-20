@@ -6,3 +6,9 @@ quiz:
 
 test:
   name: Test
+
+project:
+  name: Project
+
+part:
+  name: Participation
