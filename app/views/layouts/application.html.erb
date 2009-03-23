@@ -31,7 +31,15 @@
 		</div>
 		
 		<div class='span-6 push-5 last'>
-			<span class='login'>Welcome <a href='/'>Kim Hurt </a></span>
+		  <% if !current_user %>
+		    <%= link_to "Register", new_account_path %> |
+		    <%= link_to "Log In", new_user_session_path %> |
+		  <% else %>
+		    <%= link_to "My Account", account_path %> |
+		    <%= link_to "Logout", user_session_path, :method => :delete,
+		          :confirm => 'Are you sure you want to logout?' %>
+  			<span class='login'>Welcome <a href='/'><%= current_user.full_name %></a></span>
+  		<% end %>
 		</div>
 				
 		<div class='span-20 last'>

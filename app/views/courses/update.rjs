@@ -2,6 +2,6 @@
 ## will also allow the processing of flash messages so that the user knows
 ## what is going on and if something fails.
 
-@courses = Course.find_all_by_teacher_id(current_user, :include => [:term])
+@courses = Course.find_all_by_teacher_id(@current_user, :include => [:term])
 page.replace_html 'course_list', :partial => 'courses/course_list', :object => @courses
 

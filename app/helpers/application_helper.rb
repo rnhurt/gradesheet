@@ -7,12 +7,6 @@ module ApplicationHelper
   end
 
 
-	## FIXME - Get the current user.  This will probably change when we add real auth capabilities
-	def current_user
-		session[:user_id] ? @current_user ||= User.find(session[:user_id]) : nil
-	end
-
-
 	# Render the list of courses for the current user.  This method is called in
 	# several locations throughout the system to let the user choose which Course
 	# they want to work with.  It should only show "active" courses in "active"

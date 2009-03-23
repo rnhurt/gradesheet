@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  # Authlogic
   acts_as_authentic
   
   belongs_to	:site

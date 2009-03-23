@@ -8,12 +8,10 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'e09cdc0512f2d77a60d7ccb4c46775c1'
 
+  # Authlogic
+  filter_parameter_logging  :password, :password_confirmation
+  helper_method :current_user_session, :current_user
 
-	## FIXME - return the 'current' user
-	def current_user
-		session[:user_id] ? @current_user ||= User.find(session[:user_id]) : nil
-	end
-	
 	
   ## Declare exception to handler methods
   rescue_from ActiveRecord::RecordNotFound, :with => :bad_record
@@ -30,5 +28,45 @@ class ApplicationController < ActionController::Base
 	def my_current_controller?(c)
 		controller.controller_name == c
 	end
+
+  #######################
+  # Private methods
+  private
+    def current_user_session
+      return @current_user_session if defined?(@current_user_session)
+      @current_user_session = UserSession.find
+    end
+    
+    def current_user
+      return @current_user if defined?(@current_user)
+      @current_user = current_user_session && current_user_session.user
+    end
+
+    def require_user
+      unless current_user
+        store_location
+        flash[:notice] = "You must be logged in to access this page"
+        redirect_to new_user_session_url
+        return false
+      end
+    end
+
+    def require_no_user
+      if current_user
+        store_location
+        flash[:notice] = "You must be logged out to access this page"
+        redirect_to account_url
+        return false
+      end
+    end
+
+    def store_location
+      session[:return_to] = request.request_uri
+    end
+
+    def redirect_back_or_default(default)
+      redirect_to(session[:return_to] || default)
+      session[:return_to] = nil
+    end
 
 end

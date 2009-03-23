@@ -1,0 +1,28 @@
+<%= error_messages_for "user_session", :header_message => "Please Try Again!", :message => "We had some problems logging you into your account:" %>
+
+<div class='box'>
+  <% form_for @user_session, :url => user_session_path do |f| %>
+		<div class='spacer'>
+		  <%= content_tag( :h1, "Login" ) %>
+		</div>
+
+		<label><span class='required'>Login ID</span>
+			<%= f.text_field :login %>
+		</label>
+
+		<label><span class='required'>Password</span>
+			<%= f.password_field :password %>
+		</label>
+		
+		<label><span>Remeber Me</span>
+			<%= f.check_box :remember_me %>
+		</label>
+
+		<div class='spacer'>
+			<%= f.submit 'Login', :class=> 'btn positive' %>
+			<%= link_to 'Cancel', '/', :class => 'btn standard' %>
+		</div>
+  <% end %>
+</div>
+
+<%= set_focus_to_id 'user_session_login' %>
