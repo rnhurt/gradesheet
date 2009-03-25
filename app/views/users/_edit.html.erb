@@ -17,9 +17,18 @@
   			<%= f.text_field :last_name %>
 			</label>
 			
-			<label><span>Email Address</span>
+			<label><span class='required'>Email Address</span>
   			<%= f.text_field :email %>
 			</label>
+
+		  <label><%= content_tag :span, f.object.new_record? ? 'Password' : 'Change password', 
+		                !f.object.new_record? ? nil : :class=>'required' %>
+			  <%= f.password_field :password %>
+		  </label>
+		
+		  <label><%= content_tag :span, 'Confirm password', !f.object.new_record? ? nil : :class=>'required' %>
+			  <%= f.password_field :password_confirmation %>
+		  </label>
 
 			<label><span class='required'>Site</span>
   			<%= collection_select user.class.name.underscore, :site_id, Site.find(:all), :id, :name %>
@@ -27,6 +36,7 @@
 
 			<% if user.class.name == 'Student' %>
 				<label><span class='required'>Class Of</span>
+				  <%# FIXME: Get the class time properly and stop hardcoding values %>
 					<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a) %>
 				</label>
 
