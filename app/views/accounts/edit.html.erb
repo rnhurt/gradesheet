@@ -1,0 +1,41 @@
+<%= error_messages_for :user, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
+
+<div class='box span-13 push-5'>
+  <% form_for @user, :url => account_path do |f| %>
+		<div class='spacer'>
+		  <%= content_tag( :h1, "Account Information" ) %>
+		</div>
+
+		<label><span>Login ID</span>
+			<%= f.text_field :login, :disabled => true %>
+		</label>
+
+		<label><span class='required'>First Name</span>
+  		<%= f.text_field :first_name, :id => 'first_name' %>
+		</label>
+
+		<label><span class='required'>Last Name</span>
+  		<%= f.text_field :last_name %>
+		</label>
+
+		<label><span>Email Address</span>
+  		<%= f.text_field :email%><br>
+		</label>
+
+		<label><%= content_tag :span, f.object.new_record? ? 'Password' : 'Change password', 
+		              !f.object.new_record? ? nil : :class=>'required' %>
+			<%= f.password_field :password %>
+		</label>
+		
+		<label><%= content_tag :span, 'Confirm password', !f.object.new_record? ? nil : :class=>'required' %>
+			<%= f.password_field :password_confirmation %>
+		</label>
+
+		<div class='spacer'>
+			<%= f.submit 'Save', :class=> 'btn positive' %>
+			<%= link_to 'Cancel', '/', :class => 'btn standard' %>
+		</div>
+  <% end %>
+</div>
+
+<%= set_focus_to_id 'first_name' %>
