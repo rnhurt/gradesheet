@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
 		controller.controller_name == c
 	end
 
+
   #######################
   # Private methods
   private

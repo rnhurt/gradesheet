@@ -6,7 +6,14 @@ body {background: #FFF url("/images/header-bg.gif") top left repeat-x;}
 #header .login a {color: #FF0;}
 #flash {text-align: center;}
 #footer {margin: auto;padding-top: 20px;text-align: center;font-size: 0.8em;}
-
+#header-top-right {
+  -moz-border-radius-bottomleft: 7px;
+  -webkit-border-bottom-left-radius: 7px;
+  background-color:#EFF7FF;
+  padding:4px;
+  position:absolute;
+  right:0;
+}
 .container .error, .container .notice, .container .warning {padding:0em;margin-bottom:1.1em;border:2px solid #ddd;}
 .container .error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
 .container .warning {background:#FFF6BF;color:#514721;border-color:#FFD324;}

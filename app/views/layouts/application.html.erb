@@ -30,18 +30,18 @@
 			<span class='tagline column span-6'><%= TAG_LINE %></span>
 		</div>
 		
-		<div class='span-6 push-5 last'>
+    <div id='header-top-right'>				
 		  <% if !current_user %>
-		    <%= link_to "Register", new_account_path %> |
-		    <%= link_to "Log In", new_user_session_path %> |
+		    <span>Welcome</span> | 
+		    <span><%= link_to " log in ", new_user_session_path %></span>
 		  <% else %>
-		    <%= link_to "My Account", account_path %> |
-		    <%= link_to "Logout", user_session_path, :method => :delete,
-		          :confirm => 'Are you sure you want to logout?' %>
-  			<span class='login'>Welcome <a href='/'><%= current_user.full_name %></a></span>
+  			<span><%= current_user.full_name %></span> |
+  			<span><%= link_to 'My Account', account_path() %></span> |
+		    <span><%= link_to "log out", user_session_path, :method => :delete,
+		          :confirm => 'Are you sure you want to logout?' %></span>
   		<% end %>
 		</div>
-				
+
 		<div class='span-20 last'>
 			<%= menu_builder(request.path_parameters['controller'].split('/')[0]) %>
 		</div>

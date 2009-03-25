@@ -41,7 +41,8 @@
 			<tr><td>No Students Found</td></tr>
 		<% end %>
 
-      <% for student in @gradations.students %>
+      <% students = @gradations.students.sort_by {|a| a.last_name } %>
+      <% for student in students %>
 			  <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
 				  <%= content_tag :td, student.full_name, :id => student.id %>
 				  <td class='score'>0.0</td>

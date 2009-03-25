@@ -7,7 +7,11 @@ tabatha:
   email: tabatha@kangaroobox.com
   class_of: 2013
   homeroom: 3S
-
+  login: tabatha
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("tabatha" + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
+  
 rich:
   type: Student
   site: nda
@@ -17,6 +21,10 @@ rich:
   email: rnhurt@kangaroobox.com
   class_of: 2008
   homeroom: 8H
+  login: richard
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("richard" + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
 
 andrew:
   type: Student
@@ -27,7 +35,11 @@ andrew:
   email: andrew@kangaroobox.com
   class_of: 2010
   homeroom: 7S
-  
+  login: andrew
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("andrew" + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
+
 bob:
   id: 1070
   type: Teacher
@@ -36,6 +48,10 @@ bob:
   first_name: Bob
   last_name: Smith
   email: bob@bob.xom
+  login: andrew
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("bob" + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
   
 kim:
   id: 1069
@@ -45,6 +61,10 @@ kim:
   first_name: Kim
   last_name: Hurt
   email: kimy@asdf.xom
+  login: kim
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("kim" + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
 
 tammy:
   type: TeacherAssistant
@@ -80,11 +100,16 @@ tom:
 
 <% for t in 1..30 %>
 user_<%= t %>:
+  <% first_name = random_words(1).downcase %> 
   type: Teacher
   site: nda
   short_name: <%= t * t %>
-  first_name: <%= random_words(1).capitalize %> 
+  first_name: <%= first_name.capitalize %> 
   last_name: <%= random_words(1).capitalize %>
+  login: <%= first_name %>
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt(first_name + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
 <% end %>
 
 <% for i in 100..125 %>
