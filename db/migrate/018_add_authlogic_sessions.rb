@@ -1,7 +1,10 @@
 class AddAuthlogicSessions < ActiveRecord::Migration
 
   def self.up
-    add_column :users,  :login,             :string
+    # Replacing :short_name column with :login
+    rename_column :users, :short_name, :login
+
+    # Add new Authlogic columns
     add_column :users,  :crypted_password,  :string
     add_column :users,  :password_salt,     :string
     add_column :users,  :persistence_token, :string
@@ -14,7 +17,10 @@ class AddAuthlogicSessions < ActiveRecord::Migration
   end
     
   def self.down
-    remove_column :users, :login
+    # Restore :short_name column
+    rename_column :users, :login, :short_name
+
+    # Remove Authlogic columns
     remove_column :users, :crypted_password
     remove_column :users, :password_salt
     remove_column :users, :persistence_token

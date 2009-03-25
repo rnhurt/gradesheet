@@ -1,13 +1,12 @@
 tabatha:
   type: Student
   site: nda
-  short_name: 119
+  login: tabatha
   first_name: Tabatha
   last_name: Hurt
   email: tabatha@kangaroobox.com
   class_of: 2013
   homeroom: 3S
-  login: tabatha
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("tabatha" + salt) %>
   persistence_token: <%= Authlogic::Random.friendly_token %>
@@ -15,13 +14,12 @@ tabatha:
 rich:
   type: Student
   site: nda
-  short_name: 119
+  login: rich
   first_name: Richard
   last_name: Hurt
   email: rnhurt@kangaroobox.com
   class_of: 2008
   homeroom: 8H
-  login: richard
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("richard" + salt) %>
   persistence_token: <%= Authlogic::Random.friendly_token %>
@@ -29,13 +27,12 @@ rich:
 andrew:
   type: Student
   site: nda
-  short_name: 119
+  login: andrew
   first_name: Andrew
   last_name: Hurt
   email: andrew@kangaroobox.com
   class_of: 2010
   homeroom: 7S
-  login: andrew
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("andrew" + salt) %>
   persistence_token: <%= Authlogic::Random.friendly_token %>
@@ -44,11 +41,10 @@ bob:
   id: 1070
   type: Teacher
   site: stlaw
-  short_name: 273
+  login: bob
   first_name: Bob
   last_name: Smith
   email: bob@bob.xom
-  login: andrew
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("bob" + salt) %>
   persistence_token: <%= Authlogic::Random.friendly_token %>
@@ -57,11 +53,10 @@ kim:
   id: 1069
   type: Teacher
   site: nda
-  short_name: 23
+  login: kim
   first_name: Kim
   last_name: Hurt
   email: kimy@asdf.xom
-  login: kim
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("kim" + salt) %>
   persistence_token: <%= Authlogic::Random.friendly_token %>
@@ -69,7 +64,7 @@ kim:
 tammy:
   type: TeacherAssistant
   site: nda
-  short_name: tamtam
+  login: tamtam
   first_name: Tammy
   last_name: Smith
   email: tammy@lkajsd.com
@@ -77,7 +72,7 @@ tammy:
 tom:
   type: Teacher
   site: nda
-  short_name: 32
+  login: 32
   first_name: Tom
   last_name: Rec
   email: tomrec@aklsdf.com
@@ -103,10 +98,9 @@ user_<%= t %>:
   <% first_name = random_words(1).downcase %> 
   type: Teacher
   site: nda
-  short_name: <%= t * t %>
+  login: <%= t * t %>
   first_name: <%= first_name.capitalize %> 
   last_name: <%= random_words(1).capitalize %>
-  login: <%= first_name %>
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt(first_name + salt) %>
   persistence_token: <%= Authlogic::Random.friendly_token %>
@@ -116,7 +110,7 @@ user_<%= t %>:
 user_<%= i %>:
   type: Student
   site: nda
-  short_name: <%= i * i %>
+  login: <%= i * i %>
   first_name: <%= random_words(1).capitalize %> 
   last_name: <%= random_words(1).capitalize %>
   class_of: <%= 2000 + rand(2018-2000) %>
@@ -127,7 +121,7 @@ user_<%= i %>:
 user_<%= i %>:
   type: Student
   site: nda
-  short_name: <%= i * i %>
+  login: <%= i * i %>
   first_name: <%= random_words(1).capitalize %> 
   last_name: <%= random_words(1).capitalize %>
   class_of: <%= 2000 + rand(2018-2000) %>

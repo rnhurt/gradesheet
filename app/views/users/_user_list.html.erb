@@ -3,7 +3,7 @@
 <table id="users" class="master">
   <thead>
   	<tr>
-    <th>ID</th>
+    <th>Login</th>
     <% form_for users.class.to_s, :html => { :method => :get } do |s| %>
 	    <th>Name <%= text_field_tag :search, params[:search], :size => 10, :class => 'search' %></th>
 	  <% end %>
@@ -17,7 +17,7 @@
 	<tbody>
 		<% for u in users %>
 			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for(u)+'/edit' %>'" />
-				<%= content_tag :td, u.short_name %>
+				<%= content_tag :td, u.login %>
 				<td width='50%'><%= link_to u.full_name, url_for(u)+'/edit' %></td>
 				<%= content_tag :td, u.email %>
 				<%= content_tag :td, u.site.name %>

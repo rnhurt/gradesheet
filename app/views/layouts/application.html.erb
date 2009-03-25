@@ -36,7 +36,7 @@
 		    <span><%= link_to " log in ", new_user_session_path %></span>
 		  <% else %>
   			<span><%= current_user.full_name %></span> |
-  			<span><%= link_to 'My Account', account_path() %></span> |
+  			<span><%= link_to 'My Account', edit_account_path() %></span> |
 		    <span><%= link_to "log out", user_session_path, :method => :delete,
 		          :confirm => 'Are you sure you want to logout?' %></span>
   		<% end %>

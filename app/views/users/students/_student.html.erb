@@ -1,9 +1,11 @@
+<h1>WE SHOULD NOT BE HERE!</h1>
+
 <% # Are we editing this Student?
 if true 
 %>
 	<p>
-		<b>Short name:</b>
-		<%= f.text_field :short_name %>
+		<b>Login:</b>
+		<%= f.text_field :login %>
 	</p>
 
 	<p>
@@ -35,8 +37,8 @@ if true
 <% # No, we are just displaying them
 else %>
 	<p>
-		<b>Short name:</b>
-		<%=h @student.short_name %>
+		<b>Login:</b>
+		<%=h @student.login %>
 	</p>
 
 	<p>
