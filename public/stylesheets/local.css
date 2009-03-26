@@ -94,15 +94,6 @@ form .required {background: transparent url(/images/bullet_red.png) no-repeat sc
 .disabled { background-color:#f2f2f2;color:#D4D4D4}
 .sml { width: 50px }
 
-
-.calendar_date_select {
-/*  color:white; */
-/*  border:#777 1px solid; */
-  display:block;
-  width:220px;
-  z-index: 1000;
-}
-
 /*** Scaffold defaults ***/
 .fieldWithErrors {padding: 2px;background-color: red;display: table;}
 #errorExplanation {

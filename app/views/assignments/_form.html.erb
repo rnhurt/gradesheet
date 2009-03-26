@@ -1,0 +1,42 @@
+<div class='box last'>
+	<% form_for(@assignment) do |f| %>
+			<div class='spacer'>
+			  <% header = @assignment.name? ? "Editing: #{@assignment.name}" : "New Assignment" %>
+				<%= content_tag( :h1, header ) %>
+				<%= f.hidden_field :course_id, :value => @course.id %>
+			</div>
+		
+			<label><span class='required'>Name</span>
+				<%= f.text_field :name %>
+			</label>
+
+			<label><span class='required'>Possible Points</span>
+		    <%= f.text_field :possible_points %>
+			</label>
+		
+			<label><span class='required'>Type</span>
+			 <%= collection_select :assignment, :assignment_category_id, AssignmentCategory.find(:all), :id, :name %>
+			</label>
+
+			<label><span>Due Date</span>
+				<span id='due_date' class='scal tinyscal'></span>
+				<%= f.hidden_field :due_date %>
+				<input id='default_due_date' type='hidden' 
+				  value='<%= @assignment.due_date? ? @assignment.due_date.to_s(:long) : DateTime.now.to_s(:long) %>' />
+			</label>
+
+			<div class='spacer'>
+				<%= submit_tag 'Save', :class=> 'btn positive' %>
+				<%= link_to 'Cancel', assignment_path(@course), :class => 'btn standard' %>
+			</div>
+	<% end %>
+</div>
+
+<%= set_focus_to_id 'assignment_name' %>
+
+<% javascript_tag do %>
+  due_date = new scal('due_date', 'assignment_due_date', {closebutton: ''});
+  default_due_date = new Date ($('default_due_date').readAttribute('value'));
+  due_date.setCurrentDate(default_due_date);
+<% end %>
+

@@ -1,5 +1,6 @@
-<% content_for :page_header  do %>
-  <%= calendar_date_select_includes %>
+<% content_for :page_header do %>
+  <%= stylesheet_link_tag 'mycal' -%>
+  <%= javascript_include_tag 'scal' -%>
 <% end %>
 
 <% content_for :left do %>
@@ -8,34 +9,4 @@
 
 <%= error_messages_for :assignment, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div class='box'>
-	<% form_for(@assignment) do |f| %>
-			<div class='spacer'>
-				<%= content_tag( :h1, "New '#{@course.name}' Assignment" ) %>
-				<%= f.hidden_field :course_id, :value => @course.id %>
-			</div>
-		
-			<label><span class='required'>Name</span>
-				<%= f.text_field :name %>
-			</label>
-
-			<label><span class='required'>Possible Points</span>
-		    <%= f.text_field :possible_points %>
-			</label>
-		
-			<label><span class='required'>Type</span>
-			 <%= collection_select :assignment, :assignment_category_id, AssignmentCategory.find(:all), :id, :name %>
-			</label>
-
-			<label><span>Due Date</span>
-				<%= f.calendar_date_select :due_date, :time => :false, :month_year => 'label', :buttons => :false %>
-			</label>
-
-			<div class='spacer'>
-				<%= submit_tag 'Save', :class=> 'btn positive' %>
-				<%= link_to 'Cancel', assignment_path(@course), :class => 'btn standard' %>
-			</div>
-	<% end %>
-</div>
-
-<%= set_focus_to_id 'assignment_name' %>
+<%= render :partial => 'form' %>

@@ -1,0 +1,141 @@
+/*
+scal.css - The style sheet for the scal calendar control.
+*/
+.scal{
+	background-color: white;
+	margin-bottom:10px;
+	border:1px inset gray;
+	font-size:24pt;
+	width:436px;
+	min-height:300px;
+	display:block;
+	padding:10px;
+	font-size:24pt;
+	font-family:'Lucida Grande',Verdana,Arial,Sans-Serif;
+	line-height:normal;
+}
+.scal:hover{
+	cursor:pointer;
+	/*cursor:hand; /* If you're worried about old IE versions, turn this on.  I have it off because I hate seeing css exceptions in my debug window. ;) */
+}
+.scal .calwrapper{
+}
+.scal .calweekswrapper{
+	display:block;
+}
+.scal .calheader{
+	display: block;
+	width:100%;
+	text-align:center;
+	margin-bottom:2px;
+}
+.scal .caltitle{
+	width:60%;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+}
+.scal .calcontrol{
+	margin: 2px;
+	padding: 2px;
+	font-size:12pt;
+	font-weight: bold;
+}
+.scal .calcontrol:hover{
+	background-color:red;
+	color:white;
+}
+.scal .calclose{
+	border: 1px solid black;
+	float:right;
+	display:none;
+}
+.scal .calprevmonth{
+	float:left;
+}
+.scal .calnextmonth{
+	float:right;
+}
+.scal .calnextyear{
+	display:none;
+}
+.scal .calprevyear{
+	display:none;
+}
+.scal .daybox{
+	float:left;
+	border:1px solid black;
+	width: 60px;
+	color:black;
+	text-align:center;	
+}
+.scal .dayboxvalue{
+    display: none;
+}
+.scal .dayboxname{
+	background-color: black;
+	color:white;
+	font-size:16pt;
+}
+.scal .dayboxsunday{
+	background-color: lightgray;
+}
+.scal .dayboxsaturday{
+	background-color: lightgray;
+}
+.scal .daybox:hover{
+	border:1px solid red;
+}
+.scal .dayboxname:hover{
+	border:1px solid black;
+}
+.scal .dayinmonth{
+	color: black;
+}
+.scal .dayoutmonth{
+	color:gray;
+}
+.scal .dayselected{
+	background-color: red;
+	color: white;
+}
+.scal .daycurrent{
+	border:1px solid red;
+}
+.scal .weekbox{
+	width:100%;
+	display:block;
+}
+.scal .endweek{
+	float:left;
+}
+.scal .weekboxname{
+}
+
+/* 
+tinyscal - a mini version of the calendar type.  useful in tight spaces. 
+ usage: define class of base element as "scal tinyscal" as tinyscal is 
+        dependent on scal.
+*/
+.tinyscal{
+	font-size:8pt;
+	width:154px;
+	min-height:130px;
+	margin-right:300px;
+}
+.tinyscal .calcontrol{
+	font-size:8pt;
+}
+.tinyscal .caltitle{
+	padding:3px;
+}
+.tinyscal .daybox{
+	width: 20px;
+}
+.tinyscal .dayboxname{
+	font-size: 8pt;
+}
+.tinyscal .weekboxname{
+	margin-top:5px;
+}
+
