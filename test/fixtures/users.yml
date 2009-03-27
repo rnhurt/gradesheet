@@ -1,81 +1,86 @@
-tabatha:
+studenta:
   type: Student
   site: nda
-  login: tabatha
-  first_name: Tabatha
-  last_name: Hurt
-  email: tabatha@kangaroobox.com
+  login: studenta
+  first_name: Student
+  last_name: A
+  email: studenta@example.com
   class_of: 2013
   homeroom: 3S
   password_salt: <%= salt = Authlogic::Random.hex_token %>
-  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("tabatha" + salt) %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("studenta" + salt) %>
   persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
   
-rich:
+studentb:
   type: Student
   site: nda
-  login: rich
-  first_name: Richard
-  last_name: Hurt
-  email: rnhurt@kangaroobox.com
+  login: studentb
+  first_name: Student
+  last_name: B
+  email: studentb@example.com
   class_of: 2008
   homeroom: 8H
   password_salt: <%= salt = Authlogic::Random.hex_token %>
-  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("richard" + salt) %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("studentb" + salt) %>
   persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 
-andrew:
-  type: Student
-  site: nda
-  login: andrew
-  first_name: Andrew
-  last_name: Hurt
-  email: andrew@kangaroobox.com
-  class_of: 2010
-  homeroom: 7S
-  password_salt: <%= salt = Authlogic::Random.hex_token %>
-  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("andrew" + salt) %>
-  persistence_token: <%= Authlogic::Random.friendly_token %>
-
-bob:
+teachera:
   id: 1070
   type: Teacher
-  site: stlaw
-  login: bob
-  first_name: Bob
-  last_name: Smith
-  email: bob@bob.xom
+  site: campus2
+  login: teachera
+  first_name: Teacher
+  last_name: A
+  email: teachera@example.com
   password_salt: <%= salt = Authlogic::Random.hex_token %>
-  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("bob" + salt) %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("teachera" + salt) %>
   persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
   
-kim:
+teacherb:
   id: 1069
   type: Teacher
-  site: nda
-  login: kim
-  first_name: Kim
-  last_name: Hurt
-  email: kimy@asdf.xom
+  site: campus1
+  login: teacherb
+  first_name: Teacher
+  last_name: B
+  email: teacherb@example.com
   password_salt: <%= salt = Authlogic::Random.hex_token %>
-  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("kim" + salt) %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("teacherb" + salt) %>
   persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 
-tammy:
+teacherb:
   type: TeacherAssistant
-  site: nda
-  login: tamtam
-  first_name: Tammy
-  last_name: Smith
-  email: tammy@lkajsd.com
+  site: campus1
+  login: taa
+  first_name: T.A.
+  last_name: A
+  email: taa@example.com
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("taa" + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 
-tom:
+admin:
   type: Teacher
   site: nda
-  login: 32
-  first_name: Tom
-  last_name: Rec
-  email: tomrec@aklsdf.com
+  login: admin
+  first_name: Mr.
+  last_name: Admin
+  email: admin@example.com
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("admin" + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 
 <%
   @@words = File.open("/usr/share/dict/words").collect do |line|
@@ -97,33 +102,47 @@ tom:
 user_<%= t %>:
   <% first_name = random_words(1).downcase %> 
   type: Teacher
-  site: nda
+  site: campus1
   login: <%= t * t %>
   first_name: <%= first_name.capitalize %> 
   last_name: <%= random_words(1).capitalize %>
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt(first_name + salt) %>
   persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 <% end %>
 
 <% for i in 100..125 %>
 user_<%= i %>:
+  <% first_name = random_words(1).downcase %> 
   type: Student
-  site: nda
+  site: campus1
   login: <%= i * i %>
-  first_name: <%= random_words(1).capitalize %> 
+  first_name: <%= first_name.capitalize %> 
   last_name: <%= random_words(1).capitalize %>
   class_of: <%= 2000 + rand(2018-2000) %>
   homeroom: 8P
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt(first_name + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 <% end %>
 
 <% for i in 126..150 %>
 user_<%= i %>:
+  <% first_name = random_words(1).downcase %> 
   type: Student
-  site: nda
+  site: campus1
   login: <%= i * i %>
-  first_name: <%= random_words(1).capitalize %> 
+  first_name: <%= first_name.capitalize %> 
   last_name: <%= random_words(1).capitalize %>
   class_of: <%= 2000 + rand(2018-2000) %>
   homeroom: 7S
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt(first_name + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 <% end %>

@@ -1,6 +1,4 @@
 module Authlogic
-  # I18n
-  #
   # This class allows any message in Authlogic to use internationalization. In earlier versions of Authlogic each message was translated via configuration.
   # This cluttered up the configuration and cluttered up Authlogic. So all translation has been extracted out into this class. Now all messages pass through
   # this class, making it much easier to implement in I18n library / plugin you want. Use this as a layer that sits between Authlogic and whatever I18n
@@ -40,7 +38,15 @@ module Authlogic
   #       not_active: Your account is not active
   #       not_confirmed: Your account is not confirmed
   #       not_approved: Your account is not approved
-  #       blank_record: You can not login with a blank record
+  #       no_authentication_details: You did not provide any details for authentication.
+  #     models:
+  #       user_session: UserSession (or whatever name you are using)
+  #     attributes:
+  #       user_session: (or whatever name you are using)
+  #         login: login
+  #         email: email
+  #         passwword: password
+  #         remember_me: remember me
   class I18n
     class << self
       # All message translation is passed to this method. The first argument is the key for the message. The second is options, see the rails I18n library for a list of options used.
@@ -51,6 +57,7 @@ module Authlogic
           options[:default]
         end
       end
+      alias_method :translate, :t
     end
   end
 end
