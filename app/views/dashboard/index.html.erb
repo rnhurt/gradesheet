@@ -1,54 +1,68 @@
 <% content_for :left do %>
-	<h3 class='alt'>Upcoming Events</h3>
-	<ul>
-		<%= content_tag :li, "#{distance_of_time_in_words_to_now(Time.now.end_of_year).capitalize} until New Year's Day." %>
-		<%= content_tag :li, "#{distance_of_time_in_words_to_now(Term.current[0].end_date).capitalize} until the end of this grading period." %>
-		<%= content_tag :li, '&lt;unknown&gt; days until the end of the school year.' %>
-	</ul>
+	<h3>Upcoming Events</h3>
+	<%= content_tag :div, "<span class='notice'>#{distance_of_time_in_words_to_now(Term.current[0].end_date).capitalize}</span>
+	    until the end of this grading period.", :class => 'box span-3 last' %>
+	<%= content_tag :div, "<span class='notice'>#{distance_of_time_in_words_to_now(Time.now.end_of_year).capitalize}</span>
+	    until New Year's Day.", :class => 'box span-3 last' %>
+	<%#= content_tag :li, '&lt;unknown&gt; days until the end of the school year.' %>
 	
 <% end %>
 
 <h2>Welcome to <%= SITE_NAME %>!</h2>
 
-<p>This is a pre-Beta version of the <%= SITE_NAME %> software.  All of the data here is
+<p class='warning last'>This is a pre-Beta version of the <%= SITE_NAME %> software.  All of the data here is
 generated and most of it is nonsensical.  However, it is a starting point and 
 should give you enough 'things' to be able to exercise the program a little bit.
 Please, take a look around and push all the buttons.  You can't hurt anything here.
 If you find something interesting, please <a href='mailto:gradesheet@kangaroobox.com'>let us know about it</a>.</p>
 
-<p>Use one of the following accounts to log into Gradesheet:</p>
-<dl>
+<h3>Latest News - Mar. 23, 2009</h3>
+<ul>
+  <li>The authentication system is now active.  Now that you have to log in as a real 
+  user (Teacher, Admin, Student/Parent), you will find instructions on how to
+  do it at the top of this page.  Give it a go and let me know how it works.  You
+  should see different menu items and classes depending on how you log in.</li>
+</ul>
+
+<div class='box span-5'>
   <dt>Site Administrator<dd><ul>
     <li>Username: <em>admin</em></li>
     <li>Password: <em>admin</em></li></ul></dd>
   </dt>
+</div>
+
+<div class='box span-5'>
   <dt>Teacher A<dd><ul>
     <li>Username: <em>teachera</em></li>
     <li>Password: <em>teachera</em></li></ul></dd>
   </dt>
+  <hr />
   <dt>Teacher B<dd><ul>
     <li>Username: <em>teacherb</em></li>
     <li>Password: <em>teacherb</em></li></ul></dd>
   </dt>
+</div>
+
+<div class='box span-5 last'>
   <dt>Student A<dd><ul>
     <li>Username: <em>studenta</em></li>
     <li>Password: <em>studenta</em></li></ul></dd>
   </dt>
-</dl>
+  <hr />
+  <dt>Student B<dd><ul>
+    <li>Username: <em>studentb</em></li>
+    <li>Password: <em>studentb</em></li></ul></dd>
+  </dt>
+</div>
+
+<div class='clear'>
 
 <address>
 Thank you!<br />
 KangarooBox, LLC.
 </address>
 
-
-<h3>Latest News - Mar. 23, 2009</h3>
-<ul>
-  <li>The authentication system is active.  Now that you have to log in as a real 
-  user (Teacher, Admin, Student/Parent), you will find instructions on how to
-  do it at the top of this page.  Give it a go and let me know how it works.  You
-  should see different menu items and classes depending on how you log in.</li>
-</ul>
+<hr />
 
 <h3>News - Feb. 26, 2009</h3>
 <ul>

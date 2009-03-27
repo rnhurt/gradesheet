@@ -23,7 +23,7 @@ body {background: #FFF url("/images/header-bg.gif") top left repeat-x;}
 .container .notice a {color:#264409; background:none; padding:0; margin:0; }
 
 div.box {	border: 2px solid #D2DDFE; padding: 0.5em; }
-
+h3 {border-bottom: 1px solid #DDD;}
 
 /*** Tables ***/
 table, td, th {vertical-align:bottom;}
