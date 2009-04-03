@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   # Authlogic
-  acts_as_authentic
+  acts_as_authentic do |c|
+    c.logged_in_timeout = 1.minute
+  end
   
   belongs_to	:site
 	has_many		:comments
@@ -13,9 +15,6 @@ class User < ActiveRecord::Base
   # in the system.
 	validates_uniqueness_of	:first_name, :scope => :last_name
 
-  ##
-  # Methods
-  ##
   
 	# Search for a user (will_paginate)
 	def self.search(search, page)
@@ -26,25 +25,21 @@ class User < ActiveRecord::Base
 							:include => :site
 	end
 	
-	## Get the user "types" avalable
+	# Get the user "types" avalable
 	def self.find_user_types(*args)
 		return {'ALL' => Users, 'Teachers' => Teacher, 'Students' => Student, 'Teacher Assistants' => TeacherAssistant}
 	end
 
-	## Display the users full name
+	# Display the users full name
 	def full_name
 		[first_name, last_name].join(' ')
 	end
 	
-	## Break a full name into first_name & last_name
+	# Break a full name into first_name & last_name
 	def full_name=(name)
 		split = name.split(' ', 2)
 		self.first_name = split.first
 		self.last_name = split.last
 	end
-
-  ##
-  # Private
-  ##
 
 end

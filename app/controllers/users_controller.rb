@@ -1,4 +1,8 @@
+# FIXME: Meld all the sub-controllers (Students, Teachers, TA) into this controller
 class UsersController < ApplicationController
+  before_filter :require_user
+  append_before_filter :authorize
+
   def index
     @users = User.search(params[:search], params[:page])
 
@@ -8,6 +12,11 @@ class UsersController < ApplicationController
   end
 
 
+  # We don't really want to show an individual person but rather the listing
+  # of all people.
+  def show
+		redirect_to :action => :index
+  end
 	def show
 		redirect_to :action => :index
   end

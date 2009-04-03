@@ -1,4 +1,7 @@
 class Users::TeachersController < ApplicationController
+  before_filter :require_user
+  append_before_filter :authorize
+
   def index
     @teachers = Teacher.search(params[:search], params[:page])
 
@@ -9,12 +12,10 @@ class Users::TeachersController < ApplicationController
   end
 
 
+  # We don't really want to show an individual person but rather the listing
+  # of all people.
   def show
-    # We don't really want to show an individual teacher but rather the listing
-    # of all teachers.
-    respond_to do |format|
-      format.html { redirect_to :action=>:index }
-    end
+		redirect_to :action => :index
   end
 
 

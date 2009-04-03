@@ -1,4 +1,6 @@
 class Settings::GradingScalesController < SettingsController
+  before_filter :authorized
+
   def index
     @scales = GradingScale.find(:all)
 

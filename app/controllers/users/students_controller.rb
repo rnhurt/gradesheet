@@ -1,4 +1,7 @@
 class Users::StudentsController < ApplicationController
+  before_filter :require_user
+  append_before_filter :authorize
+
   def index
     @students = Student.search(params[:search], params[:page])
 
@@ -9,6 +12,8 @@ class Users::StudentsController < ApplicationController
   end
 
 
+  # We don't really want to show an individual person but rather the listing
+  # of all people.
   def show
 		redirect_to :action => :index
   end

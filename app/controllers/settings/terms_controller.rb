@@ -1,4 +1,6 @@
 class Settings::TermsController < SettingsController
+  before_filter :authorized
+
   def index
     @terms = Term.find(:all, :order => "begin_date DESC")
 

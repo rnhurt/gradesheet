@@ -1,4 +1,7 @@
 class ReportsController < ApplicationController
+  before_filter :require_user
+  append_before_filter :authorize
+
 	def index
 	end
 	

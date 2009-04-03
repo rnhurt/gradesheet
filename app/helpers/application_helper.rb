@@ -19,9 +19,19 @@ module ApplicationHelper
 
 	## Generate the MENU html
 	def menu_builder(page_id)
-		tabs = [ 'Home:dashboard', 'Users:users', 'Courses:courses', 
-						'Assignments:assignments', 'Grades:gradations', 'Reports:reports', 'My Settings:settings' ]
-
+	  # Show a different menu to different users
+	  if !current_user
+	    # No user is currently logged in so just the dashboard
+	    tabs = [ 'Home:dashboard' ]
+	  elsif current_user.type == 'Teacher'
+	    # Show the 'Teacher' menu
+		  tabs = [ 'Home:dashboard', 'Courses:courses', 
+						  'Assignments:assignments', 'Grades:gradations', 'Reports:reports', 'My Settings:settings' ]
+	  else
+		  tabs = [ 'Home:dashboard', 'Users:users', 'Courses:courses', 
+						  'Assignments:assignments', 'Grades:gradations', 'Reports:reports', 'My Settings:settings' ]
+    end
+    
 		content = ""
 		tabs.each do |tab|
 			t = tab.split(':')

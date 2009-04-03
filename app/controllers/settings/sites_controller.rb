@@ -1,4 +1,6 @@
 class Settings::SitesController < SettingsController
+  before_filter :authorized
+
   def index
     @sites = Site.all
     

@@ -1,6 +1,17 @@
-== 2.0.4
+== 2.0.6
+
+* Don't use second, use [1] instead so older rails systems don't complain.
+
+== 2.0.5 released 2009-3-30
+
+* Stub out authenticate_with_http_basic for TestCase::ControllerAdapter.
+* Added second parameter for add_acts_as_authentic module to specify the position: append or prepend.
+
+== 2.0.4 released 2009-3-28
 
 * Added validates_uniqueness_of_login_field_options and validates_uniqueness_of_email_field_options configuration options
+* Add in checks to make sure session_class is not nil.
+* Cleaned up TestCase some more and added functionality to log users in during functional tests.
 
 == 2.0.3 released 2009-3-26
 

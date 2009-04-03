@@ -1,7 +1,7 @@
-nda:
-  name: NDA
+campus1:
+  name: North
   school_id: 1
 
-stlaw:
-  name: St Lawrence
+campus2:
+  name: South
   school_id: 1

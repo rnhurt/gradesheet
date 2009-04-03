@@ -41,9 +41,14 @@ module Authlogic
         # nothing to do with Authlogic.
         #
         # That being said, this is your tool for extending Authlogic and "hooking" into the acts_as_authentic call.
-        def add_acts_as_authentic_module(mod)
+        def add_acts_as_authentic_module(mod, action = :append)
           modules = acts_as_authentic_modules
-          modules << mod
+          case action
+          when :append
+            modules << mod
+          when :prepend
+            modules = [mod] + modules
+          end
           modules.uniq!
           write_inheritable_attribute(:acts_as_authentic_modules, modules)
         end
@@ -62,8 +67,7 @@ module Authlogic
         
           def config(key, value, default_value = nil, read_value = nil)
             if value == read_value
-              return read_inheritable_attribute(key) if inheritable_attributes.include?(key)
-              write_inheritable_attribute(key, default_value)
+              inheritable_attributes.include?(key) ? read_inheritable_attribute(key) : default_value
             else
               write_inheritable_attribute(key, value)
             end
@@ -73,6 +77,7 @@ module Authlogic
             columns_to_check.each { |column_name| return column_name.to_sym if column_names.include?(column_name.to_s) }
             columns_to_check.first ? columns_to_check.first.to_sym : nil
           end
+
       end
     end
   end

@@ -2,9 +2,6 @@
 	# NOTE: I'm 'not sure why using 'object.new' works here, but it does :/  
 %>
 
-<% 	# FIXME
-		# I know hitting the DB from a view is not proper, but it beats 
-		# calling it from every method on every user controller in the land. %>
 <% types = User.find_user_types(:all) %>
 
 <table id="types" class="master">

@@ -1,6 +1,8 @@
-require "authlogic/test_case/mock_cookie_jar"
-require "authlogic/test_case/mock_request"
-require "authlogic/test_case/mock_controller"
+require File.dirname(__FILE__) + "/test_case/controller_adapter"
+require File.dirname(__FILE__) + "/test_case/mock_cookie_jar"
+require File.dirname(__FILE__) + "/test_case/mock_controller"
+require File.dirname(__FILE__) + "/test_case/mock_logger"
+require File.dirname(__FILE__) + "/test_case/mock_request"
 
 module Authlogic
   # This is a collection of methods and classes that help you easily test Authlogic. In fact, I use these same tools
@@ -8,16 +10,23 @@ module Authlogic
   #
   # Some important things to keep in mind when testing:
   #
-  # Authlogic requires a "connection" to your controller. In the same manner that ActiveRecord requires a connection to
+  # Authlogic requires a "connection" to your controller to activate it. In the same manner that ActiveRecord requires a connection to
   # your database. It can't do anything until it gets connnected. That being said, Authlogic will raise an
   # Authlogic::Session::Activation::NotActivatedError any time you try to instantiate an object without a "connection".
-  # So before you do anything with Authlogic, you need to connect it. Let's walk through how to do this in tests:
+  # So before you do anything with Authlogic, you need to activate / connect Authlogic. Let's walk through how to do this in tests:
   #
   # === Functional tests
   #
-  # You shouldn't have to do anything. Authlogic automatically sets a before_filter in your ApplicationController that
-  # conntects Authlogic to the controller. So as soon as you make a request in your tests, it will connect Authlogic
-  # for you.
+  # Activating Authlogic isn't a problem here, because making a request will activate Authlogic for you. The problem is
+  # logging users in so they can access restricted areas. Solvin this is simple, just do this:
+  #
+  #   setup :activate_authlogic
+  #
+  # Now log users in using Authlogic:
+  #
+  #   UserSession.create(users(:whomever))
+  #
+  # Do this before you make your request and it will act as if that user is logged in.
   #
   # === Integration tests
   #
@@ -26,22 +35,24 @@ module Authlogic
   #
   # === Unit tests
   #
-  # Now here is the tricky part of testing. Since there really is no controller here, you need to "fake" Authlogic into
-  # thinking there is. Don't worry, because the this model takes care of this for you. Just do the following
+  # The only time you need to do any trickiness here is if you want to test Authlogic yourself. Maybe you added some custom
+  # code or methods in your Session class. Maybe you are writing a plugin or a library that extends Authlogic. Whatever it is
+  # you need to make sure your code is tested and working properly.
+  #
+  # That being said, in this environment there is no controller. So you need to "fake" Authlogic into
+  # thinking there is. Don't worry, because the this module takes care of this for you. Just do the following
   # in your test's setup and you are good to go:
   #
   #   setup :activate_authlogic
   #
-  # activate_authlogic is a method provided to you by this TestCase module.
-  #
-  # You can even test off of this controller to make sure everything is good. For example:
+  # You also get a controller method that you can test off of. For example:
   #
   #   ben = users(:ben)
   #   assert_nil controller.session["user_credentials"]
   #   assert UserSession.create(ben)
   #   assert_equal controller.session["user_credentials"], ben.persistence_token
   #
-  # You also get the "controller" method to use in your tests as well. Now you have everything you need to properly test in unit tests.
+  # That's it.
   #
   # === How to use
   #
@@ -49,9 +60,11 @@ module Authlogic
   #
   #   require "authlogic/test_case"
   module TestCase
-    # Activates authlogic with an Authlogic::TestCase::MockController object.
+    # Activates authlogic so that you can use it in your tests. You should call this method in your test's setup. Ex:
+    #
+    #   setup :activate_authlogic
     def activate_authlogic
-      Authlogic::Session::Base.controller = controller
+      Authlogic::Session::Base.controller = (@request && Authlogic::TestCase::ControllerAdapter.new(@request)) || controller
     end
     
     # The Authlogic::TestCase::MockController object passed to Authlogic to activate it. You can access this in your test.

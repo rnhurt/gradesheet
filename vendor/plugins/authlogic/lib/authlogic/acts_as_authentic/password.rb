@@ -54,7 +54,7 @@ module Authlogic
         # * <tt>Default:</tt> {:minimum => 4, :if => "#{password_salt_field}_changed?".to_sym}
         # * <tt>Accepts:</tt> Hash of options accepted by validates_confirmation_of
         def validates_confirmation_of_password_field_options(value = nil)
-          config(:validates_confirmation_of_password_field_options, value, {:minimum => 4, :if => (password_salt_field ? "#{password_salt_field}_changed?".to_sym : nil)})
+          config(:validates_confirmation_of_password_field_options, value, {:minimum => 4, :if => :require_password?})
         end
         alias_method :validates_confirmation_of_password_field_options=, :validates_confirmation_of_password_field_options
         
@@ -140,6 +140,7 @@ module Authlogic
           @password = pass
           send("#{password_salt_field}=", Authlogic::Random.friendly_token) if password_salt_field
           send("#{crypted_password_field}=", crypto_provider.encrypt(*encrypt_arguments(@password, act_like_restful_authentication? ? :restful_authentication : nil)))
+          @password_changed = true
           after_password_set
         end
         
@@ -201,7 +202,11 @@ module Authlogic
           end
           
           def require_password?
-            new_record? || (password_salt_field && send("#{password_salt_field}_changed?")) || send(crypted_password_field).blank?
+            new_record? || password_changed? || send(crypted_password_field).blank?
+          end
+          
+          def password_changed?
+            @password_changed == true
           end
           
           def crypted_password_field

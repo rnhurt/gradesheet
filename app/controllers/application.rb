@@ -2,6 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  # FIXME: I don't think we want to include ALL helpers here, just possibly the application-helper
   helper :all # include all helpers, all the time
 
   # See ActionController::RequestForgeryProtection for details
@@ -23,51 +24,85 @@ class ApplicationController < ActionController::Base
   end
   def show_error(exception); render :text => exception.message; end
 
-	# This method was built to overcome a weakness in current_page? as reported
-	# in http://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/805
-	def my_current_controller?(c)
-		controller.controller_name == c
-	end
 
 
   #######################
   # Private methods
   private
-    def current_user_session
-      return @current_user_session if defined?(@current_user_session)
-      @current_user_session = UserSession.find
+
+  # Get the session object for the current user  
+  def current_user_session
+    return @current_user_session if defined?(@current_user_session)
+    @current_user_session = UserSession.find
+  end
+  
+  # Get the current user
+  def current_user
+    return @current_user if defined?(@current_user)
+    @current_user = current_user_session && current_user_session.user
+  end
+
+  # Make sure that there is a current user.  If not, redirect the user to the
+  # login page.
+  def require_user
+    unless current_user
+      store_location
+      flash[:notice] = "You must be logged in to access this page"
+      redirect_to new_user_session_url
+      return false
+    end
+  end
+
+  # Make sure there is not a current user.
+  def require_no_user
+    if current_user
+      store_location
+      flash[:notice] = "You must be logged out to access this page"
+      redirect_to dashboard_index_url
+      return false
+    end
+  end
+
+  # Keep the location that the user was trying to get to in-case we need to
+  # redirect them
+  def store_location
+    session[:return_to] = request.request_uri
+  end
+
+  # Send the user to the page they were trying to get to before they were forced
+  # to log in.
+  def redirect_back_or_default(default)
+    redirect_to(session[:return_to] || default)
+    session[:return_to] = nil
+  end
+  
+  # Check to make sure the user is supposed to access this page
+  def authorize
+    # If this user is an Admin authorize them for everything
+    # unless current_user.admin?
+    
+    # Check for an authorize section in the session object and build one if
+    # they don't have one
+    puts " **** checking for an existing session[:authorize] set ..."
+    unless session[:authorize]
+      puts " **** building the session[:authorize] set ..."
+      case current_user.type.downcase
+        when 'teacher'
+          session[:authorize] = ['courses', 'assignments', 'gradations', 'reports', 'settings'].to_set
+        when 'student'
+          session[:authorize] = ['reports'].to_set
+        else
+          # unknown type of user
+          session[:authorize] = [''].to_set
+      end
     end
     
-    def current_user
-      return @current_user if defined?(@current_user)
-      @current_user = current_user_session && current_user_session.user
+    # Check to make sure the user can use the requested controller
+    unless session[:authorize].include?(controller_name)
+      flash[:error] = "You don't have the authority to access that page"
+      redirect_to dashboard_index_path
+      return false
     end
-
-    def require_user
-      unless current_user
-        store_location
-        flash[:notice] = "You must be logged in to access this page"
-        redirect_to new_user_session_url
-        return false
-      end
-    end
-
-    def require_no_user
-      if current_user
-        store_location
-        flash[:notice] = "You must be logged out to access this page"
-        redirect_to dashboard_index_url
-        return false
-      end
-    end
-
-    def store_location
-      session[:return_to] = request.request_uri
-    end
-
-    def redirect_back_or_default(default)
-      redirect_to(session[:return_to] || default)
-      session[:return_to] = nil
-    end
+  end
 
 end

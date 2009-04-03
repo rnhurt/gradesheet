@@ -1,6 +1,6 @@
 studenta:
   type: Student
-  site: nda
+  site: campus1
   login: studenta
   first_name: Student
   last_name: A
@@ -15,7 +15,7 @@ studenta:
   
 studentb:
   type: Student
-  site: nda
+  site: campus1
   login: studentb
   first_name: Student
   last_name: B
@@ -71,7 +71,7 @@ teacherb:
 
 admin:
   type: Teacher
-  site: nda
+  site: campus1
   login: admin
   first_name: Mr.
   last_name: Admin
