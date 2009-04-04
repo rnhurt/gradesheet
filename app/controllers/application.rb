@@ -78,27 +78,7 @@ class ApplicationController < ActionController::Base
   
   # Check to make sure the user is supposed to access this page
   def authorize
-    # If this user is an Admin authorize them for everything
-    # unless current_user.admin?
-    
-    # Check for an authorize section in the session object and build one if
-    # they don't have one
-    puts " **** checking for an existing session[:authorize] set ..."
-    unless session[:authorize]
-      puts " **** building the session[:authorize] set ..."
-      case current_user.type.downcase
-        when 'teacher'
-          session[:authorize] = ['courses', 'assignments', 'gradations', 'reports', 'settings'].to_set
-        when 'student'
-          session[:authorize] = ['reports'].to_set
-        else
-          # unknown type of user
-          session[:authorize] = [''].to_set
-      end
-    end
-    
-    # Check to make sure the user can use the requested controller
-    unless session[:authorize].include?(controller_name)
+    unless session[:authorize].detect{ |menu_name, controller| controller == controller_name }
       flash[:error] = "You don't have the authority to access that page"
       redirect_to dashboard_index_path
       return false

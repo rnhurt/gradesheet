@@ -19,7 +19,6 @@ class UserSessionsController < ApplicationController
 
   def destroy
     current_user_session.destroy
-    session[:authorize] = nil   # remove the users authority
     flash[:notice] = "Logout successful!"
     redirect_to dashboard_index_url
   end
