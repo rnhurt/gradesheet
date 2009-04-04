@@ -1,5 +1,5 @@
 class UserSession < Authlogic::Session::Base 
-#  logout_on_timeout true # default is false
+  logout_on_timeout true # default is false
   after_create  :aauthorize
   after_destroy :deauthorize
   
