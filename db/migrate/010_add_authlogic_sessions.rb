@@ -15,11 +15,11 @@ class AddAuthlogicSessions < ActiveRecord::Migration
 
     # Put something in the columns so that we can add the NOT-NULL clause
     execute "UPDATE users SET 
-                'crypted_password'    = 'INVALID', 
-                'password_salt'       = 'INVALID',
-                'persistence_token'   = 'INVALID',
-                'single_access_token' = 'INVALID',
-                'perishable_token'    = 'INVALID';"
+                crypted_password    = 'INVALID', 
+                password_salt       = 'INVALID',
+                persistence_token   = 'INVALID',
+                single_access_token = 'INVALID',
+                perishable_token    = 'INVALID';"
 
     # Disallow null for these columns
     change_column :users,  :crypted_password,   :string,  :null => false
