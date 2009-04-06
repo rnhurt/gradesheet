@@ -7,14 +7,11 @@ class GradationsController < ApplicationController
 	
   def show
     @gradations = Course.find(params[:id], :include => [:students, :gradations])
-
-    respond_to do |format|
-      format.html # show.html.erb
-    end
   end
 
   def update
-  	## This functionality is handled in update_grade
+  	# FIXME: Should we remove this or wait until Rails 2.3?
+  	# This functionality is handled in update_grade
 #    @gradation = Gradation.find(params[:id])
 
 #    respond_to do |format|

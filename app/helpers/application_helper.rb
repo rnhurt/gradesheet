@@ -19,24 +19,11 @@ module ApplicationHelper
 
 	## Generate the MENU html
 	def menu_builder(page_id)
-	  # Show a different menu to different users
-#	  if !current_user
-	    # No user is currently logged in so just the dashboard
-#	    tabs = [ 'Home:dashboard' ]
-#	  elsif current_user.type == 'Teacher'
-	    # Show the 'Teacher' menu
-#		  tabs = [ 'Home:dashboard', 'Courses:courses', 
-#						  'Assignments:assignments', 'Grades:gradations', 'Reports:reports' ]
-#	  else
-#		  tabs = [ 'Home:dashboard', 'Users:users', 'Courses:courses', 
-#						  'Assignments:assignments', 'Grades:gradations', 'Reports:reports', 'My Settings:settings' ]
-#    end
  
-    session[:authorize] ||= [['Home', 'dashboard']]
+#    session[:authorize] ||= [['Home', 'dashboard']]
        
 		content = ""
 		session[:authorize].each do |t|
-#debugger
 			content << if page_id == t[1]
 				## This is the current page, so give it a unique CSS class
 				content_tag('li', content_tag('a', t[0], :href => "/#{t[1]}", :class => 'current' )) + " "
