@@ -1,44 +1,32 @@
-r1:
-  student: rich
-  course: homeroom-k-t1
-
-r2:
-  student: rich
-  course: english-t1
-
 r3:
-  student: rich
+  student: studenta
   course: math7s
 
-t1:
-  student: tabatha
-  course: homeroom-b-t1
-
 a1:
-  student: andrew
+  student: studentb
   course: english-t1
 
 a2:
-  student: andrew
+  student: studentb
   course: english-t2
 
 a3:
-  student: andrew
+  student: studenta
   course: music-t1
 
 a4:
-  student: andrew
+  student: studenta
   course: music-t2
 
 a5:
-  student: andrew
+  student: studenta
   course: math7s
 
 a6:
-  student: andrew
+  student: studenta
   course: spelling-t1
   
 a7:
-  student: andrew
+  student: studenta
   course: spelling-t2
   
