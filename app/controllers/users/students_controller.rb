@@ -1,6 +1,6 @@
 class Users::StudentsController < ApplicationController
   before_filter :require_user
-  append_before_filter :authorize
+  append_before_filter :authorized?
 
   def index
     @students = Student.search(params[:search], params[:page])

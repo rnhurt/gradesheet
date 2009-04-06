@@ -1,13 +1,22 @@
 class UserSession < Authlogic::Session::Base 
   logout_on_timeout true # default is false
-  after_create  :aauthorize
+  after_create  :authorize
   after_destroy :deauthorize
   
 private
 
-  def aauthorize
+  def authorize
     # If this user is an Admin authorize them for everything
 #    if current_user.admin?
+#          controller.session[:authorize] = [
+#              ['Home', 'dashboard'],
+#              ['Courses', 'courses'], 
+#              ['Assignments', 'assignments'], 
+#              ['Grades', 'gradations'], 
+#              ['Reports', 'reports'],
+#              ['Site Settings', 'settings'],
+#              ['', 'sites'],
+#              ]
 #    else
       case record[:type].downcase
         when 'teacher'
@@ -16,8 +25,7 @@ private
               ['Courses', 'courses'], 
               ['Assignments', 'assignments'], 
               ['Grades', 'gradations'], 
-              ['Reports', 'reports'], 
-              ['My Settings', 'settings']]
+              ['Reports', 'reports']]
         when 'student'
           controller.session[:authorize] = [
               ['Home', 'dashboard'],
@@ -25,12 +33,12 @@ private
               ['Reports', 'reports']] 
         else
           # unknown type of user
-          controller.session[:authorize] = [['Nobody', 'dashboard']]
+          controller.session[:authorize] = [['Home', 'dashboard']]
       end
 #    end
   end  
       
   def deauthorize
-    controller.session[:authorize] = [['Homey', 'dashboard']]
+    controller.session[:authorize] = [['Home', 'dashboard']]
   end
 end

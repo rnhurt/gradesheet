@@ -1,5 +1,4 @@
 class Settings::AssignmentCategoriesController < SettingsController
-  before_filter :authorized
 
   def index
     @types = AssignmentCategory.all

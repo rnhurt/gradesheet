@@ -20,28 +20,29 @@ module ApplicationHelper
 	## Generate the MENU html
 	def menu_builder(page_id)
  
-#    session[:authorize] ||= [['Home', 'dashboard']]
-       
 		content = ""
 		session[:authorize].each do |t|
+		  # Don't build a menu item without a name
+		  next if t[0].size == 0
+		  
 			content << if page_id == t[1]
-				## This is the current page, so give it a unique CSS class
+				# This is the current page, so give it a unique CSS class
 				content_tag('li', content_tag('a', t[0], :href => "/#{t[1]}", :class => 'current' )) + " "
 			else
-				## This is not the current page.
+				# This is not the current page.
 				content_tag('li', content_tag('a', t[0], :href => "/#{t[1]}" )) + " "
 			end
 		end
 		
-		## Add in the spinner to the end of the menu
+		# Add in the spinner to the end of the menu
 		content << 	"<div id='spinner' class='spinner' style='display: none;'><img src='/images/spinner.gif' alt=''></div>"
 
-		## Close up the tags
+		# Close up the tags
 		content_tag(:div, content_tag(:ul, content, :id => 'menu'), :class => 'menucontainer')
 	end
 
 
-	## Show the FLASH div
+	# Show the FLASH div
 	def show_flash
 		result = ''
 		flash.each {|type, message| result << content_tag(:div, message, :id => 'notice', :class => type.to_s) } 
