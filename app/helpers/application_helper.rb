@@ -19,8 +19,8 @@ module ApplicationHelper
 
 	## Generate the MENU html
 	def menu_builder(page_id)
- 
-#    session[:authorize] ||= [['Home', 'dashboard']]
+    # Set a default menu for first time visitors.
+    session[:authorize] ||= [['Home', 'dashboard']]
        
 		content = ""
 		session[:authorize].each do |t|

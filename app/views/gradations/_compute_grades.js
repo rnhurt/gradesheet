@@ -5,27 +5,27 @@ function calculate() {
 
 // Given a row with student data, calculate the grade for that student
 function calcGrades(row) {
-  var totalscore;
+  var final_score;
+  var total_avail_points;
+  var total_score;
   var grades;
   var total;
-  var count;
   var score;
   var points;
 
   // Make sure this row has a place to store the average
-  totalscore = row.select('td.score')[0];
-  if (totalscore) {
+  final_score = row.select('td.score')[0];
+  if (final_score) {
     // It does, get the relevant grades
     grades = row.select('input[name^=grade]');
 
     // Compute the score, allowing for empty/non-numeric cells
-    total_percentage = 0.0;
-    count = 0.0;
+    total_score = 0.0;
+    total_avail_points = 0.0;
     grades.each(function(grade) {
       // Variables
      	avail_points  = parseFloat(grade.readAttribute('points')); // How many points is this assignment worth?
     	grade_value   = grade.getValue();                          // What grade did the user enter?
-    	skip_grade    = false;                                     // Should we skip this grade?
 
       // Did the user enter a number or a letter?     
       if (isNaN(parseFloat(grade_value))) {
@@ -35,11 +35,10 @@ function calcGrades(row) {
       	    score = 0;
       	    break;
           case 'E': // This is an excused grade
-            skip_grade = true;
+            score = avail_points;
             break;
           default:  // This is an invalid grade
             grade.addClassName('grade-error');
-            skip_grade = true;
             score = 0;
             break;
       	}
@@ -48,30 +47,20 @@ function calcGrades(row) {
         score = parseFloat(grade_value);            
       }
 
-      // Only average in grades that are valid    	
-    	if (!skip_grade) {
-        grade.removeClassName('grade-error');
-        
-      	// Make sure they didn't score more points than possible
-      	if (score > avail_points) {
-      		grade.addClassName('grade-warning');
-      	} else {    	
-      		grade.removeClassName('grade-warning');
-		    }
+    	// Make sure they didn't score more points than possible
+    	if (score > avail_points || (score / avail_points) < .40) {
+    		grade.addClassName('grade-warning');
+    	} else {    	
+    		grade.removeClassName('grade-warning');
+	    }
 		    
-        // Total up the percentage
-        total_percentage += score / avail_points;
-        ++count;
-  		} // skip_grade
+      // Keep a running total
+      total_avail_points += avail_points;
+      total_score += score;
     });
 
     // Show the result
-    if (count > 0) {
-    	original = (total_percentage / count)*100
-      totalscore.update(Math.round(original*100)/100 + '%');
-    } else {
-      totalscore.update('n/a');
-    }
+    final_score.update(Math.round((total_score / total_avail_points)*100) + '%' )
   }
 }
 
