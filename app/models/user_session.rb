@@ -7,17 +7,25 @@ private
 
   def authorize
     # If this user is an Admin authorize them for everything
-#    if current_user.admin?
-#          controller.session[:authorize] = [
-#              ['Home', 'dashboard'],
-#              ['Courses', 'courses'], 
-#              ['Assignments', 'assignments'], 
-#              ['Grades', 'gradations'], 
-#              ['Reports', 'reports'],
-#              ['Site Settings', 'settings'],
-#              ['', 'sites'],
-#              ]
-#    else
+    if record.is_admin?
+          controller.session[:authorize] = [
+              ['Home', 'dashboard'],
+              ['Users', 'users'], 
+                ['', 'students'], 
+                ['', 'teachers'], 
+                ['', 'teacher_assistants'], 
+              ['Courses', 'courses'], 
+              ['Assignments', 'assignments'], 
+              ['Grades', 'gradations'], 
+              ['Reports', 'reports'],
+              ['Site Settings', 'settings'],
+                ['', 'sites'],
+                ['', 'grading_scales'],
+                ['', 'sites'],
+                ['', 'assignment_categories'],
+                ['', 'terms'],
+              ]
+    else
       case record[:type].downcase
         when 'teacher'
           controller.session[:authorize] = [
@@ -35,7 +43,7 @@ private
           # unknown type of user
           controller.session[:authorize] = [['Home', 'dashboard']]
       end
-#    end
+    end
   end  
       
   def deauthorize

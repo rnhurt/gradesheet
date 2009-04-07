@@ -2,6 +2,10 @@ class UserSessionsController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => :destroy
 
+  def show
+    redirect_back_or_default(dashboard_index_url)
+  end
+
   def new
     @user_session = UserSession.new
   end

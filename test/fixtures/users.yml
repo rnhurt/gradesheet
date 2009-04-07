@@ -56,7 +56,7 @@ teacherb:
   single_access_token: <%= Authlogic::Random.friendly_token %>
   perishable_token: <%= Authlogic::Random.friendly_token %>
 
-teacherb:
+teacherass:
   type: TeacherAssistant
   site: campus1
   login: taa
@@ -75,6 +75,7 @@ admin:
   login: admin
   first_name: Mr.
   last_name: Admin
+  is_admin: true
   email: admin@example.com
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("admin" + salt) %>

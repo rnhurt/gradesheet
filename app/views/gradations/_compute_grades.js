@@ -51,7 +51,7 @@ function calcGrades(row) {
       // Only average in grades that are valid    	
     	if (!skip_grade) {
         grade.removeClassName('grade-error');
-        
+
       	// Make sure they didn't score more points than possible
       	if (score > avail_points) {
       		grade.addClassName('grade-warning');
@@ -68,7 +68,7 @@ function calcGrades(row) {
     // Show the result
     if (count > 0) {
     	original = (total_percentage / count)*100
-      totalscore.update(Math.round(original*100)/100 + '%');
+      totalscore.update(Math.round(original*10)/10 + '%');
     } else {
       totalscore.update('n/a');
     }

@@ -28,7 +28,7 @@ class AddAuthlogicSessions < ActiveRecord::Migration
     change_column :users,  :single_access_token,:string,  :null => false
     change_column :users,  :perishable_token,   :string,  :null => false
 
-    # Add all the 'normal' columns
+    # Add all the 'normal' Authlogic columns
     add_column :users,  :login_count,         :integer, :null => false, :default => 0
     add_column :users,  :failed_login_count,  :integer, :null => false, :default => 0
     add_column :users,  :last_request_at,     :datetime
@@ -36,6 +36,7 @@ class AddAuthlogicSessions < ActiveRecord::Migration
     add_column :users,  :last_login_at,       :datetime
     add_column :users,  :current_login_ip,    :string
     add_column :users,  :last_login_ip,       :string
+    add_column :users,  :is_admin,            :boolean, :default => false
   end
     
   def self.down
@@ -55,6 +56,7 @@ class AddAuthlogicSessions < ActiveRecord::Migration
     remove_column :users, :last_login_at
     remove_column :users, :current_login_ip          
     remove_column :users, :last_login_ip
+    remove_column :users, :is_admin
   end
   
 end 
