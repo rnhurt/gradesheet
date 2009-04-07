@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
   end
   
   # Check to make sure the user is supposed to access this page
-  def authorize
+  def authorized?
     unless session[:authorize].detect{ |menu_name, controller| controller == controller_name }
       flash[:error] = "You don't have the authority to access that page"
       redirect_to dashboard_index_path

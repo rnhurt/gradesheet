@@ -47,12 +47,14 @@ function calcGrades(row) {
         score = parseFloat(grade_value);            
       }
 
+<<<<<<< HEAD:app/views/gradations/_compute_grades.js
     	// Make sure they didn't score more points than possible
     	if (score > avail_points || (score / avail_points) < .40) {
     		grade.addClassName('grade-warning');
     	} else {    	
     		grade.removeClassName('grade-warning');
 	    }
+=======
 		    
       // Keep a running total
       total_avail_points += avail_points;
@@ -60,7 +62,9 @@ function calcGrades(row) {
     });
 
     // Show the result
+<<<<<<< HEAD:app/views/gradations/_compute_grades.js
     final_score.update(Math.round((total_score / total_avail_points)*100) + '%' )
+=======
   }
 }
 

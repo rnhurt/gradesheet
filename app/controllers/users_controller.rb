@@ -1,7 +1,7 @@
 # FIXME: Meld all the sub-controllers (Students, Teachers, TA) into this controller
 class UsersController < ApplicationController
   before_filter :require_user
-  append_before_filter :authorize
+  append_before_filter :authorized?
 
   def index
     @users = User.search(params[:search], params[:page])
