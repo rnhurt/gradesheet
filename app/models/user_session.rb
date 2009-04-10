@@ -1,5 +1,8 @@
 class UserSession < Authlogic::Session::Base 
   logout_on_timeout true # default is false
+  consecutive_failed_logins_limit 10  # only let them try to log in 10 times
+  failed_login_ban_for 30.minutes     # and keep them out for 30 minutes
+  
   after_create  :authorize
   after_destroy :deauthorize
   
