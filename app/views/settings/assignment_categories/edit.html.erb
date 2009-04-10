@@ -4,7 +4,7 @@
 
 <%= error_messages_for :type, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div class='box'>
+<div class='box span-13'>
 <% form_for @type do |f| %>
 	<label><span class='required'>Assignment Type</span>
 		<%= f.text_field :name %>

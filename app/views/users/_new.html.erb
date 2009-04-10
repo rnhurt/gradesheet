@@ -1,8 +1,8 @@
 <%# FIXME - This should be merged with _edit.html.erb %>
-<div class='box'>
+<div class='box span-13'>
 	<% form_for user do |f| %>
 			<div class="spacer">
-	  		<%= content_tag( :h1, "New #{user.class.name.titleize}" ) %>
+	  		<%= content_tag( :h2, "New #{user.class.name.titleize}" ) %>
 			</div>
 
 			<label><span>Login</span>

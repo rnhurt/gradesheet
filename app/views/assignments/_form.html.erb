@@ -1,8 +1,8 @@
-<div class='box last'>
+<div class='box span-13 last'>
 	<% form_for(@assignment) do |f| %>
 			<div class='spacer'>
 			  <% header = @assignment.name? ? "Editing: #{@assignment.name}" : "New Assignment" %>
-				<%= content_tag( :h1, header ) %>
+				<%= content_tag( :h2, header ) %>
 				<%= f.hidden_field :course_id, :value => @course.id %>
 			</div>
 		
@@ -18,7 +18,7 @@
 			 <%= collection_select :assignment, :assignment_category_id, AssignmentCategory.find(:all), :id, :name %>
 			</label>
 
-			<label><span>Due Date</span>
+			<label class='span-17 last'><span>Due Date</span>
 				<span id='due_date' class='scal tinyscal'></span>
 				<%= f.hidden_field :due_date %>
 				<input id='default_due_date' type='hidden' 
