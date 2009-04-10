@@ -83,6 +83,60 @@ admin:
   single_access_token: <%= Authlogic::Random.friendly_token %>
   perishable_token: <%= Authlogic::Random.friendly_token %>
 
+s1:
+  type: Student
+  site: campus1
+  login: s1
+  first_name: Steve
+  last_name: Smith
+  class_of: 2013
+  homeroom: 5Q
+
+s2:
+  type: Student
+  site: campus1
+  login: s2
+  first_name: Jane
+  last_name: Doe
+  class_of: 2013
+  homeroom: 5Q
+
+s3:
+  type: Student
+  site: campus1
+  login: s3
+  first_name: John
+  last_name: Doe
+  class_of: 2013
+  homeroom: 5Q
+
+s4:
+  type: Student
+  site: campus1
+  login: s4
+  first_name: Robert
+  last_name: Smith
+  class_of: 2013
+  homeroom: 5Q
+
+s5:
+  type: Student
+  site: campus1
+  login: s5
+  first_name: Billy
+  last_name: Gates
+  class_of: 2013
+  homeroom: 5Q
+
+s6:
+  type: Student
+  site: campus1
+  login: s6
+  first_name: Stephen
+  last_name: Jobs
+  class_of: 2013
+  homeroom: 5Q
+
 <%
   @@words = File.open("/usr/share/dict/words").collect do |line|
     line.strip
