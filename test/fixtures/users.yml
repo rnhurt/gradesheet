@@ -93,6 +93,9 @@ s1:
   homeroom: 5Q
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('s' + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 
 s2:
   type: Student
@@ -104,6 +107,9 @@ s2:
   homeroom: 5Q
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('s' + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 
 s3:
   type: Student
@@ -115,6 +121,9 @@ s3:
   homeroom: 5Q
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('s' + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 
 s4:
   type: Student
@@ -126,6 +135,9 @@ s4:
   homeroom: 5Q
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('s' + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 
 s5:
   type: Student
@@ -137,6 +149,9 @@ s5:
   homeroom: 5Q
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('s' + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 
 s6:
   type: Student
@@ -148,6 +163,9 @@ s6:
   homeroom: 5Q
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('s' + salt) %>
+  persistence_token: <%= Authlogic::Random.friendly_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
 
 <%
   @@words = File.open("/usr/share/dict/words").collect do |line|
