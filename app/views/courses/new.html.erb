@@ -4,7 +4,7 @@
 
 <%= error_messages_for :course, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div class="box">
+<div class="box span-12">
 	<% form_for (@course) do |f| %>
 			<div class="spacer">
 				<%= content_tag( :h1, "New Course" ) %>
@@ -23,8 +23,8 @@
 			</label>
 
 			<div class="spacer">
-				<%= f.submit 'Create', :class=> 'positive' %>
-				<%= link_to 'Cancel', {:action=> 'index', :controller=> 'courses'}, :class => 'standard' %>
+				<%= f.submit 'Create', :class=> 'btn positive' %>
+				<%= link_to 'Cancel', {:action=> 'index', :controller=> 'courses'}, :class => 'btn positive' %>
 			</div>
 	<% end %>
 </div>

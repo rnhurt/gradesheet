@@ -16,7 +16,7 @@ params = <<-EOS
 
 	<form action="/reports/report_card.pdf" method="get">
 		<label><span>Grading Period</span>
-		<select size='1' id="term_id" name="term_id">
+		<select id="term_id" name="term_id">
 EOS
 
 		# List each active grading period
@@ -28,6 +28,8 @@ params += <<-EOS
 		</select>
 		</label>
 
+    <hr />
+    
 		<label><span>Homeroom</span>
 		<select size='1' id="homeroom_id" name="homeroom_id">
 EOS
@@ -51,7 +53,7 @@ EOS
 
 		# List all of the students in the school
 		students.each do |s|
-			params += "<option value='#{s[:id]}'>#{s[:first_name]}</option>"
+			params += "<option value='#{s[:id]}'>#{s[:first_name]} #{s[:last_name]}</option>"
 		end
 				
 params += <<-EOS
@@ -59,7 +61,7 @@ params += <<-EOS
 		</label>
 
 		<div class="spacer">
-			<input class="positive" name="commit" type="submit" value="Run Report" />
+			<input class="btn positive" name="commit" type="submit" value="Run Report" />
 		</div>
 	</form>
 EOS

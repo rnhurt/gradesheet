@@ -25,7 +25,7 @@ EOS
 		</label>
 			
 		<div class="spacer">
-			<input class="positive" type="submit" value="Run Report" />
+			<input class="btn positive" type="submit" value="Run Report" />
 		</div>
 	</form>
 EOS
