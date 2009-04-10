@@ -91,6 +91,8 @@ s1:
   last_name: Smith
   class_of: 2013
   homeroom: 5Q
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('s' + salt) %>
 
 s2:
   type: Student
@@ -100,6 +102,8 @@ s2:
   last_name: Doe
   class_of: 2013
   homeroom: 5Q
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('s' + salt) %>
 
 s3:
   type: Student
@@ -109,6 +113,8 @@ s3:
   last_name: Doe
   class_of: 2013
   homeroom: 5Q
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('s' + salt) %>
 
 s4:
   type: Student
@@ -118,6 +124,8 @@ s4:
   last_name: Smith
   class_of: 2013
   homeroom: 5Q
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('s' + salt) %>
 
 s5:
   type: Student
@@ -127,6 +135,8 @@ s5:
   last_name: Gates
   class_of: 2013
   homeroom: 5Q
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('s' + salt) %>
 
 s6:
   type: Student
@@ -136,6 +146,8 @@ s6:
   last_name: Jobs
   class_of: 2013
   homeroom: 5Q
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt('s' + salt) %>
 
 <%
   @@words = File.open("/usr/share/dict/words").collect do |line|
