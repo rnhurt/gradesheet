@@ -7,18 +7,18 @@
 <div class="box span-12">
 	<% form_for (@course) do |f| %>
 			<div class="spacer">
-				<%= content_tag( :h1, "New Course" ) %>
+				<%= content_tag( :h2, "New Course" ) %>
 			</div>
 
-			<label><span>Name</span>
-				<%= f.text_field :name, :class=>'input-text'  %>
+			<label><span class = 'required'>Name</span>
+				<%= f.text_field :name %>
 			</label>
 
-			<label><span>Grading Term</span>
+			<label><span class = 'required'>Grading Term</span>
 				<%= collection_select :course, :term_id, Term.active, :id, :name %>
 			</label>
 
-			<label><span>Grading Scale</span>
+			<label><span class = 'required'>Grading Scale</span>
 				<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
 			</label>
 
