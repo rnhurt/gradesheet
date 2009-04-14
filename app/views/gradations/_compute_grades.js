@@ -9,9 +9,7 @@ function calcGrades(row) {
   var total_avail_points;
   var total_score;
   var grades;
-  var total;
   var score;
-  var points;
 
   // Make sure this row has a place to store the average
   final_score = row.select('td.score')[0];
@@ -29,7 +27,7 @@ function calcGrades(row) {
 
       // Did the user enter a number or a letter?     
       if (isNaN(parseFloat(grade_value))) {
-      	// Look for any 'special' grades
+      	// Its not a number so look for any 'special' grades
       	switch(grade_value.toUpperCase()) {
       	  case 'M': // This is a missing grade and it is counted as a 0
       	    score = 0;
@@ -50,8 +48,9 @@ function calcGrades(row) {
     	// Make sure they didn't score more points than possible
     	if (score > avail_points || (score / avail_points) < .40) {
     		grade.addClassName('grade-warning');
-    	} else {    	
+    	} else {
     		grade.removeClassName('grade-warning');
+    		grade.removeClassName('grade-error');
 	    }
 		    
       // Keep a running total
@@ -60,7 +59,17 @@ function calcGrades(row) {
     });
 
     // Show the result
-    final_score.update(Math.round((total_score / total_avail_points)*100) + '%' )
+    if (total_avail_points > 0) {
+      var computed_score = Math.round((total_score / total_avail_points)*100);
+    } else {
+      var computed_score = 100 + total_score;
+    }
+      
+    if (isNaN(parseFloat(computed_score))) {
+      final_score.update( 'n/a' );
+    } else {
+      final_score.update( computed_score + '%' );
+    }
   }
 }
 
