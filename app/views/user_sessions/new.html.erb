@@ -1,10 +1,11 @@
 <% content_for :left do %>
+  <%# This is an Internet Explorer workaround ...sigh... %>
 	&nbsp;
 <% end %>
 
 <%= error_messages_for "user_session", :header_message => "Please Try Again!", :message => "We had some problems logging you into your account:" %>
 
-<div class='box span-12'>
+<div class='box span-12 last'>
   <% form_for @user_session, :url => user_session_path do |f| %>
 		<div class='spacer'>
 		  <%= content_tag( :h1, "Login" ) %>

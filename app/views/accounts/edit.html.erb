@@ -1,6 +1,11 @@
+<% content_for :left do %>
+  <%# This is an Internet Explorer workaround ...sigh... %>
+	&nbsp;
+<% end %>
+
 <%= error_messages_for :user, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div class='box span-13 push-5'>
+<div class='box span-13 last'>
   <% form_for @user, :url => account_path do |f| %>
 		<div class='spacer'>
 		  <%= content_tag( :h1, "Account Information" ) %>
@@ -10,16 +15,16 @@
 			<%= f.text_field :login, :disabled => true %>
 		</label>
 
-		<label><span class='required'>First Name</span>
-  		<%= f.text_field :first_name, :id => 'first_name' %>
+		<label><span>First Name</span>
+  		<%= f.text_field :first_name, :disabled => true %>
 		</label>
 
-		<label><span class='required'>Last Name</span>
-  		<%= f.text_field :last_name %>
+		<label><span>Last Name</span>
+  		<%= f.text_field :last_name, :disabled => true %>
 		</label>
 
 		<label><span>Email Address</span>
-  		<%= f.text_field :email%><br>
+  		<%= f.text_field :email, :id => 'email' %>
 		</label>
 
 		<label><%= content_tag :span, f.object.new_record? ? 'Password' : 'Change password', 
@@ -38,4 +43,4 @@
   <% end %>
 </div>
 
-<%= set_focus_to_id 'first_name' %>
+<%= set_focus_to_id 'email' %>
