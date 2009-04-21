@@ -17,9 +17,8 @@ class Course < ActiveRecord::Base
 	# FIXME
 	#	validates_uniqueness_of :teacher, :scope => [:term, :course]
 
-	# Courses are considered "active" only if they are in a grading term 
-	# that is "active".
-	named_scope :active, :conditions	=> "terms.active = 't'"
+	# Courses are considered "active" only if they are in a grading term that is "active".
+	named_scope :active, :include => :term, :conditions	=> "terms.active = 't'"
 
 
 ##

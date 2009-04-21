@@ -40,8 +40,7 @@ private
         when 'student'
           controller.session[:authorize] = [
               ['Home', 'dashboard'],
-              ['Grades', 'gradations'], 
-              ['Reports', 'reports']] 
+              ['My Grades', 'grades']] 
         else
           # unknown type of user
           controller.session[:authorize] = [['Home', 'dashboard']]
