@@ -55,11 +55,11 @@ lib/authlogic/session/timeout.rb
 lib/authlogic/session/unauthorized_record.rb
 lib/authlogic/session/validation.rb
 lib/authlogic/test_case.rb
-lib/authlogic/test_case/controller_adapter.rb
 lib/authlogic/test_case/mock_controller.rb
 lib/authlogic/test_case/mock_cookie_jar.rb
 lib/authlogic/test_case/mock_logger.rb
 lib/authlogic/test_case/mock_request.rb
+lib/authlogic/test_case/rails_request_adapter.rb
 lib/authlogic/version.rb
 shoulda_macros/authlogic.rb
 test/acts_as_authentic_test/base_test.rb
@@ -82,6 +82,7 @@ test/fixtures/companies.yml
 test/fixtures/employees.yml
 test/fixtures/projects.yml
 test/fixtures/users.yml
+test/libs/affiliate.rb
 test/libs/company.rb
 test/libs/employee.rb
 test/libs/employee_session.rb

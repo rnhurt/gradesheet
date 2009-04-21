@@ -29,10 +29,13 @@ module Authlogic
         #     end
         #   end
         #
-        # * <tt>Default:</tt> "find_by_#{login_field}"
+        # Now just specifcy the name of this method for this configuration option and you are all set. You can do anything you want here. Maybe you allow users to have multiple logins
+        # and you want to search a has_many relationship, etc. The sky is the limit.
+        #
+        # * <tt>Default:</tt> "find_by_smart_case_login_field"
         # * <tt>Accepts:</tt> Symbol or String
         def find_by_login_method(value = nil)
-          config(:find_by_login_method, value, "find_by_#{login_field}")
+          config(:find_by_login_method, value, "find_by_smart_case_login_field")
         end
         alias_method :find_by_login_method=, :find_by_login_method
         
@@ -41,19 +44,19 @@ module Authlogic
         # login with a field called "login" and then find users by email this is compeltely doable. See the find_by_login_method configuration
         # option for more details.
         #
-        # * <tt>Default:</tt> Uses the configuration option in your model: User.login_field
+        # * <tt>Default:</tt> klass.login_field || klass.email_field
         # * <tt>Accepts:</tt> Symbol or String
         def login_field(value = nil)
           config(:login_field, value, klass.login_field || klass.email_field)
         end
         alias_method :login_field=, :login_field
         
-        # Works exactly like login_field, but for the password instead.
+        # Works exactly like login_field, but for the password instead. Returns :password if a login_field exists.
         #
         # * <tt>Default:</tt> :password
         # * <tt>Accepts:</tt> Symbol or String
         def password_field(value = nil)
-          config(:password_field, value, :password)
+          config(:password_field, value, login_field && :password)
         end
         alias_method :password_field=, :password_field
         
@@ -71,18 +74,23 @@ module Authlogic
       module InstanceMethods
         def initialize(*args)
           if !self.class.configured_password_methods
-            self.class.send(:attr_writer, login_field) if !respond_to?("#{login_field}=")
-            self.class.send(:attr_reader, login_field) if !respond_to?(login_field)
-            self.class.send(:attr_writer, password_field) if !respond_to?("#{password_field}=")
-            self.class.send(:define_method, password_field) {} if !respond_to?(password_field)
+            if login_field
+              self.class.send(:attr_writer, login_field) if !respond_to?("#{login_field}=")
+              self.class.send(:attr_reader, login_field) if !respond_to?(login_field)
+            end
+            
+            if password_field
+              self.class.send(:attr_writer, password_field) if !respond_to?("#{password_field}=")
+              self.class.send(:define_method, password_field) {} if !respond_to?(password_field)
 
-            self.class.class_eval <<-"end_eval", __FILE__, __LINE__
-              private
-                # The password should not be accessible publicly. This way forms using form_for don't fill the password with the attempted password. The prevent this we just create this method that is private.
-                def protected_#{password_field}
-                  @#{password_field}
-                end
-            end_eval
+              self.class.class_eval <<-"end_eval", __FILE__, __LINE__
+                private
+                  # The password should not be accessible publicly. This way forms using form_for don't fill the password with the attempted password. The prevent this we just create this method that is private.
+                  def protected_#{password_field}
+                    @#{password_field}
+                  end
+              end_eval
+            end
 
             self.class.configured_password_methods = true
           end
@@ -114,7 +122,7 @@ module Authlogic
         
         private
           def authenticating_with_password?
-            !send(login_field).nil? || !send("protected_#{password_field}").nil?
+            login_field && (!send(login_field).nil? || !send("protected_#{password_field}").nil?)
           end
           
           def validate_by_password
