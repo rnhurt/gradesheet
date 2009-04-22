@@ -22,10 +22,10 @@ private
               ['Grades', 'gradations'], 
               ['Reports', 'reports'],
               ['Site Settings', 'settings'],
-                ['', 'sites'],
-                ['', 'grading_scales'],
-                ['', 'sites'],
                 ['', 'assignment_categories'],
+                ['', 'grading_scales'],
+                ['', 'imports'],
+                ['', 'sites'],
                 ['', 'terms'],
               ]
     else

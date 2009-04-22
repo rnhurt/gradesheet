@@ -1,0 +1,37 @@
+<% content_for :left do %>
+	<%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for "import", 
+    :header_message => "The following records did not pass validation:", 
+    :message => 'Please correct these problems and try again' %>
+
+<h2>Import Users</h2>
+
+<div class='box span-12 last'>
+  <% form_for :dump, :url => { :action => :create }, :html => { :multipart => true } do |f| -%>
+    <table">
+     <tr>
+       <td><label for="dump_file">Select a STUDENT CSV File :</label></td>
+       <td ><%= f.file_field :file -%></td>
+     </tr>
+     <tr>
+       <td colspan='2'><%= submit_tag 'Submit', :confirm => "Importing new STUDENT data.  Click OK to continue." -%></td>
+     </tr>
+    </table>
+  <% end -%>
+</div>
+
+<div class='box span-12 last'>
+  <% form_for :dump, :url => { :path => :students_imports }, :html => { :multipart => true } do |f| -%>
+    <table">
+     <tr>
+       <td><label for="dump_file">Select a TEACHER CSV File :</label></td>
+       <td ><%= f.file_field :file -%></td>
+     </tr>
+     <tr>
+       <td colspan='2'><%= submit_tag 'Submit' -%></td>
+     </tr>
+    </table>
+  <% end -%>
+</div>
