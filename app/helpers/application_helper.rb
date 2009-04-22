@@ -1,6 +1,8 @@
+# This is the helper module for the entire application.  It should only contain
+# methods that are used thoughout the system.
 module ApplicationHelper
 
-	## Generate the page title
+	# Generate the page title dynamically to reflect the current page information
 	def title(new_title)
   	content_tag('h2', new_title, :class => 'page_title') if new_title
   end
@@ -16,7 +18,9 @@ module ApplicationHelper
 	end
 
 
-	## Generate the MENU html
+	# Generate the MENU html for the current user from the [:authorize] parameter
+	# of the session object.  This allows us to have a fairly flexable menu
+	# while at the same time keeping maintenance to a minimum.
 	def menu_builder(page_id)
     # Set a default menu for first time visitors.
     session[:authorize] ||= [['Home', 'dashboard']]
@@ -43,7 +47,7 @@ module ApplicationHelper
 	end
 
 
-	# Show the FLASH div
+	# Show the FLASH div if there is data in the flash object.
 	def show_flash
 		result = ''
 		flash.each {|type, message| result << content_tag(:div, message, :id => 'notice', :class => type.to_s) } 
@@ -51,7 +55,7 @@ module ApplicationHelper
 	end
 
 
-	# Set the focus to a specific element on the page
+	# Convienience method to set the focus to a specific element on the page
 	def set_focus_to_id(id)
 		javascript_tag("$('#{id}').focus()");
 		javascript_tag("$('#{id}').select()");
