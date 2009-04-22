@@ -1,3 +1,4 @@
+# Contains the enrollment information for each course.
 class Enrollment < ActiveRecord::Base
 	belongs_to :student
 	belongs_to :course

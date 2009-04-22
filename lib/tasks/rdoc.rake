@@ -4,7 +4,7 @@ namespace :doc do
     rdoc.rdoc_dir = 'doc/app_horo'
     rdoc.title    = "Gradesheet Documentation"
     rdoc.template = "doc/template/horo.rb"
-    rdoc.options << '--line-numbers' << '--inline-source'
+    rdoc.options << '--line-numbers' << '--inline-source' << '--all'
     rdoc.rdoc_files.include('README.rdoc')
     rdoc.rdoc_files.include('app/**/*.rb')
     rdoc.rdoc_files.include('lib/**/*.rb')

@@ -1,5 +1,7 @@
+# Contains the information about the User archtype.  This class is not used
+# directly but subclassed for other user types (Teacher, Student, etc.) 
 class User < ActiveRecord::Base
-  # Authlogic
+  # Authlogic setup
   acts_as_authentic do |c|
     c.logged_in_timeout = 10.minutes
   end
@@ -16,7 +18,7 @@ class User < ActiveRecord::Base
 	validates_uniqueness_of	:first_name, :scope => :last_name
 
   
-	# Search for a user (will_paginate)
+	# Search for a user using the 'will_paginate' plugin
 	def self.search(search, page)
 		search.downcase! if search	# Make sure we don't have any case sensitivity problems
 		paginate	:per_page => 15, :page => page,
@@ -25,17 +27,22 @@ class User < ActiveRecord::Base
 							:include => :site
 	end
 	
-	# Get the user "types" avalable
+	# Return the valid user types available to be instaciated.
+	# FIXME: I'm sure there is a better way to do this, but I didn't know how at the time.
 	def self.find_user_types(*args)
-		return {'ALL' => Users, 'Teachers' => Teacher, 'Students' => Student, 'Teacher Assistants' => TeacherAssistant}
+		return {
+		    'ALL'       => Users, 
+		    'Teachers'  => Teacher, 
+		    'Students'  => Student, 
+		    'Teacher Assistants' => TeacherAssistant}
 	end
 
-	# Display the users full name
+	# Convienience method to display the users full name.
 	def full_name
 		[first_name, last_name].join(' ')
 	end
 	
-	# Break a full name into first_name & last_name
+	# Convieniene method to break a users full name into its components
 	def full_name=(name)
 		split = name.split(' ', 2)
 		self.first_name = split.first

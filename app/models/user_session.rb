@@ -1,3 +1,4 @@
+# Contains the AuthLogic session information for each user.
 class UserSession < Authlogic::Session::Base 
   logout_on_timeout true # default is false
   consecutive_failed_logins_limit 10  # only let them try to log in 10 times
@@ -8,6 +9,8 @@ class UserSession < Authlogic::Session::Base
   
 private
 
+  # Builds the [:authorize] parameter of the session object.  This information is
+  # used to build the menu bar as well as grant access to a particually controller.
   def authorize
     # If this user is an Admin authorize them for everything
     if record.is_admin?
@@ -47,7 +50,9 @@ private
       end
     end
   end  
-      
+   
+  # Resets the [:authorize] parameter of the session object to give the user
+  # a default menu bar and grant access to basic information only.
   def deauthorize
     controller.session[:authorize] = [['Home', 'dashboard']]
   end

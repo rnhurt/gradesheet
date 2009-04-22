@@ -7,11 +7,12 @@ class Site < ActiveRecord::Base
 	validates_size_of        :name, :within => 1..20
   validates_uniqueness_of  :name, :case_sensitive => false
   
-##
-# Private Methods
-##
+private
+
+  # Ensure that the user does not delete a record without first cleaning up
+  # any records that use it.  This could cause a cascading effect, wiping out
+  # more data than expected.	
 	def ensure_no_children
-	  ## TODO: Not really sure what should go here
 		unless self.users.empty?
 			self.errors.add_to_base "Cannot delete campus while users are still registered to it."
 			raise ActiveRecord::Rollback

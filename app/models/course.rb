@@ -1,3 +1,4 @@
+# Contains the information about each course for each teacher.
 class Course < ActiveRecord::Base
 	before_destroy 	:ensure_no_children
 
@@ -21,14 +22,11 @@ class Course < ActiveRecord::Base
 	named_scope :active, :include => :term, :conditions	=> "terms.active = 't'"
 
 
-##
-# Private Methods
-##
 private		
 
-	# We don't want the user to delete a course term without first cleaning up
-	# any assignments that use it.  This could cause a cascading effect wiping out
-	# a whole year of student data.	
+  # Ensure that the user does not delete a record without first cleaning up
+  # any records that use it.  This could cause a cascading effect, wiping out
+  # more data than expected.	
 	def ensure_no_children
 		unless self.assignments.empty?
 			self.errors.add_to_base "You must remove all Assignments before deleting."

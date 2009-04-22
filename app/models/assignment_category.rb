@@ -1,3 +1,5 @@
+# Stores the different types of assigments (Quiz, Test, Homework, etc.) as a
+# lookup table.
 class AssignmentCategory < ActiveRecord::Base
 	has_many	:assignments
 	
