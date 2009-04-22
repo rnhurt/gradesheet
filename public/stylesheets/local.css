@@ -75,6 +75,9 @@ form .required {background: transparent url(/images/bullet_red.png) no-repeat sc
 .grade-error {background:#FBE3E4 none repeat scroll 0 0;border-color:#FBC2C4;color:#8A1F11;}
 .grade-grid {overflow:scroll;}
 
+form .label {font-weight:bold;}
+form .example {font-size:smaller;}
+
 /*** Buttons ***/
 .btn {
   border:1px outset #3b6e22;
@@ -98,7 +101,7 @@ form .required {background: transparent url(/images/bullet_red.png) no-repeat sc
 /*** Scaffold defaults ***/
 .fieldWithErrors {padding: 2px;background-color: red;display: table;}
 #errorExplanation {
-  width: 400px;
+  width: 500px;
   border: 2px solid red;
   padding: 7px;
   padding-bottom: 12px;

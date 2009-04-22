@@ -16,10 +16,11 @@ ActionController::Routing::Routes.draw do |map|
   # logical way to group them together is to build individual controllers
   # and house them under the Settings "master" controller.
   map.namespace :settings do |s|
-    s.resources :terms, :name_prefix => nil
-    s.resources :events, :name_prefix => nil
-    s.resources :grading_scales, :name_prefix => nil
-    s.resources :sites, :name_prefix => nil
+    s.resources :terms,           :name_prefix => nil
+    s.resources :events,          :name_prefix => nil
+    s.resources :grading_scales,  :name_prefix => nil
+    s.resources :sites,           :name_prefix => nil
+    s.resources :imports,         :name_prefix => nil
     s.resources :assignment_categories, :name_prefix => nil
   end
 
@@ -29,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :assignments
   map.resources :reports
   map.resources :settings
+  map.resources :grades
 
   # We do a couple of "special" things with these routes.  It mostly has to
   # do with AJAX updating and things like that.
