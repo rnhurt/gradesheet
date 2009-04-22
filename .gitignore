@@ -10,5 +10,6 @@ database.yml
 *.sqlite3
 schema.rb
 doc/api
+doc/app_horo
 .DS_Store
 .svn
