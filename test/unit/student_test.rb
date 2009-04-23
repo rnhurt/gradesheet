@@ -5,6 +5,7 @@ class StudentTest < ActiveSupport::TestCase
 	
 	def setup
     @student = Student.first
+    assert @student.valid?, 'The initial student is valid'
 	end
 
 	def teardown
@@ -39,7 +40,7 @@ class StudentTest < ActiveSupport::TestCase
     @student.class_of = 1900
     assert !@student.valid?, 'Class_Of 1900 is not valid'
 
-    @student.class_of = Date.today.year + 20
+    @student.class_of = Date.today.year + 30
     assert !@student.valid?, 'Future Class_Of is not valid'
 
     @student.class_of = Date.today.year + 2
@@ -63,7 +64,7 @@ class StudentTest < ActiveSupport::TestCase
                     :last_name => @student.last_name, 
                     :site => @student.site, 
                     :email => @student.email, 
-                    :short_name => @student.short_name)
+                    :login => @student.login)
     assert !dup_user.save, "Duplicate Student is not valid"    
   end
   

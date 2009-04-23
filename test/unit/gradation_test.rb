@@ -5,7 +5,9 @@ class GradationTest < ActiveSupport::TestCase
 	
 	def setup
     @gradation = Gradation.first
+    assert @gradation.valid?, "Initial gradation is valid"
     @student = Student.first
+    assert @student.valid?, "Initial student is valid"
 	end
 	def teardown
 	end
@@ -25,7 +27,7 @@ class GradationTest < ActiveSupport::TestCase
     @gradation.points_earned = -1.4
     assert !@gradation.valid?, "set points_earned to an invalid float."
 
-    @gradation.points_earned = 1.6
+    @gradation.points_earned = 10.6
     assert @gradation.valid?, "set points_earned to a valid float."
 
     @gradation.points_earned = -5

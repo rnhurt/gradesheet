@@ -38,7 +38,7 @@ class TeacherTest < ActiveSupport::TestCase
                     :last_name => @teacher.last_name, 
                     :site => @teacher.site, 
                     :email => @teacher.email, 
-                    :short_name => @teacher.short_name)
+                    :login => @teacher.login)
     assert !dup_user.valid?, "Duplicate Teacher is not valid"    
   end
   
