@@ -1,13 +1,11 @@
 = Gradesheet
 == Introduction
-GradeSheet has been designed to give teachers all the tools 
-they need to record student grades.  It is web based to make 
-it easily accessible to everyone.  Students and parents can 
-log into the system to check on their grades and even 
+GradeSheet has been designed to give teachers all the tools they need to record 
+student grades.  It is web based to make it easily accessible to everyone.  
+Students and parents can log into the system to check on their grades and even 
 communicate with their teacher(s).
 
 == Helpful links
-* <b>Documentation:</b>
 * <b>Repository:</b> http://github.com/rnhurt/gradesheet
 * <b>Live example:</b> http://demo.KangarooBox.com
 * <b>Bugs / feature suggestions:</b> http://github.com/rnhurt/gradesheet/issues
@@ -17,12 +15,10 @@ communicate with their teacher(s).
 * Ruby 1.8 (working on moving to v1.9)
 * Rails 2.1.0 (working on moving to 2.2.x
 * Dependencies (aka Rails plugins):
-* will_paginate
-* authlogic
-* validates_existence
-* livepipe_ui
-
-== Development Philosophy
+* will_paginate[http://github.com/mislav/will_paginate] - Most awesome pagination system for Ruby
+* Authlogic[http://github.com/binarylogic/authlogic] - A clean, simple, and unobtrusive ruby authentication solution.
+* validates_existence[http://github.com/joshsusser/validates_existence] - Rails plugin that provides a validates_existence_of method for ActiveRecord models to check existence of records referenced by belongs_to associations.
+* livepipe_ui[http://livepipe.net/] -  A suite of high quality widgets and controls for web 2.0 applications built using the Prototype JavaScript Framework.
 
 == Installation
 Since this is a Ruby on Rails project, it is installed just like any other RoR
@@ -31,12 +27,12 @@ will be simpler to get up and running if you are using one of those OSs.  Howeve
 it should run on any system that runs Rails.
 
 1. Get the source code (http://github.com/rnhurt/gradesheet/tree/master)
-2. Add these dependencies noted above
-3. Modify +database.yml+ to point to your database
-4. run ++rake db:migrate++ to create the database schema
-5. run 'rake fixtures:load' to load the test data
-6. run "./script/server" to start the development web server
-7. Fire up your web browser and point it to http://localhost:3000[http://localhost:3000]
+2. Add the dependencies noted in the Requirements section
+3. Modify <tt>database.yml</tt> to point to your database
+4. Run <tt>rake db:migrate</tt> to create the database schema
+5. Run <tt>rake fixtures:load</tt> to load the test data
+6. Run <tt>./script/server</tt> to start the development web server
+7. Fire up your web browser and point it to http://localhost:3000
 
 == Building Documentation
 Gradesheet is documented using the standard, built-in RDoc system.  To build 
@@ -51,7 +47,7 @@ on the eyes.
 Currently, Gradesheet tests are written using the standard, built-in test framework.
 However, RSpec looks very attractive and when I get a bit more time I might move
 them over to that.  In the meantime, just use the standard Rails testing commands
-to run the test (<code>rails test:units</code>, etc.).
+to run the test (<tt>rails test:units</tt>, etc.).
 
 == Author Information
 Author:: 		Richard Hurt
