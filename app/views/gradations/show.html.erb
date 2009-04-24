@@ -2,103 +2,58 @@
 	<%= show_course_list %>
 <% end %>
 
+<%#= render :partial => "grades" %>
 
-<% unsorted_assignments = Array.new %>
-<% for assignment in @gradations.assignments %>
-  <% unsorted_assignments << assignment %>
-<% end %>
-<% assignments = unsorted_assignments.sort_by {|a| a.due_date || Time.now}.reverse %>
+<style>
+/* Subsection Tabs
+--------------------*/
+ul.subsection_tabs {
+	list-style:none;
+	margin:0 0 5px 0;
+	padding:0;
+	clear:both;
+	border-bottom:1px solid #ccc;
+	height:20px;
+	clear:both;
+}
 
-<%# Loop through the gradations and build a table with students as the ROW
-  # and assignments in the COLUMN.  Along the way we'll also alert the user 
-  # when there are missing students or assignments. %>
-<form id='grade_grid'>
-<table class='grade-grid sortable scroll'>
-	<thead>
-		<tr>
-			<th>Student Name</th>
-			<th width='60'>%</th>
-			<% if assignments.length == 0 then %>
-				<th>No Assignments Found</th>			
-			<% else %>
-				<% for assignment in assignments %>
-					<th width='50' class='grade' id='<%= assignment.id %>'>
-						<div class='assign-name'><%= h assignment.name %></div>
-						<div class='assign-points'><%= h assignment.possible_points %> pts</div>
-						<div class='assign-date'><%= h assignment.due_date ? assignment.due_date.to_s(:due_date) : '.' %></div>
-					</th>
-				<% end %>
-			<% end %>
-		</tr>
-	</thead>
-	<tbody>
-	  <% number_of_students = @gradations.students.count %>
-	  <% counter = 0 %>
+ul.subsection_tabs li.tab {
+	float:left;
+	margin-right:7px;
+	text-align:center;
+}
 
-	  
-	  <%# Show a default message if there are no students in this course %>	  
-		<% if number_of_students == 0 then %>
-			<tr><td>No Students Found</td></tr>
-		<% end %>
+ul.subsection_tabs li.tab a {
+	display:block;
+	height:20px;
+	padding:0 6px 0 6px;
+	background-color:#fff;
+	color:#666;
+	width:80px;
+}
 
-      <% students = @gradations.students.sort_by {|a| a.last_name } %>
-      <% for student in students %>
-			  <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
-				  <%= content_tag :td, student.full_name, :id => student.id %>
-				  <td class='score'>0.0</td>
-				  <% a_counter = counter + 1 %>
-			  
-				  <% for assignment in assignments %>
-				    <td class='grades'>
-   				    <% found = nil %>
+ul.subsection_tabs li.tab a:hover {
+	color:#666;
+}
 
-				      <%# does the student have a grade for this assignment? %>
-				      <% number_of_gradations = student.gradations.count %>
-				      <% 0.upto(number_of_gradations-1) do |index| %>
-				        <% if assignment.id == student.gradations[index].assignment_id %>
-				          <% found = student.gradations[index] %>
-				          <% break %>
-				        <% end %>
-				      <% end %>
+ul.subsection_tabs li.tab a.active {
+	background-color:#ddd;
+}
 
-				      <% if found %>
-						    <%= text_field_tag 'score', found.points_earned, 
-								    :points	=> assignment.possible_points,
-								    :name		=> 'grade',
-								    :id			=> [:s => student.id, :a => assignment.id],
-								    :tabindex	=> a_counter,
-								    :onchange => remote_function( :url => {:action => :update_grade}, 
-                    :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
-								    :size		=> '10' %>				      
-				      <% else %>
-						    <%= text_field_tag 'score', '', 
-								    :points	=> assignment.possible_points,
-								    :name		=> 'grade',
-								    :id			=> [:s => student.id, :a => assignment.id],
-								    :tabindex	=> a_counter,
-								    :onchange => remote_function( :url => {:action => :update_grade}, 
-                    :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
-								    :size		=> '10' %>				      
-				      <% end %>
-				      
-				    </td>
-				    <% a_counter += number_of_students %>
-				  <% end %>
-				  
-				</tr>
-			  <% counter += 1 %>
-      <% end %>
-  </tbody>
-</table>
-</form>
+ul.subsection_tabs li.source_code {
+	float:right;
+}
+</style>
 
-<%# Load up the JavaScript that will compute the grades for this course %>
-<%= javascript_tag render( :partial => 'compute_grades.js') %>
+<!-- example 1 -->  
+<ul id="tabs_example_one" class="subsection_tabs">  
+  <li class="tab"><a href="#skills">Skills</a></li>  
+  <li class="tab"><a href="#grades">Grades</a></li>  
+</ul>
 
-<script type="text/javascript">
-  // Force a recalculation as soon as the HTML is loaded
-  document.observe('dom:loaded', calculate);
+<div id="skills"><%= render :partial => "skills" %></div>
+<div id="grades"><%= render :partial => "grades" %></div>
 
-  // Watch for changes in the form
-  new Form.Observer('grade_grid', 1, calculate);
-</script>
+<% javascript_tag do %>
+  new Control.Tabs('tabs_example_one');  
+<% end -%>

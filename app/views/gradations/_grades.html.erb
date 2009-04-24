@@ -1,0 +1,102 @@
+
+<%# Sort the assignments by due date. %>
+<% unsorted_assignments = Array.new %>
+<% for assignment in @gradations.assignments %>
+  <% unsorted_assignments << assignment %>
+<% end %>
+<% assignments = unsorted_assignments.sort_by {|a| a.due_date || Time.now}.reverse %>
+
+
+<%# Loop through the gradations and build a table with students as the ROW
+  # and assignments in the COLUMN.  Along the way we'll also alert the user 
+  # when there are missing students or assignments. %>
+<form id='grade_grid'>
+<table class='grade-grid sortable scroll'>
+	<thead>
+		<tr>
+			<th>Student Name</th>
+			<th width='60'>%</th>
+			<% if assignments.length == 0 then %>
+				<th>No Assignments Found</th>			
+			<% else %>
+				<% for assignment in assignments %>
+					<th width='50' class='grade' id='<%= assignment.id %>'>
+						<div class='assign-name'><%= h assignment.name %></div>
+						<div class='assign-points'><%= h assignment.possible_points %> pts</div>
+						<div class='assign-date'><%= h assignment.due_date ? assignment.due_date.to_s(:due_date) : '.' %></div>
+					</th>
+				<% end %>
+			<% end %>
+		</tr>
+	</thead>
+	<tbody>
+	  <% number_of_students = @gradations.students.count %>
+	  <% counter = 0 %>
+
+	  <%# Show a default message if there are no students in this course %>	  
+		<% if number_of_students == 0 then %>
+			<tr><td>No Students Found</td></tr>
+		<% end %>
+
+      <% students = @gradations.students.sort_by {|a| a.last_name } %>
+      <% for student in students %>
+			  <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
+				  <%= content_tag :td, student.full_name, :id => student.id %>
+				  <td class='score'>0.0</td>
+				  <% a_counter = counter + 1 %>
+			  
+				  <% for assignment in assignments %>
+				    <td class='grades'>
+   				    <% found = nil %>
+
+				      <%# does the student have a grade for this assignment? %>
+				      <% number_of_gradations = student.gradations.count %>
+				      <% 0.upto(number_of_gradations-1) do |index| %>
+				        <% if assignment.id == student.gradations[index].assignment_id %>
+				          <% found = student.gradations[index] %>
+				          <% break %>
+				        <% end %>
+				      <% end %>
+
+				      <% if found %>
+						    <%= text_field_tag 'score', found.points_earned, 
+								    :points	=> assignment.possible_points,
+								    :name		=> 'grade',
+								    :id			=> [:s => student.id, :a => assignment.id],
+								    :tabindex	=> a_counter,
+								    :onchange => remote_function( :url => {:action => :update_grade}, 
+                    :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
+								    :size		=> '10' %>				      
+				      <% else %>
+						    <%= text_field_tag 'score', '', 
+								    :points	=> assignment.possible_points,
+								    :name		=> 'grade',
+								    :id			=> [:s => student.id, :a => assignment.id],
+								    :tabindex	=> a_counter,
+								    :onchange => remote_function( :url => {:action => :update_grade}, 
+                    :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
+								    :size		=> '10' %>				      
+				      <% end %>
+				      
+				    </td>
+				    <% a_counter += number_of_students %>
+				  <% end %>
+				  
+				</tr>
+			  <% counter += 1 %>
+      <% end %>
+  </tbody>
+</table>
+</form>
+
+
+<%# Load up the JavaScript that will compute the grades for this course %>
+<%= javascript_tag render( :partial => 'compute_grades.js') %>
+
+<script type="text/javascript">
+  // Force a recalculation as soon as the HTML is loaded
+  document.observe('dom:loaded', calculate);
+
+  // Watch for changes in the form
+  new Form.Observer('grade_grid', 1, calculate);
+</script>
