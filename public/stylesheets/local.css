@@ -90,6 +90,7 @@ form .example {font-size:smaller;}
   text-decoration:none;
   width: 100px;
   text-align: center;
+  float: right;
 /*  vertical-align: text-top;*/
 }
 .positive{ background-color:#f2f2f2;color:#333 }

@@ -40,11 +40,11 @@
 						:update => 'student_list', 
 						:url => { :action => :show }, 
 						:with => "'value=' + value + '||Class Of ' + value + '||C'",
-						:method => :get) %>
+						:method => :get), :class=>'span-3' %>
 	</form>
 </div>
 
-<div class='span-10 last'>
+<div class='span-4 append-10 last'>
 	<form id='homeroom_form'>
 		<%= collection_select :homeroom, :name, @homerooms, :to_s, :to_s, {:include_blank => 'Home Room'}, {
 				:onchange => 
@@ -52,7 +52,7 @@
 						:update => 'student_list', 
 						:url => { :action => :show }, 
 						:with => "'value=' + value + '||Home Room ' + options[selectedIndex].text + '||H'",
-						:method => :get) } %>
+						:method => :get), :class => 'span-4' }  %>
 	</form>
 </div>
 
@@ -60,7 +60,7 @@
 	<%= render :partial => 'student_list' %>
 </div>
 
-<div id='enrolled_students' class='span-7 push-1 last'>
+<div id='enrolled_students' class='span-7 last'>
 	<%= render :partial => 'enrolled_students' %>
 </div>
 
