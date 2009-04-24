@@ -15,8 +15,13 @@
   <%= javascript_include_tag :defaults -%>
   <%= javascript_include_tag 'livepipe' -%>
   <%= javascript_include_tag 'tabs' -%>
-  <%#= javascript_include_tag 'tablekit' -%>
-
+  <%= javascript_include_tag "tablekit" -%>
+  
+  <script>
+    TableKit.options.rowEvenClass = 'even';
+    TableKit.options.rowOddClass = 'odd';
+  </script>
+  
   <%= @content_for_page_header -%>
 
 </head>

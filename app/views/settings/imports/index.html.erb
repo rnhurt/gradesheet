@@ -31,17 +31,3 @@
           :confirm => "This will import new TEACHER\ninformation into the system.\n\nClick OK to continue." -%>
   <% end -%>
 </div>
-
-<div class='span-13 last'><h2>Import Other Data</h2></div>
-
-<div class='box span-13 last'>
-  <% form_for :import, :url => { :action => :create }, :html => { :multipart => true } do |f| -%>
-    <div class='label'>Import Other data using this format:<br />
-    <span class='example'>("Field 1","Field 2","Field 3")</span></div>
-    <input type='hidden' name='import_type' value='other' />
-    <%= f.file_field :file -%>
-
-    <%= submit_tag 'Import', :class => 'btn standard',
-          :confirm => "This will import new \ninformation into the system.\n\nClick OK to continue." -%>
-  <% end -%>
-</div>

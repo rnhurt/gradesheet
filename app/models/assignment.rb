@@ -11,7 +11,7 @@ class Assignment < ActiveRecord::Base
   validates_presence_of			:possible_points
   
   validates_existence_of		:course
-  
+
   # Return a date formated for display as an assignment due date.
   def due_date_formated
   	due_date.strftime("%a %b %e, %Y") if due_date?
@@ -32,7 +32,7 @@ class Assignment < ActiveRecord::Base
   end
   
   
-  private		
+private		
   
   # We don't want the user to delete an assignment without first cleaning up
   # any grades that use it.  This could cause a cascading effect wiping out
