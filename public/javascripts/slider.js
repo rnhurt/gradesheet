@@ -1,0 +1,1 @@
+/usr/share/javascript/scriptaculous/slider.js
