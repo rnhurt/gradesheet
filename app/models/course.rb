@@ -21,6 +21,22 @@ class Course < ActiveRecord::Base
 	# Courses are considered 'active' only if they are in a grading term that is 'active'.
 	named_scope :active, :include => :term, :conditions	=> "terms.active = 't'"
 
+  # Calculate a students current grade for a particular course.
+  def calculate_grade(student_id)
+    # Get the student record
+    student = Student.find(student_id)
+    
+    # Set up some variables
+    final_grade         = 0.0
+    temp_score          = 0.0
+    total_avail_points  = 0.0
+
+    # Loop through the assignments for computing the grade as we go
+    
+    
+    
+    return {:letter => 'A', :score => 0.78}
+  end
 
 private		
 

@@ -28,15 +28,15 @@ h3 {border-bottom: 1px solid #DDD;}
 
 /*** Tables ***/
 table, td, th {vertical-align:bottom;}
-table {
+table.master {
   cursor: pointer;
   background-color: #BACAF1;
   border: 1px solid #eee;
   border-collapse: collapse;
 }
-thead .search {font-size: 0.8em;border: medium groove;}
-tr.current td{background: yellow;font-style: oblique;}
-tr:hover td{background-color:#fff;}
+.master thead .search {font-size: 0.8em;border: medium groove;}
+.master tr.current td{background: yellow;font-style: oblique;}
+.master tr:hover td{background-color:#fff;}
 .assign-name, .assign-points, .assign-date {font-size: 0.9em;white-space:nowrap;text-align:center;}
 .assign-points {font-size: 0.8em;}
 .assign-date {font-size: 0.8em;}
@@ -90,7 +90,6 @@ form .example {font-size:smaller;}
   text-decoration:none;
   width: 100px;
   text-align: center;
-  float: right;
 /*  vertical-align: text-top;*/
 }
 .positive{ background-color:#f2f2f2;color:#333 }

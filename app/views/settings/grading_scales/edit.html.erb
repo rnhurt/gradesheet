@@ -11,25 +11,55 @@
 	</label>
 
   <label><span>Scale Range</span>&nbsp;</label>
-  <div class='prepend-3 span-9 last'>
-  <ul style='list-style-type:none;'>
-    <li>above <input type='text' size='3' value='93.5'></input> is a 
+
+  <div class='span-13 last'>
+    <div class='prepend-2 span-1'>above</div> 
+    <div class='span-2'><input type='text' size='3' value='93.5'>%</input></div>
+    <div class='span-2'>is</div>
+    <div class='span-5 last'>
       <input type='text' size='5' value='A'></input>
-          </input> <input type='button' value='Remove' class='btn standard'></input>
-    </li>
-    <li>above <input type='text' size='3' value='87'></input> is a <input type='text' size='5' value='B'></input>
-          </input> <input type='button' value='Remove' class='btn standard'></input>
-    </li>
+      <input type='button' value='Remove' class='btn standard'></input>
+    </div>
 
-    <li>above <input type='text' size='3' value='75'></input> is a <input type='text' size='5' value='C'></input>
-          </input> <input type='button' value='Remove' class='btn standard'></input>
-    </li>
+    <div class='prepend-2 span-1'>above</div> 
+    <div class='span-4'><input type='text' size='3' value='87'>%</input> is</div>
+    <div class='span-5 last'>
+      <input type='text' size='5' value='B'></input>
+      <input type='button' value='Remove' class='btn standard'></input>
+    </div>
 
-    <li>anything lower is a <input type='text' size='5' value='U'></input></li>
-  </ul>
+    <div class='prepend-1 span-2'>&nbsp;</div> 
+    <div class='span-4'><input type='text' size='3' value='50'>%</input> and below is</div>
+    <div class='span-5 last'>
+      <input type='text' size='5' value='U'></input>
+      <input type='button' value='Remove' class='btn standard'></input>
+    </div>
   </div>
-	
-	<div class='spacer'>
+
+  <table>
+    <tr>
+      <td>above</td>
+      <td><input type='text' size='3' value='93.5'>%</input> is</td>
+      <td><input type='text' size='5' value='A'></input></td>
+      <td><input type='button' value='Remove' class='btn standard'></input></td>
+    </tr>
+
+    <tr>
+      <td>above</td>
+      <td><input type='text' size='3' value='87'>%</input> is</td>
+      <td><input type='text' size='5' value='B'></input></td>
+      <td><input type='button' value='Remove' class='btn standard'></input></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td><input type='text' size='3' value='93.5'>%</input> and below is</td>
+      <td><input type='text' size='5' value='U'></input></td>
+      <td><input type='button' value='Remove' class='btn standard'></input></td>
+    </tr>
+   </table>
+
+	<div class='spacer span-15 last'>
 		<%= submit_tag 'Save', :class => 'btn positive' %>
 		<%= link_to 'Cancel', grading_scales_path, :class => 'btn standard' %>
 	</div>
@@ -37,82 +67,3 @@
 </div>
 
 <%= set_focus_to_id 'scale_name' %>
-
-
-<style type="text/css" media="screen">
-  .my_handle { 
-      background: url('/images/thumb-w.gif') no-repeat left;
-      padding-left: 8px;
-      text-align: left;
-      width: 50px; 
-      overflow: hidden;
-      position: absolute; 
-      cursor: move;
-   }
-   .trackv {
-    width: 10px;
-    background-color: #ccc;
-    height: 500px;
-    position: relative;   
-   }
-   .trackh {
-    width: 400px;
-    background-color: #ccc;
-    height: 10px;
-    position: relative;   
-   }
-
-</style>
-
-<div class='span-20 last'>
-
-<h2>Grades</h2>
-  <div id='add'>ADD</div>
-  <div id="grades" class='trackv'>
-    <div class="handle"><div id='A' class="my_handle">A</div></div>
-    <div class="handle"><div id='B' class="my_handle">B</div></div>
-    <div class="handle"><div id='C' class="my_handle">C</div></div>
-    <div class="handle"><div id='D' class="my_handle">D</div></div>
-  </div>
-<div id='debug1'>&nbsp;</div>
-
-<% javascript_tag do -%>
-  var grades = $('grades');
-  var default_grades = [7, 15, 23, 30];
-  
-  function createSlider() {
-    new Control.Slider(grades.select('.handle'), grades, {
-      range: $R(0,100),
-      sliderValue: default_grades,
-      axis: 'vertical',
-      restricted: 'true',
-      alignY: 10,
-	    onSlide: function(v) {update_grade_slider(v)},
-	    onChange: function(v){ default_grades = v}
-	  });
-  }
-
-  $('add').observe('click', function(event){
-    default_grades = default_grades.concat([90]);
-    var h = grades.insert("<div class='handle'><div class='my_handle'>Q</div></div>");
-    createSlider();
-    update_grade_slider(default_grades);
-  }); 
-  
-  function update_grade_slider(v) {
-    var handles = $('grades').select('[class="my_handle"]');
-    for (var i = 0; i<handles.length; i++) {
-      var letter = handles[i].innerHTML[0];
-      handles[i].innerHTML = letter + '&nbsp;&nbsp;&nbsp;' + (100 - v[i]).round() + '%';    
-    }
-  }
-  
-  // Initialize the grade slider
-  createSlider();
-  update_grade_slider(default_grades);
-  
-<% end -%>
-
-
-</div>
-
