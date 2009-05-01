@@ -3,10 +3,17 @@ class GradingScale < ActiveRecord::Base
 	before_destroy	:ensure_no_children
 
 	has_many	:courses
+	has_many  :grade_ranges
 	
 	validates_length_of		  :name, :within => 1..20
 	validates_uniqueness_of :name, :case_sensitive => false
 
+
+  def range_attributes=(range_attributes)
+    range_attributes.each do |attributes|
+      grade_ranges.build(attributes)
+    end
+  end
 
 private		
   # Ensure that the user does not delete a record without first cleaning up

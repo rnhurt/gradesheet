@@ -12,53 +12,18 @@
 
   <label><span>Scale Range</span>&nbsp;</label>
 
-  <div class='span-13 last'>
-    <div class='prepend-2 span-1'>above</div> 
-    <div class='span-2'><input type='text' size='3' value='93.5'>%</input></div>
-    <div class='span-2'>is</div>
-    <div class='span-5 last'>
-      <input type='text' size='5' value='A'></input>
-      <input type='button' value='Remove' class='btn standard'></input>
-    </div>
-
-    <div class='prepend-2 span-1'>above</div> 
-    <div class='span-4'><input type='text' size='3' value='87'>%</input> is</div>
-    <div class='span-5 last'>
-      <input type='text' size='5' value='B'></input>
-      <input type='button' value='Remove' class='btn standard'></input>
-    </div>
-
-    <div class='prepend-1 span-2'>&nbsp;</div> 
-    <div class='span-4'><input type='text' size='3' value='50'>%</input> and below is</div>
-    <div class='span-5 last'>
-      <input type='text' size='5' value='U'></input>
-      <input type='button' value='Remove' class='btn standard'></input>
-    </div>
+  <div class='prepend-3 span-8 last'>
+  <% for range in @scale.grade_ranges %>
+    <% fields_for "grading_scale[range_attributes][]", range do |ff| %>
+        <div class='grade_range last'>
+          From <%= ff.text_field :max_score, :size => '3' %>%
+          to <%= ff.text_field :min_score, :size => '3' %>% 
+          is a <%= ff.text_field :grade, :size => '3' %>
+        </div>
+    <% end %>
+  <% end %>
   </div>
-
-  <table>
-    <tr>
-      <td>above</td>
-      <td><input type='text' size='3' value='93.5'>%</input> is</td>
-      <td><input type='text' size='5' value='A'></input></td>
-      <td><input type='button' value='Remove' class='btn standard'></input></td>
-    </tr>
-
-    <tr>
-      <td>above</td>
-      <td><input type='text' size='3' value='87'>%</input> is</td>
-      <td><input type='text' size='5' value='B'></input></td>
-      <td><input type='button' value='Remove' class='btn standard'></input></td>
-    </tr>
-
-    <tr>
-      <td></td>
-      <td><input type='text' size='3' value='93.5'>%</input> and below is</td>
-      <td><input type='text' size='5' value='U'></input></td>
-      <td><input type='button' value='Remove' class='btn standard'></input></td>
-    </tr>
-   </table>
-
+  
 	<div class='spacer span-15 last'>
 		<%= submit_tag 'Save', :class => 'btn positive' %>
 		<%= link_to 'Cancel', grading_scales_path, :class => 'btn standard' %>

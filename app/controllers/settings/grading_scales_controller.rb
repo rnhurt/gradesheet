@@ -20,7 +20,8 @@ class Settings::GradingScalesController < SettingsController
 
   def new
     @scale = GradingScale.new
-    
+    5.times{ @scale.grade_ranges.build }  # Create a couple of grade ranges as a default
+
     respond_to do |format|
       format.html { render :action => :edit }
     end
