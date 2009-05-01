@@ -12,16 +12,14 @@
 
   <label><span>Scale Range</span>&nbsp;</label>
 
-  <div class='prepend-3 span-8 last'>
-  <% for range in @scale.grade_ranges %>
-    <% fields_for "grading_scale[range_attributes][]", range do |ff| %>
-        <div class='grade_range last'>
-          From <%= ff.text_field :max_score, :size => '3' %>%
-          to <%= ff.text_field :min_score, :size => '3' %>% 
-          is a <%= ff.text_field :grade, :size => '3' %>
-        </div>
-    <% end %>
-  <% end %>
+  <div id='ranges' class='prepend-3 span-10 last'>
+    <%= render :partial => 'grade_range', :collection => @scale.grade_ranges %>
+  </div>
+  
+  <div class='prepend-3 span-10 last'>
+    <%= link_to_function "Add a range", :class => 'btn standard' do |page|
+      page.insert_html :bottom, :ranges, :partial => 'grade_range', :object => GradeRange.new
+    end %>
   </div>
   
 	<div class='spacer span-15 last'>

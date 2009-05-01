@@ -1,0 +1,22 @@
+<% fields_for "grading_scale[range_attributes][]", grade_range do |ff| %>
+  <div class='grade_range'>
+    From <%= ff.text_field :max_score, :size => '3', :index => nil %>%
+    to <%= ff.text_field :min_score, :size => '3', :index => nil %>% 
+    is a <%= ff.text_field :grade, :size => '3', :index => nil %>
+    
+    <% if grade_range.new_record? %>
+      <%= link_to_function "remove", "$(this).up('.grade_range').remove()", :class => 'btn standard' %>
+    <% else %>
+      <%= link_to_function "remove", "mark_for_destroy(this)", :class => 'btn standard' %>
+      <%= ff.hidden_field :id, :index => nil %>
+      <%= ff.hidden_field :should_destroy, :index => nil, :class => 'should_destroy' %>
+    <% end %>
+  </div>
+<% end %>
+
+<% javascript_tag do %>
+  function mark_for_destroy(element) {
+    $(element).next('.should_destroy').value = 1;
+    $(element).up('.grade_range').hide();
+  }
+<% end %>
