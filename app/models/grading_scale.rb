@@ -8,6 +8,7 @@ class GradingScale < ActiveRecord::Base
 	
 	validates_length_of		  :name, :within => 1..20
 	validates_uniqueness_of :name, :case_sensitive => false
+	validates_associated    :grade_ranges
 
 
   def range_attributes=(range_attributes)
