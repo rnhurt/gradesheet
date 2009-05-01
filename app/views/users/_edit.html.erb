@@ -6,38 +6,38 @@
 			</div>
 			
 			<label><span>Login</span>
-  			<%= f.text_field :login, :id => 'user_login' %>
+  			<%= f.text_field :login, :id => 'user_login', :class=>'input' %>
 			</label>
 		
 			<label><span class='required'>First Name</span>
-  			<%= f.text_field :first_name %>
+  			<%= f.text_field :first_name, :class=>'input' %>
 			</label>
 
 			<label><span class='required'>Last Name</span>
-  			<%= f.text_field :last_name %>
+  			<%= f.text_field :last_name, :class=>'input' %>
 			</label>
 			
 			<label><span class='required'>Email Address</span>
-  			<%= f.text_field :email %>
+  			<%= f.text_field :email, :class=>'input' %>
 			</label>
 
 		  <label><%= content_tag :span, f.object.new_record? ? 'Password' : 'Change password', 
 		                !f.object.new_record? ? nil : :class=>'required' %>
-			  <%= f.password_field :password %>
+			  <%= f.password_field :password, :class=>'input' %>
 		  </label>
 		
 		  <label><%= content_tag :span, 'Confirm password', !f.object.new_record? ? nil : :class=>'required' %>
-			  <%= f.password_field :password_confirmation %>
+			  <%= f.password_field :password_confirmation, :class=>'input' %>
 		  </label>
 
 			<label><span class='required'>Site</span>
-  			<%= collection_select user.class.name.underscore, :site_id, Site.find(:all), :id, :name %>
+  			<%= collection_select user.class.name.underscore, :site_id, Site.find(:all), :id, :name, {}, :class=>'input' %>
 			</label>
 
 			<% if user.class.name == 'Student' %>
 				<label><span class='required'>Class Of</span>
 				  <%# FIXME: Get the class time properly and stop hardcoding values %>
-					<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a) %>
+					<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a, {}, :class=>'input') %>
 				</label>
 
 				<label><span>Homeroom</span>
