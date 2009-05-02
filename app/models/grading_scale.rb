@@ -11,26 +11,29 @@ class GradingScale < ActiveRecord::Base
 	validates_associated    :grade_ranges
 
 
-  def range_attributes=(range_attributes)
+  def new_range_attributes=(range_attributes)
     range_attributes.each do |attributes|
-      if attributes[:id].blank?
-        grade_ranges.build(attributes)
-      else
-        range = grade_ranges.detect { |r| r.id == attributes[:id].to_i }
+      grade_ranges.build(attributes)
+    end
+  end
+  
+  def existing_range_attributes=(range_attributes)
+    grade_ranges.reject(&:new_record?).each do |range|
+      attributes = range_attributes[range.id.to_s]
+      if attributes
         range.attributes = attributes
+      else
+        grade_ranges.delete(range)
       end
     end
   end
 
+
 private		
 
   def save_ranges
-    grade_ranges.each do |r|
-      if r.should_destroy?
-        r.destroy
-      else
-        r.save(false)
-      end
+    grade_ranges.each do |range|
+        range.save(false)
     end
   end
 

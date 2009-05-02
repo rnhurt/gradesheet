@@ -36,26 +36,24 @@ class Settings::GradingScalesController < SettingsController
   def create
     @scale = GradingScale.new(params[:grading_scale])
 
-    respond_to do |format|
-      if @scale.save
-        flash[:notice] = "Grading scale '#{@scale.name}' was successfully created."
-        format.html { redirect_to :action => :index }
-      else
-        format.html { render :action => "new" }
-      end
+    if @scale.save
+      flash[:notice] = "Grading scale '#{@scale.name}' was successfully created."
+      redirect_to :action => :index
+    else
+      render :action => 'new'
     end
   end
 
   def update
+# debugger
+    params[:grading_scale][:existing_range_attributes] ||= {}
     @scale = GradingScale.find(params[:id])
 
-    respond_to do |format|
-      if @scale.update_attributes(params[:grading_scale])
-        flash[:notice] = "Grading scale '#{@scale.name}' was successfully updated."
-        format.html { redirect_to :action => :index }
-      else
-        format.html { render :action => "edit" }
-      end
+    if @scale.update_attributes(params[:grading_scale])
+      flash[:notice] = "Grading scale '#{@scale.name}' was successfully updated."
+      redirect_to :action => :index
+    else
+      render :action => 'edit'
     end
   end
 
