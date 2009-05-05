@@ -1,10 +1,12 @@
 <% fields_for_range(grade_range) do |ff| %>
-  <div class='grade_range'>
-    From <%= ff.text_field :max_score, :size => '3' %>%
-    to <%= ff.text_field :min_score, :size => '3' %>% 
+  <div class='grade_range span-13 last'>
+    Above <%= ff.text_field :min_score, :size => '3' %>%
     is a <%= ff.text_field :grade, :size => '3' %>
+
+    <%= ff.text_area :description, :size => '25x2' %>
 
     <%= link_to_function "remove", "$(this).up('.grade_range').remove()", :class => 'btn standard' %>
   </div>
 <% end %>
+
 

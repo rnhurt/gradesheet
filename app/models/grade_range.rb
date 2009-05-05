@@ -2,6 +2,8 @@
 class GradeRange < ActiveRecord::Base
   belongs_to  :grading_scale
 
+  validates_length_of :description, :within => 0..250
+
   attr_accessor :should_destroy
 
   # This attribute is set in the grade_range partial when the user wants to 

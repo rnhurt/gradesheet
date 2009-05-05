@@ -4,24 +4,23 @@
 
 <%= error_messages_for :scale, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div class='box span-13 last'>
+<div class='box span-15 last'>
 <% form_for @scale do |f| %>
 	<label><span class='required'>Scale Name</span>
 		<%= f.text_field :name, :id => 'scale_name' %>
 	</label>
 
   <label><span>Scale Range</span>&nbsp;</label>
-
-  <div id='ranges' class='prepend-3 span-10 last'>
-    <%= render :partial => 'grade_range', :collection => @scale.grade_ranges %>
-  </div>
-  
-  <div class='prepend-3 span-10 last'>
+  <div class='prepend-2 span-13 last'>
     <%= link_to_function "Add a range", :class => 'btn standard' do |page|
       page.insert_html :bottom, :ranges, :partial => 'grade_range', :object => GradeRange.new
     end %>
   </div>
-  
+
+  <div id='ranges' class='prepend-2 span-13 last'>
+    <%= render :partial => 'grade_range', :collection => @scale.grade_ranges %>
+  </div>
+    
 	<div class='spacer span-15 last'>
 		<%= submit_tag 'Save', :class => 'btn positive' %>
 		<%= link_to 'Cancel', grading_scales_path, :class => 'btn standard' %>

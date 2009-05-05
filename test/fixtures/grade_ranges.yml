@@ -1,0 +1,56 @@
+sA:
+  grading_scale: s
+  description: Understanding of subject matter and demonstration of skills is Excellent.
+  max_score: 100
+  min_score: 93
+  grade: A
+  active: true
+
+sB:
+  grading_scale: s
+  description: Understanding of subject matter and demonstration of skills is Very Good.
+  max_score: 92
+  min_score: 84
+  grade: B
+  active: true
+
+sC:
+  grading_scale: s
+  description: Understanding of subject matter and demonstration of skills is Adequate.
+  max_score: 83
+  min_score: 75
+  grade: C
+  active: true
+
+sD:
+  grading_scale: s
+  description: Difficulty understanding of subject matter and demonstration of skills.
+  max_score: 74
+  min_score: 70
+  grade: D
+  active: true
+
+sU:
+  grading_scale: s
+  description: Understanding of subject matter and demonstration of skills is Inadequate.
+  max_score: 69
+  min_score: 0
+  grade: U
+  active: true
+
+pP:
+  grading_scale: pf
+  description: Understanding of subject matter and demonstration of skills is Excellent.
+  max_score: 100
+  min_score: 51
+  grade: Pass
+  active: true
+
+pF:
+  grading_scale: pf
+  description: Understanding of subject matter and demonstration of skills is Inadequate.
+  max_score: 50
+  min_score: 0
+  grade: Fail
+  active: true
+
