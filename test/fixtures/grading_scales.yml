@@ -1,8 +1,11 @@
 s:
   name: Standard (A, B, C)
-
+  active: true
+  
 pf:
   name: Pass/Fail
+  active: true
   
 other:
-  name: Other
+  name: Other (Old)
+  active: false

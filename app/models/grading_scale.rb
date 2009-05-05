@@ -10,6 +10,8 @@ class GradingScale < ActiveRecord::Base
 	validates_uniqueness_of :name, :case_sensitive => false
 	validates_associated    :grade_ranges
 
+  named_scope :active, :conditions => { :active => true }
+
 
   def new_range_attributes=(range_attributes)
     range_attributes.each do |attributes|
