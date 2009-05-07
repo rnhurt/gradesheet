@@ -76,10 +76,10 @@ EOS
 	  student = Student.find(params[:student_id])
 
     # Create a new document
-    pdf = Prawn::Document.new :page_size => "LEGAL", :skip_page_creation => false
+    @pdf = Prawn::Document.new :page_size => "LEGAL", :skip_page_creation => false
 
     # Make it so we don't have to use the 'pdf.' prefix everywhere.  :)
-    pdf.instance_eval do
+    @pdf.instance_eval do
   
       # Build the header
       header margin_box.top_left do 
@@ -88,6 +88,7 @@ EOS
         text "Report Card", :align => :center, :size => 10
         mask(:y) { text "Grade: 7S", :align => :center }
         text "Student: #{student.full_name}", :align => :left, :size => 10
+        stroke_horizontal_rule
       end
       # Build the footer
       footer margin_box.bottom_left do 
@@ -103,50 +104,14 @@ EOS
         stroke_color "000000"
       end   
 
-    # Find out if this student has any courses in the selected grading period.
-    unless student.courses.active
-      bounding_box([10,bounds.height-50], :width => bounds.width-20, :height => 85) do
-        stroke_rectangle [bounds.left-2,bounds.top+2], bounds.width, bounds.height
-        pdf.text "No active courses", :size => 25
-      end
-    else  
-  	  # Show grading keys
-  	  bounding_box([10,bounds.height-50], :width => bounds.width-20, :height => 85) do
-  		  stroke_rectangle [bounds.left-2,bounds.top+2], bounds.width, bounds.height
-  
-  		  font "Helvetica"
-  		  text_options.update(:size => 7, :align => :left)
-  		
-  		  # Display the key for the grading scale used in this course
-  		  bounding_box([0,bounds.height], :width => (bounds.width/2)-25, :height => bounds.height) do
-          student.courses.each do |course|
-            course.grading_scale.grade_ranges.each do |range|
-              text "#{range.grade} - #{range.description} (#{range.min_score}% and above)"
-            end
-          end
-  		  end			
-  		
-  		  # Subheadings	
-  		  bounding_box([250,bounds.height], :width => 250, :height => bounds.height) do
-  			  data = [
-  				  ["(+)","Exceptional performance"],
-  				  ["(b)","Satisfactory performance"],
-  				  ["(N)","Needs improvement"],
-  				  ["(NA)","Not applicable"]]
-  			  table data,
-  				  :vertical_padding	=> -2,
-  				  :border_width => 0
-  
-  			  bounding_box([bounds.width/1.5,bounds.height-10], :width => 75, :height => 20) do
-  				  fill_color "C0C0C0"
-  				  fill_and_stroke_rectangle [bounds.left-2,bounds.top+2], bounds.width, bounds.height
-  
-  				  fill_color "000000"
-  				  text "* - Accommodations and/or modifications"
-  			  end
-  		  end			
-  	  end	
-  
+
+      # Print the grading keys
+      # FIXME: There is probably a more "Ruby" way to do this...
+      scales = Array.new
+      student.courses.each { |course| scales.push(course.grading_scale) }
+      ReportCard.print_keys(scales)
+
+      
   	  # Print the grades for each class
   	  student.courses.each_with_index do |course, index|
   		  # Build the header and data information for this course
@@ -165,7 +130,7 @@ EOS
   			  [" "," "," "," "," "]
   		  ]
   
-  		  # Print even course numbers in the left column, odd numbers in the right
+  		  # Print half of the courses in the left column and the other half in the right
   		  if index.even?
   			  mask (:y) {
   				  span(bounds.width/2, :position => :left) do
@@ -187,7 +152,7 @@ EOS
   					  :width	=> bounds.width-10
   			  end
   		  end
-  		
+      		
   	  # Try not to overflow into the next page
   	  if cursor < 200
   		  start_new_page
@@ -195,11 +160,107 @@ EOS
   	  end
   	
   	  end	# each course
-    end # instance_eval
-   end
 
-  # Render the document
-	pdf.render
- 	
+      # Always print an even number of pages.  This prevents the start of one
+      # report from printing on the back of the previous report.
+      start_new_page unless page_count.even?
+    end # instance_eval
+    
+    
+    # Render the document
+	  @pdf.render
 	end
+
+	
+	# Print the grading key for a specified course
+	def self.print_keys(scales)
+	  # Check for something to print...
+	  return unless !scales.empty?
+	  
+	  # Remove any duplicates
+	  scales.uniq!
+    max_height = 0.0
+    
+    @pdf.instance_eval do    
+    bounding_box [0, cursor - 50], :width => bounds.width do
+    
+      # Set up the text options
+	    font "Helvetica"
+	    text_options.update(:size => 7, :align => :left)
+
+		
+		    # Loop through each scale printing its information as we go
+	      scales.each.with_index do |scale, index|
+    		  if index.even?
+    			  mask (:y) {
+    				  span((bounds.width/2)-5, :position => :left) do
+	              bounding_box([0, cursor], :width => bounds.width) do
+	                # Print the name of the grading scale
+	                  text "#{scale.name}", :size => font_size
+	                  stroke_horizontal_rule
+                  	                
+                  scale.grade_ranges.each do |range|
+                    text "  #{range.grade} - #{range.description} (#{range.min_score}% and above)"
+                  end
+          		    stroke_bounds
+          		    
+                  # Store the maximum height so we can move down later
+                  max_height = bounds.height unless max_height > bounds.height
+          		  end
+    				  end
+      			}
+    			else
+  				  span((bounds.width/2)-5, :position => :right) do
+	            bounding_box([0, cursor], :width => bounds.width) do
+	              # Print the name of the grading scale
+	              text "#{scale.name}", :size => font_size
+	              stroke_horizontal_rule
+	              
+                scale.grade_ranges.each do |range|
+                  text "#{range.grade} - #{range.description} (#{range.min_score}% and above)"
+                end
+        		    stroke_bounds
+
+                # Store the maximum height so we can move down later
+                max_height = bounds.height unless max_height > bounds.height
+        		  end
+        		  # we are done printing in this row, move down to make room for the
+        		  # next row of grading scales.
+              move_down 5
+  				  end
+          end		      	      
+            
+        end          
+
+		end
+
+      move_down (bounds.height - cursor) - max_height
+      
+		end # instance_eval
+
+		
+	end
+
+  def self.print_skills
+	  # Subheadings	
+	  bounding_box([250,bounds.height], :width => 250, :height => bounds.height) do
+		  data = [
+			  ["(+)","Exceptional performance"],
+			  ["(b)","Satisfactory performance"],
+			  ["(N)","Needs improvement"],
+			  ["(NA)","Not applicable"]]
+		  table data,
+			  :vertical_padding	=> -2,
+			  :border_width => 0
+
+		  bounding_box([bounds.width/1.5,bounds.height-10], :width => 75, :height => 20) do
+			  fill_color "C0C0C0"
+			  fill_and_stroke_rectangle [bounds.left-2,bounds.top+2], bounds.width, bounds.height
+
+			  fill_color "000000"
+			  text "* - Accommodations and/or modifications"
+		  end
+	  end			
+  end		  
+	
 end
