@@ -28,8 +28,6 @@ class Term < ActiveRecord::Base
 	named_scope	:current, :conditions => ["? BETWEEN begin_date and end_date ", Date.today]
 		
 
-private		
-
 	# Make sure that the BEGIN date is earlier than the END date
 	def begin_before_end
 		errors.add_to_base("End Date must be after the Begin Date") if begin_date >= end_date
@@ -40,7 +38,10 @@ private
 		# TODO: 
 		#errors.add_to_base("Period dates cannot overlap another period") if <some magic>
 	end	
-			
+
+
+private   
+
   # Ensure that the user does not delete a record without first cleaning up
   # any records that use it.  This could cause a cascading effect, wiping out
   # more data than expected.	

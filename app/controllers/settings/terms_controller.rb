@@ -44,8 +44,7 @@ class Settings::TermsController < SettingsController
     end
   end
 
-  # PUT /terms/1
-  # PUT /terms/1.xml
+
   def update
     @term = Term.find(params[:id])
 
@@ -59,8 +58,7 @@ class Settings::TermsController < SettingsController
     end
   end
 
-  # DELETE /terms/1
-  # DELETE /terms/1.xml
+
   def destroy
     @term = Term.find(params[:id])
     @term.destroy
