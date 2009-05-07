@@ -5,6 +5,9 @@ require "date"
 # printing will be possible and neatly done (no odd numbered pages).
 class ReportCard
 
+  HEADER_HEIGHT = 50  # The size of the page header
+  BUFFER_SIZE   = 5   # The size of the buffer between elements
+  
   # Build the parameter window to be shown to the user.	
 	def self.get_params()
 		# Build the parameter screen
@@ -74,13 +77,12 @@ EOS
 	def self.draw(params)	
 	  # Gather the required data from the database
 	  student = Student.find(params[:student_id])
-
+ 
     # Create a new document
     @pdf = Prawn::Document.new :page_size => "LEGAL", :skip_page_creation => false
 
     # Make it so we don't have to use the 'pdf.' prefix everywhere.  :)
-    @pdf.instance_eval do
-  
+    @pdf.instance_eval do 
       # Build the header
       header margin_box.top_left do 
         font "Helvetica", :size => 7
@@ -111,6 +113,9 @@ EOS
       student.courses.each { |course| scales.push(course.grading_scale) }
       ReportCard.print_keys(scales)
 
+      # Set up the text options
+      font "Helvetica"
+      text_options.update(:size => 7, :align => :left)
       
   	  # Print the grades for each class
   	  student.courses.each_with_index do |course, index|
@@ -133,7 +138,7 @@ EOS
   		  # Print half of the courses in the left column and the other half in the right
   		  if index.even?
   			  mask (:y) {
-  				  span(bounds.width/2, :position => :left) do
+  				  span((bounds.width/2) - BUFFER_SIZE, :position => :left) do
   					  table data, :headers => headers,
   						  :header_color => "C0C0C0",
   						  :font_size	=> 7,
@@ -143,20 +148,20 @@ EOS
   				  end
   		  }
   		  else
-  			  span(bounds.width/2, :position => :right) do
+  			  span((bounds.width/2) - BUFFER_SIZE, :position => :right) do
   				  table data, :headers => headers,
   					  :header_color => "C0C0C0",
   					  :font_size	=> 7,
   					  :border_style	=> :grid,
   					  :border_width	=> 0.5,
-  					  :width	=> bounds.width-10
+  					  :width	=> bounds.width
   			  end
   		  end
       		
   	  # Try not to overflow into the next page
   	  if cursor < 200
   		  start_new_page
-  		  move_down 50 		# make room for the header
+  		  move_down HEADER_HEIGHT 		# make room for the header
   	  end
   	
   	  end	# each course
@@ -179,63 +184,83 @@ EOS
 	  
 	  # Remove any duplicates
 	  scales.uniq!
-    max_height = 0.0
-    
-    @pdf.instance_eval do    
-    bounding_box [0, cursor - 50], :width => bounds.width do
-    
-      # Set up the text options
-	    font "Helvetica"
-	    text_options.update(:size => 7, :align => :left)
-
-		
-		    # Loop through each scale printing its information as we go
-	      scales.each.with_index do |scale, index|
-    		  if index.even?
-    			  mask (:y) {
-    				  span((bounds.width/2)-5, :position => :left) do
-	              bounding_box([0, cursor], :width => bounds.width) do
-	                # Print the name of the grading scale
-	                  text "#{scale.name}", :size => font_size
-	                  stroke_horizontal_rule
-                  	                
-                  scale.grade_ranges.each do |range|
-                    text "  #{range.grade} - #{range.description} (#{range.min_score}% and above)"
-                  end
-          		    stroke_bounds
-          		    
-                  # Store the maximum height so we can move down later
-                  max_height = bounds.height unless max_height > bounds.height
-          		  end
-    				  end
-      			}
-    			else
-  				  span((bounds.width/2)-5, :position => :right) do
-	            bounding_box([0, cursor], :width => bounds.width) do
-	              # Print the name of the grading scale
-	              text "#{scale.name}", :size => font_size
-	              stroke_horizontal_rule
-	              
-                scale.grade_ranges.each do |range|
-                  text "#{range.grade} - #{range.description} (#{range.min_score}% and above)"
-                end
-        		    stroke_bounds
-
-                # Store the maximum height so we can move down later
-                max_height = bounds.height unless max_height > bounds.height
-        		  end
-        		  # we are done printing in this row, move down to make room for the
-        		  # next row of grading scales.
-              move_down 5
-  				  end
-          end		      	      
-            
-        end          
-
-		end
-
-      move_down (bounds.height - cursor) - max_height
       
+    @pdf.instance_eval do    
+      bounding_box [0, cursor - HEADER_HEIGHT], :width => bounds.width  do
+        text "Grading Scales", :size => 10
+        stroke_bounds
+      
+        # Set up the text options
+  	    font "Helvetica"
+  	    text_options.update(:size => 7, :align => :left)
+
+        scales.each do |scale|
+          move_down BUFFER_SIZE
+
+          text "#{scale.name}", :size => 8
+          stroke_horizontal_rule
+          move_down 2
+          scale.grade_ranges.each_with_index do |range, index|
+            if index.even?
+              mask(:y) {
+                span(bounds.width/2-BUFFER_SIZE, :position => :left) do
+                  text "  #{range.grade} - #{range.description} (#{range.min_score}% and above)"            
+                end
+              }
+            else
+              span((bounds.width/2) - BUFFER_SIZE, :position => :right) do
+                text "  #{range.grade} - #{range.description} (#{range.min_score}% and above)"
+              end
+            end
+          end
+          
+          move_down BUFFER_SIZE
+        end
+      
+#  		    # Loop through each scale printing its information as we go
+#  	      scales.each_with_index do |scale, index|
+#      		  if index.even?
+#      			  mask (:y) {
+#      				  span((bounds.width/2)-5, :position => :left) do
+#  	              bounding_box([0, cursor], :width => bounds.width) do
+#  	                # Print the name of the grading scale
+#  	                  text "#{scale.name}", :size => font_size
+#  	                  stroke_horizontal_rule
+#                    	                
+#                    scale.grade_ranges.each do |range|
+#                      text "  #{range.grade} - #{range.description} (#{range.min_score}% and above)"
+#                    end
+#            		    stroke_bounds
+#            		    
+#                    # Store the maximum height so we can move down later
+#                    max_height = bounds.height unless max_height > bounds.height
+#            		  end
+#      				  end
+#        			}
+#      			else
+#    				  span((bounds.width/2)-5, :position => :right) do
+#  	            bounding_box([0, cursor], :width => bounds.width) do
+#  	              # Print the name of the grading scale
+#  	              text "#{scale.name}", :size => font_size
+#  	              stroke_horizontal_rule
+#  	              
+#                  scale.grade_ranges.each do |range|
+#                    text "#{range.grade} - #{range.description} (#{range.min_score}% and above)"
+#                  end
+#          		    stroke_bounds
+#  
+#                  # Store the maximum height so we can move down later
+#                  max_height = bounds.height unless max_height > bounds.height
+#          		  end
+#          		  # we are done printing in this row, move down to make room for the
+#          		  # next row of grading scales.
+#                move_down max_height - HEADER_HEIGHT + 5
+#    				  end
+#            end		      	      
+#          end          
+    		end
+
+      move_down BUFFER_SIZE
 		end # instance_eval
 
 		
@@ -246,8 +271,8 @@ EOS
 	  bounding_box([250,bounds.height], :width => 250, :height => bounds.height) do
 		  data = [
 			  ["(+)","Exceptional performance"],
-			  ["(b)","Satisfactory performance"],
-			  ["(N)","Needs improvement"],
+        ["(b)","Satisfactory performance"],
+  		  ["(N)","Needs improvement"],
 			  ["(NA)","Not applicable"]]
 		  table data,
 			  :vertical_padding	=> -2,
