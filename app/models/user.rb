@@ -3,7 +3,7 @@
 class User < ActiveRecord::Base
   # Authlogic setup
   acts_as_authentic do |c|
-    c.logged_in_timeout = 10.minutes
+    c.logged_in_timeout = (RAILS_ENV == 'development' ? 1000.minutes : 10.minutes)
   end
   
   belongs_to	:site
