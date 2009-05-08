@@ -120,7 +120,7 @@ EOS
   	  # Print the grades for each class
   	  student.courses.each_with_index do |course, index|
   		  # Build the header and data information for this course
-  		  headers = ["#{course.name}\n  #{course.teacher.full_name} - #{course.term.name}", "1\nA", "2\nB", "3\n ", "AVG"]
+  		  headers = ["#{course.name} - #{course.term.name}\n  #{course.teacher.full_name}", "A(93%)", "B(86%)", "n/a", "B(90%)"]
   		  data = [
   			  ["Application","A","B"," ","B"],
   			  ["Test/quizes","B","B"," ","B"],
@@ -146,8 +146,11 @@ EOS
   						  :border_width	=> 0.5,
   						  :width	=> bounds.width-10
   				  end
-  		  }
+  		    }
   		  else
+          data.pop  
+          data.pop  
+          data.pop  
   			  span((bounds.width/2) - BUFFER_SIZE, :position => :right) do
   				  table data, :headers => headers,
   					  :header_color => "C0C0C0",
@@ -195,11 +198,13 @@ EOS
   	    text_options.update(:size => 7, :align => :left)
 
         scales.each do |scale|
+          # Print the grading scale header
           move_down BUFFER_SIZE
-
           text "#{scale.name}", :size => 8
           stroke_horizontal_rule
           move_down 2
+            
+          # Print the grading scale details
           scale.grade_ranges.each_with_index do |range, index|
             if index.even?
               mask(:y) {
@@ -216,49 +221,7 @@ EOS
           
           move_down BUFFER_SIZE
         end
-      
-#  		    # Loop through each scale printing its information as we go
-#  	      scales.each_with_index do |scale, index|
-#      		  if index.even?
-#      			  mask (:y) {
-#      				  span((bounds.width/2)-5, :position => :left) do
-#  	              bounding_box([0, cursor], :width => bounds.width) do
-#  	                # Print the name of the grading scale
-#  	                  text "#{scale.name}", :size => font_size
-#  	                  stroke_horizontal_rule
-#                    	                
-#                    scale.grade_ranges.each do |range|
-#                      text "  #{range.grade} - #{range.description} (#{range.min_score}% and above)"
-#                    end
-#            		    stroke_bounds
-#            		    
-#                    # Store the maximum height so we can move down later
-#                    max_height = bounds.height unless max_height > bounds.height
-#            		  end
-#      				  end
-#        			}
-#      			else
-#    				  span((bounds.width/2)-5, :position => :right) do
-#  	            bounding_box([0, cursor], :width => bounds.width) do
-#  	              # Print the name of the grading scale
-#  	              text "#{scale.name}", :size => font_size
-#  	              stroke_horizontal_rule
-#  	              
-#                  scale.grade_ranges.each do |range|
-#                    text "#{range.grade} - #{range.description} (#{range.min_score}% and above)"
-#                  end
-#          		    stroke_bounds
-#  
-#                  # Store the maximum height so we can move down later
-#                  max_height = bounds.height unless max_height > bounds.height
-#          		  end
-#          		  # we are done printing in this row, move down to make room for the
-#          		  # next row of grading scales.
-#                move_down max_height - HEADER_HEIGHT + 5
-#    				  end
-#            end		      	      
-#          end          
-    		end
+      end
 
       move_down BUFFER_SIZE
 		end # instance_eval
