@@ -134,38 +134,50 @@ EOS
   			  [" "," "," "," "," "],
   			  [" "," "," "," "," "]
   		  ]
+
+        column_box [0,cursor], :width => bounds.width, :columns => 2 do
+          text " This is a test " * 100
+          table data, :headers => headers,
+            :header_color => 'C0C0C0',
+            :font_size    => 7,
+            :border_style => :grid,
+            :border_width => 0.5,
+            :width        => bounds.width-10
+        end
+        
+        move_down BUFFER_SIZE
   
-  		  # Print half of the courses in the left column and the other half in the right
-  		  if index.even?
-  			  mask (:y) {
-  				  span((bounds.width/2) - BUFFER_SIZE, :position => :left) do
-  					  table data, :headers => headers,
-  						  :header_color => "C0C0C0",
-  						  :font_size	=> 7,
-  						  :border_style	=> :grid,
-  						  :border_width	=> 0.5,
-  						  :width	=> bounds.width-10
-  				  end
-  		    }
-  		  else
-          data.pop  
-          data.pop  
-          data.pop  
-  			  span((bounds.width/2) - BUFFER_SIZE, :position => :right) do
-  				  table data, :headers => headers,
-  					  :header_color => "C0C0C0",
-  					  :font_size	=> 7,
-  					  :border_style	=> :grid,
-  					  :border_width	=> 0.5,
-  					  :width	=> bounds.width
-  			  end
-  		  end
-      		
-  	  # Try not to overflow into the next page
-  	  if cursor < 200
-  		  start_new_page
-  		  move_down HEADER_HEIGHT 		# make room for the header
-  	  end
+#  		  # Print half of the courses in the left column and the other half in the right
+#  		  if index.even?
+#  			  mask (:y) {
+#  				  span((bounds.width/2) - BUFFER_SIZE, :position => :left) do
+#  					  table data, :headers => headers,
+#  						  :header_color => "C0C0C0",
+#  						  :font_size	=> 7,
+#  						  :border_style	=> :grid,
+#  						  :border_width	=> 0.5,
+#  						  :width	=> bounds.width-10
+#  				  end
+#  		    }
+#  		  else
+#          data.pop  
+#          data.pop  
+#          data.pop  
+#  			  span((bounds.width/2) - BUFFER_SIZE, :position => :right) do
+#  				  table data, :headers => headers,
+#  					  :header_color => "C0C0C0",
+#  					  :font_size	=> 7,
+#  					  :border_style	=> :grid,
+#  					  :border_width	=> 0.5,
+#  					  :width	=> bounds.width
+#  			  end
+#  		  end
+#      		
+#  	  # Try not to overflow into the next page
+#  	  if cursor < 200
+#  		  start_new_page
+#  		  move_down HEADER_HEIGHT 		# make room for the header
+#  	  end
   	
   	  end	# each course
 

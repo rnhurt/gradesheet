@@ -1,2 +1,2 @@
 require 'prawn'
-require 'prawn/table'
+require 'prawn/layout'
