@@ -27,6 +27,7 @@ private
               ['Site Settings', 'settings'],
                 ['', 'assignment_categories'],
                 ['', 'grading_scales'],
+                ['', 'grading_skills'],
                 ['', 'imports'],
                 ['', 'sites'],
                 ['', 'terms'],

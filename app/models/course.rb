@@ -7,6 +7,7 @@ class Course < ActiveRecord::Base
 	belongs_to	:grading_scale
 	has_many		:assignments
 	has_many		:enrollments
+	has_many    :grading_skills
 	has_many		:students, :through => :enrollments
 	has_many		:gradations, :through => :assignments
 	

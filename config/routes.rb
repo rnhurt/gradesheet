@@ -19,6 +19,7 @@ ActionController::Routing::Routes.draw do |map|
     s.resources :terms,           :name_prefix => nil
     s.resources :events,          :name_prefix => nil
     s.resources :grading_scales,  :name_prefix => nil
+    s.resources :grading_skills,  :name_prefix => nil
     s.resources :sites,           :name_prefix => nil
     s.resources :imports,         :name_prefix => nil
     s.resources :assignment_categories, :name_prefix => nil

@@ -1,6 +1,7 @@
-class CreateSkills < ActiveRecord::Migration
+class CreateGradingSkills < ActiveRecord::Migration
   def self.up
-    create_table :skills do |t|
+    create_table :grading_skills do |t|
+      t.integer :course_id
       t.string  :symbol
       t.string  :description
       t.boolean :active
@@ -11,6 +12,6 @@ class CreateSkills < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :skills
+    drop_table :grading_skills
   end
 end
