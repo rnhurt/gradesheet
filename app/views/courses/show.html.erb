@@ -6,26 +6,27 @@
 
 <div class='box span-12'>
 	<% form_for( @course, :url => {}, :html => {:id => 'edit_course'} ) do |f| %>
-		<label><span class='required'>Name</span>
+	  <fieldset>
+	    <%= content_tag :legend, 'Edit Course' %>
+	    
+	    <%= f.label :name, {}, :class => 'req' %>
 			<%= f.text_field :name %>
-		</label>
-
-		<label><span class='required'>Term</span>
+		  <br />
+	    <%= f.label :term_id, {}, :class => 'req' %>
 			<%= collection_select :course, :term_id, Term.active, :id, :name %>
-		</label>
-		
-		<label><span class='required'>Grading Scale</span>
+		  <br />
+	    <%= f.label :grading_scale_id, {}, :class => 'req' %>
 			<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
-		</label>
-	<% end %>
 	
-	<div class="spacer">
-		<%= button_to 'Delete Course', @course, 
-					:method => :delete,
-					:disabled => !@course.assignments.empty?,
-					:class => "btn negative " + (@course.assignments.empty? ? '' : 'disabled'),
-					:confirm => "Are you sure you want to delete the '#{@course.name}' course?" %>
-	</div>
+	    <div class="spacer">
+		    <%= button_to 'Delete Course', @course, 
+					    :method => :delete,
+					    :disabled => !@course.assignments.empty?,
+					    :class => "btn negative " + (@course.assignments.empty? ? '' : 'disabled'),
+					    :confirm => "Are you sure you want to delete the '#{@course.name}' course?" %>
+	    </div>
+		</fieldset>
+	<% end %>
 
 	<%= observe_form :edit_course, :url => {:action => :update} %>
 </div>

@@ -6,25 +6,22 @@
 
 <div class="box span-12">
 	<% form_for (@course) do |f| %>
-			<div class="spacer">
-				<%= content_tag( :h2, "New Course" ) %>
-			</div>
+	  <fieldset>
+	    <%= content_tag :legend, 'New Course' %>
 
-			<label><span class = 'required'>Name</span>
-				<%= f.text_field :name %>
-			</label>
-
-			<label><span class = 'required'>Grading Term</span>
-				<%= collection_select :course, :term_id, Term.active, :id, :name %>
-			</label>
-
-			<label><span class = 'required'>Grading Scale</span>
-				<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
-			</label>
+			<%= f.label :name, {}, :class => 'req' %>
+			<%= f.text_field :name %>
+      <br />
+			<%= f.label :term_id, {}, :class => 'req' %>
+			<%= collection_select :course, :term_id, Term.active, :id, :name %>
+      <br />
+			<%= f.label :grading_scale_id, {}, :class => 'req' %>
+			<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
 
 			<div class="spacer">
 				<%= f.submit 'Create', :class=> 'btn positive' %>
 				<%= link_to 'Cancel', {:action=> 'index', :controller=> 'courses'}, :class => 'btn positive' %>
 			</div>
+		</fieldset>
 	<% end %>
 </div>

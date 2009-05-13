@@ -1,49 +1,42 @@
-<%# FIXME - This should be merged with _new.html.erb %>
 <div class='box span-13'>
 	<% form_for user do |f| %>
-			<div class="spacer">
-  			<%= content_tag( :h2, "Editing: #{user.full_name}" ) %>
-			</div>
+	  <fieldset>
+	    <% if user.new_record? %>
+	  		<%= content_tag :legend, "New #{user.class.name.titleize}" %>
+      <% else %>
+        <%= content_tag :legend, "Editing: #{user.full_name}" %>
+	  	<% end %>
 			
-			<label><span>Login</span>
-  			<%= f.text_field :login, :id => 'user_login', :class=>'input' %>
-			</label>
+		  <%= f.label :login, {}, :class => 'req' %>
+			<%= f.text_field :login, :id => 'user_login', :class=>'input' %>
 		
-			<label><span class='required'>First Name</span>
-  			<%= f.text_field :first_name, :class=>'input' %>
-			</label>
+		  <%= f.label :first_name, {}, :class => 'req' %>
+ 			<%= f.text_field :first_name, :class => 'input' %>
 
-			<label><span class='required'>Last Name</span>
-  			<%= f.text_field :last_name, :class=>'input' %>
-			</label>
+		  <%= f.label :last_name, {}, :class => 'req' %>
+ 			<%= f.text_field :last_name, :class => 'input' %>
 			
-			<label><span class='required'>Email Address</span>
-  			<%= f.text_field :email, :class=>'input' %>
-			</label>
+		  <%= f.label :email, {}, :class => 'req' %>
+ 			<%= f.text_field :email, :class=>'input' %>
 
 		  <label><%= content_tag :span, f.object.new_record? ? 'Password' : 'Change password', 
-		                !f.object.new_record? ? nil : :class=>'required' %>
-			  <%= f.password_field :password, :class=>'input' %>
-		  </label>
+		                !f.object.new_record? ? nil : :class=>'required' %></label>
+		  <%= f.password_field :password, :class=>'input' %>
 		
-		  <label><%= content_tag :span, 'Confirm password', !f.object.new_record? ? nil : :class=>'required' %>
-			  <%= f.password_field :password_confirmation, :class=>'input' %>
-		  </label>
+		  <label><%= content_tag :span, 'Confirm password', !f.object.new_record? ? nil : :class=>'required' %></label>
+		  <%= f.password_field :password_confirmation, :class=>'input' %>
 
-			<label><span class='required'>Site</span>
-  			<%= collection_select user.class.name.underscore, :site_id, Site.find(:all), :id, :name, {}, :class=>'input' %>
-			</label>
+		  <%= f.label :site, {}, :class => 'req' %>
+ 			<%= collection_select user.class.name.underscore, :site_id, Site.find(:all), :id, :name, {}, :class=>'input' %>
 
 			<% if user.class.name == 'Student' %>
-				<label><span class='required'>Class Of</span>
-				  <%# FIXME: Get the class time properly and stop hardcoding values %>
-					<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a, {}, :class=>'input') %>
-				</label>
+  		  <%= f.label :class_of, {}, :class => 'req' %>
+  		  <%# FIXME: Get the class time properly and stop hardcoding values %>
+				<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a, {}, :class=>'input') %>
 
-				<label><span>Homeroom</span>
-						<%= text_field_tag :homeroom1, {}, :maxlength => 20 %>
-						<%= f.select :homeroom, @homerooms, :include_blank => true %>
-				</label>
+			  <%= f.label :homeroom %>
+				<%= text_field_tag :homeroom1, {}, :maxlength => 20 %>
+				<%= f.select :homeroom, @homerooms, :include_blank => true %>
 			<% end %>
 		
 			<div class="spacer">

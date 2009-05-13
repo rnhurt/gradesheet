@@ -23,9 +23,7 @@ class Users::StudentsController < ApplicationController
     @student = Student.new
 		@homerooms = Student.find(:all, :select => 'homeroom', :group => 'homeroom', :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
 		
-    respond_to do |format|
-      format.html
-    end
+		render :action => :edit
   end
 
 
@@ -33,9 +31,6 @@ class Users::StudentsController < ApplicationController
     @student = Student.find(params[:id])
 		@homerooms = Student.find(:all, :select => 'homeroom', :group => 'homeroom', :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
     
-    respond_to do |format|
-    	format.html
-    end
   end
 
 

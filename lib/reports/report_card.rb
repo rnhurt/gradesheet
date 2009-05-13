@@ -19,7 +19,10 @@ class ReportCard
 		
 params = <<-EOS
 	<form action="/reports/report_card.pdf" method="get">
-		<label><span>Grading Period</span>
+	  <fieldset>
+	    <legend>Report Card</legend>
+	    
+		<label>Grading Period</label>
 		<select id="term_id" name="term_id">
 EOS
 
@@ -30,11 +33,10 @@ EOS
 
 params += <<-EOS
 		</select>
-		</label>
 
     <hr />
     
-		<label><span>Homeroom</span>
+		<label>Homeroom</label>
 		<select size='1' id="homeroom_id" name="homeroom_id">
 EOS
 
@@ -45,13 +47,9 @@ EOS
 		
 params += <<-EOS
 		</select>
-		</label>
-
-		<label><span>&nbsp;</span>
-		 OR
-		</label>
-
-		<label><span>Student(s)</span>
+		<br />
+		    
+		<label>OR<br /><br />Student(s)</label>
 		<select multiple size="7" id="student_id" name="student_id">
 EOS
 
@@ -62,11 +60,12 @@ EOS
 				
 params += <<-EOS
 		</select>
-		</label>
 
 		<div class="spacer">
 			<input class="btn positive" name="commit" type="submit" value="Run Report" />
 		</div>
+		
+		</fieldset>
 	</form>
 EOS
 
@@ -199,7 +198,7 @@ EOS
       start_new_page unless page_count.even?
       end # instance_eval
     
-    end # each student
+#    end # each student
     # Render the document
 	  @pdf.render
 	end

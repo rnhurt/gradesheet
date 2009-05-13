@@ -37,21 +37,11 @@ class CoursesController < ApplicationController
   def new
     @course = Course.new
     @teacher = Teacher.find(current_user)
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @course }
-    end
   end
 
 
   def edit
     @course = Course.find(params[:id])
-#    @homerooms = Course.find_all_by_course_type_id(CourseType.find_all_by_name('Home Room'))
-    
-    respond_to do |format|
-    	format.html
-	  end
   end
 
 

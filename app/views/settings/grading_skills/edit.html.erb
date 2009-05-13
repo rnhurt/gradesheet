@@ -5,20 +5,22 @@
 <%= error_messages_for :skill, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
 <div class='box span-15 last'>
-<% form_for @skill do |f| %>
-	<label><span class='required'>Symbol</span>
-		<%= f.select :symbol, @valid_symbols %>
-	</label>
+  <% form_for @skill do |f| -%>
+    <fieldset>
+      <legend>Grading Skill</legend>
+      
+      <%= f.label :symbol, {}, :class => 'req' %>
+      <%= f.select :symbol, @valid_symbols %>
+      <br />
+      <%= f.label :description, {}, :class => 'req' %>
+      <%= f.text_field :description %>
 
-	<label><span class='required'>Description</span>
-		<%= f.text_field :description, :id => 'skill_description' %>
-	</label>
-
-	<div class='spacer span-15 last'>
-		<%= submit_tag 'Save', :class => 'btn positive' %>
-		<%= link_to 'Cancel', grading_skills_path, :class => 'btn standard' %>
-	</div>
-<% end %>
+	    <div class='spacer span-15 last'>
+		    <%= submit_tag 'Save', :class => 'btn positive' %>
+		    <%= link_to 'Cancel', grading_skills_path, :class => 'btn standard' %>
+	    </div>
+    </fieldset>
+  <% end -%>
 </div>
 
 <%= set_focus_to_id 'skill_description' %>

@@ -5,14 +5,17 @@
 <%= error_messages_for "site" %>
 
 <div class='box span-13'>
-<% form_for @site do |f| %>
-	<label><span class='required'>Location Name</span>
-		<%= f.text_field :name %>
-	</label>
+  <% form_for @site do |f| %>
+    <fieldset>
+      <legend>Campus</legend>
+
+      <%= f.label :name, {}, :class => 'req' %>
+		  <%= f.text_field :name %>
 			
-	<div class="spacer">
-		<%= submit_tag 'Save', :class => 'btn positive' %>
-		<%= link_to 'Cancel', sites_path(), :class => 'btn standard' %>
-	</div>
-<% end %>
+	    <div class="spacer">
+		    <%= submit_tag 'Save', :class => 'btn positive' %>
+		    <%= link_to 'Cancel', sites_path(), :class => 'btn standard' %>
+	    </div>
+    </fieldset>
+  <% end %>
 </div>

@@ -54,22 +54,13 @@ tr.help:hover td{background-color: #009900;}
 
 
 /*** Forms ***/
-.spacer {
-  margin-left:80px; 
-  margin-bottom:10px;
-  font-size:11px;
-  color:#555555;
-  padding: 4px;
-}
-form label {display: block;margin-top: 4px;}
-form label span {
-  display:block;
-  float:left;
-  padding-right:15px;
-  width:140px;
-  text-align:right;
-  font-weight:bold;
-}
+.spacer {padding-left:80px; color:#555555; padding-top: 20px;}
+fieldset {border:none; margin:0px;}
+fieldset legend {text-align: center; font-size:2em;}
+fieldset label {display:block;margin-top:4px;float:left; width:125px;text-align:right;padding-right:15px;clear:right;font-weight:bold;}
+fieldset .req {background: transparent url(/images/bullet_red.png) no-repeat scroll right center;}
+fieldset input, select {margin:5px 0; }
+
 form .required {background: transparent url(/images/bullet_red.png) no-repeat scroll right center;}
 form .input {width:40%;}
 form .select {width:40%;}
@@ -77,9 +68,6 @@ form .select {width:40%;}
 .grade-error {background:#FBE3E4 none repeat scroll 0 0;border-color:#FBC2C4;color:#8A1F11;}
 .grade-grid {overflow:scroll;}
 .grade_range {border-bottom: 1px solid #999; margin:3px;}
-
-form .label {font-weight:bold;}
-form .example {font-size:smaller;}
 
 /*** Buttons ***/
 .btn {

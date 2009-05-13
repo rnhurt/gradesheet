@@ -121,7 +121,8 @@ tinyscal - a mini version of the calendar type.  useful in tight spaces.
 	font-size:8pt;
 	width:154px;
 	min-height:130px;
-	margin-right:300px;
+	margin-left:140px;
+	margin-top: 5px;
 }
 .tinyscal .calcontrol{
 	font-size:8pt;

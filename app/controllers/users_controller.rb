@@ -17,18 +17,11 @@ class UsersController < ApplicationController
   def show
 		redirect_to :action => :index
   end
-	def show
-		redirect_to :action => :index
-  end
 
 
   def new
     @user = User.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @user }
-    end
+    render :action => 'edit'
   end
 
 

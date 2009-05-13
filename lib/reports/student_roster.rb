@@ -11,7 +11,10 @@ class StudentRoster
 		params = <<-EOS
 
 	<form action="/reports/student_roster.pdf" method="get">
-		<label><span class='required'>Homeroom</span>
+	  <fieldset>
+	    <legend>Student Roster</legend>
+	    
+		<label>Homeroom</label>
 			<select name='homeroom'>
 				<option value=''>ALL</option>
 EOS
@@ -22,11 +25,11 @@ EOS
 
 		params += <<-EOS
 			</select>
-		</label>
 			
 		<div class="spacer">
 			<input class="btn positive" type="submit" value="Run Report" />
 		</div>
+		</fieldset>
 	</form>
 EOS
 	end

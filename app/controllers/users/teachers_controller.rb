@@ -21,10 +21,7 @@ class Users::TeachersController < ApplicationController
 
   def new
     @teacher = Teacher.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-    end
+    render :action => :edit
   end
 
 

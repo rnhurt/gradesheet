@@ -23,21 +23,14 @@ class AssignmentsController < ApplicationController
   def new
     @assignment = Assignment.new
     @course = Course.find(params[:course_id])
-#    @assignment.course_id = params[:course_id]
 
-    respond_to do |format|
-      format.html # new.html.erb
-    end
+    render :action => :edit
   end
 
 
   def edit
     @assignment = Assignment.find(params[:id])
 	  @course = Course.find(@assignment.course_id)
-
-    respond_to do |format|
-    	format.html
-	  end
   end
 
 

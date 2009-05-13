@@ -5,32 +5,35 @@
 <%= error_messages_for "term" %>
 
 <div class='box span-13'>
-<% form_for @term do |f| %>
-	<label><span class='required'>School Year</span>
-		<%= f.text_field :school_year %>
-	</label>
+  <% form_for @term do |f| %>
+    <fieldset>
+      <legend>Grading Period</legend>
+
+      <%= f.label :school_year, {}, :class => 'req' %>
+      <%= f.text_field :school_year %>
+      <br />
 	
-	<label><span class='required'>Term Name</span>
-		<%= f.text_field :name %>
-	</label>
+      <%= f.label :name, {}, :class => 'req' %>
+  		<%= f.text_field :name %>
+      <br />
 
-	<label><span class='required'>Begin Date</span>
-		<%= f.date_select :begin_date %>
-	</label>
+      <%= f.label :begin_date, {}, :class => 'req' %>
+  		<%= f.date_select :begin_date %>
+      <br />
 
-	<label><span class='required'>End Date</span>
-		<%= f.date_select :end_date %>
-	</label>
+      <%= f.label :end_date, {}, :class => 'req' %>
+  		<%= f.date_select :end_date %>
+      <br />
 	
-	<label><span>Active?</span>
-		<%= f.check_box :active %>
-	</label>
-
-	<div class='spacer'>&nbsp;</div>
-			
-	<div class="spacer">
-		<%= submit_tag 'Save Term', :class => 'btn positive' %>
-		<%= link_to 'Cancel', terms_path(), :class => 'btn standard' %>
-	</div>
-<% end %>
+      <%= f.label :active %>
+  		<%= f.check_box :active %>
+      <br />
+	
+      <div class="spacer">
+        <%= submit_tag 'Save Term', :class => 'btn positive' %>
+        <%= link_to 'Cancel', terms_path(), :class => 'btn standard' %>
+      </div>
+    </fieldset>
+  <% end %>
 </div>
+

@@ -18,23 +18,15 @@ class Users::TeacherAssistantsController < ApplicationController
 		redirect_to :action => :index
   end
 
-
   def new
     @teacher_assistant = TeacherAssistant.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @teacher_assistant }
-    end
+    render :action => :edit
   end
 
-  # GET /teacher_assistants/1/edit
   def edit
     @teacher_assistant = TeacherAssistant.find(params[:id])
   end
 
-  # POST /teacher_assistants
-  # POST /teacher_assistants.xml
   def create
     @teacher_assistant = TeacherAssistant.new(params[:teacher_assistant])
 
@@ -50,8 +42,6 @@ class Users::TeacherAssistantsController < ApplicationController
     end
   end
 
-  # PUT /teacher_assistants/1
-  # PUT /teacher_assistants/1.xml
   def update
     @teacher_assistant = TeacherAssistant.find(params[:id])
 
@@ -67,8 +57,6 @@ class Users::TeacherAssistantsController < ApplicationController
     end
   end
 
-  # DELETE /teacher_assistants/1
-  # DELETE /teacher_assistants/1.xml
   def destroy
     @teacher_assistant = TeacherAssistant.find(params[:id])
     @teacher_assistant.destroy
