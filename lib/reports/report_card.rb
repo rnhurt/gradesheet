@@ -50,7 +50,7 @@ params += <<-EOS
 		<br />
 		    
 		<label>OR<br /><br />Student(s)</label>
-		<select multiple size="7" id="student_id" name="student_id">
+		<select multiple size="7" id="student_id" name="student_id[]">
 EOS
 
 		# List all of the students in the school
@@ -73,56 +73,65 @@ EOS
 	
 
   # Build the report as a PDF and send it to the browser.
-	def self.draw(params)	
+	def self.draw(params)
 	  # Gather the required data from the database
-	  student = Student.find(params[:student_id])
- 
+	  term = Term.find(params[:term_id])
+	  
+	  if params.key?(:student_id) then
+	    # Search for individual student(s)
+  	  students = Student.all(:conditions => params[:student_id])
+  	else
+  	  # Process a whole homeroom
+  	  students = Student.find_all_by_homeroom(params[:homeroom_id])
+  	end
+
     # Create a new document
     @pdf = Prawn::Document.new :page_size => "LEGAL", :skip_page_creation => false
 
     # Make it so we don't have to use the 'pdf.' prefix everywhere.  :)
     @pdf.instance_eval do 
-      # Generate the table containing the students grade information
-      def make_table(headers, data)
-        table(
-          data,
-          :headers      => headers,
-          :header_color => "C0C0C0",
-          :font_size    => 7,
-          :border_style => :grid,
-          :border_width => 0.5,
-          :width        => bounds.width)
-      end
-
-      # Build the header
-      header margin_box.top_left do 
-        font "Helvetica", :size => 7
-        text "ARCHDIOCESE OF LOUISVILLE", :align => :center, :size => 11
-        text "Report Card", :align => :center, :size => 10
-        mask(:y) { text "Grade: 7S", :align => :center }
-        text "Student: #{student.full_name}", :align => :left, :size => 10
-        stroke_horizontal_rule
-
-        # Reset the column cursor positions whenever we start a new page
-		    left_cursor = cursor - HEADER_HEIGHT
-		    right_cursor = cursor - HEADER_HEIGHT
-
-      end
-      # Build the footer
-      footer margin_box.bottom_left do 
-        font "Helvetica", :size => 7
-        fill_color "555555"
-        stroke_color "555555"
-        stroke_horizontal_rule
-  
-        move_down(5)
-        mask(:y) { text "page #{page_count}", :align => :right }
-        mask(:y) { text Date.today.to_s(:long), :align => :left }
-        fill_color "000000"
-        stroke_color "000000"
-      end   
-
       # Loop through each student
+      students.each do |student|
+    
+        # Generate the table containing the students grade information
+        def make_table(headers, data)
+          table(
+            data,
+            :headers      => headers,
+            :header_color => "C0C0C0",
+            :font_size    => 7,
+            :border_style => :grid,
+            :border_width => 0.5,
+            :width        => bounds.width)
+        end
+
+        # Build the header
+        header margin_box.top_left do 
+          font "Helvetica", :size => 7
+          text "ARCHDIOCESE OF LOUISVILLE", :align => :center, :size => 11
+          text "Report Card", :align => :center, :size => 10
+          mask(:y) { text "Grade: 7S", :align => :center }
+          text "Student: #{student.full_name}", :align => :left, :size => 10
+          stroke_horizontal_rule
+
+          # Reset the column cursor positions whenever we start a new page
+		      left_cursor = cursor - HEADER_HEIGHT
+		      right_cursor = cursor - HEADER_HEIGHT
+
+        end
+        # Build the footer
+        footer margin_box.bottom_left do 
+          font "Helvetica", :size => 7
+          fill_color "555555"
+          stroke_color "555555"
+          stroke_horizontal_rule
+    
+          move_down(5)
+          mask(:y) { text "page #{page_count}", :align => :right }
+          mask(:y) { text Date.today.to_s(:long), :align => :left }
+          fill_color "000000"
+          stroke_color "000000"
+        end   
 
         # Print the grading keys
         # FIXME: There is probably a more "Ruby" way to do this...
@@ -136,6 +145,7 @@ EOS
         
         left_cursor = nil
         right_cursor = nil
+        student_page_count = 0
         
     	  # Print the grades for each class
     	  student.courses.each_with_index do |course, index|
@@ -190,15 +200,17 @@ EOS
           end
           move_down(BUFFER_SIZE)
           right_cursor = cursor
-            	
-      end	# each course
+          
+        end	# each course
 
-      # Always print an even number of pages.  This prevents the start of one
-      # report from printing on the back of the previous report.
-      start_new_page unless page_count.even?
-      end # instance_eval
+      # Always print an even number of pages for a student.  This prevents the
+      # start of one report from printing on the back of the previous report.
+      start_new_page unless student_page_count.even?
+      
+      end # each student
+    end # instance_eval
     
-#    end # each student
+    
     # Render the document
 	  @pdf.render
 	end
