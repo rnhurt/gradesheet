@@ -7,26 +7,23 @@
 
 <div class='box span-12 last'>
   <% form_for @user_session, :url => user_session_path do |f| %>
-		<div class='spacer'>
-		  <%= content_tag( :h1, "Login" ) %>
-		</div>
-
-		<label><span class='required'>Login ID</span>
-			<%= f.text_field :login %>
-		</label>
-
-		<label><span class='required'>Password</span>
-			<%= f.password_field :password %>
-		</label>
-		
-		<label><span>Remember Me?</span>
-			<%= f.check_box :remember_me %>
-		</label>
-
-		<div class='spacer'>
-			<%= f.submit 'Login', :class=> 'btn positive' %>
-			<%= link_to 'Cancel', '/', :class => 'btn standard' %>
-		</div>
+    <fieldset>
+      <%= content_tag :legend, 'Login' %>
+      
+      <%= f.label :login, {}, :class => 'req' %>
+			<%= f.text_field :login, :tabindex => 1 %>
+      <br />
+      <%= f.label :password, {}, :class => 'req' %>
+			<%= f.password_field :password, :tabindex => 2 %>
+      <br />
+      <%= f.label :remember_me, 'Remember me?' %>
+			<%= f.check_box :remember_me, :tabindex => 3 %>
+      <br />
+		  <div class='spacer'>
+			  <%= f.submit 'Login', :class=> 'btn positive' %>
+			  <%= link_to 'Cancel', '/', :class => 'btn standard' %>
+		  </div>
+		</fieldset>
   <% end %>
 </div>
 
