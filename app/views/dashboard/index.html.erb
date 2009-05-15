@@ -18,13 +18,31 @@ Please, take a look around and push all the buttons.  You can't hurt anything he
 If you find something interesting, please <a href='mailto:gradesheet@kangaroobox.com'>let us know about it</a>.
 </div>
 
-<h3>Latest News - Mar. 23, 2009</h3>
+<h3>Go <a href="#auth">here</a> for details on logging into the system.</h3>
+
+<h3>Latest News - May 15, 2009</h3>
 <ul>
-  <li>The authentication system is now active.  Now that you have to log in as a real 
+  <li>Most of the changes have been in the <%= link_to "Settings", settings_path %> section
+  so if your not logged in as Admin then you probably wont notice many changes.</li>
+  <li><%= link_to "Grading Scales", grading_scales_path %> are now in place and editable.  They are not used everywhere
+  and don't change calculated grades yet, but they will soon.</li>
+  <li>You can now <%= link_to "import data", imports_path %> into the system.  Just format the file according
+  to the on-screen instructions and hit the go button.  It will let you know if 
+  there are problems with the file and won't import the data until everything is
+  perfect.</li>
+  <li>The <%= link_to "Report Card", reports_path %> has gone through some major updates.  While the content of the report
+  cards is not yet correct (its just demo data) it does print the correct course
+  information for a student.  It should also display properly formated columns and
+  not split course data between pages.  Be aware that you can choose multiple
+  students and have their report cards all in one PDF.</li>
+</ul>
+
+<a name="auth"></a>
+<h3>March 23, 2009</h3>
+<p>The authentication system is now active.  Now that you have to log in as a real 
   user (Teacher, Admin, Student/Parent), you will find instructions on how to
   do it at the top of this page.  Give it a go and let me know how it works.  You
-  should see different menu items and classes depending on how you log in.</li>
-</ul>
+  should see different menu items and classes depending on how you log in.</p>
 
 <div class='box span-5'>
   Site Administrator
@@ -71,7 +89,7 @@ KangarooBox, LLC.
 
 <hr />
 
-<h3>News - Feb. 26, 2009</h3>
+<h3>News - February 26, 2009</h3>
 <ul>
   <li>Wow, there has been quite a bit going on this week.  Everything from the look
   and feel of the buttons to tightening down what you can delete has been touched.</li>
@@ -83,12 +101,12 @@ KangarooBox, LLC.
   to delete a course if that course has assignments.  And now you can't.  We even
   let you know that you can't remove it by disabling the button.  Cool!</li>
   <li><%= link_to 'Grading Periods', terms_path %> and <%= link_to 'Grading Scales', grading_scales_path %> 
-  are now editable.  They don't do much at the momemnt but we are working hard on 
+  are now editable.  They don't do much at the moment but we are working hard on 
   getting them integrated into the system.  They should be up and functional 
   within the next week or so.  Stay tuned!</li>
 </ul>
 
-<h3>News - Feb. 19, 2009</h3>
+<h3>News - February 19, 2009</h3>
 <ul>
   <li>The <%= link_to "Settings", settings_path %> section is getting heavy attention right
   now and we hope to be fully operational within the week.  It is already looking pretty
@@ -99,7 +117,7 @@ KangarooBox, LLC.
   So if you come back tomorrow the numbers should change.  Very cool!</li>
 </ul>
 
-<h3>News - Feb. 13, 2009</h3>
+<h3>News - February 13, 2009</h3>
 <ul>
   <li>The <%= link_to "Reports", reports_path %> page is now up and working. 
   		The "Student Roster" report shows a listing of every student in every class. 
