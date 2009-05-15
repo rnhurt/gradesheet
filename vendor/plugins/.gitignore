@@ -1,6 +1,8 @@
-# Ignore the prawn* directories, except for lib/
+# Ignore the prawn* directories...
 prawn/
 prawn-layout/
-
+# ...except for lib/*
 !prawn/lib/*
 !prawn-layout/lib/*
+# ...and vendor/*
+!prawn/vendor/*
