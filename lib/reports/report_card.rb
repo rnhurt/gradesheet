@@ -121,19 +121,29 @@ EOS
         student_page_count = 0
                   
         # Build the page header
-        header margin_box.top_left do 
-          font "Helvetica", :size => 7
-          text "ARCHDIOCESE OF LOUISVILLE", :align => :center, :size => 11
+        header margin_box.top_left do
+          # Insert the school logo
+          logo = "public/images/logo.png"
+          image logo, :at => bounds.top_left, :height => 20
+
+          # Insert the school name
+          text SITE_NAME, :align => :center, :size => 11
           text "Report Card", :align => :center, :size => 10
-          mask(:y) { text "Homeroom: #{student.homeroom}", :align => :center }
-          text "Student: #{student.full_name}", :align => :left, :size => 10
-          stroke_horizontal_rule
           
-          student_page_count += 1
+          # Insert the student information
+          mask(:y) { text "Homeroom: #{student.homeroom}", :align => :center }
+          mask(:y) { text "Term: #{term.name}", :align => :right }
+          text "Student: #{student.full_name}", :align => :left, :size => 10
+          
+          stroke_horizontal_rule    # make it look pretty        
+          student_page_count += 1   # reset the student page counter
         end
+        
         # Build the page footer
         footer margin_box.bottom_left do 
           font "Helvetica", :size => 7
+          orig_fill_color = fill_color
+          orig_stroke_color = stroke_color
           fill_color "555555"
           stroke_color "555555"
           stroke_horizontal_rule
@@ -141,8 +151,8 @@ EOS
           move_down(5)
           mask(:y) { text "page #{page_count}", :align => :right }
           mask(:y) { text Date.today.to_s(:long), :align => :left }
-          fill_color "000000"
-          stroke_color "000000"
+          fill_color orig_fill_color
+          stroke_color orig_stroke_color
         end   
 
         # Print the grading keys
@@ -237,42 +247,39 @@ EOS
 	  # Remove any duplicates
 	  scales.uniq!
       
-    @pdf.instance_eval do    
-      bounding_box [0, cursor - HEADER_HEIGHT], :width => bounds.width do
-        text "Grading Scales", :size => 10
-        stroke_horizontal_rule
+    @pdf.instance_eval do
+      pad_bottom(0) do
+        bounding_box [0, cursor - HEADER_HEIGHT], :width => bounds.width do
 
-        # Set up the text options
-  	    font "Helvetica"
-  	    text_options.update(:size => 7, :align => :left)
+          # Set up the text options
+    	    font "Helvetica"
+    	    text_options.update(:size => 7, :align => :left)
 
-        scales.each do |scale|
-          # Print the grading scale header
-          move_down GUTTER_SIZE
-          text "#{scale.name}", :size => 8
-          stroke_horizontal_rule
-          move_down 2
-            
-          # Print the grading scale details
-          scale.grade_ranges.each_with_index do |range, index|
-            if index.even?
-              mask(:y) {
-                span(bounds.width/2 - GUTTER_SIZE, :position => :left) do
-                  text "  #{range.grade} - #{range.description} (#{range.min_score}% and above)"            
+          scales.each do |scale|
+            # Print the grading scale header
+            text "#{scale.name}", :size => 8
+            stroke_horizontal_rule
+            move_down 2
+
+            # Print the grading scale details
+            scale.grade_ranges.each_with_index do |range, index|
+              if index.even?
+                mask(:y) {
+                  span(bounds.width/2 - GUTTER_SIZE, :position => :left) do
+                    text "  #{range.grade} - #{range.description} (#{range.min_score}% and above)"            
+                  end
+                }
+              else
+                span((bounds.width/2) - GUTTER_SIZE, :position => :right) do
+                  text "  #{range.grade} - #{range.description} (#{range.min_score}% and above)"
                 end
-              }
-            else
-              span((bounds.width/2) - GUTTER_SIZE, :position => :right) do
-                text "  #{range.grade} - #{range.description} (#{range.min_score}% and above)"
               end
-            end
-          end
-          
-          move_down GUTTER_SIZE + 10
-        end
-      end
+            end # grade_range.each
 
-      move_down GUTTER_SIZE
+            move_down GUTTER_SIZE + 20
+          end
+        end # bounding_box
+      end # pad_bottom
 		end # instance_eval
 
 		
