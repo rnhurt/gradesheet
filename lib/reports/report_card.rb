@@ -123,7 +123,7 @@ EOS
         # Build the page header
         header margin_box.top_left do
           # Insert the school logo
-          logo = "public/images/logo.png"
+          logo = "#{RAILS_ROOT}/public/images/logo.png"
           image logo, :at => bounds.top_left, :height => 20
 
           # Insert the school name
