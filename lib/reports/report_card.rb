@@ -127,7 +127,7 @@ EOS
           image logo, :at => bounds.top_left, :height => 20
 
           # Insert the school name
-          text SITE_NAME, :align => :center, :size => 11
+          text StaticData.site_name, :align => :center, :size => 11
           text "Report Card", :align => :center, :size => 10
           
           # Insert the student information
