@@ -22,7 +22,7 @@ private
                 ['', 'teacher_assistants'], 
               ['Courses', 'courses'], 
               ['Assignments', 'assignments'], 
-              ['Grades', 'gradations'], 
+              ['Evaluations', 'gradations'], 
               ['Reports', 'reports'],
               ['Site Settings', 'settings'],
                 ['', 'assignment_categories'],
@@ -39,7 +39,7 @@ private
               ['Home', 'dashboard'],
               ['Courses', 'courses'], 
               ['Assignments', 'assignments'], 
-              ['Grades', 'gradations'], 
+              ['Evaluations', 'gradations'], 
               ['Reports', 'reports']]
         when 'student'
           controller.session[:authorize] = [

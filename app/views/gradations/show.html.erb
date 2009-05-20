@@ -10,8 +10,7 @@ ul.subsection_tabs {
 	margin:0 0 5px 0;
 	padding:0;
 	clear:both;
-	border-bottom:1px solid #ccc;
-	height:20px;
+	height:15px;
 	clear:both;
 }
 
@@ -22,20 +21,25 @@ ul.subsection_tabs li.tab {
 }
 
 ul.subsection_tabs li.tab a {
-	display:block;
 	height:20px;
-	padding:0 6px 0 6px;
+	padding:4px 20px;
 	background-color:#fff;
 	color:#666;
 	width:80px;
 }
 
 ul.subsection_tabs li.tab a:hover {
-	color:#666;
+	color:#333;
 }
 
 ul.subsection_tabs li.tab a.active {
-	background-color:#ddd;
+	background-color:#C3D9FF;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-webkit-border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
 }
 
 ul.subsection_tabs li.source_code {
@@ -45,12 +49,14 @@ ul.subsection_tabs li.source_code {
 
 <!-- example 1 -->  
 <ul id="tabs_example_one" class="subsection_tabs">  
-  <li class="tab"><a href="#grades">Grades</a></li>  
+  <li class="tab"><a href="#assignments">Assignments</a></li>  
   <li class="tab"><a href="#skills">Skills</a></li>  
+  <li class="tab"><a href="#comments">Comments</a></li>  
 </ul>
 
-<div id="grades"><%= render :partial => "grades" %></div>
+<div id="assignments"><%= render :partial => "grades" %></div>
 <div id="skills"><%= render :partial => "skills" %></div>
+<div id="comments"><%= render :partial => "skills" %></div>
 
 <% javascript_tag do %>
   new Control.Tabs('tabs_example_one');  
