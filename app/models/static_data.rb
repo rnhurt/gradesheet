@@ -3,7 +3,7 @@
 # it to the database as needed.
 class StaticData < ActiveRecord::Base
   # Rename the database table
-  def self.table_name() 'staticdata' end
+  def self.table_name() 'static_data' end
 
   # SITE_NAME  
   def self.site_name

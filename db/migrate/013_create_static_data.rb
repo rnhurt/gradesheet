@@ -1,6 +1,6 @@
 class CreateStaticData < ActiveRecord::Migration
   def self.up
-    create_table :staticdata do |t|
+    create_table :static_data do |t|
       t.string  :name
       t.string  :value
 
@@ -9,6 +9,6 @@ class CreateStaticData < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :staticdata
+    drop_table :static_data
   end
 end

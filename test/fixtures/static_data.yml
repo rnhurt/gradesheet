@@ -1,0 +1,8 @@
+site_name:
+  name: SITE_NAME
+  value: Gradesheet
+
+tag_line:
+  name: TAG_LINE
+  value: The Best in Online Grading!
+
