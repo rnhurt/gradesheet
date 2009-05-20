@@ -5,6 +5,7 @@ class GradingScaleTest < ActiveSupport::TestCase
 	
 	def setup
     @scale = GradingScale.first
+    assert @scale.valid?, 'The initial scale is valid'
 	end
 
 	def teardown

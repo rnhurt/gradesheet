@@ -5,6 +5,7 @@ class TeacherTest < ActiveSupport::TestCase
 	
 	def setup
     @teacher = Teacher.first
+    assert @teacher.valid?, 'The initial teacher is valid'
 	end
 
 	def teardown
