@@ -4,7 +4,7 @@
 <html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
 <head>
   <meta http-equiv='content-type' content='text/html;charset=UTF-8' />
-  <title><%= SITE_NAME %> - <%= controller.controller_name.humanize %></title>
+  <title><%= StaticData.site_name %> - <%= controller.controller_name.humanize %></title>
   <%= stylesheet_link_tag 'screen' -%>
   <%= stylesheet_link_tag 'print', :media => 'print' -%>
 	<!--[if IE]><%= stylesheet_link_tag 'ie' -%><![endif]-->
@@ -35,8 +35,8 @@
 		<div class='span-2'><img class='top' src='/images/logo.png' width='60px' height='60px'></div>
 		
 		<div class='span-5'>
-			<span class='title last'><%= SITE_NAME %></span>
-			<span class='tagline column span-6'><%= TAG_LINE %></span>
+			<span class='title last'><%= StaticData.site_name %></span>
+			<span class='tagline column span-6'><%= StaticData.tag_line %></span>
 		</div>
 		
     <div id='account-info' class='span-7 push-8 last'>
