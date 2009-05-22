@@ -1,11 +1,11 @@
-class CreateGradeRanges < ActiveRecord::Migration
+class CreateScaleRanges < ActiveRecord::Migration
   def self.up
-    create_table :grade_ranges do |t|
+    create_table :scale_ranges do |t|
       t.integer :grading_scale_id
       t.string  :description
       t.float   :max_score
       t.float   :min_score
-      t.string  :grade
+      t.string  :letter_grade
       t.integer :position
       
       t.timestamps
@@ -13,6 +13,6 @@ class CreateGradeRanges < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :grade_ranges
+    drop_table :scale_ranges
   end
 end    

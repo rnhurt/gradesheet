@@ -7,7 +7,7 @@
 <div class='box span-15 last'>
   <% form_for @scale do |f| %>
     <fieldset>
-      <legend>Grading Skills</legend>
+      <legend>Grading Scales</legend>
 
       <%= f.label :name, {}, :class => 'req' %>
       <%= f.text_field :name %>
@@ -15,12 +15,12 @@
       
       <label>
         <%= link_to_function "Add a range", :class => 'btn standard' do |page|
-          page.insert_html :bottom, :ranges, :partial => 'grade_range', :object => GradeRange.new
+          page.insert_html :bottom, :ranges, :partial => 'scale_range', :object => ScaleRange.new
         end %>
       </label>
 
       <div id='ranges' class='prepend-2 span-13 last'>
-        <%= render :partial => 'grade_range', :collection => @scale.grade_ranges %>
+        <%= render :partial => 'scale_range', :collection => @scale.scale_ranges %>
       </div>
 
 	    <div class='spacer span-15 last'>

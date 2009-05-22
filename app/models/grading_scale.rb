@@ -4,28 +4,28 @@ class GradingScale < ActiveRecord::Base
   after_update  :save_ranges
   
 	has_many	:courses
-	has_many  :grade_ranges, :dependent => :destroy
+	has_many  :scale_ranges, :dependent => :destroy
 	
 	validates_length_of		  :name, :within => 1..20
 	validates_uniqueness_of :name, :case_sensitive => false
-	validates_associated    :grade_ranges
+	validates_associated    :scale_ranges
 
   named_scope :active, :conditions => { :active => true }
 
 
   def new_range_attributes=(range_attributes)
     range_attributes.each do |attributes|
-      grade_ranges.build(attributes)
+      scale_ranges.build(attributes)
     end
   end
   
   def existing_range_attributes=(range_attributes)
-    grade_ranges.reject(&:new_record?).each do |range|
+    scale_ranges.reject(&:new_record?).each do |range|
       attributes = range_attributes[range.id.to_s]
       if attributes
         range.attributes = attributes
       else
-        grade_ranges.delete(range)
+        scale_ranges.delete(range)
       end
     end
   end
@@ -34,7 +34,7 @@ class GradingScale < ActiveRecord::Base
 private		
 
   def save_ranges
-    grade_ranges.each do |range|
+    scale_ranges.each do |range|
         range.save(false)
     end
   end

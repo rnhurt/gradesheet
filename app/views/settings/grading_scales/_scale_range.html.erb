@@ -1,0 +1,12 @@
+<% fields_for_range(scale_range) do |ff| %>
+  <div class='scale_range span-12 last'>
+    Above <%= ff.text_field :min_score, :size => '3' %>%
+    is a <%= ff.text_field :letter_grade, :size => '3' %>
+
+    <%= ff.text_area :description, :size => '20x2' %>
+
+    <%= link_to_function "remove", "$(this).up('.scale_range').remove()", :class => 'btn standard' %>
+  </div>
+<% end %>
+
+

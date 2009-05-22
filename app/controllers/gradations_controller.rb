@@ -24,12 +24,10 @@ class GradationsController < ApplicationController
 #    end
   end
 
-
+	# Store the grade for a single student/assignment combination.  We are expecting
+	# an AJAX call with the format below:
+  #     "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"
   def update_grade
-  	# Store the grade for a single student/assignment combination.  We are expecting
-  	# an AJAX call with the format below:
-    #     "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"
-
   	# Find or create a new grade for this student/assignment
 		@gradation = Gradation.find_or_create_by_student_id_and_assignment_id(
 									params[:student], params[:assignment], :include => [:students, :assignments])

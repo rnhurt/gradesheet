@@ -3,28 +3,18 @@ class Settings::GradingScalesController < SettingsController
 
   def index
     @scales = GradingScale.find(:all)
-
-    respond_to do |format|
-      format.html # index.html.erb
-    end
   end
 
   def show
     @scale = GradingScale.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-    end
   end
 
 
   def new
     @scale = GradingScale.new
-    5.times{ @scale.grade_ranges.build }  # Create a couple of grade ranges as a default
+    5.times{ @scale.scale_ranges.build }  # Create a couple of grade ranges as a default
 
-    respond_to do |format|
-      format.html { render :action => :edit }
-    end
+    render :action => :edit
   end
 
 
@@ -40,12 +30,11 @@ class Settings::GradingScalesController < SettingsController
       flash[:notice] = "Grading scale '#{@scale.name}' was successfully created."
       redirect_to :action => :index
     else
-      render :action => 'new'
+      render :action => :edit
     end
   end
 
   def update
-# debugger
     params[:grading_scale][:existing_range_attributes] ||= {}
     @scale = GradingScale.find(params[:id])
 
@@ -53,7 +42,7 @@ class Settings::GradingScalesController < SettingsController
       flash[:notice] = "Grading scale '#{@scale.name}' was successfully updated."
       redirect_to :action => :index
     else
-      render :action => 'edit'
+      render :action => :edit
     end
   end
 
