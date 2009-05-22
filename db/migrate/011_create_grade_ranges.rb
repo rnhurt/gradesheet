@@ -6,7 +6,6 @@ class CreateGradeRanges < ActiveRecord::Migration
       t.float   :max_score
       t.float   :min_score
       t.string  :grade
-      t.boolean :active
       t.integer :position
       
       t.timestamps
