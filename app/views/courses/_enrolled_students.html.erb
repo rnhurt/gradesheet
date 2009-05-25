@@ -14,7 +14,7 @@
 				<tr class='help'><td>Add students to this course from the list of students &nbsp;--></td><td></td></tr>
 			<% else %>
 				<% for student in students %>
-					<tr class="<%= cycle ('odd', 'even') %>" id="<%= student.id %>">
+					<tr class="<%= cycle('odd', 'even') %>" id="<%= student.id %>">
 						<%= content_tag :td, student.full_name %>
 						<td>
 							<% form_remote_tag :url => { :action => 'remove_student', :student_id => student.id },

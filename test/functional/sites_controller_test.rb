@@ -1,11 +1,25 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class SitesControllerTest < ActionController::TestCase
-#  def test_should_get_index
-#    get :index
-#    assert_response :success
-#    assert_not_nil assigns(:sites)
-#  end
+  tests Settings::SitesController
+  setup :activate_authlogic
+
+  def setup
+    UserSession.create(users(:admin))
+  end
+
+  def test_should_get_index
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:sites)
+  end
+
+  def test_teachers_should_not_get_index
+    UserSession.create(users(:teachera))
+    get :index
+    assert_response :redirect
+    assert_nil assigns(:sites)
+  end
 
 #  def test_should_get_new
 #    get :new

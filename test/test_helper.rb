@@ -1,6 +1,7 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
+require "authlogic/test_case"
 
 class Test::Unit::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method
@@ -35,4 +36,21 @@ class Test::Unit::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  module TestCase
+    # Activates authlogic so that you can use it in your tests. You should call this method in your test's setup. Ex:
+    #
+    #   setup :activate_authlogic
+    def activate_authlogic
+      Authlogic::Session::Base.controller = (@request && Authlogic::TestCase::RailsRequestAdapter.new(@request)) || controller
+    end
+    
+    # The Authlogic::TestCase::MockController object passed to Authlogic to activate it. You can access this in your test.
+    # See the module description for an example.
+    def controller
+      @controller ||= Authlogic::TestCase::MockController.new
+    end
+  end
+  
+  ::Test::Unit::TestCase.send(:include, TestCase)
+
 end
