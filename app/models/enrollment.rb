@@ -7,5 +7,5 @@ class Enrollment < ActiveRecord::Base
 	validates_existence_of	:course
 
 	validates_uniqueness_of :student_id, :scope =>  :course_id
-	
+
 end

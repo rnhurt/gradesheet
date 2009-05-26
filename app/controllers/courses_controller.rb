@@ -28,6 +28,7 @@ class CoursesController < ApplicationController
 					# Find students by "Class Of"
 					@students = Student.find_all_by_class_of(value[0])
 				end
+				
 				render :partial => "student_list"
 			}
 		end
@@ -90,7 +91,7 @@ class CoursesController < ApplicationController
   
  	# Add student(s) to a course  
   def add_student
-		@course = Course.find(params[:id]) 
+		@course = Course.find(params[:id])
 
     # Are we adding one student or an array of students?
     if params[:students]
@@ -123,10 +124,21 @@ class CoursesController < ApplicationController
  		@course = Course.find(params[:id])
  		@student = Student.find(params[:student_id])
  		@add = false
+ 		
  		if @course.students.index(@student) != nil
 	    @course.students -= [@student]
   	  @course.save
   	end
+
    	render :action => "modify", :locals => { :add => false }
   end
+  
+  # Toggle the accommodation flag on/off.
+  def toggle_accommodation
+    @enrollment = Enrollment.find(params[:id])
+    @enrollment.toggle!(:accommodation)
+    
+    render :nothing => true
+  end
+      
 end
