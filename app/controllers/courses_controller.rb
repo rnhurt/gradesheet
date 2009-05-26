@@ -80,12 +80,10 @@ class CoursesController < ApplicationController
 
 
   def destroy
-    @course = Course.find(params[:id])
-    @course.destroy
+    @course = Course.find(params[:id]).destroy
 
-    respond_to do |format|
-      format.html { redirect_to(courses_url) }
-    end
+    flash[:notice] = "Course '#{@course.name}' was successfully deleted."
+    redirect_to :action => :index
   end
 
   
