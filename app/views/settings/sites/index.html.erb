@@ -4,13 +4,17 @@
 
 <%= error_messages_for "site" %>
 
-<table>
+<table class='master'>
 	<thead>
 		<th>Name</th>
 		<th width='1'></th>		
 	</thead>
 	<tbody>
-		<tr><td colspan='0'><%= link_to "Add Campus", new_site_path(), :class => 'btn positive' %></td></tr>
+		<tr class="<%= cycle('odd', 'even')%>">
+		  <td colspan='10'>
+		    <%= link_to "Add Campus", new_site_path(), :class => 'btn positive' %>
+		  </td>
+		</tr>
 		<% for site in @sites %>
 			<tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= url_for(site) + '/edit' %>'">
 				<td><%= link_to site.name, edit_site_path(site) %></td>

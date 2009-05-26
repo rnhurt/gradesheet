@@ -4,7 +4,7 @@
 
 <%= error_messages_for "term" %>
 
-<table>
+<table class='master'>
 	<thead>
 		<th>Name</th>
 		<th>School Year</th>
@@ -14,7 +14,11 @@
 		<th width='1'></th>		
 	</thead>
 	<tbody>
-		<tr><td colspan='0'><%= link_to "Add Period", new_term_path(), :class => 'btn positive' %></td></tr>
+		<tr class="<%= cycle('odd', 'even')%>">
+		  <td colspan='0'>
+		    <%= link_to "Add Period", new_term_path(), :class => 'btn positive' %>
+		  </td>
+		</tr>
 		<% for term in @terms %>
 			<tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= url_for(term) + '/edit' %>'">
 				<td><%= link_to term.name, edit_term_path(term) %></td>

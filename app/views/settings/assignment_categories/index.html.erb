@@ -4,13 +4,17 @@
 
 <%= error_messages_for "assignment_categories" %>
 
-<table>
+<table class='master'>
 	<thead>
 		<th>Name</th>
 		<th width='1'></th>		
 	</thead>
 	<tbody>
-		<tr><td colspan='0'><%= link_to "Add Type", new_assignment_category_path(), :class => 'btn positive' %></td></tr>
+		<tr class="<%= cycle('odd', 'even') %>">
+		  <td colspan='10'>
+		    <%= link_to "Add Type", new_assignment_category_path(), :class => 'btn positive' %>
+		  </td>
+		</tr>
 		<% for type in @types %>
 			<tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= url_for(type) + '/edit' %>'">
 				<td><%= link_to type.name, edit_assignment_category_path(type) %></td>

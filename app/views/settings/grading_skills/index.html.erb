@@ -4,14 +4,18 @@
 
 <%= error_messages_for :skill, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<table>
+<table class='master'>
 	<thead>
 	  <th width='1'>Symbol</th>
 		<th>Description</th>
 		<th width='1'></th>		
 	</thead>
 	<tbody>
-		<tr><td colspan='0'><%= link_to "Add skill", new_grading_skill_path, :class => 'btn positive' %></td></tr>
+		<tr class="<%= cycle('odd', 'even')%>">
+		  <td colspan='10'>
+		    <%= link_to "Add skill", new_grading_skill_path, :class => 'btn positive' %>
+		  </td>
+		</tr>
 		<% for skill in @skills %>
 			<tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= url_for(skill) + '/edit' %>'">
 				<td><%= h skill.symbol %></td>
