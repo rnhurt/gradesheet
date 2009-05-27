@@ -262,19 +262,19 @@ EOS
             move_down 2
 
             # Print the grading scale details
-            scale.grade_ranges.each_with_index do |range, index|
+            scale.scale_ranges.each_with_index do |range, index|
               if index.even?
                 mask(:y) {
                   span(bounds.width/2 - GUTTER_SIZE, :position => :left) do
-                    text "  #{range.grade} - #{range.description} (#{range.min_score}% and above)"            
+                    text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"            
                   end
                 }
               else
                 span((bounds.width/2) - GUTTER_SIZE, :position => :right) do
-                  text "  #{range.grade} - #{range.description} (#{range.min_score}% and above)"
+                  text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
                 end
               end
-            end # grade_range.each
+            end # scale_range.each
 
             move_down GUTTER_SIZE + 20
           end
