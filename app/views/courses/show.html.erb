@@ -17,16 +17,16 @@
 		  <br />
 	    <%= f.label :grading_scale_id, {}, :class => 'req' %>
 			<%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
+	<% end %>
 	
 	    <div class="spacer">
 		    <%= button_to 'Delete Course', @course, 
-					    :method => :delete,
+					    :method   => :delete,
 					    :disabled => !@course.assignments.empty?,
-					    :class => "btn negative " + (@course.assignments.empty? ? '' : 'disabled'),
+					    :class    => "btn negative " + (@course.assignments.empty? ? '' : 'disabled'),
 					    :confirm => "Are you sure you want to delete the '#{@course.name}' course?" %>
 	    </div>
 		</fieldset>
-	<% end %>
 
 	<%= observe_form :edit_course, :url => {:action => :update} %>
 </div>

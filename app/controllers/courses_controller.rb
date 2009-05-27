@@ -28,6 +28,7 @@ class CoursesController < ApplicationController
 					# Find students by "Class Of"
 					@students = Student.find_all_by_class_of(value[0])
 				end
+				
 				render :partial => "student_list"
 			}
 		end
@@ -79,18 +80,16 @@ class CoursesController < ApplicationController
 
 
   def destroy
-    @course = Course.find(params[:id])
-    @course.destroy
+    @course = Course.find(params[:id]).destroy
 
-    respond_to do |format|
-      format.html { redirect_to(courses_url) }
-    end
+    flash[:notice] = "Course '#{@course.name}' was successfully deleted."
+    redirect_to :action => :index
   end
 
   
  	# Add student(s) to a course  
   def add_student
-		@course = Course.find(params[:id]) 
+		@course = Course.find(params[:id])
 
     # Are we adding one student or an array of students?
     if params[:students]
@@ -123,10 +122,21 @@ class CoursesController < ApplicationController
  		@course = Course.find(params[:id])
  		@student = Student.find(params[:student_id])
  		@add = false
+ 		
  		if @course.students.index(@student) != nil
 	    @course.students -= [@student]
   	  @course.save
   	end
+
    	render :action => "modify", :locals => { :add => false }
   end
+  
+  # Toggle the accommodation flag on/off.
+  def toggle_accommodation
+    @enrollment = Enrollment.find(params[:id])
+    @enrollment.toggle!(:accommodation)
+    
+    render :nothing => true
+  end
+      
 end
