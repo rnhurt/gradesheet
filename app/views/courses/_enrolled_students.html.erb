@@ -6,12 +6,12 @@
 		<thead>
 			<tr>
 				<th width='1px'>Acm?</th>
-				<th colspan='10'>Enrolled Students (<%= enrollments.size %>)</th>
+				<th colspan='0'>Enrolled Students (<%= enrollments.size %>)</th>
 			</tr>
 		</thead>
 		<tbody>
 			<% if enrollments.blank? %>
-				<tr class='help'><td colspan='10'>Add students to this course from the list of students &nbsp;--></td></tr>
+				<tr class='help'><td colspan='0'>Add students to this course from the list of students &nbsp;--></td></tr>
 			<% else %>
 				<% for enrollment in enrollments %>
 					<tr class="<%= cycle('odd', 'even') %>" id="<%= enrollment.student.id %>">
