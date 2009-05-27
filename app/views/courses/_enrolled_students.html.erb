@@ -5,17 +5,23 @@
 	<table class='master'>
 		<thead>
 			<tr>
-				<th>Enrolled Students (<%= enrollments.size %>)</th>
-				<th width='1px'></th>
-				<th width='1px'></th>
+				<th width='1px'>Acm?</th>
+				<th colspan='10'>Enrolled Students (<%= enrollments.size %>)</th>
 			</tr>
 		</thead>
 		<tbody>
 			<% if enrollments.blank? %>
-				<tr class='help'><td>Add students to this course from the list of students &nbsp;--></td><td></td></tr>
+				<tr class='help'><td colspan='10'>Add students to this course from the list of students &nbsp;--></td></tr>
 			<% else %>
 				<% for enrollment in enrollments %>
 					<tr class="<%= cycle('odd', 'even') %>" id="<%= enrollment.student.id %>">
+						<td>
+   						<%= check_box_tag enrollment.id, enrollment.id, enrollment.accommodation,
+   						      :onclick => remote_function(
+   						        :url => { :action => :toggle_accommodation, :id => enrollment.id },
+  										:loading => "Element.show('spinner')",	
+  										:complete => "Element.hide('spinner')" ) %>
+						</td>
 						<%= content_tag :td, enrollment.student.full_name %>
 						<td>
 							<% form_remote_tag :url => { :action => 'remove_student', :student_id => enrollment.student.id },
@@ -23,15 +29,8 @@
 										:confirm => "Are you sure you want to remove this '#{enrollment.student.full_name}' from this course?",
 										:loading => "Element.show('spinner')",	
 										:complete => "Element.hide('spinner')" do %>
-								<%= submit_tag 'Remove', :class => 'btn negative' %>
+								<%= submit_tag 'Remove', :class => 'smallbtn negative' %>
 							<% end %>
-						</td>
-						<td>
-   						<%= check_box_tag enrollment.id, enrollment.id, enrollment.accommodation,
-   						      :onclick => remote_function(
-   						        :url => { :action => :toggle_accommodation, :id => enrollment.id },
-  										:loading => "Element.show('spinner')",	
-  										:complete => "Element.hide('spinner')" ) %>
 						</td>
 					</tr>
 				<% end %>
