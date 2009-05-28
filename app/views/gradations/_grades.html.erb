@@ -10,11 +10,11 @@
   # and assignments in the COLUMN.  Along the way we'll also alert the user 
   # when there are missing students or assignments. %>
 <form id='grade_grid'>
-<table class='grade-grid sortable scroll'>
+<table class='master grade-grid sortable scroll'>
 	<thead>
 		<tr>
+			<th>Score</th>
 			<th>Student Name</th>
-			<th width='60'>%</th>
 			<% if assignments.length == 0 then %>
 				<th>No Assignments Found</th>			
 			<% else %>
@@ -40,8 +40,8 @@
       <% students = @gradations.students.sort_by {|a| a.last_name } %>
       <% for student in students %>
 			  <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
-				  <%= content_tag :td, student.full_name, :id => student.id %>
 				  <td class='score'>0.0</td>
+				  <%= content_tag :td, student.full_name, :id => student.id %>
 				  <% a_counter = counter + 1 %>
 			  
 				  <% for assignment in assignments %>
@@ -64,7 +64,7 @@
 								    :id			=> [:s => student.id, :a => assignment.id],
 								    :tabindex	=> a_counter,
 								    :onchange => remote_function( :url => {:action => :update_grade}, 
-                    :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
+                      :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value" ),
 								    :size		=> '10' %>				      
 				      <% else %>
 						    <%= text_field_tag 'score', '', 
@@ -72,8 +72,8 @@
 								    :name		=> 'grade',
 								    :id			=> [:s => student.id, :a => assignment.id],
 								    :tabindex	=> a_counter,
-								    :onchange => remote_function( :url => {:action => :update_grade}, 
-                    :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"),
+  							    :onchange => remote_function( :url => {:action => :update_grade}, 
+                      :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value" ),
 								    :size		=> '10' %>				      
 				      <% end %>
 				      
@@ -93,14 +93,17 @@
 </table>
 </form>
 
-
 <%# Load up the JavaScript that will compute the grades for this course %>
 <%= javascript_tag render( :partial => 'compute_grades.js') %>
 
-<script type="text/javascript">
+<% javascript_tag do %>
+  // Define the function used to calculate the letter grade
+  eval(<%= @gradations.letterGradeCalc %>);
+
   // Force a recalculation as soon as the HTML is loaded
   document.observe('dom:loaded', calculate);
 
   // Watch for changes in the form
   new Form.Observer('grade_grid', 1, calculate);
-</script>
+<% end %>
+

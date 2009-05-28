@@ -11,8 +11,9 @@ function calcGrades(row) {
   var grades;
   var score;
 
-  // Make sure this row has a place to store the average
+  // Make sure this row has a place to store the score
   final_score = row.select('td.score')[0];
+
   if (final_score) {
     // It does, get the relevant grades
     grades = row.select('input[name^=grade]');
@@ -58,22 +59,23 @@ function calcGrades(row) {
       total_score += score;
     });
 
-    // Show the result
+    // Compute the score for this assignment
     if (total_avail_points > 0) {
       var computed_score = Math.round((total_score / total_avail_points)*100);
     } else {
       var computed_score = 100 + total_score;
     }
       
+    // Display the result
     if (isNaN(parseFloat(computed_score))) {
       final_score.update( 'n/a' );
     } else {
-      final_score.update( computed_score + '%' );
+      final_score.update( calcLetterGrade(computed_score) + ' (' + computed_score + '%)' );
     }
   }
 }
 
-// Watch for keypresses on the form
+// Control the movement between fields in the form
 $('grade_grid').observe('keyup', function(event){ 
   // Move to the next field when the user presses the ENTER key
 	if (event.keyCode == Event.KEY_RETURN) {

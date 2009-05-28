@@ -22,6 +22,7 @@ class Course < ActiveRecord::Base
 	# Courses are considered 'active' only if they are in a grading term that is 'active'.
 	named_scope :active, :include => :term, :conditions	=> "terms.active = 't'"
 
+
   # Calculate a students current grade for a particular course.
   def calculate_grade(student_id)
     # Get the student record
@@ -38,6 +39,27 @@ class Course < ActiveRecord::Base
     
     return {:letter => 'A', :score => 0.78}
   end
+
+
+  # Build a JavaScript function that converts a score to a letter grade based
+  # on the grading scale of the course.
+  def letterGradeCalc
+    scale_ranges = ScaleRange.find_all_by_grading_scale_id(self.grading_scale_id, :order => 'max_score DESC')
+    
+    # Build the JavaScript function definition
+    calcLetterGrade = "function calcLetterGrade(score) {"
+    
+    # Loop through the scale ranges building the JavaScript body
+    scale_ranges.each do |scale_range|
+      calcLetterGrade += " if(score >= #{scale_range.min_score}) {return '#{scale_range.letter_grade}';} else "
+    end
+    
+    # Complete the JavaScript function
+    calcLetterGrade +=  " return ''; }"
+
+    return calcLetterGrade.to_json
+  end
+  
 
 private		
 

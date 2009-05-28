@@ -7,6 +7,7 @@ class GradationsController < ApplicationController
 	
   def show
     @gradations = Course.find(params[:id], :include => [:students, :gradations])
+    @scalerange = ScaleRange.find_all_by_grading_scale_id(@gradations.grading_scale_id)
   end
 
   def update
@@ -50,6 +51,8 @@ class GradationsController < ApplicationController
 		if !@gradation.save
 			flash[:error] = 'Gradation failed to save'
 			redirect_to :action => :show 
+		else
+		  render :nothing => true
 		end
  		
   end
