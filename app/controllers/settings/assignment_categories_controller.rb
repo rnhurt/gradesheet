@@ -20,9 +20,7 @@ class Settings::AssignmentCategoriesController < SettingsController
   def new
     @type = AssignmentCategory.new
 
-    respond_to do |format|
-      format.html { render :action => :edit }
-    end
+    render :action => :edit
   end
 
 
