@@ -6,15 +6,17 @@
 
 <table id="types" class="master">
   <thead>
+    <tr>
     <th>Type</th>
     <th></th>
+    </tr>
   </thead>
 	<tbody>
 		<% types.sort.each { |key, value| %>
 			<% object = value.to_s.camelize.singularize.constantize  %>
 			<% object_path = url_for object.new %>
 			<tr class="<%= cycle('odd', 'even') + (current_page?(:controller => object_path) ? ' current' : '') %>" 
-					onclick="location.href='<%= url_for(object_path) %>'"/>
+					onclick="location.href='<%= url_for(object_path) %>'">
 				<%= content_tag :td, link_to(key, object_path) %>
 				<td><%= button_to( 'Add', object_path + '/new', :method => :get, :class => 'btn standard sml' ) if key != 'ALL' %></td>
 			</tr>

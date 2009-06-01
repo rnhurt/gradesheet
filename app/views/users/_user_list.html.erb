@@ -16,7 +16,7 @@
   </thead>
 	<tbody>
 		<% for u in users %>
-			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for(u)+'/edit' %>'" />
+			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for(u)+'/edit' %>'">
 				<%= content_tag :td, u.login %>
 				<td width='50%'><%= link_to u.full_name, url_for(u)+'/edit' %></td>
 				<%= content_tag :td, u.email %>

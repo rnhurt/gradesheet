@@ -93,7 +93,7 @@ form .select {width:40%;}
 .sml { width: 50px }
 
 /*** Scaffold defaults ***/
-.fieldWithErrors {padding: 2px;background-color: red;display: table;}
+.fieldWithErrors {background-color:#FFA2A2; border:1px solid #FF0000}
 #errorExplanation {
   width: 500px;
   border: 2px solid red;

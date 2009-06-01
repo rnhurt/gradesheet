@@ -1,8 +1,10 @@
 <div id='course_list'>
 	<table id='courses' class='master'>
 		<thead>
-		  <th>Course <%= "(#{@courses.length})" unless @courses.blank? %></th>
-		  <th>Term</th>
+		  <tr>
+		    <th>Course <%= "(#{@courses.length})" unless @courses.blank? %></th>
+		    <th>Term</th>
+		  </tr>
 		</thead>
 		<tbody>
 			<% if current_controller?('courses') then %>
@@ -10,7 +12,7 @@
 			<% end %>
 			<% for course in @courses %>
 				<tr class="<%= cycle('even', 'odd') + (current_page?(:id => course) ? ' current' : '') %>" 
-						onclick="location.href='<%= url_for( :action => :show, :id => course.id ) %>'"/>
+						onclick="location.href='<%= url_for( :action => :show, :id => course.id ) %>'" >
 					<%= content_tag :td, link_to( course.name, :action => :show, :id => course.id ) %>
 					<%= content_tag :td, course.term.name %>
 				</tr>
