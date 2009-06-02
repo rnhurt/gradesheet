@@ -20,7 +20,22 @@ If you find something interesting, please <a href='mailto:gradesheet@kangaroobox
 
 <h3>Go <a href="#auth">here</a> for details on logging into the system.</h3>
 
-<h3>Latest News - May 15, 2009</h3>
+<h3>Latest News - June 2, 2009</h3>
+<ul>
+  <li>Fixed a bug when updating/creating a course and it would not save the
+  changes if there were any errors.</li>
+  <li>You'll notice that the "Gradations" menu item has changed names and is now
+  called "<%= link_to "Evaluations", gradations_path %>".  This is due to the 
+  fact that we are working on incorporating all the ways to evaluate a student 
+  into one menu item.  This currently includes assignments, skills, and comments.  
+  It is currently under heavy construction and all the tabs don't work yet, 
+  but they will soon.  We are looking for feedback on this feature and it would
+  be great if you could give it a try and let us know what you think.</li>
+  <li>The report card has been reworked a bit and now shows the school logo in
+  the top left hand corner.</li>
+</ul>
+
+<h3>May 15, 2009</h3>
 <ul>
   <li>Most of the changes have been in the <%= link_to "Settings", settings_path %> section
   so if your not logged in as Admin then you probably wont notice many changes.</li>
