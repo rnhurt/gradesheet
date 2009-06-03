@@ -6,7 +6,7 @@ class GradingScale < ActiveRecord::Base
 	has_many	:courses
 	has_many  :scale_ranges, :dependent => :destroy
 	
-	validates_length_of		  :name, :within => 1..20
+	validates_length_of     :name, :within => 1..20
 	validates_uniqueness_of :name, :case_sensitive => false
 	validates_associated    :scale_ranges
 
