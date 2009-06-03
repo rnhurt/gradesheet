@@ -45,7 +45,7 @@ EOS
 	  end	
 
 	  # Create a new document
-    pdf = Prawn::Document.new (:skip_page_creation => true, :page => "LETTER")
+    pdf = Prawn::Document.new(:skip_page_creation => true, :page => "LETTER")
 
 	  # Make it so we don't have to use pdf. everywhere.  :)
 	  pdf.instance_eval do

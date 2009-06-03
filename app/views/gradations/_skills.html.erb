@@ -32,7 +32,7 @@
 
       <% students = @gradations.students.sort_by {|a| a.last_name } %>
       <% for student in students %>
-			  <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>' />
+			  <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>'>
 				  <%= content_tag :td, student.full_name, :id => student.id %>
 				  <% a_counter = counter + 1 %>
 			  

@@ -15,7 +15,7 @@
 		<tr><td colspan='0'>No Assignments Found</td></tr>
 	<% else %>
 		<% for assignment in @assignments %>
-			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for( :action => :edit, :id => assignment.id ) %>'"/>
+			<tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for( :action => :edit, :id => assignment.id ) %>'">
 				<%= content_tag :td, assignment.name %>
 				<%= content_tag :td, assignment.possible_points %>
 				<%= content_tag :td, assignment.assignment_category.name %>

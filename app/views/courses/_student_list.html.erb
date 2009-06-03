@@ -17,7 +17,7 @@
 			<% else %>
 				<% students = @students.sort_by &:last_name %>
 				<% for student in students %>
-					<tr class="<%= cycle('odd', 'even') %>"/>
+					<tr class="<%= cycle('odd', 'even') %>">
 						<td colspan='2'><%= link_to_remote student.full_name, 
 											:url => { :action => 'add_student', :student_id => student.id },
 											:loading => "Element.show('spinner')",
