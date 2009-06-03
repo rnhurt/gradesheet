@@ -54,7 +54,7 @@ class ScaleRangeTest < ActiveSupport::TestCase
 
   def test_scale_range_max_score_limits
     @range.max_score = nil
-    assert !@range.valid?, "Max Score is nil"
+    assert @range.valid?, "Max Score is nil"
 
     @range.max_score = 'K'
     assert !@range.valid?, "Max Score is not a number"
@@ -74,7 +74,7 @@ class ScaleRangeTest < ActiveSupport::TestCase
   
   def test_scale_range_min_score_limits
     @range.min_score = nil
-    assert !@range.valid?, "Min Score is nil"
+    assert @range.valid?, "Min Score is nil"
 
     @range.min_score = 'K'
     assert !@range.valid?, "Min Score is not a number"
