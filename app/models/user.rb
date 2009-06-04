@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
   
   belongs_to	:site
 	has_many		:comments
-	
+  has_many    :supporting_skill_evaluations
+
 	validates_length_of			:first_name, :in => 1..20
 	validates_length_of			:last_name, :in => 1..20
 	validates_existence_of 	:site

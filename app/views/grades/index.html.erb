@@ -25,7 +25,7 @@
         <% for assignment in course.assignments %>
           <%#= h assignment.name %>
           <%#= h assignment.possible_points %>
-          <% gradation = assignment.gradations.detect {|i| i.student_id = '808948075' } %>
+          <% gradation = assignment.assignment_evaluations.detect {|i| i.student_id = '808948075' } %>
           <% if gradation %>
             <%= h gradation.points_earned -%>
           <% else %>

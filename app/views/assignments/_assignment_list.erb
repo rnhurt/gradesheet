@@ -22,8 +22,8 @@
 				<%= content_tag :td, assignment.due_date_formated %>
 				<td><%= button_to 'Delete', assignment, 
 									:method => :delete, 
-									:disabled => !assignment.gradations.empty?,
-                  :class => "btn negative " + (assignment.gradations.empty? ? '' : 'disabled'),									
+									:disabled => !assignment.assignment_evaluations.empty?,
+                  :class => "btn negative " + (assignment.assignment_evaluations.empty? ? '' : 'disabled'),
 									:confirm => "Are you sure you want to delete the '" + assignment.name + "' assignment?" %></td>
 			</tr>
 		<% end %>

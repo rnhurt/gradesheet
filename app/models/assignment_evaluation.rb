@@ -1,5 +1,6 @@
-# Contains the information on student grades.
-class Gradation < ActiveRecord::Base
+# This model contains the evaluations for each assignment, by student.  It is
+# the students "grade" for an assignment, if you will.
+class AssignmentEvaluation < ActiveRecord::Base
 	belongs_to :student
 	belongs_to :assignment
 

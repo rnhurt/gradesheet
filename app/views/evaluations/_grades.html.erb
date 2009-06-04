@@ -49,10 +49,10 @@
    				    <% found = nil %>
 
 				      <%# does the student have a grade for this assignment? %>
-				      <% number_of_gradations = student.gradations.count %>
+				      <% number_of_gradations = student.assignment_evaluations.count %>
 				      <% 0.upto(number_of_gradations-1) do |index| %>
-				        <% if assignment.id == student.gradations[index].assignment_id %>
-				          <% found = student.gradations[index] %>
+				        <% if assignment.id == student.assignment_evaluations[index].assignment_id %>
+				          <% found = student.assignment_evaluations[index] %>
 				          <% break %>
 				        <% end %>
 				      <% end %>

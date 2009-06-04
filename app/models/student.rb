@@ -1,9 +1,9 @@
 # Subclass of User that handles the Student users
 class Student < User
 	has_many		:enrollments
-	has_many		:gradations
+	has_many		:assignment_evaluations
 	has_many		:courses, 		:through	=> :enrollments
-	has_many		:assignments,	:through	=> :gradations
+	has_many		:assignments,	:through	=> :assignment_evaluations
 
 	validates_length_of	:homeroom, :maximum => 20
 	

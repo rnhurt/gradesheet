@@ -35,7 +35,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # We do a couple of "special" things with these routes.  It mostly has to
   # do with AJAX updating and things like that.
-  map.resources :gradations, :member => { :update_grade => :post, :update_skill => :post }
+  map.resources :evaluations, :member => { :update_grade => :post, :update_skill => :post }
   map.resources :courses, :member => { :add_student => :post, :remove_student => :delete, :toggle_accommodation => :post }
 
   # By default, we want the user to see the "dashboard" page.

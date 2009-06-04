@@ -41,7 +41,7 @@
    				    <% found = nil %>
 
 				      <%# does the student have a entry for this skill? %>
-				      <% number_of_gradations = student.gradations.count %>
+				      <% number_of_gradations = student.assignment_evaluations.count %>
 				      <% 0.upto(number_of_gradations-1) do |index| %>
 				        <%# if skill.id == student.gradations[index].skill_id %>
 				          <%# found = student.gradations[index] %>

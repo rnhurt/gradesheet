@@ -4,7 +4,7 @@ class Assignment < ActiveRecord::Base
   
   belongs_to	:course
   belongs_to	:assignment_category
-  has_many		:gradations
+  has_many		:assignment_evaluations
   
   validates_length_of				:name, :within => 1..20
   validates_numericality_of	:possible_points
@@ -32,14 +32,14 @@ class Assignment < ActiveRecord::Base
   end
   
   
-private		
+private
   
   # We don't want the user to delete an assignment without first cleaning up
   # any grades that use it.  This could cause a cascading effect wiping out
   # a whole year of student data.	
   def ensure_no_children
-  	unless self.gradations.empty?
-  		self.errors.add_to_base "You must remove all Grades before deleting."
+  	unless self.assignment_evaluations.empty?
+  		self.errors.add_to_base "You must remove all assignment evaluations before deleting."
   		raise ActiveRecord::Rollback
   	end
   end

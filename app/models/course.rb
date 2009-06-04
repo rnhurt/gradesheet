@@ -9,7 +9,8 @@ class Course < ActiveRecord::Base
 	has_many		:enrollments
 	has_many    :grading_skills
 	has_many		:students, :through => :enrollments
-	has_many		:gradations, :through => :assignments
+	has_many		:assignment_evaluations, :through => :assignments
+  has_many    :supporting_skills
 	
 	validates_existence_of :teacher, :message => "isn't a known teacher."
 	validates_existence_of :term
