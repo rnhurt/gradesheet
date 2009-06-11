@@ -1,17 +1,17 @@
 <% content_for :left do %>
 	<h3>Upcoming Events</h3>
 	<%= content_tag :div, "<span class='notice'>#{distance_of_time_in_words_to_now(Term.current[0].end_date).capitalize}</span>
-	    until the end of this grading period.", :class => 'box span-3 last' %>
+	    until the end of this grading period.", :class => 'box span-3 last' if Term.current[0] %>
 	<%= content_tag :div, "<span class='notice'>#{distance_of_time_in_words_to_now(Time.now.end_of_year).capitalize}</span>
 	    until New Year's Day.", :class => 'box span-3 last' %>
 	<%#= content_tag :li, '&lt;unknown&gt; days until the end of the school year.' %>
 	
 <% end %>
 
-<h2>Welcome to <%= StaticData.site_name %>!</h2>
+<h2>Welcome to <%= h StaticData.site_name unless StaticData.site_name.nil? %>!</h2>
 
 <div class='warning box last' style='padding: 5px;'>
-This is a pre-Beta version of the <%= StaticData.site_name %> software.  All of the data here is
+This is a pre-Beta version of the <%= h StaticData.site_name if StaticData %> software.  All of the data here is
 generated and most of it is nonsensical.  However, it is a starting point and 
 should give you enough 'things' to be able to exercise the program a little bit.
 Please, take a look around and push all the buttons.  You can't hurt anything here.

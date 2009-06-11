@@ -3,13 +3,9 @@ class CoursesController < ApplicationController
   append_before_filter :authorized?
 
   def index
-    respond_to do |format|
-      format.html
-    end
   end
 
 	def show
-		# Displays the students enrolled in each course.
     @course = Course.find(params[:id])
     @homerooms = Student.find_homerooms()
 
@@ -34,17 +30,14 @@ class CoursesController < ApplicationController
 		end
 	end	
 
-
   def new
     @course = Course.new
     @teacher = Teacher.find(current_user)
   end
 
-
   def edit
     @course = Course.find(params[:id])
   end
-
 
   def create
     @course = Course.new(params[:course])
@@ -61,7 +54,6 @@ class CoursesController < ApplicationController
       end
     end
   end
-
 
   def update
     @course = Course.find(params[:id])

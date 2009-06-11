@@ -12,7 +12,7 @@ class Student < User
 	validates_inclusion_of :class_of, 
 	            :in => from_year..to_year, 
               :message => "must be in the range of #{from_year} to #{to_year}"
-												
+
 	named_scope	:courses, :joins => :courses
 
 
@@ -21,5 +21,5 @@ class Student < User
     # FIXME: This should probably just return homerooms that are being used by 'valid' students
 		return Student.all(:select => 'homeroom', :group => 'homeroom', 
 		        :conditions => "homeroom > ''").map { |h| h.homeroom }
-	end	
+	end
 end

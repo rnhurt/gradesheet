@@ -17,7 +17,6 @@ class AssignmentEvaluation < ActiveRecord::Base
 
 
 private
-
 	# There are certain 'magic' characters that can be substituded for a number
 	# grade.  This method makes sure that the user only enters valid ones.
 	#

@@ -4,10 +4,10 @@
 
 <%= error_messages_for :course, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
-<div class='box span-12'>
+<div class='box span-14'>
 	<% form_for( @course, :url => {}, :html => {:id => 'edit_course'} ) do |f| %>
 	  <fieldset>
-	    <%= content_tag :legend, 'Edit Course' %>
+	    <%#= content_tag :legend, 'Edit Course' %>
 	    
 	    <%= f.label :name, {}, :class => 'req' %>
 			<%= f.text_field :name %>
@@ -33,36 +33,60 @@
 
 <div class='append-7 last'>&nbsp;</div>
 
-<div class='span-3'>
-	<form id='class_of_form'>
-		<%= select_tag 'class_of', options_for_select(class_range.insert(0, 'Class Of ...'), ' '), 
-				:onchange => 
-					remote_function(
-						:update => 'student_list', 
-						:url => { :action => :show }, 
-						:with => "'value=' + value + '||Class Of ' + value + '||C'",
-						:method => :get), :class=>'span-3' %>
-	</form>
-</div>
+<style>
+/* Subsection Tabs
+--------------------*/
+ul.subsection_tabs {
+	list-style:none;
+	margin:0 10px 5px;
+	padding:0;
+	clear:both;
+	height:15px;
+	clear:both;
+}
 
-<div class='span-4 append-10 last'>
-	<form id='homeroom_form'>
-		<%= collection_select :homeroom, :name, @homerooms, :to_s, :to_s, {:include_blank => 'Home Room'}, {
-				:onchange => 
-					remote_function(
-						:update => 'student_list', 
-						:url => { :action => :show }, 
-						:with => "'value=' + value + '||Home Room ' + options[selectedIndex].text + '||H'",
-						:method => :get), :class => 'span-4' }  %>
-	</form>
-</div>
+ul.subsection_tabs li.tab {
+	float:left;
+	margin-right:7px;
+	text-align:center;
+}
 
-<div id='student_list' class='span-7'>	
-	<%= render :partial => 'student_list' %>
-</div>
+ul.subsection_tabs li.tab a {
+	height:20px;
+	padding:4px 20px;
+	background-color:#eee;
+	color:#666;
+	width:80px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-webkit-border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
+}
 
-<div id='enrolled_students' class='span-7 last'>
-	<%= render :partial => 'enrolled_students' %>
-</div>
+ul.subsection_tabs li.tab a:hover {
+	color:#333;
+  background-color: #999;
+}
 
+ul.subsection_tabs li.tab a.active {
+	background-color:#C3D9FF;
+}
 
+ul.subsection_tabs li.source_code {
+	float:right;
+}
+</style>
+
+<ul id="course_tabs" class="subsection_tabs">
+  <li class="tab"><a href="#skills">Supporting Skills</a></li>
+  <li class="tab"><a href="#students">Students</a></li>
+</ul>
+
+<div id="students"><%= render :partial => "students_tab" %></div>
+<div id="skills"><%= render :partial => "skills_tab" %></div>
+
+<% javascript_tag do %>
+  new Control.Tabs('course_tabs');
+<% end -%>

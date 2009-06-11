@@ -1,4 +1,5 @@
-<% if @course then students = @course.students.sort_by &:last_name end %>
+<%# FIXME: This is completely yucky and should be pretty easy to clean up. %>
+<% students = @course.students.sort_by &:last_name if @course %>
 <% students ||= [] %>
 <% enrollments = @course.enrollments %>
 

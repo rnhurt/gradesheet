@@ -1,70 +1,66 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
-<head>
-  <meta http-equiv='content-type' content='text/html;charset=UTF-8' />
-  <title><%= StaticData.site_name %> - <%= controller.controller_name.humanize %></title>
-  <%= stylesheet_link_tag 'screen' -%>
-  <%= stylesheet_link_tag 'print', :media => 'print' -%>
-	<!--[if IE]><%= stylesheet_link_tag 'ie' -%><![endif]-->
+  <head>
+    <meta http-equiv='content-type' content='text/html;charset=UTF-8' />
+    <title><%= StaticData.site_name %> - <%= controller.controller_name.humanize %></title>
+    <%= stylesheet_link_tag 'screen' -%>
+    <%= stylesheet_link_tag 'print', :media => 'print' -%>
+    <!--[if IE]><%= stylesheet_link_tag 'ie' -%><![endif]-->
 
-  <%= stylesheet_link_tag 'menu' -%>
-  <%= stylesheet_link_tag 'local' -%>
+    <%= stylesheet_link_tag 'menu', 'tabs', 'local' -%>
+    <%= javascript_include_tag :defaults -%>
+    <%= javascript_include_tag 'livepipe', 'tabs', 'slider' -%>
+    <%= javascript_include_tag "tablekit" -%>
 
-  <%= javascript_include_tag :defaults -%>
-  <%= javascript_include_tag 'slider' -%>
-  <%= javascript_include_tag 'livepipe' -%>
-  <%= javascript_include_tag 'tabs' -%>
-  <%= javascript_include_tag "tablekit" -%>
-  
-  <script>
-    TableKit.options.rowEvenClass = 'even';
-    TableKit.options.rowOddClass = 'odd';
-  </script>
-  
-  <%= @content_for_page_header -%>
+    <script>
+      TableKit.options.rowEvenClass = 'even';
+      TableKit.options.rowOddClass = 'odd';
+    </script>
 
-</head>
+    <%= @content_for_page_header -%>
 
-<body>
+  </head>
 
-<div class='container showgri'>
-	<div id='header' class='span-25 last'>
+  <body>
 
-		<div class='span-2'><img class='top' src='/images/logo.png' width='60px' height='60px'></div>
-		
-		<div class='span-5'>
-			<span class='title last'><%= StaticData.site_name %></span>
-			<span class='tagline column span-6'><%= StaticData.tag_line %></span>
-		</div>
-		
-    <div id='account-info' class='span-7 push-8 last'>
-		  <% if !current_user %>
-		    <span>Welcome</span> | 
-		    <span><%= link_to " log in ", new_user_session_path %></span>
-		  <% else %>
-  			<span><%= current_user.full_name %></span> |
-  			<span><%= link_to 'My Account', edit_account_path() %></span> |
-		    <span><%= link_to "log out", user_session_path, :method => :delete,
-		          :confirm => 'Are you sure you want to logout?' %></span>
-  		<% end %>
-		</div>
+    <div class='container showgri'>
+      <div id='header' class='span-25 last'>
 
-		<div class='span-23'>
-			<%= menu_builder(request.path_parameters['controller'].split('/')[0]) %>
-		</div>
-	</div>
+        <div class='span-2'><img class='top' src='/images/logo.png' width='60px' height='60px'></div>
 
-	<div id='flash' class='span-24 last'><%= show_flash %></div>
+        <div class='span-5'>
+          <span class='title last'><%= StaticData.site_name %></span>
+          <span class='tagline column span-6'><%= StaticData.tag_line %></span>
+        </div>
 
-	<div class='span-4 colborder'><%= yield :left  %></div>
-  <div class='span-19 last'><%= yield  %></div>
+        <div id='account-info' class='span-7 push-8 last'>
+          <% if !current_user %>
+            <span>Welcome</span> |
+            <span><%= link_to " log in ", new_user_session_path %></span>
+          <% else %>
+            <span><%= current_user.full_name %></span> |
+            <span><%= link_to 'My Account', edit_account_path() %></span> |
+            <span><%= link_to "log out", user_session_path, :method => :delete,
+              :confirm => 'Are you sure you want to logout?' %></span>
+          <% end %>
+        </div>
 
-	<div class='span-24 last' id='footer'>
-		&copy; 2005 - 2009 <a href='http://www.kangaroobox.com'>KangarooBox</a>, LLC.  All rights reserved.
-	</div>
-</div>
+        <div class='span-23'>
+          <%= menu_builder(request.path_parameters['controller'].split('/')[0]) %>
+        </div>
+      </div>
 
-</body>
+      <div id='flash' class='span-24 last'><%= show_flash %></div>
+
+      <div class='span-4 colborder'><%= yield :left  %></div>
+      <div class='span-19 last'><%= yield  %></div>
+
+      <div class='span-24 last' id='footer'>
+        &copy; 2005 - 2009 <a href='http://www.kangaroobox.com'>KangarooBox</a>, LLC.  All rights reserved.
+      </div>
+    </div>
+
+  </body>
 </html>

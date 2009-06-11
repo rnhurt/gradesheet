@@ -1,9 +1,30 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 one:
-  course_id: 1
-  description: MyString
+  supporting_skill_category: langart
+  description: Recalls details of story
+  active: true
 
 two:
-  course_id: 1
-  description: MyString
+  supporting_skill_category: langart
+  description: Speaks clearly and audibly
+  active: true
+
+three:
+  supporting_skill_category: math
+  description: Counts by rote
+  active: true
+
+four:
+  supporting_skill_category: math
+  description: Counts objects
+  active: false
+
+five:
+  supporting_skill_category: math
+  description: Measures with nonstandard units
+  active: true
+
+six:
+  supporting_skill_category: art
+  description: Behaviour
+  active: true
+

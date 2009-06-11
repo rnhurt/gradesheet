@@ -2,8 +2,9 @@ class CreateSupportingSkillCodes < ActiveRecord::Migration
   def self.up
     create_table :supporting_skill_codes do |t|
       t.integer :supporting_skill_id
-      t.string :code
-      t.string :description
+      t.string  :code
+      t.string  :description
+      t.boolean :active
 
       t.timestamps
     end
