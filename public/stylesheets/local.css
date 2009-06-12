@@ -11,9 +11,9 @@ body {background: #FFF url("/images/header-bg.gif") top left repeat-x;}
   -moz-border-radius-bottomright: 7px;
   -webkit-border-bottom-left-radius: 7px;
   -webkit-border-bottom-right-radius: 7px;
-	-webkit-box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
-	border-bottom-right-radius: 7px;
-	border-bottom-left-radius: 7px;
+  -webkit-box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+  border-bottom-right-radius: 7px;
+  border-bottom-left-radius: 7px;
   background-color:#EFF7FF;
   padding:4px;
   text-align: center;
@@ -28,6 +28,7 @@ body {background: #FFF url("/images/header-bg.gif") top left repeat-x;}
 
 div.box {	border: 2px solid #D2DDFE; padding: 0.5em; -moz-border-radius: 7px; -webkit-border-radius: 7px; }
 h3 {border-bottom: 1px solid #DDD;}
+.hidden { display: none; }
 
 /*** Tables ***/
 table, td, th {vertical-align:bottom;}
@@ -76,15 +77,15 @@ form .select {width:40%;}
 .btn {
   border:1px outset #3b6e22;
   padding:0px 6px;
-/*  height:20px; */
-/*  line-height:20px;*/
+  /*  height:20px; */
+  /*  line-height:20px;*/
   font-size:12px;
   margin-right:10px;
   display:inline-block;
   text-decoration:none;
   width: 100px;
   text-align: center;
-/*  vertical-align: text-top;*/
+  /*  vertical-align: text-top;*/
 }
 .positive{ background-color:#f2f2f2;color:#333 }
 .negative{ background-color:#FBE3E4;color:#8a1f11; }

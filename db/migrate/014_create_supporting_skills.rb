@@ -5,6 +5,7 @@ class CreateSupportingSkills < ActiveRecord::Migration
       t.integer :supporting_skill_category_id
       t.string  :description
       t.boolean :active
+      t.integer :position
 
       t.timestamps
     end

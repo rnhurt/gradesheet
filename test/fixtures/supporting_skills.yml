@@ -23,8 +23,32 @@ five:
   description: Measures with nonstandard units
   active: true
 
+five1:
+  supporting_skill_category: math
+  description: Counts on fingers and toes
+  active: false
+
 six:
   supporting_skill_category: art
   description: Behaviour
   active: true
 
+seven:
+  supporting_skill_category: science
+  description: Demonstrates the ability to sort or group materials based on their similarities and differences (e.g. states of matter, types of motion, earth materials, living organisms and their environment)
+  active: true
+
+eight:
+  supporting_skill_category: ss
+  description: Recognizes basic economic concepts (e.g. scarcity, goods and services, making basic choices)
+  active: true
+
+nine:
+  supporting_skill_category: rel
+  description: Shows reverence durning liturgy/prayer
+  active: true
+
+ten:
+  supporting_skill_category: langart
+  description: Arranges pictures in sequence
+  active: true
