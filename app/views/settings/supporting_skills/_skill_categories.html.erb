@@ -1,0 +1,32 @@
+<% for category in @categories %>
+  <div class="bo span-15">
+    <% skills = SupportingSkill.find(:all, :conditions => {:supporting_skill_category_id => category.id}) %>
+    <table class="master skills">
+      <thead>
+        <tr>
+          <th>
+            <%= content_tag :span, "#{category.name} (#{skills.length})", :style=>"float:left;" %>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="<%= cycle('odd', 'even') %>"><td>
+            <span style="float:left;"><button class="btn positive">Add skill</button></span>
+          </td></tr>
+        <% for skill in skills %>
+          <tr class="<%= cycle('odd', 'even') %>"><td>
+              <%= content_tag :span, skill.description, :style => "float:left;" %>
+              <span style="float:right;"><%= image_tag 'spinner.gif', :id => "spinner-#{skill.id}", :class => "hidden" %></span>
+
+              <span style="float:right;"><button class="btn sml negative">Delete</button></span>
+
+              <span style="float:right;"><%= check_box_tag 'supporting_skill[active]', "1", skill.active,
+                :onclick => toggle_value(skill), :id => skill.id %></span>
+            </td></tr>
+
+
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<%  end %>

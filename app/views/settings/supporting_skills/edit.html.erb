@@ -1,0 +1,25 @@
+<% content_for :left do %>
+	<%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for :supporting_skills, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
+
+<div class='box span-15 last'>
+  <% form_for @skill do |f| -%>
+    <fieldset>
+      <legend>Supporting Skill</legend>
+
+      <label>Category</label>
+      <input type="text" value="<%= h @skill_category.name %>" disabled />
+      <br />
+      <%= f.label :description, {}, :class => 'req' %>
+      <%= f.text_area :description, :rows => 3, :cols => 50 %>
+
+	    <div class='spacer span-15 last'>
+		    <%= submit_tag 'Update', :class => 'btn positive' %>
+	    </div>
+    </fieldset>
+  <% end -%>
+</div>
+
+<%= set_focus_to_id 'supporting_skill_description' %>

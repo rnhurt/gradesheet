@@ -1,0 +1,63 @@
+<% content_for :left do %>
+  <%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for :skill_category, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
+
+<div class='box span-15 last'>
+  <% form_for @skill_category do |f| -%>
+    <fieldset>
+
+      <%= f.label :name, {}, :class => 'req' %>
+      <%= f.text_field :name %>
+
+      <div class='spacer last'>
+        <%= submit_tag 'Update', :class => 'btn positive' %>
+        <%= link_to 'Back', supporting_skill_categories_path, :class => 'btn standard' %>
+      </div>
+    </fieldset>
+  <% end -%>
+</div>
+
+<div class="sortable span-15 last">
+  <table class="master">
+    <thead>
+      <tr>
+        <th>Supporting Skill Description</th>
+        <th>
+          <%= button_to 'Add skill',
+            { :controller => :supporting_skills,
+            :action => :create,
+            :supporting_skill => {
+              :description => 'New Skill',
+              :supporting_skill_category_id => @skill_category,
+              :active => true}},
+            :class => "btn positive" %>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @skills then %>
+        <% for skill in @skills %>
+          <tr class="<%= cycle('odd', 'even') %>"
+              onclick="location.href='/settings/supporting_skills/<%= skill.id -%>/edit'"><td colspan="0">
+              <a href='/settings/supporting_skills/<%= skill.id -%>/edit'>
+              <%= content_tag :span, skill.description, :style => "float:left;", :class => "span-12" %></a>
+              <span style="float:right;"><%= image_tag 'spinner.gif', :id => "spinner-#{skill.id}", :class => "hidden" %></span>
+
+              <span style="float:right;">
+                <%= button_to 'Delete',
+                  { :controller => :supporting_skills, :action => :destroy, :id => skill.id },
+                  :confirm => "Are you sure you want to delete this skill?", :method => :delete,
+                  :class => "btn sml negative" %>
+              </span>
+
+              <span style="float:right;"><%= check_box_tag 'supporting_skill[active]', "1", skill.active,
+                :onclick => toggle_value(skill), :id => skill.id %></span>
+            </td></tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>

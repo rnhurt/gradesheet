@@ -1,0 +1,30 @@
+<% content_for :left do %>
+	<%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for :skill_code, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
+
+<div class='box span-15 last'>
+  <% form_for @skill_code do |f| -%>
+    <fieldset>
+      <legend>Supporting Skill Code</legend>
+
+      <%#= text_field_tag :homeroom1, {}, :maxlength => 20 %>
+      <%#= f.select :homeroom, @homerooms, :include_blank => true %>
+
+      <%= f.label :code, {}, :class => 'req' %>
+      <%= text_field_tag :code1, {}, :maxlength => 20 %>
+      <%= f.select :code, SupportingSkillCode.valid_codes %>
+      <br />
+      <%= f.label :description, {}, :class => 'req' %>
+      <%= f.text_field :description %>
+
+	    <div class='spacer span-15 last'>
+		    <%= submit_tag 'Save', :class => 'btn positive' %>
+		    <%= link_to 'Cancel', supporting_skill_codes_path, :class => 'btn standard' %>
+	    </div>
+    </fieldset>
+  <% end -%>
+</div>
+
+<%= set_focus_to_id 'skill_description' %>

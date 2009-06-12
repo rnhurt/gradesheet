@@ -1,0 +1,9 @@
+<% content_for :left do %>
+  <%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for :skill, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
+
+<div id="skill_categories">
+  <%= render :partial => 'skill_categories' %>
+</div>

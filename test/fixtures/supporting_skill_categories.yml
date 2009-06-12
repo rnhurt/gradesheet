@@ -1,0 +1,21 @@
+math:
+  name: Math
+
+science:
+  name: Science
+
+ss:
+  name: Social Studies
+
+hw:
+  name: Handwriting
+
+rel:
+  name: Religion
+
+langart:
+  name: Language Arts
+
+art:
+  name: Art
+  

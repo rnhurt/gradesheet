@@ -1,0 +1,35 @@
+<% content_for :left do %>
+  <%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for :skill_category, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
+
+<table class='master'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th width='1'></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="<%= cycle('odd', 'even')%>">
+      <td colspan='0'>
+        <%= button_to 'Add category',
+          { :controller => :supporting_skill_categories,
+          :action => :create,
+          :supporting_skill_category => {:name => 'New Category'}},
+          :class => "btn positive" %>
+      </td>
+    </tr>
+    <% for skill_category in @skill_categories %>
+      <tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= url_for(skill_category) + '/edit' %>'">
+        <td><%= link_to skill_category.name, edit_supporting_skill_category_path(skill_category) %></td>
+        <td><%= button_to 'Delete', supporting_skill_category_path(skill_category), :method => :delete,
+            :class => "btn negative ",
+            :confirm => "Are you sure you want to delete\n\n '" + skill_category.name + "'?" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

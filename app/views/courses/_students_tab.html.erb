@@ -1,0 +1,36 @@
+<div class="box span-14 last">
+  <div  style="overflow-y:scroll; height:250px;">
+    <div class='span-4'>
+      <form id='class_of_form'>
+        <%= select_tag 'class_of', options_for_select(class_range.insert(0, 'Class Of ...'), ' '),
+          :onchange =>
+          remote_function(
+          :update => 'student_list',
+          :url => { :action => :show },
+          :with => "'value=' + value + '||Class Of ' + value + '||C'",
+          :method => :get), :class=>'span-4' %>
+      </form>
+    </div>
+
+    <div class='span-4 append-1 last'>
+      <form id='homeroom_form'>
+        <%= collection_select :homeroom, :name, @homerooms, :to_s, :to_s, {:include_blank => 'Home Room'}, {
+          :onchange =>
+            remote_function(
+            :update => 'student_list',
+            :url => { :action => :show },
+            :with => "'value=' + value + '||Home Room ' + options[selectedIndex].text + '||H'",
+            :method => :get), :class => 'span-4' }  %>
+      </form>
+    </div>
+
+
+    <div id='student_list' class='span-6'>
+      <%= render :partial => 'student_list' %>
+    </div>
+
+    <div id='enrolled_students' class='span-7 last'>
+      <%= render :partial => 'enrolled_students' %>
+    </div>
+  </div>
+</div>
