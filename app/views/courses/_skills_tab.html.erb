@@ -2,7 +2,7 @@
   <ul class="checklist">
     <% for category in @skill_cats %>
       <%= content_tag :li, category.name, :class=>"category" %>
-      <% for skill in category.supporting_skills %>
+      <% for skill in category.supporting_skills.active %>
         <li>
           <label for="<%= skill.id -%>">
             <%= check_box_tag skill.id, "1", @course.supporting_skills.include?(skill),
