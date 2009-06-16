@@ -2,7 +2,7 @@ class CreateSupportingSkillCategories < ActiveRecord::Migration
   def self.up
     create_table :supporting_skill_categories do |t|
       t.string  :name
-      t.boolean :active
+      t.boolean :active, :default => true
       t.integer :position
 
       t.timestamps

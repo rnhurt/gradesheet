@@ -30,6 +30,33 @@ div.box {	border: 2px solid #D2DDFE; padding: 0.5em; -moz-border-radius: 7px; -w
 h3 {border-bottom: 1px solid #DDD;}
 .hidden { display: none; }
 
+/*** Check list ***/
+.checklist {
+  list-style: none;
+  height: 350px;
+  overflow: auto;
+}
+
+.checklist .category {
+  background-color: #D2DDFE;
+  border: 1px solid #BBBBBB;
+  font-weight: bolder;
+  margin: 5px 10px;
+  padding: 0 10px;
+}
+
+.checklist, .checklist li { margin: 0; padding: 0; }
+
+.checklist label {
+  display: block;
+  padding-left: 25px;
+  text-indent: -25px;
+  font-weight: inherit;
+}
+* html .checklist label { height: 1%; }
+
+.checklist label:hover { background: #777; color: #fff; }
+
 /*** Tables ***/
 table, td, th {vertical-align:bottom;}
 table.master {

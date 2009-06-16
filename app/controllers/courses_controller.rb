@@ -8,6 +8,7 @@ class CoursesController < ApplicationController
 	def show
     @course = Course.find(params[:id])
     @homerooms = Student.find_homerooms()
+    @skill_cats = SupportingSkillCategory.active
 
 		respond_to do |format|
 			format.html
@@ -58,6 +59,10 @@ class CoursesController < ApplicationController
   def update
     @course = Course.find(params[:id])
 
+    # Add or remove supporting_skills to this course
+    @course.supporting_skills.delete(SupportingSkill.find(params[:skill]["false"])) if params[:skill]["false"]
+    @course.supporting_skills << SupportingSkill.find(params[:skill]["true"]) if params[:skill]["true"]
+
     respond_to do |format|
       if @course.update_attributes(params[:course])
         flash[:notice] = "Course '#{@course.name}' was successfully updated."
@@ -66,6 +71,7 @@ class CoursesController < ApplicationController
       else
         flash[:error] = "Course '#{@course.name}' failed to update."
         format.html { redirect_to(:action => :show) }
+        format.js { head :unprocessable_entity }
       end
     end
   end
@@ -78,7 +84,6 @@ class CoursesController < ApplicationController
     redirect_to :action => :index
   end
 
-  
  	# Add student(s) to a course  
   def add_student
 		@course = Course.find(params[:id])

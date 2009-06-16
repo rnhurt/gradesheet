@@ -1,85 +1,16 @@
-<style>
-  .list label { font-weight: inherit; }
-  .list .section { font-weight: bold; border-bottom: 1px solid #333; padding-top: 5px;}
-</style>
-
-<div class="box span-14 last" style="overflow-y:scroll; height:250px;">
-  <form>
-
-    <div class="list">
-      <div class="section">Reading</div>
-      <div><input type="checkbox" id="1">
-        <label for="1">Shows awareness of sounds and patterns in
-          language (e.g. rhyming, blending, syllables)</label></div>
-      <div><input type="checkbox" id="2">
-        <label for="2">Identifies upper- and lowercase letters</label></div>
-      <div><input type="checkbox" id="3">
-        <label for="3">Uses a variety of strategies (uses prior knowledge,
-          predicts, draws conclusions, retells, summarizes, and infers) to
-          comprehend text</label></div>
-      <div><input type="checkbox" id=""><label for="">
-          Shows awareness of sounds and patterns in
-          language (e.g. rhyming, blending, syllables)</label></div>
-      <div><input type="checkbox" id=""><label for="">
-          Uses word structure and word meaning to make sense of text</label></div>
-      <div><input type="checkbox" id=""><label for="">
-          Reads fluently and self-corrects when the text does not make sense</label></div>
-
-
-      <div class="section">Math</div>
-      <div><input type="checkbox" id=""><label for="">
-          Identifies characteristics of geometric shapes (such as the number of
-          sides or angles)
-        </label></div>
-      <div><input type="checkbox" id=""><label for="">
-          Recognizes place value
-        </label></div>
-      <div><input type="checkbox" id=""><label for="">
-          Puts whole numbers in order</label></div>
-
-
-      <div class="section">Social Studies</div>
-      <div><input type="checkbox" id=""><label for="">
-          Understands that rules and laws protect peoples' lives and property
-        </label></div>
-
-      <div class="section">Science</div>
-      <div><input type="checkbox" id=""><label for="">
-          Makes observations of materials by using all five senses and can recognize
-          when change occurs
-        </label></div>
-      <div><input type="checkbox" id="il"><label for="il">Lorem ipsum dolor sit amet,
-          consectetuer adipiscing elit. Donec sollicitudin libero id elit.
-          Sed euismod nonummy neque. Nam dignissim urna vel urna. Nunc aliquet.
-          Sed euismod nonummy neque. Nam dignissim urna vel urna. Nunc aliquet.
-        </label></div>
-    </div>
-  </form>
-
-<%# form_for @skill do |f| %>
-<%#*<fieldset>%>
-<%#*<legend>Supporting Skills</legend>%>
-
-<%#= f.label :name, {}, :class => 'req' %>
-<%#= f.text_field :name %>
-<%#*<br />%>
-
-<%#*<label>%>
-<%#= link_to_function "Add a range", :class => 'btn standard' do |page|
-page.insert_html :bottom, :ranges, :partial => 'scale_range', :object => ScaleRange.new
-end %>
-<%#*</label>%>
-
-<%#*<div id='ranges' class='prepend-2 span-13 last'>%>
-<%#= render :partial => 'scale_range', :collection => @scale.scale_ranges %>
-<%#*</div>%>
-
-<%#*<div class='spacer span-15 last'>%>
-<%#= submit_tag 'Save', :class => 'btn positive' %>
-<%#= link_to 'Cancel', grading_scales_path, :class => 'btn standard' %>
-<%#*</div>%>
-
-<%#*</fieldset>%>
-
-<%# end %>
+<div class="box span-14 last">
+  <ul class="checklist">
+    <% for category in @skill_cats %>
+      <%= content_tag :li, category.name, :class=>"category" %>
+      <% for skill in category.supporting_skills %>
+        <li>
+          <label for="<%= skill.id -%>">
+            <%= check_box_tag skill.id, "1", @course.supporting_skills.include?(skill),
+              :onclick => toggle_skill(@course), :id => skill.id %>
+            <%= h skill.description %>
+          </label>
+        </li>
+      <% end  %>
+    <%  end %>
+  </ul>
 </div>

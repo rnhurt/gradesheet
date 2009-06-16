@@ -10,7 +10,9 @@
     <!--[if IE]><%= stylesheet_link_tag 'ie' -%><![endif]-->
 
     <%= stylesheet_link_tag 'menu', 'tabs', 'local' -%>
-    <%= javascript_include_tag :defaults -%>
+
+    <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.3/prototype.js" -%>
+    <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/scriptaculous/1.8.2/scriptaculous.js" -%>
     <%= javascript_include_tag 'livepipe', 'tabs', 'slider' -%>
     <%= javascript_include_tag "tablekit" -%>
 
@@ -28,7 +30,7 @@
     <div class='container showgri'>
       <div id='header' class='span-25 last'>
 
-        <div class='span-2'><img class='top' src='/images/logo.png' width='60px' height='60px'></div>
+        <div class='span-2'><img class='top' src='/images/logo.png' alt="logo" width='60px' height='60px' /></div>
 
         <div class='span-5'>
           <span class='title last'><%= StaticData.site_name %></span>

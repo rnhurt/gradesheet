@@ -7,20 +7,11 @@
 <table class='master'>
   <thead>
     <tr>
-      <th>Name</th>
+      <th>Category Name <%= link_to '+ Add a new category', new_supporting_skill_category_path %> </th>
       <th width='1'></th>
     </tr>
   </thead>
   <tbody>
-    <tr class="<%= cycle('odd', 'even')%>">
-      <td colspan='0'>
-        <%= button_to 'Add category',
-          { :controller => :supporting_skill_categories,
-          :action => :create,
-          :supporting_skill_category => {:name => 'New Category'}},
-          :class => "btn positive" %>
-      </td>
-    </tr>
     <% for skill_category in @skill_categories %>
       <tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= url_for(skill_category) + '/edit' %>'">
         <td><%= link_to skill_category.name, edit_supporting_skill_category_path(skill_category) %></td>
