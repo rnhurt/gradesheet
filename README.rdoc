@@ -56,6 +56,6 @@ server appliance running Kookaburra[http://www.KangarooBox.com/kookaburra]
 (the commercial version of Gradesheet).  
 
 == Legal Information
-Author:: 		Richard Hurt
+Author:: Richard Hurt
 Copyright:: Copyright (c) 2008-2009 KangarooBox, LLC
-License::		GPL-2.  See LICENSE file in this directory.
+License:: GPL-2.  See LICENSE file in this directory.
