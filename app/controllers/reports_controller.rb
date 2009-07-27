@@ -43,7 +43,8 @@ class ReportsController < ApplicationController
 					send_data @report.draw(params),
 							:filename			=> params[:id].titleize + '.pdf',
 							:type					=> 'application/pdf',
-							:disposition	=> 'inline'
+							:disposition	=> 'inline',
+              :x_sendfile   => true
 				end
 			end
 		end
