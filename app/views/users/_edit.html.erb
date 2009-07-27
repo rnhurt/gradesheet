@@ -1,50 +1,50 @@
 <div class='box span-13'>
-	<% form_for user do |f| %>
-	  <fieldset>
-	    <% if user.new_record? %>
-	  		<%= content_tag :legend, "New #{user.class.name.titleize}" %>
+  <% form_for user do |f| %>
+    <fieldset>
+      <% if user.new_record? %>
+        <%= content_tag :legend, "New #{user.class.name.titleize}" %>
       <% else %>
         <%= content_tag :legend, "Editing: #{user.full_name}" %>
-	  	<% end %>
-			
-		  <%= f.label :login, {}, :class => 'req' %>
-			<%= f.text_field :login, :id => 'user_login', :class=>'input' %>
-		
-		  <%= f.label :first_name, {}, :class => 'req' %>
- 			<%= f.text_field :first_name, :class => 'input' %>
+      <% end %>
 
-		  <%= f.label :last_name, {}, :class => 'req' %>
- 			<%= f.text_field :last_name, :class => 'input' %>
-			
-		  <%= f.label :email, {}, :class => 'req' %>
- 			<%= f.text_field :email, :class=>'input' %>
+      <%= f.label :login, {}, :class => 'req' %>
+      <%= f.text_field :login, :id => 'user_login', :class=>'input' %>
 
-		  <label><%= content_tag :span, f.object.new_record? ? 'Password' : 'Change password', 
-		                !f.object.new_record? ? nil : :class=>'required' %></label>
-		  <%= f.password_field :password, :class=>'input' %>
-		
-		  <label><%= content_tag :span, 'Confirm password', !f.object.new_record? ? nil : :class=>'required' %></label>
-		  <%= f.password_field :password_confirmation, :class=>'input' %>
+      <%= f.label :first_name, {}, :class => 'req' %>
+      <%= f.text_field :first_name, :class => 'input' %>
 
-		  <%= f.label :site, {}, :class => 'req' %>
- 			<%= collection_select user.class.name.underscore, :site_id, Site.find(:all), :id, :name, {}, :class=>'input' %>
+      <%= f.label :last_name, {}, :class => 'req' %>
+      <%= f.text_field :last_name, :class => 'input' %>
 
-			<% if user.class.name == 'Student' %>
-  		  <%= f.label :class_of, {}, :class => 'req' %>
-  		  <%# FIXME: Get the class time properly and stop hardcoding values %>
-				<%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a, {}, :class=>'input') %>
+      <%= f.label :email, {}, :class => 'req' %>
+      <%= f.text_field :email, :class=>'input' %>
 
-			  <%= f.label :homeroom %>
-				<%= text_field_tag :homeroom1, {}, :maxlength => 20 %>
-				<%= f.select :homeroom, @homerooms, :include_blank => true %>
-			<% end %>
-		
-			<div class="spacer">
-				<%= submit_tag 'Save', :class => 'btn positive' %>
-				<%= link_to 'Cancel', {:action=> 'index', :controller=> 'users/'+user.class.name.tableize}, :class => 'btn standard' %>
-			</div>
-     </fieldset>
-	<% end %>
+      <label><%= content_tag :span, f.object.new_record? ? 'Password' : 'Change password',
+        !f.object.new_record? ? nil : :class=>'required' %></label>
+      <%= f.password_field :password, :class=>'input' %>
+
+      <label><%= content_tag :span, 'Confirm password', !f.object.new_record? ? nil : :class=>'required' %></label>
+      <%= f.password_field :password_confirmation, :class=>'input' %>
+
+      <%= f.label :site, {}, :class => 'req' %>
+      <%= collection_select user.class.name.underscore, :site_id, Site.find(:all), :id, :name, {}, :class=>'input' %>
+
+      <% if user.class.name == 'Student' %>
+        <%= f.label :class_of, {}, :class => 'req' %>
+    <%# FIXME: Get the class time properly and stop hardcoding values %>
+        <%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a, {}, :class=>'input') %>
+
+        <%= f.label :homeroom %>
+        <%= text_field_tag :homeroom1, {}, :maxlength => 20 %>
+        <%= f.select :homeroom, @homerooms, :include_blank => true %>
+      <% end %>
+
+      <div class="spacer">
+        <%= submit_tag 'Save', :class => 'btn positive' %>
+        <%= link_to 'Cancel', {:action=> 'index', :controller=> 'users/'+user.class.name.tableize}, :class => 'btn standard' %>
+      </div>
+    </fieldset>
+  <% end %>
 </div>
 
 <%= set_focus_to_id 'user_login' %>

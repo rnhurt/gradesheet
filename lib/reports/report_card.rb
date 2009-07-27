@@ -9,9 +9,7 @@ class ReportCard
   GUTTER_SIZE   = 5   # The size of the buffer between elements
   
   # Build the parameter window to be shown to the user.	
-	def self.get_params()
-		# Build the parameter screen
-		
+	def self.get_params()	
 		# Allow the user to select a single student or multiple students.
 		students	= Student.find(:all)
 		homerooms	= Student.find_homerooms()

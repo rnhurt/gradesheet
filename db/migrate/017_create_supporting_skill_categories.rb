@@ -10,6 +10,6 @@ class CreateSupportingSkillCategories < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :supporting_skill_catetories
+    drop_table :supporting_skill_categories
   end
 end

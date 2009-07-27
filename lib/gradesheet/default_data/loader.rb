@@ -37,14 +37,14 @@ module Gradesheet
 
           StaticData.transaction do
             # Static Data
-            StaticData.create!(:name => 'SITE_NAME', :value => 'Your School Name')
+            StaticData.create!(:name => 'SITE_NAME', :value => 'School Name')
             StaticData.create!(:name => 'TAG_LINE', :value => 'The Best School Ever!')
 
             # Site Data
             site = Site.create!(:name => 'Main Campus', :school_id => 1)
 
             # Administrator user
-            User.create!(:type => 'Teacher', :login => 'admin', :first_name => 'Admin', :last_name => 'Admin',
+            Teacher.create!(:login => 'admin', :first_name => 'Admin', :last_name => 'Admin',
                          :site => site, :is_admin => true, :password_salt => Authlogic::Random.hex_token,
                          :password => 'admin', :password_confirmation => 'admin', :email => 'admin@example.com' )
           end
