@@ -142,7 +142,7 @@ class StudentTranscript
         end
         
         # Is this the last student?
-        if sindex < students.count - 1 then
+        if sindex < students.size - 1 then
           # No, force a page break between students
           start_new_page
         else
