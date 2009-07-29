@@ -61,3 +61,58 @@ spelling-t2:
   grading_scale: s
   course_att_id: 1
 
+spelling-t3:
+  name: Spelling
+  teacher_id: 1070
+  term: t3
+  grading_scale: s
+  course_att_id: 1
+
+math-t3:
+  name: Math
+  teacher_id: 1070
+  term: t3
+  grading_scale: s
+  course_att_id: 1
+
+spelling-t4:
+  name: Spelling
+  teacher_id: 1070
+  term: t4
+  grading_scale: s
+  course_att_id: 1
+
+math-t4:
+  name: Math
+  teacher_id: 1070
+  term: t4
+  grading_scale: s
+  course_att_id: 1
+
+spelling-t5:
+  name: Spelling
+  teacher_id: 1070
+  term: t5
+  grading_scale: s
+  course_att_id: 1
+
+math-t5:
+  name: Math
+  teacher_id: 1070
+  term: t5
+  grading_scale: s
+  course_att_id: 1
+
+spelling-t6:
+  name: Spelling
+  teacher_id: 1070
+  term: t6
+  grading_scale: s
+  course_att_id: 1
+
+math-t6:
+  name: Math
+  teacher_id: 1070
+  term: t6
+  grading_scale: s
+  course_att_id: 1

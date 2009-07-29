@@ -1,8 +1,9 @@
 # Contains the details on the grading periods and several date standardizations.
-class Term < ActiveRecord::Base
+class Term < DateRange
 	before_destroy	:ensure_no_children
 	
-	has_many :courses
+	has_many    :courses
+  belongs_to  :school_year
 #	has_many :comments
 
 	validates_length_of		:name, :within => 1..20

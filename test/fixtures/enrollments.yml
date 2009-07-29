@@ -30,3 +30,34 @@ a7:
   student: studenta
   course: spelling-t2
   
+as3:
+  student: studenta
+  course: spelling-t3
+
+am3:
+  student: studenta
+  course: math-t3
+
+as4:
+  student: studenta
+  course: spelling-t4
+
+am4:
+  student: studenta
+  course: math-t4
+
+as5:
+  student: studenta
+  course: spelling-t5
+
+am5:
+  student: studenta
+  course: math-t5
+
+as6:
+  student: studenta
+  course: spelling-t6
+
+am6:
+  student: studenta
+  course: math-t6

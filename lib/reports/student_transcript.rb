@@ -37,9 +37,14 @@ class StudentTranscript
 			params += "<option value='#{s[:id]}'>#{s[:first_name]} #{s[:last_name]}</option>"
 		end
 
-    params += <<-EOS
+    params << <<-EOS
 		</select>
+    <br />
 
+    <label for="orientation">Landscape?</label>
+      <input type="checkbox" id="orientation" name="orientation" value="landscape" />
+      <input name="orientation" type="hidden" value="portrait" />
+    
 		<div class="spacer">
 			<input class="btn positive" name="commit" type="submit" value="Run Report" />
 		</div>
@@ -47,12 +52,11 @@ class StudentTranscript
 		</fieldset>
 	</form>
     EOS
-
 	end
 
 
   # Build the report as a PDF and send it to the browser.
-	def self.draw(params)
+	def self.draw(params)    
 	  if params[:student_id].nil? then
   	  # Process a whole homeroom
   	  students = Student.find_all_by_homeroom(params[:homeroom_id])
@@ -64,7 +68,7 @@ class StudentTranscript
     # Create a new document
     @pdf = Prawn::Document.new :page_size => "LETTER",
       :skip_page_creation => false,
-      :page_layout => :landscape
+      :page_layout => params[:orientation] == "portrait" ? :portrait : :landscape
 
     # Make it so we don't have to use the 'pdf.' prefix everywhere.  :)
     @pdf.instance_eval do
@@ -87,23 +91,11 @@ class StudentTranscript
 
           # Insert the student information
           move_down(15)
-          mask(:y) { text "Social Security No. <u><pre>" + ' '*50 + "</pre></u>",
-            :align => :right, :size => 10
-          }
+#          mask(:y) { text "Social Security No. <u><pre>" + ' '*(bounds.width/16) + "</pre></u>",
+#            :align => :right, :size => 10
+#          }
           text "Student Name <u> #{student.full_name}<pre>" +
-            ' '*(50-student.full_name.length) + "</pre></u>", :align => :left, :size => 10
-
-          #          move_down(font.height)
-          #          text "Student Address <u><pre>" + ' '*75 + "</pre></u>",
-          #            :align => :left, :size => 10
-          #
-          #          move_down(font.height)
-          #          text 'Date of Birth <u><pre>' + ' '*15 + '/' + ' '*15 + '/' + ' '*15 +
-          #            '</pre></u>', :align => :left, :size => 10
-          #
-          #          move_down(font.height)
-          #          text "Program Name <u><pre>" + ' '*75 + "</pre></u>",
-          #            :align => :left, :size => 10
+            ' '*((bounds.width/16)-student.full_name.length) + "</pre></u>", :align => :left, :size => 10
 
           student_page_count += 1   # reset the student page counter
         end
@@ -111,28 +103,38 @@ class StudentTranscript
         # Set up the text options
         font "Helvetica"
         text_options.update(:size => 7, :align => :left)
+        move_down(60)
 
-        student.courses.each do |temp|
-          puts "**** #{temp.name} "
-        end
+        # Gather all the information on this students course history
+        history = []
+        student.courses.map { |c| history << {:year => c.term.school_year, :course => c} }
 
-    	  # Print the grades for each class
-   		  headers = ['School Year', 'Term', 'Course Name', 'Instructor', 'Grade']
-        data = []
-    	  student.courses.each_with_index do |course, index|
-          data << [
-            course.term.school_year,
-            course.term.name,
-            course.name,
-            course.teacher.full_name,
-            course.calculate_grade(student)[:letter]
-          ]
-        end	# each course
+        # Loop through the students history, by year
+        history.group_by { |record| record[:year] }.each do |year, detail|
+          move_down(font.height)
+          text year.name, :size => 12
 
-        bounding_box([0,bounds.height-75], :width => bounds.width) do
+          # Sort by course name...
+          detail.sort! { |a,b| a[:course].name <=> b[:course].name }
+          # ..then by term
+          detail.sort! { |a,b| a[:course].term.begin_date <=> b[:course].term.begin_date }
+          
+          # Loop through each course in this year
+          data = []
+          detail.each do |d|
+            # Build the data for the table
+            data << [
+              d[:course].term.name,
+              d[:course].name,
+              d[:course].teacher.full_name,
+              d[:course].calculate_grade(student)[:letter]
+            ]
+          end
+
+          # Print the table for this year
           table(
             data,
-            :headers            => headers,
+            :headers            => ['Term', 'Course Name', 'Instructor', 'Grade'],
             :header_color       => "0000A0",
             :header_text_color  => "FFFFFF",
             :row_colors         => :pdf_writer,
@@ -140,6 +142,7 @@ class StudentTranscript
             :border_style       => :grid,
             :width              => bounds.width)
         end
+        
         
         # Is this the last student?
         if sindex < students.size - 1 then
@@ -160,7 +163,7 @@ class StudentTranscript
 
 
     # Render the document
-	  @pdf.render
-	end
+    @pdf.render
+  end
 
 end

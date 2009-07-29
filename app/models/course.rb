@@ -4,7 +4,8 @@ class Course < ActiveRecord::Base
 
 	belongs_to	:teacher
 	belongs_to	:term
-	belongs_to	:grading_scale
+  belongs_to  :school_year
+  belongs_to  :grading_scale
 	has_many		:assignments
 	has_many		:enrollments
 	has_many		:students, :through => :enrollments
@@ -21,10 +22,12 @@ class Course < ActiveRecord::Base
 	#	validates_uniqueness_of :teacher, :scope => [:term, :course]
 
 	# Courses are considered 'active' only if they are in a grading term that is 'active'.
-	named_scope :active, :include => :term, :conditions	=> "terms.active = 't'"
-
+	named_scope :active, :include => :term, 
+    :conditions	=> ["date_ranges.active = ?", true],
+    :order => ["date_ranges.begin_date ASC, courses.name ASC"]
 
   # Calculate a students current grade for a particular course.
+  # FIXME - this is currently just a stub and needs to be filled out.
   def calculate_grade(student_id)
     # Get the student record
     student = Student.find(student_id)
