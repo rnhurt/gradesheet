@@ -40,11 +40,11 @@
         <div id='account-info' class='span-7 push-8 last'>
           <% if !current_user %>
             <span>Welcome</span> |
-            <span><%= link_to " log in ", new_user_session_path %></span>
+            <span><%= link_to " log in ", login_path %></span>
           <% else %>
             <span><%= current_user.full_name %></span> |
             <span><%= link_to 'My Account', edit_account_path() %></span> |
-            <span><%= link_to "log out", user_session_path, :method => :delete,
+            <span><%= link_to "log out", logout_path, :method => :delete,
               :confirm => 'Are you sure you want to logout?' %></span>
           <% end %>
         </div>

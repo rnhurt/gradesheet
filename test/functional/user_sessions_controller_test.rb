@@ -6,7 +6,7 @@ class UserSessionsControllerTest < ActionController::TestCase
     post :create, :user_session => { :login => "teachera", :password => "teachera" }
     assert user_session = UserSession.find
     assert_equal users(:teachera), user_session.user
-    assert_redirected_to "/dashboard"
+    assert_redirected_to root_url
   end
 
 end
