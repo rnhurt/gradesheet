@@ -24,7 +24,7 @@
 		<% for term in @terms %>
 			<tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= url_for(term) + '/edit' %>'">
 				<td><%= link_to term.name, edit_term_path(term) %></td>
-				<%= content_tag :td, term.school_year %>
+				<%= content_tag :td, term.school_year.name %>
 				<%= content_tag :td, term.begin_date %>
 				<%= content_tag :td, term.end_date %>
 				<%= content_tag :td, ( check_box_tag :active, term.active, term.active, :disabled => true ) %>

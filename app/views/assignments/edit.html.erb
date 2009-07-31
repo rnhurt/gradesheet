@@ -4,41 +4,41 @@
 <% end %>
 
 <% content_for :left do %>
-	<%= show_course_list %>
+  <%= show_course_list %>
 <% end %>
 
 <%= error_messages_for :assignment, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
 <div class='box span-13 last'>
-	<% form_for(@assignment) do |f| %>
-	  <fieldset>
-		  <% header = @assignment.name? ? "Editing: #{@assignment.name}" : "New Assignment" %>
-	    <%= content_tag :legend, header %>
-			<%= f.hidden_field :course_id, :value => @course.id %>
-		
+  <% form_for(@assignment) do |f| %>
+    <fieldset>
+      <% header = @assignment.name? ? "Editing: #{@assignment.name}" : "New Assignment" %>
+      <%= content_tag :legend, header %>
+      <%= f.hidden_field :course_id, :value => @course.id %>
+
       <%= f.label :name, {}, :class => 'req' %>
-			<%= f.text_field :name %>
+      <%= f.text_field :name %>
       <br />
       <%= f.label :possible_points, {}, :class => 'req' %>
-	    <%= f.text_field :possible_points %>
-		  <br />
+      <%= f.text_field :possible_points %>
+      <br />
       <%= f.label :assignment_category_id, 'Type', :class => 'req' %>
       <%= collection_select :assignment, :assignment_category_id, AssignmentCategory.find(:all), :id, :name %>
       <br />
-      
+
       <%= f.label :due_date %>
       <%= f.hidden_field :due_date %>
-				<span id='due_date' class='scal tinyscal'></span>
-				<%= f.hidden_field :due_date %>
-				<input id='default_due_date' type='hidden' 
-				  value='<%= @assignment.due_date? ? @assignment.due_date.to_s(:long) : DateTime.now.to_s(:long) %>' />
+      <span id='due_date' class='scal tinyscal'></span>
+      <%= f.hidden_field :due_date %>
+      <input id='default_due_date' type='hidden'
+             value='<%= @assignment.due_date? ? @assignment.due_date.to_s(:long) : DateTime.now.to_s(:long) %>' />
 
-			<div class='spacer'>
-				<%= submit_tag 'Save', :class=> 'btn positive' %>
-				<%= link_to 'Cancel', assignment_path(@course), :class => 'btn standard' %>
-			</div>
-		</fieldset>
-	<% end %>
+      <div class='spacer'>
+        <%= submit_tag 'Save', :class=> 'btn positive' %>
+        <%= link_to 'Cancel', assignment_path(@course), :class => 'btn standard' %>
+      </div>
+    </fieldset>
+  <% end %>
 </div>
 
 <%= set_focus_to_id 'assignment_name' %>

@@ -33,6 +33,7 @@ private
                 ['', 'imports'],
                 ['', 'sites'],
                 ['', 'terms'],
+                ['', 'school_years'],
               ]
     else
       case record[:type].downcase

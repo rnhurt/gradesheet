@@ -16,6 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   # logical way to group them together is to build individual controllers
   # and house them under the Settings "master" controller.
   map.namespace :settings do |s|
+    s.resources :grading_periods,       :name_prefix => nil, :controller => "school_years"
     s.resources :terms,                 :name_prefix => nil
     s.resources :events,                :name_prefix => nil
     s.resources :grading_scales,        :name_prefix => nil

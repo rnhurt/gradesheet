@@ -55,7 +55,7 @@ module ApplicationHelper
 	end
 
 
-	# Convienience method to set the focus to a specific element on the page
+	# Convenience method to set the focus to a specific element on the page
 	def set_focus_to_id(id)
 		javascript_tag("$('#{id}').focus()");
 		javascript_tag("$('#{id}').select()");

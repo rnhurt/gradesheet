@@ -1,0 +1,35 @@
+<% content_for :left do %>
+  <%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<% for year in @years %>
+
+  <h2>
+    <span style="float:right;"><%= button_to 'Delete',  { :controller => :school_years, :action => "destroy", :id => year.id },
+      :method   => :delete,
+      :class    => "btn negative",
+      :confirm => "Are you sure you want to delete the '#{year.name}' school year?" %></span>
+    <%= link_to year.name, edit_grading_period_path(year) %>
+  </h2>
+
+  <table class="master">
+    <thead>
+      <tr>
+        <th>Period Name</th>
+        <th>Begin Date</th>
+        <th>End Date</th>
+        <th>Active?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for term in year.terms %>
+        <tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= edit_grading_period_path(year) %>'">
+          <%= content_tag :td, link_to(term.name, edit_grading_period_path(year)) %>
+          <%= content_tag :td, term.begin_date %>
+          <%= content_tag :td, term.end_date %>
+          <%= content_tag :td, ( check_box_tag :active, term.active, term.active, :disabled => true ) %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

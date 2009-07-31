@@ -10,5 +10,10 @@ database.yml
 schema.rb
 doc/api
 doc/app_horo
+doc/*.png
 .DS_Store
 .svn
+config/analytics.js
+nbproject/*
+vendor/plugins/prawn-format
+vendor/plugins/validates_date_time

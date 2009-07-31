@@ -1,0 +1,20 @@
+<div class="term box">
+  <% fields_for_term(term) do |t| %>
+    <% @term = term %>
+    <%= error_messages_for :term %>
+
+    <%= t.label :name %>
+    <%= t.text_field :name %>
+    <br />
+    <%= t.label :begin_date %>
+    <%= t.date_select :begin_date, :index => term.id || "" %>
+    <br />
+    <%= t.label :end_date %>
+    <%= t.date_select :end_date, :index => term.id || "" %>
+    <br />
+    <%= t.label :active %>
+    <%= t.check_box :active %>
+    <br />
+    <%= link_to_function "remove", "this.up('.term').remove()", :style=>"float:right;" %>
+<% end %>
+</div>
