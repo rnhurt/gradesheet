@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class TermTest < ActiveSupport::TestCase
-  fixtures :terms
+  fixtures :all
   
 	def setup
     @term = Term.first

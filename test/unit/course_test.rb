@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CourseTest < ActiveSupport::TestCase
-	fixtures :courses, :terms, :users
+	fixtures :all
 	
 	def setup
     @course = Course.new :name => "Math 8H"
