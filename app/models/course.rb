@@ -27,21 +27,24 @@ class Course < ActiveRecord::Base
     :order => ["date_ranges.begin_date ASC, courses.name ASC"]
 
   # Calculate a students current grade for a particular course.
-  # FIXME - this is currently just a stub and needs to be filled out.
   def calculate_grade(student_id)
-    # Get the student record
-    student = Student.find(student_id)
-    
     # Set up some variables
-    final_grade         = 0.0
-    temp_score          = 0.0
-    total_avail_points  = 0.0
+    points_earned       = 0.0
+    possible_points     = 0.0
 
     # Loop through the assignments for computing the grade as we go
+    self.assignment_evaluations.all(:conditions => { :student_id => student_id}).each do |evaluation|
+      points_earned += evaluation.points_earned.to_f
+      possible_points += evaluation.assignment.possible_points.to_f
+            puts " **** points earned: #{evaluation.points_earned} out of #{evaluation.assignment.possible_points}"
+    end
     
-    
-    
-    return {:letter => 'A', :score => 0.78}
+    puts "  **** final! #{points_earned} out of #{possible_points} #{self.name}"
+    # Sanitize the score & grade so that we don't try to divide by zero or anything stupid
+    final_score = possible_points > 0 ? ((points_earned/possible_points)*100).round(2) : -1
+    letter_grade = final_score > 0 ? self.grading_scale.calculate_letter_grade(final_score) : 'n/a'
+
+    return {:letter => letter_grade, :score => final_score }
   end
 
 
@@ -65,7 +68,7 @@ class Course < ActiveRecord::Base
   end
   
 
-private		
+  private
 
   # Ensure that the user does not delete a record without first cleaning up
   # any records that use it.  This could cause a cascading effect, wiping out

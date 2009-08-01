@@ -127,7 +127,7 @@ class StudentTranscript
               d[:course].term.name,
               d[:course].name,
               d[:course].teacher.full_name,
-              d[:course].calculate_grade(student)[:letter]
+              d[:course].calculate_grade(student.id)[:letter]
             ]
           end
 

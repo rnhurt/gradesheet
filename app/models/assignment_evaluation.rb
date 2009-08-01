@@ -7,17 +7,31 @@ class AssignmentEvaluation < ActiveRecord::Base
 	validates_existence_of :student
 	validates_existence_of :assignment
 
-# TODO: make sure there can only be one grade per student/assignment
-#	validates_uniqueness_of :student_id, :scope => [:assignment_id]
-#	validates_uniqueness_of :assignment_id, :scope => [:student_id]
+  # TODO: make sure there can only be one grade per student/assignment
+  #	validates_uniqueness_of :student_id, :scope => [:assignment_id]
+  #	validates_uniqueness_of :assignment_id, :scope => [:student_id]
 
 	validates_numericality_of	:points_earned, :allow_nil => :true, 
-	      :greater_than_or_equal_to => 0.0,
-	      :unless => :valid_string?
+    :greater_than_or_equal_to => 0.0,
+    :unless => :valid_string?
 
-
-private
-	# There are certain 'magic' characters that can be substituded for a number
+  # Calculate the points earned based on the presence of 'magic' characters
+  def points_earned
+    case self[:points_earned]
+    when 'E'  # Excused assignment (student gets full credit)
+      points = self.assignment.possible_points
+    when 'M'  # Missing assignment (student gets no credit)
+      points = 0.0
+    else
+      points = self[:points_earned]
+    end
+    
+    return points
+  end
+  
+  private
+  
+	# There are certain 'magic' characters that can be substituted for a number
 	# grade.  This method makes sure that the user only enters valid ones.
 	#
 	# * 'E' = Excused assignment (student gets full credit)

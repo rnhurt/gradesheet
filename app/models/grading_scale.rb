@@ -12,13 +12,24 @@ class GradingScale < ActiveRecord::Base
 
   named_scope :active, :conditions => { :active => true }
 
+  # Calculate a letter grade based on the score and the grading scale
+  def calculate_letter_grade(score)
+    letter_grade = ''
+    self.scale_ranges.sort{ |a,b| a.max_score <=> b.max_score }.map {|range|
+      letter_grade = range.letter_grade if score > range.min_score
+    }
 
+    return letter_grade
+  end
+
+  # Save new grade ranges
   def new_range_attributes=(range_attributes)
     range_attributes.each do |attributes|
       scale_ranges.build(attributes)
     end
   end
-  
+
+  # Save changes to existing grade ranges
   def existing_range_attributes=(range_attributes)
     scale_ranges.reject(&:new_record?).each do |range|
       attributes = range_attributes[range.id.to_s]

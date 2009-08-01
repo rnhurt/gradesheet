@@ -1,64 +1,79 @@
 <% content_for :left do %>
-	<h3>Upcoming Events</h3>
-	<%= content_tag :div, "<span class='notice'>#{distance_of_time_in_words_to_now(Term.current[0].end_date).capitalize}</span>
-	    until the end of this grading period.", :class => 'box span-3 last' if Term.current[0] %>
-	<%= content_tag :div, "<span class='notice'>#{distance_of_time_in_words_to_now(Time.now.end_of_year).capitalize}</span>
-	    until New Year's Day.", :class => 'box span-3 last' %>
-	<%#= content_tag :li, '&lt;unknown&gt; days until the end of the school year.' %>
-	
+  <h3>Upcoming Events</h3>
+  <%= content_tag :div, "<span class='notice'>#{distance_of_time_in_words_to_now(Term.current[0].end_date).capitalize}</span>
+  until the end of this grading period.", :class => 'box span-3 last' if Term.current[0] %>
+  <%= content_tag :div, "<span class='notice'>#{distance_of_time_in_words_to_now(Time.now.end_of_year).capitalize}</span>
+  until New Year's Day.", :class => 'box span-3 last' %>
+  <%#= content_tag :li, '&lt;unknown&gt; days until the end of the school year.' %>
+
 <% end %>
 
 <h2>Welcome to <%= h StaticData.site_name unless StaticData.site_name.nil? %>!</h2>
 
-<div class='warning box last' style='padding: 5px;'>
-This is a pre-Beta version of the <%= h StaticData.site_name if StaticData %> software.  All of the data here is
-generated and most of it is nonsensical.  However, it is a starting point and 
-should give you enough 'things' to be able to exercise the program a little bit.
-Please, take a look around and push all the buttons.  You can't hurt anything here.
-If you find something interesting, please <a href='mailto:gradesheet@kangaroobox.com'>let us know about it</a>.
+<div class="warning box last" style="padding: 5px;text-align:justify;">
+  This is a demo version of the <%= h StaticData.site_name if StaticData %> software.  All of the data here is
+  generated and most of it is nonsensical.  However, it is a starting point and
+  should give you enough 'things' to be able to exercise the program a little bit.
+  Please, take a look around and push all the buttons.  You can't hurt anything here.
+  If you find something interesting, please <a href='mailto:gradesheet@kangaroobox.com'>let us know about it</a>.
 </div>
 
-<h3>Go <a href="#auth">here</a> for details on logging into the system.</h3>
+<div class="notice box last" style="padding:5px;text-align:center;font-size:larger;">
+  Go <a href="#auth">here</a> for details on logging into the system.
+</div>
 
-<h3>Latest News - June 16, 2009</h3>
+<h3>Latest News - August 1, 2009</h3>
+<ul>
+  <li>Grade calculations are now complete.  Previously the system was not
+    calculating the grades correctly and temporary values were being used.
+    Not anymore though! When you print a report or enter grades into the system,
+    the grade calculations should now be correct.</li>
+  <li>A new report is now available.  One of our users requirements was a
+    Student Transcript report that sums up the students entire academic history.
+    We thought this might be pretty easy to do and so we created it.  Not only do
+    they get the new report but so do you.  Every time we add something to the
+    system everyone gets it, for "free".  How can you lose?  :)</li>
+</ul>
+
+<h3>June 16, 2009</h3>
 <ul>
   <li>The <a href="settings/supporting_skill_categories">Supporting Skills</a> are now in place and should 
-  be available to use in the <%= link_to "Courses", courses_path %> screen.
-  changes if there were any errors.</li>
+    be available to use in the <%= link_to "Courses", courses_path %> screen.
+    changes if there were any errors.</li>
   <li>Integrating the supporting Skills functionality into the report card system
-  is in progress now and should become available to test next week.</li>
+    is in progress now and should become available to test next week.</li>
 </ul>
 
 <h3>June 2, 2009</h3>
 <ul>
   <li>Fixed a bug when updating/creating a course and it would not save the
-  changes if there were any errors.</li>
+    changes if there were any errors.</li>
   <li>You'll notice that the "Gradations" menu item has changed names and is now
-  called "<%= link_to "Evaluations", evaluations_path %>".  This is due to the
-  fact that we are working on incorporating all the ways to evaluate a student 
-  into one menu item.  This currently includes assignments, skills, and comments.  
-  It is currently under heavy construction and all the tabs don't work yet, 
-  but they will soon.  We are looking for feedback on this feature and it would
-  be great if you could give it a try and let us know what you think.</li>
+    called "<%= link_to "Evaluations", evaluations_path %>".  This is due to the
+    fact that we are working on incorporating all the ways to evaluate a student
+    into one menu item.  This currently includes assignments, skills, and comments.
+    It is currently under heavy construction and all the tabs don't work yet,
+    but they will soon.  We are looking for feedback on this feature and it would
+    be great if you could give it a try and let us know what you think.</li>
   <li>The report card has been reworked a bit and now shows the school logo in
-  the top left hand corner.</li>
+    the top left hand corner.</li>
 </ul>
 
 <h3>May 15, 2009</h3>
 <ul>
   <li>Most of the changes have been in the <%= link_to "Settings", settings_path %> section
-  so if your not logged in as Admin then you probably wont notice many changes.</li>
+    so if your not logged in as Admin then you probably wont notice many changes.</li>
   <li><%= link_to "Grading Scales", grading_scales_path %> are now in place and editable.  They are not used everywhere
-  and don't change calculated grades yet, but they will soon.</li>
+    and don't change calculated grades yet, but they will soon.</li>
   <li>You can now <%= link_to "import data", imports_path %> into the system.  Just format the file according
-  to the on-screen instructions and hit the go button.  It will let you know if 
-  there are problems with the file and won't import the data until everything is
-  perfect.</li>
+    to the on-screen instructions and hit the go button.  It will let you know if
+    there are problems with the file and won't import the data until everything is
+    perfect.</li>
   <li>The <%= link_to "Report Card", reports_path %> has gone through some major updates.  While the content of the report
-  cards is not yet correct (its just demo data) it does print the correct course
-  information for a student.  It should also display properly formated columns and
-  not split course data between pages.  Be aware that you can choose multiple
-  students and have their report cards all in one PDF.</li>
+    cards is not yet correct (its just demo data) it does print the correct course
+    information for a student.  It should also display properly formated columns and
+    not split course data between pages.  Be aware that you can choose multiple
+    students and have their report cards all in one PDF.</li>
 </ul>
 
 <a name="auth"></a>
@@ -107,8 +122,8 @@ If you find something interesting, please <a href='mailto:gradesheet@kangaroobox
 <div class='clear'>&nbsp;</div>
 
 <address>
-Thank you!<br />
-KangarooBox, LLC.
+  Thank you!<br />
+  KangarooBox, LLC.
 </address>
 
 <hr />
@@ -116,29 +131,29 @@ KangarooBox, LLC.
 <h3>News - February 26, 2009</h3>
 <ul>
   <li>Wow, there has been quite a bit going on this week.  Everything from the look
-  and feel of the buttons to tightening down what you can delete has been touched.</li>
+    and feel of the buttons to tightening down what you can delete has been touched.</li>
   <li>First off take a look at the buttons.  They are a little bit more subtle and
-  hopefully look semi-good across different browsers/operating systems.  It is 
-  amazingly difficult to get this working correctly.</li>
+    hopefully look semi-good across different browsers/operating systems.  It is
+    amazingly difficult to get this working correctly.</li>
   <li>The next big thing is we are now preventing some things from being deleted if
-  there are other things depending on them.  For example, you should not be able
-  to delete a course if that course has assignments.  And now you can't.  We even
-  let you know that you can't remove it by disabling the button.  Cool!</li>
-  <li><%= link_to 'Grading Periods', terms_path %> and <%= link_to 'Grading Scales', grading_scales_path %> 
-  are now editable.  They don't do much at the moment but we are working hard on 
-  getting them integrated into the system.  They should be up and functional 
-  within the next week or so.  Stay tuned!</li>
+    there are other things depending on them.  For example, you should not be able
+    to delete a course if that course has assignments.  And now you can't.  We even
+    let you know that you can't remove it by disabling the button.  Cool!</li>
+  <li><%= link_to 'Grading Periods', grading_periods_path %> and <%= link_to 'Grading Scales', grading_scales_path %>
+    are now editable.  They don't do much at the moment but we are working hard on
+    getting them integrated into the system.  They should be up and functional
+    within the next week or so.  Stay tuned!</li>
 </ul>
 
 <h3>News - February 19, 2009</h3>
 <ul>
   <li>The <%= link_to "Settings", settings_path %> section is getting heavy attention right
-  now and we hope to be fully operational within the week.  It is already looking pretty
-  good and you should be able to edit the grading period with abandon.  Notice that when
-  you deactivate a particular grading period all the courses that are in that period are
-  no longer editable.</li>
+    now and we hope to be fully operational within the week.  It is already looking pretty
+    good and you should be able to edit the grading period with abandon.  Notice that when
+    you deactivate a particular grading period all the courses that are in that period are
+    no longer editable.</li>
   <li>The left side columns are actually computing real dates now based on the grading periods.
-  So if you come back tomorrow the numbers should change.  Very cool!</li>
+    So if you come back tomorrow the numbers should change.  Very cool!</li>
 </ul>
 
 <h3>News - February 13, 2009</h3>

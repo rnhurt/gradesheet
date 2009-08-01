@@ -174,7 +174,9 @@ EOS
 	        new_page if cursor < 300
 
     		  # Build the header and data information for this course
-    		  headers = ["#{course.name} - #{course.term.name}\n  #{course.teacher.full_name}", "A(93%)", "B(86%)", "n/a", "B(90%)"]
+          grade = course.calculate_grade(student.id)
+    		  headers = ["#{course.name} - #{course.term.name}\n  #{course.teacher.full_name}",
+            "#{grade[:letter]}(#{grade[:score]})", "B(86%)", "n/a", "B(90%)"]
     		  data = [
     			  ["Application","A","B"," ","B"],
     			  ["Test/quizes","B","B"," ","B"],
