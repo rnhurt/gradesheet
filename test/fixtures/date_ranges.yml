@@ -16,7 +16,7 @@ sy09:
   begin_date: 2008/08/01
   end_date: 2010/06/27
 
-t1:
+t1-08:
   type: Term
   name: GP1-08
   begin_date: 2008/08/01
@@ -24,7 +24,7 @@ t1:
   school_year_id: 594005756
   active: true
 	
-t2:
+t2-08:
   type: Term
   name: GP2-08
   begin_date: 2008/11/17
@@ -32,7 +32,7 @@ t2:
   school_year_id: 594005756
   active: true
 
-t3:
+t3-08:
   type: Term
   name: GP3-08
   begin_date: 2009/03/28
@@ -40,7 +40,7 @@ t3:
   school_year_id: 594005756
   active: false
   
-t4:
+t1-09:
   type: Term
   name: GP1-09
   begin_date: 2009/08/01
@@ -48,7 +48,7 @@ t4:
   school_year_id: 594005757
   active: true
 	
-t5:
+t2-09:
   type: Term
   name: GP2-09
   begin_date: 2009/11/17
@@ -56,7 +56,7 @@ t5:
   school_year_id: 594005757
   active: true
 
-t6:
+t3-10:
   type: Term
   name: GP3-10
   begin_date: 2010/03/28

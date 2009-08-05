@@ -1,118 +1,125 @@
-math7s:
-  name: Math 7S
-  teacher_id: 1069
-  term: t1
+english-t1-08:
+  teacher: teachera
+  term: t1-08
   grading_scale: s
   course_att_id: 1
+  course_master: english08
 
-math8hpf:
-  name: Math 8H
-  teacher_id: 1069
-  term: t1
+english-t2-08:
+  teacher: teachera
+  term: t2-08
+  grading_scale: s
+  course_att_id: 1
+  course_master: english08
+
+english-t3-08:
+  teacher: teachera
+  term: t3-08
+  grading_scale: s
+  course_att_id: 1
+  course_master: english08
+
+math-t1-08:
+  teacher: teachera
+  term: t1-08
+  grading_scale: s
+  course_att_id: 1
+  course_master: math08
+
+math-t2-08:
+  teacher: teachera
+  term: t2-08
+  grading_scale: s
+  course_att_id: 1
+  course_master: math08
+
+math-t3-08:
+  teacher: teachera
+  term: t3-08
+  grading_scale: s
+  course_att_id: 1
+  course_master: math08
+
+math-t1-09:
+  teacher: teacherb
+  term: t1-09
+  grading_scale: s
+  course_att_id: 1
+  course_master: math09
+
+math-t2-09:
+  teacher: teacherb
+  term: t2-09
+  grading_scale: s
+  course_att_id: 1
+  course_master: math09
+
+math-t3-09:
+  teacher: teacherb
+  term: t3-09
+  grading_scale: s
+  course_att_id: 1
+  course_master: math09
+
+music-t1-09:
+  teacher: teachera
+  term: t1-09
   grading_scale: pf
   course_att_id: 1
+  course_master: music-09
 
-math8s-t1:
-  name: Math 8S
-  teacher_id: 1069
-  term: t1
-  grading_scale: s
+music-t2-09:
+  teacher: teachera
+  term: t2-09
+  grading_scale: pf
   course_att_id: 1
+  course_master: music-09
 
-math8s-t2:
-  name: Math 8S
-  teacher_id: 1069
-  term: t2
-  grading_scale: s
+music-t3-09:
+  teacher: teachera
+  term: t3-09
+  grading_scale: pf
   course_att_id: 1
+  course_master: music-09
 
-english-t1:
-  name: English
-  teacher_id: 1070
-  term: t1
+spelling-t1-08:
+  teacher: teachera
+  term: t1-08
   grading_scale: s
   course_att_id: 1
-  
-english-t2:
-  name: English
-  teacher_id: 1070
-  term: t2
-  grading_scale: s
-  course_att_id: 1
+  course_master: spelling-08
 
-music-t1:
-  name: Music
-  teacher_id: 1070
-  term: t1
+spelling-t2-08:
+  teacher: teachera
+  term: t2-08
   grading_scale: s
   course_att_id: 1
+  course_master: spelling-08
 
-spelling-t1:
-  name: Spelling
-  teacher_id: 1070
-  term: t1
+spelling-t3-08:
+  teacher: teachera
+  term: t3-08
   grading_scale: s
   course_att_id: 1
+  course_master: spelling-08
 
-spelling-t2:
-  name: Spelling
-  teacher_id: 1070
-  term: t2
+spelling-t1-09:
+  teacher: teacherb
+  term: t1-09
   grading_scale: s
   course_att_id: 1
+  course_master: spelling-09
 
-spelling-t3:
-  name: Spelling
-  teacher_id: 1070
-  term: t3
+spelling-t2-09:
+  teacher: teacherb
+  term: t2-09
   grading_scale: s
   course_att_id: 1
+  course_master: spelling-09
 
-math-t3:
-  name: Math
-  teacher_id: 1070
-  term: t3
+spelling-t3-09:
+  teacher: teacherb
+  term: t3-09
   grading_scale: s
   course_att_id: 1
-
-spelling-t4:
-  name: Spelling
-  teacher_id: 1070
-  term: t4
-  grading_scale: s
-  course_att_id: 1
-
-math-t4:
-  name: Math
-  teacher_id: 1070
-  term: t4
-  grading_scale: s
-  course_att_id: 1
-
-spelling-t5:
-  name: Spelling
-  teacher_id: 1070
-  term: t5
-  grading_scale: s
-  course_att_id: 1
-
-math-t5:
-  name: Math
-  teacher_id: 1070
-  term: t5
-  grading_scale: s
-  course_att_id: 1
-
-spelling-t6:
-  name: Spelling
-  teacher_id: 1070
-  term: t6
-  grading_scale: s
-  course_att_id: 1
-
-math-t6:
-  name: Math
-  teacher_id: 1070
-  term: t6
-  grading_scale: s
-  course_att_id: 1
+  course_master: spelling-09
