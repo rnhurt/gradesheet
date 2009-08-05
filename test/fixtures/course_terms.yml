@@ -1,0 +1,47 @@
+english-t1-08:
+  term: t1-08
+  course: english-08
+
+english-t2-08:
+  term: t2-08
+  course: english-08
+
+english-t3-08:
+  term: t3-08
+  course: english-08
+
+english-t1-09:
+  term: t1-09
+  course: english-09
+
+english-t2-09:
+  term: t2-09
+  course: english-09
+
+english-t3-09:
+  term: t3-09
+  course: english-09
+
+spelling-t1-08:
+  term: t1-08
+  course: spelling-08
+
+spelling-t2-08:
+  term: t3-08
+  course: spelling-08
+
+spelling-t3-08:
+  term: t3-08
+  course: spelling-08
+
+math-t1-08:
+  term: t1-08
+  course: math-08
+
+math-t2-08:
+  term: t2-08
+  course: math-08
+
+math-t3-08:
+  term: t3-08
+  course: math-08

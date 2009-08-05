@@ -3,18 +3,16 @@ class Course < ActiveRecord::Base
 	before_destroy 	:ensure_no_children
 
 	belongs_to	:teacher
-	belongs_to	:term
   belongs_to  :school_year
   belongs_to  :grading_scale
-	has_many		:assignments
 	has_many		:enrollments
-	has_many		:students, :through => :enrollments
-	has_many		:assignment_evaluations, :through => :assignments
   has_many    :course_skills
-  has_many    :supporting_skills, :through => :course_skills
+  has_many    :course_terms
+	has_many    :terms,                   :through => :course_terms
+	has_many		:students,                :through => :enrollments
+  has_many    :supporting_skills,       :through => :course_skills
 	
 	validates_existence_of :teacher, :message => "isn't a known teacher."
-	validates_existence_of :term
 	validates_existence_of :grading_scale
 	
 	validates_length_of		:name, :in => 1..20
@@ -22,9 +20,9 @@ class Course < ActiveRecord::Base
 	#	validates_uniqueness_of :teacher, :scope => [:term, :course]
 
 	# Courses are considered 'active' only if they are in a grading term that is 'active'.
-	named_scope :active, :include => :term, 
+	named_scope :active, :include => :terms,
     :conditions	=> ["date_ranges.active = ?", true],
-    :order => ["date_ranges.begin_date ASC, courses.name ASC"]
+    :order => ["courses.name ASC"]
 
   # Calculate a students current grade for a particular course.
   def calculate_grade(student_id)
@@ -79,5 +77,4 @@ class Course < ActiveRecord::Base
 			raise ActiveRecord::Rollback
 		end
 	end
-
 end

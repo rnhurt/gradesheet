@@ -2,7 +2,7 @@
 class Assignment < ActiveRecord::Base
   before_destroy :ensure_no_children
   
-  belongs_to	:course
+  belongs_to	:course_term
   belongs_to	:assignment_category
   has_many		:assignment_evaluations
   
@@ -10,7 +10,7 @@ class Assignment < ActiveRecord::Base
   validates_numericality_of	:possible_points
   validates_presence_of			:possible_points
   
-  validates_existence_of		:course
+  validates_existence_of		:course_term
 
   # Return a date formated for display as an assignment due date.
   def due_date_formated

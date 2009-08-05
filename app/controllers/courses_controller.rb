@@ -6,6 +6,14 @@ class CoursesController < ApplicationController
   end
 
 	def show
+	end	
+
+  def new
+    @course = Course.new
+    @teacher = Teacher.find(current_user)
+  end
+
+  def edit
     @course = Course.find(params[:id])
     @homerooms = Student.find_homerooms()
     @skill_cats = SupportingSkillCategory.active
@@ -25,20 +33,10 @@ class CoursesController < ApplicationController
 					# Find students by "Class Of"
 					@students = Student.find_all_by_class_of(value[0])
 				end
-				
+
 				render :partial => "student_list"
 			}
-		end
-	end	
-
-  def new
-    @course = Course.new
-    @teacher = Teacher.find(current_user)
-  end
-
-  def edit
-    @course = Course.find(params[:id])
-  end
+		end  end
 
   def create
     @course = Course.new(params[:course])
@@ -46,22 +44,21 @@ class CoursesController < ApplicationController
     ## Force the course to be created by the current user
 		@course.teacher_id = current_user.id
 
-    respond_to do |format|
-      if @course.save
-        flash[:notice] = "Course '#{@course.name}' was successfully created."
-	      format.html { redirect_to(courses_url) }
-      else
-        format.html { render :action => "new" }
-      end
+    if @course.save
+      flash[:notice] = "Course '#{@course.name}' was successfully created."
+      redirect_to(courses_url)
+    else
+      render :action => "new"
     end
+   
   end
 
   def update
     @course = Course.find(params[:id])
 
     # Add or remove supporting_skills to this course
-    @course.supporting_skills.delete(SupportingSkill.find(params[:skill]["false"])) if params[:skill]["false"]
-    @course.supporting_skills << SupportingSkill.find(params[:skill]["true"]) if params[:skill]["true"]
+#    @course.supporting_skills.delete(SupportingSkill.find(params[:skill]["false"])) if params[:skill]["false"]
+#    @course.supporting_skills << SupportingSkill.find(params[:skill]["true"]) if params[:skill]["true"]
 
     respond_to do |format|
       if @course.update_attributes(params[:course])
@@ -70,7 +67,7 @@ class CoursesController < ApplicationController
 	      format.js { render :action => "update" }
       else
         flash[:error] = "Course '#{@course.name}' failed to update."
-        format.html { redirect_to(:action => :show) }
+        format.html { redirect_to(:action => "edit") }
         format.js { head :unprocessable_entity }
       end
     end

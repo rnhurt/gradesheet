@@ -13,13 +13,13 @@ module ApplicationHelper
 	# they want to work with.  It should only show "active" courses in "active"
 	# grading terms.
 	def show_course_list
-		@courses = Course.active.find_all_by_teacher_id(current_user, :include => [:term])
+		@courses = Course.active.find_all_by_teacher_id(current_user)
 		render :partial => 'courses/course_list', :object => @courses
 	end
 
 
 	# Generate the MENU html for the current user from the [:authorize] parameter
-	# of the session object.  This allows us to have a fairly flexable menu
+	# of the session object.  This allows us to have a fairly flexible menu
 	# while at the same time keeping maintenance to a minimum.
 	def menu_builder(page_id)
     # Set a default menu for first time visitors.

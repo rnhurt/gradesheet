@@ -1,7 +1,7 @@
 class CreateSupportingSkills < ActiveRecord::Migration
   def self.up
     create_table :supporting_skills do |t|
-      t.integer :course_id
+      t.integer :course_term_id
       t.integer :supporting_skill_category_id
       t.string  :description
       t.boolean :active

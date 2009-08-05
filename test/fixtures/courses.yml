@@ -1,125 +1,23 @@
-english-t1-08:
+english-08:
+  name: English
   teacher: teachera
-  term: t1-08
   grading_scale: s
   course_att_id: 1
-  course_master: english08
 
-english-t2-08:
+math-08:
+  name: Math
   teacher: teachera
-  term: t2-08
   grading_scale: s
   course_att_id: 1
-  course_master: english08
 
-english-t3-08:
+music-09:
+  name: Music
   teacher: teachera
-  term: t3-08
-  grading_scale: s
-  course_att_id: 1
-  course_master: english08
-
-math-t1-08:
-  teacher: teachera
-  term: t1-08
-  grading_scale: s
-  course_att_id: 1
-  course_master: math08
-
-math-t2-08:
-  teacher: teachera
-  term: t2-08
-  grading_scale: s
-  course_att_id: 1
-  course_master: math08
-
-math-t3-08:
-  teacher: teachera
-  term: t3-08
-  grading_scale: s
-  course_att_id: 1
-  course_master: math08
-
-math-t1-09:
-  teacher: teacherb
-  term: t1-09
-  grading_scale: s
-  course_att_id: 1
-  course_master: math09
-
-math-t2-09:
-  teacher: teacherb
-  term: t2-09
-  grading_scale: s
-  course_att_id: 1
-  course_master: math09
-
-math-t3-09:
-  teacher: teacherb
-  term: t3-09
-  grading_scale: s
-  course_att_id: 1
-  course_master: math09
-
-music-t1-09:
-  teacher: teachera
-  term: t1-09
   grading_scale: pf
   course_att_id: 1
-  course_master: music-09
 
-music-t2-09:
+spelling-08:
+  name: Spelling
   teacher: teachera
-  term: t2-09
-  grading_scale: pf
-  course_att_id: 1
-  course_master: music-09
-
-music-t3-09:
-  teacher: teachera
-  term: t3-09
-  grading_scale: pf
-  course_att_id: 1
-  course_master: music-09
-
-spelling-t1-08:
-  teacher: teachera
-  term: t1-08
   grading_scale: s
   course_att_id: 1
-  course_master: spelling-08
-
-spelling-t2-08:
-  teacher: teachera
-  term: t2-08
-  grading_scale: s
-  course_att_id: 1
-  course_master: spelling-08
-
-spelling-t3-08:
-  teacher: teachera
-  term: t3-08
-  grading_scale: s
-  course_att_id: 1
-  course_master: spelling-08
-
-spelling-t1-09:
-  teacher: teacherb
-  term: t1-09
-  grading_scale: s
-  course_att_id: 1
-  course_master: spelling-09
-
-spelling-t2-09:
-  teacher: teacherb
-  term: t2-09
-  grading_scale: s
-  course_att_id: 1
-  course_master: spelling-09
-
-spelling-t3-09:
-  teacher: teacherb
-  term: t3-09
-  grading_scale: s
-  course_att_id: 1
-  course_master: spelling-09

@@ -2,8 +2,8 @@
 class Term < DateRange
 	before_destroy	:ensure_no_children
 	
-	has_many    :courses
   belongs_to  :school_year
+	belongs_to  :courses
 #	has_many :comments
 
 	validates_length_of		:name, :within => 1..20
