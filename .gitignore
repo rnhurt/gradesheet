@@ -7,6 +7,7 @@ coverage/*
 database.yml
 *.sqlite
 *.sqlite3
+*.autosave
 schema.rb
 doc/api
 doc/app_horo

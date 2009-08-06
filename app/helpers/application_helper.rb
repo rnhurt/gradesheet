@@ -13,7 +13,8 @@ module ApplicationHelper
 	# they want to work with.  It should only show "active" courses in "active"
 	# grading terms.
 	def show_course_list
-		@courses = Course.active.find_all_by_teacher_id(current_user)
+    # FIXME active is not being checked
+		@courses = Course.find_all_by_teacher_id(current_user)
 		render :partial => 'courses/course_list', :object => @courses
 	end
 

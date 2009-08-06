@@ -11,6 +11,7 @@ class CoursesController < ApplicationController
   def new
     @course = Course.new
     @teacher = Teacher.find(current_user)
+    @school_years = SchoolYear.all(:order => "end_date DESC")
   end
 
   def edit
@@ -41,8 +42,11 @@ class CoursesController < ApplicationController
   def create
     @course = Course.new(params[:course])
     
-    ## Force the course to be created by the current user
+    # Force the course to be created by the current user
 		@course.teacher_id = current_user.id
+
+    # Insert the grading terms
+    @course.terms << SchoolYear.find(params[:school_year][:id]).terms
 
     if @course.save
       flash[:notice] = "Course '#{@course.name}' was successfully created."
@@ -57,8 +61,8 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
 
     # Add or remove supporting_skills to this course
-#    @course.supporting_skills.delete(SupportingSkill.find(params[:skill]["false"])) if params[:skill]["false"]
-#    @course.supporting_skills << SupportingSkill.find(params[:skill]["true"]) if params[:skill]["true"]
+    #    @course.supporting_skills.delete(SupportingSkill.find(params[:skill]["false"])) if params[:skill]["false"]
+    #    @course.supporting_skills << SupportingSkill.find(params[:skill]["true"]) if params[:skill]["true"]
 
     respond_to do |format|
       if @course.update_attributes(params[:course])

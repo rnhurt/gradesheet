@@ -10,9 +10,6 @@
     <fieldset>
       <%= f.label :name, {}, :class => 'req' %>
       <%= f.text_field :name %>
-
-  <%#= f.label :term_id, {}, :class => 'req' %>
-  <%#= collection_select :course, :term_id, Term.active, :id, :name %>
       <br />
       <%= f.label :grading_scale_id, {}, :class => 'req' %>
       <%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
@@ -30,20 +27,22 @@
     </div>
   </fieldset>
 
-  <%#= observe_form "edit_course_#{@course.id}", :url => {:action => :update} %>
+<%#= observe_form "edit_course_#{@course.id}", :url => {:action => :update} %>
 </div>
 
 <div id="students"><%= render :partial => "students_tab" %></div>
 
+<% @course.terms.sort!{ |a,b| a.end_date <=> b.end_date } %>
+
 <ul id="course_tabs" class="subsection_tabs">
-  <li class="tab"><a href="#term1">Term1</a></li>
-  <li class="tab"><a href="#term2">Term2</a></li>
+  <% @course.terms.each do |term| %>
+    <li class="tab"><%= link_to term.name, "\##{term.name}" %></li>
+  <% end %>
 </ul>
 
-
-<div id="term1"><%= render :partial => "skills_tab" %></div>
-<div id="term2"><%= render :partial => "skills_tab" %></div>
-
+<% @course.terms.each do |term| %>
+  <div id="<%= term.name %>"><%= render :partial => "skills_tab" %></div>
+<% end %>
 
 <% javascript_tag do %>
   new Control.Tabs('course_tabs');

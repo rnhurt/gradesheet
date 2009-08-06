@@ -12,8 +12,8 @@
       <%= f.label :name, {}, :class => 'req' %>
       <%= f.text_field :name %>
       <br />
-      <%#= f.label :term_id, {}, :class => 'req' %>
-      <%#= collection_select :course, :term_id, Term.active, :id, :name %>
+      <%= f.label :school_year, {}, :class => 'req' %>
+      <%= collection_select :school_year, :id, @school_years, :id, :name %>
       <br />
       <%= f.label :grading_scale_id, {}, :class => 'req' %>
       <%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
