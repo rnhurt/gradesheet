@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class TeacherTest < ActiveSupport::TestCase
-	fixtures :users
+	fixtures :all
 	
 	def setup
-    @teacher = Teacher.first
+    @teacher = Teacher.find_by_login("teachera")
     assert @teacher.valid?, 'The initial teacher is valid'
 	end
 

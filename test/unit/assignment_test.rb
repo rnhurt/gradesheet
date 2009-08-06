@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AssignmentTest < ActiveSupport::TestCase
-	fixtures :courses, :assignments
+	fixtures :all
 
   def setup
     @course = Course.first 
@@ -45,15 +45,10 @@ class AssignmentTest < ActiveSupport::TestCase
   end
   
   def test_assignment_requires_a_valid_course
-  	course = Course.new :name => "New Course"
-  	assert_not_nil course
-  	@assignment.course_id = course.id
-  	assert !@assignment.valid?, "Invalid course"
-  	
-  	course = Course.find(:first)
-  	assert_not_nil course
-  	@assignment.course_id = course.id
-  	assert @assignment.valid?, "Valid course"
+  	course_term = CourseTerm.first
+  	assert_not_nil course_term
+  	@assignment.course_term = course_term
+  	assert @assignment.valid?, "Valid course_term"
   end
   
   def test_assignment_due_date_format

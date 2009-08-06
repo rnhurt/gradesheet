@@ -28,7 +28,7 @@ class CoursesControllerTest < ActionController::TestCase
 #  end
 
   def test_should_show_course
-    get :show, :id => courses(:math7s).id
+    get :edit, :id => courses("english-08").id
     assert_response :success
   end
 

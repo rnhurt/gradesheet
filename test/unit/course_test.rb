@@ -6,15 +6,11 @@ class CourseTest < ActiveSupport::TestCase
 	def setup
     @course = Course.new :name => "Math 8H"
 
-		teacher = Teacher.find(:first)
+		teacher = Teacher.first
 		assert_not_nil teacher
 		@course.teacher = teacher
-		
-		term = Term.find(:first)
-		assert_not_nil term
-		@course.term = term
-		
-		grading_scale = GradingScale.find(:first)
+				
+		grading_scale = GradingScale.first
 		assert_not_nil grading_scale
 		@course.grading_scale = grading_scale
 		
@@ -26,7 +22,7 @@ class CourseTest < ActiveSupport::TestCase
 	
 	
   def test_course_copy_and_find
-    course_copy = Course.find(@course.id)
+    course_copy = Course.find(@course)
     assert_equal @course.name, course_copy.name
 	end
 	

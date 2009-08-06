@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AssignmentEvaluationTest < ActiveSupport::TestCase
-	fixtures :assignments, :users
+	fixtures :all
 	
 	def setup
     @assignment_evaluation = AssignmentEvaluation.first
-    assert @assignment_evaluation.valid?, "Initial gradation is valid"
+    assert @assignment_evaluation.valid?, "Initial assignment_evaluation is valid"
     @student = Student.first
     assert @student.valid?, "Initial student is valid"
 	end

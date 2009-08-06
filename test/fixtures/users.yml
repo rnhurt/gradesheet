@@ -29,7 +29,6 @@ studentb:
   perishable_token: <%= Authlogic::Random.friendly_token %>
 
 teachera:
-  id: 1070
   type: Teacher
   site: campus2
   login: teachera
@@ -43,7 +42,6 @@ teachera:
   perishable_token: <%= Authlogic::Random.friendly_token %>
   
 teacherb:
-  id: 1069
   type: Teacher
   site: campus1
   login: teacherb

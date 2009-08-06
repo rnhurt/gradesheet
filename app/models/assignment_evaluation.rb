@@ -12,8 +12,7 @@ class AssignmentEvaluation < ActiveRecord::Base
   #	validates_uniqueness_of :assignment_id, :scope => [:student_id]
 
 	validates_numericality_of	:points_earned, :allow_nil => :true, 
-    :greater_than_or_equal_to => 0.0,
-    :unless => :valid_string?
+    :greater_than_or_equal_to => 0.0, :unless => :valid_string?
 
   # Calculate the points earned based on the presence of 'magic' characters
   def points_earned
@@ -37,7 +36,8 @@ class AssignmentEvaluation < ActiveRecord::Base
 	# * 'E' = Excused assignment (student gets full credit)
 	# * 'M' = Missing assignment (student gets no credit)
 	def valid_string?
-	  ['E', 'M'].include?(self.points_earned)
+	  ['E', 'M'].include?(self.points_earned) || 
+      (points_earned.is_a?(Numeric) && (points_earned.to_f == points_earned.to_f.abs))
 	end
 	
 end
