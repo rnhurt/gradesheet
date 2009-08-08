@@ -40,9 +40,9 @@
   <% end %>
 </ul>
 
-<% @course.terms.each do |term| %>
-  <div id="<%= term.name %>">
-    <%= render :partial => "skills_tab", :locals => {:term => :term} %>
+<% @course.course_terms.each do |course_term| %>
+  <div id="<%= course_term.term.name %>">
+    <%= render :partial => "skills_tab", :locals => {:course_term => course_term} %>
   </div>
 <% end %>
 

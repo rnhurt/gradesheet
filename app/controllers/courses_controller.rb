@@ -55,9 +55,10 @@ class CoursesController < ApplicationController
     # Are we updating the course or assigning a supporting skill?
     if params[:skill]
       # Add or remove supporting_skills to this course
-      @course = CourseTerm.find(params[:id]).course
-      @course.supporting_skills.delete(SupportingSkill.find(params[:skill]["false"])) if params[:skill]["false"]
-      @course.supporting_skills << SupportingSkill.find(params[:skill]["true"]) if params[:skill]["true"]
+      course_term = CourseTerm.find(params[:id])
+      course_term.supporting_skills.delete(SupportingSkill.find(params[:skill]["false"])) if params[:skill]["false"]
+      course_term.supporting_skills << SupportingSkill.find(params[:skill]["true"]) if params[:skill]["true"]
+      @course = course_term.course
     else
       @course = Course.find(params[:id])
     end

@@ -1,6 +1,6 @@
-class CreateCourseSkillTerms < ActiveRecord::Migration
+class CreateCourseTermSkills < ActiveRecord::Migration
   def self.up
-    create_table :course_skill_terms do |t|
+    create_table :course_term_skills do |t|
       t.integer :course_term_id
       t.integer :supporting_skill_id
 
@@ -9,6 +9,6 @@ class CreateCourseSkillTerms < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :course_skill_terms
+    drop_table :course_term_skills
   end
 end

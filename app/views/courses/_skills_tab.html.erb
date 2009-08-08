@@ -4,14 +4,15 @@
       <%= content_tag :li, category.name, :class=>"category" %>
       <% for skill in category.supporting_skills.active %>
         <li>
-          <label for="<%= skill.id -%>">
-            <%= check_box_tag skill.id, "1", @course.supporting_skills.include?(skill),
+          <label for="<%= "#{skill.id}-#{course_term.id}" -%>">
+            <%= check_box_tag skill.id, "1", course_term.supporting_skills.include?(skill),
               :onclick => toggle_skill(
               :controller => "courses",
-              :id => term.id,
+              :id => course_term.id,
               :action => "update"
-            ), :id => skill.id, :term => :term %>
+            ), :id => "#{skill.id}-#{course_term.id}" %>
             <%= h skill.description %>
+            <%#= debug course_term %>
           </label>
         </li>
       <% end  %>

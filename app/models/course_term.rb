@@ -3,10 +3,15 @@ class CourseTerm < ActiveRecord::Base
 	belongs_to :term
 	belongs_to :course
 
+
   has_many  :assignments
-  has_many  :supporting_skills
 	has_many  :assignment_evaluations,        :through => :assignments
-  has_many  :supporting_skills_evaluations, :through => :supporting_skills
+
+  has_many  :course_term_skills
+  has_many  :supporting_skills,             :through => :course_term_skills
+  
+#  has_many  :supporting_skills
+#  has_many  :supporting_skills_evaluations, :through => :supporting_skills
 
 	validates_existence_of	:term
 	validates_existence_of	:course
