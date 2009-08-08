@@ -1,0 +1,27 @@
+<div id='course_list'>
+  <table id='courses' class='master'>
+    <thead>
+      <tr>
+        <th>Course <%= "(#{@courses.length})" unless @courses.blank? %></th>
+        <th>Term</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @courses.each do |course| %>
+        <% course.course_terms.each do |ct| %>
+          <tr class="<%= cycle('even', 'odd') + (current_page?(:id => ct) ? ' current' : '') %>"
+              onclick="location.href='<%= url_for( :action => "show", :id => ct.id ) %>'" >
+            <td>
+              <%= link_to "#{ct.course.name}",
+                :action => "show", :id => ct.id %>
+            </td>
+            <td>
+              <%= link_to "#{ct.term.name}",
+                :action => "show", :id => ct.id %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

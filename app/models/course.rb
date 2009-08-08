@@ -6,11 +6,9 @@ class Course < ActiveRecord::Base
   belongs_to  :school_year
   belongs_to  :grading_scale
   has_many		:enrollments
-  has_many    :course_skills
   has_many    :course_terms
   has_many    :terms,                   :through => :course_terms
   has_many		:students,                :through => :enrollments
-  has_many    :supporting_skills,       :through => :course_skills
   
   validates_existence_of :teacher, :message => "isn't a known teacher."
   validates_existence_of :grading_scale

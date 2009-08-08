@@ -41,7 +41,9 @@
 </ul>
 
 <% @course.terms.each do |term| %>
-  <div id="<%= term.name %>"><%= render :partial => "skills_tab" %></div>
+  <div id="<%= term.name %>">
+    <%= render :partial => "skills_tab", :locals => {:term => :term} %>
+  </div>
 <% end %>
 
 <% javascript_tag do %>

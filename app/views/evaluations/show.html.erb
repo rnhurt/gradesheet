@@ -1,5 +1,5 @@
 <% content_for :left do %>
-	<%= show_course_list %>
+	<%= show_course_term_list %>
 <% end %>
 
 <ul id="tabs_example_one" class="subsection_tabs">  
@@ -10,7 +10,7 @@
 
 <div id="assignments"><%= render :partial => "grades" %></div>
 <div id="skills"><%= render :partial => "skills" %></div>
-<div id="comments"><%= render :partial => "skills" %></div>
+<div id="comments"><%= render :partial => "comments" %></div>
 
 <% javascript_tag do %>
   new Control.Tabs('tabs_example_one');  

@@ -1,9 +1,5 @@
-<% skills = @gradations.assignments %>
+<% skills = @course_term.course.supporting_skills %>
 
-
-<%# Loop through the gradations and build a table with students as the ROW
-  # and assignments in the COLUMN.  Along the way we'll also alert the user 
-  # when there are missing students or assignments. %>
 <form id='grade_grid'>
 <table class='grade-grid sortable scroll master'>
 	<thead>
@@ -12,7 +8,7 @@
 			<% if skills.length == 0 then %>
 				<th>No Skills Found</th>			
 			<% else %>
-				<% for skill in skills %>
+				<% skills.each do |skill| %>
 					<th width='50' class='grade' id='<%= skill.id %>'>
 						<div class='skill-name'><%= h skill.name %></div>
 					</th>
@@ -21,7 +17,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	  <% number_of_students = @gradations.students.count %>
+	  <% number_of_students = @course_term.course.students.count %>
 	  <% counter = 0 %>
 
 	  <%# Show a default message if there are no students in this course %>	  
@@ -29,8 +25,8 @@
 			<tr><td>No Students Found</td></tr>
 		<% end %>
 
-      <% students = @gradations.students.sort_by {|a| a.last_name } %>
-      <% for student in students %>
+      <% students = @course_term.course.students.sort_by {|a| a.last_name } %>
+      <% students.each do |student| %>
 			  <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>'>
 				  <%= content_tag :td, student.full_name, :id => student.id %>
 				  <% a_counter = counter + 1 %>
@@ -76,15 +72,3 @@
   </tbody>
 </table>
 </form>
-
-
-<%# Load up the JavaScript that will compute the grades for this course %>
-<%#= javascript_tag render( :partial => 'compute_grades.js') %>
-
-<script type="text/javascript">
-  // Force a recalculation as soon as the HTML is loaded
-  //document.observe('dom:loaded', calculate);
-
-  // Watch for changes in the form
-  //new Form.Observer('grade_grid', 1, calculate);
-</script>

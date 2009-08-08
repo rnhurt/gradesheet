@@ -1,8 +1,5 @@
-<%# Sort the assignments by due date. %>
-<% unsorted_assignments = Array.new %>
-<% for assignment in @gradations.assignments %>
-  <% unsorted_assignments << assignment %>
-<% end %>
+<% unsorted_assignments = [] %>
+<% @course_term.assignments.each {|a| unsorted_assignments << a } %>
 <% assignments = unsorted_assignments.sort_by {|a| a.due_date || Time.now}.reverse %>
 
 
@@ -29,7 +26,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	  <% number_of_students = @gradations.students.count %>
+	  <% number_of_students = @course_term.course.students.count %>
 	  <% counter = 0 %>
 
 	  <%# Show a default message if there are no students in this course %>	  
@@ -37,8 +34,8 @@
 			<tr><td>No Students Found</td></tr>
 		<% end %>
 
-      <% students = @gradations.students.sort_by {|a| a.last_name } %>
-      <% for student in students %>
+      <% students = @course_term.course.students.sort_by {|a| a.last_name } %>
+      <% students.each do |student| %>
 			  <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>'>
 				  <td class='score'>0.0</td>
 				  <%= content_tag :td, student.full_name, :id => student.id %>
@@ -98,7 +95,7 @@
 
 <% javascript_tag do %>
   // Define the function used to calculate the letter grade
-  eval(<%= @gradations.letterGradeCalc %>);
+  eval(<%= @course_term.course.letterGradeCalc %>);
 
   // Force a recalculation as soon as the HTML is loaded
   document.observe('dom:loaded', calculate);

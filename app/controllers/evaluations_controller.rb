@@ -2,12 +2,9 @@ class EvaluationsController < ApplicationController
   before_filter :require_user
   append_before_filter :authorized?
 
-  def index
-  end
-	
   def show
-    @gradations = Course.find(params[:id], :include => [:students, :assignment_evaluations])
-    @scalerange = ScaleRange.find_all_by_grading_scale_id(@gradations.grading_scale_id)
+    @course_term = CourseTerm.find(params[:id])
+    @scalerange = ScaleRange.find_all_by_grading_scale_id(@course_term.course.grading_scale_id)
   end
 
 

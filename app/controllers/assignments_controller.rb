@@ -2,16 +2,9 @@ class AssignmentsController < ApplicationController
   before_filter :require_user
   append_before_filter :authorized?
   
-  def index
-    respond_to do |format|
-      format.html # index.html.erb
-    end
-  end
-
-
   def show
-    @course = Course.find(params[:id])
-    @assignments = @course.assignments
+    @course_term = CourseTerm.find(params[:id])
+    @assignments = @course_term.assignments
 
 	  respond_to do |format|
 			format.html
@@ -22,7 +15,7 @@ class AssignmentsController < ApplicationController
 
   def new
     @assignment = Assignment.new
-    @course = Course.find(params[:course_id])
+    @course_term = CourseTerm.find(params[:course_term_id])
 
     render :action => :edit
   end
@@ -30,19 +23,20 @@ class AssignmentsController < ApplicationController
 
   def edit
     @assignment = Assignment.find(params[:id])
-	  @course = Course.find(@assignment.course_id)
+	  @course_term = CourseTerm.find(@assignment.course_term_id)
   end
 
 
   def create
     @assignment = Assignment.new(params[:assignment])
-   	@course = Course.find(params[:assignment][:course_id])
-    @terms = Term.find(:all)
+#   	course_term = CourseTerm.find_by_course_id(params[:assignment][:course_id])
+#    @course = course_term.course
+#    @terms = Term.find(:all)
 
     respond_to do |format|
       if @assignment.save
         flash[:notice] = "Assignment '#{@assignment.name}' was created successfully."
-        format.html { redirect_to :action => :show, :id => @assignment.course_id }
+        format.html { redirect_to :action => :show, :id => @assignment.course_term.id }
       else
         format.html { render :action => :edit }
       end
@@ -55,9 +49,9 @@ class AssignmentsController < ApplicationController
     respond_to do |format|
       if @assignment.update_attributes(params[:assignment])
         flash[:notice] = "Assignment '#{@assignment.name}' was updated successfully."
-        format.html { redirect_to :action => :show, :id => @assignment.course_id }
+        format.html { redirect_to :action => :show, :id => @assignment.course_term.id }
       else
-		   	@course = Course.find(params[:assignment][:course_id])
+		   	@course_term = CourseTerm.find(params[:assignment][:course_term_id])
         format.html { render :action => "edit" }
       end
     end
@@ -74,7 +68,7 @@ class AssignmentsController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to :action => 'show', :id => @assignment.course_id }
+      format.html { redirect_to :action => 'show', :id => @assignment.course_term.id }
     end
   end
   

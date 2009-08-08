@@ -12,10 +12,10 @@ module ApplicationHelper
 	# several locations throughout the system to let the user choose which Course
 	# they want to work with.  It should only show "active" courses in "active"
 	# grading terms.
-	def show_course_list
+	def show_course_term_list
     # FIXME active is not being checked
-		@courses = Course.find_all_by_teacher_id(current_user)
-		render :partial => 'courses/course_list', :object => @courses
+		@courses = Course.active.find_all_by_teacher_id(current_user)
+		render :partial => 'shared/course_term_list', :object => @courses
 	end
 
 

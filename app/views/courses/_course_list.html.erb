@@ -6,16 +6,14 @@
       </tr>
     </thead>
     <tbody>
-      <% if current_controller?('courses') then %>
-        <tr><td colspan='0'><%= link_to 'Add New Course', new_course_path, :class=>'btn standard' %></td></tr>
-      <% end %>
+      <tr><td colspan='0'><%= link_to 'Add New Course', new_course_path, :class=>'btn standard' %></td></tr>
       <% @courses.each do |course| %>
-          <tr class="<%= cycle('even', 'odd') + (current_page?(:id => course) ? ' current' : '') %>"
-              onclick="location.href='<%= url_for( :action => "edit", :id => course.id ) %>'" >
-            <td>
-              <%= link_to( course.name, :action => "edit", :id => course.id ) %>
-            </td>
-          </tr>
+        <tr class="<%= cycle('even', 'odd') + (current_page?(:id => course) ? ' current' : '') %>"
+            onclick="location.href='<%= url_for( :action => "edit", :id => course.id ) %>'" >
+          <td>
+            <%= link_to( course.name, :action => "edit", :id => course.id ) %>
+          </td>
+        </tr>
       <% end %>
     </tbody>
   </table>

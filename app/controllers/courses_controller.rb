@@ -2,12 +2,6 @@ class CoursesController < ApplicationController
   before_filter :require_user
   append_before_filter :authorized?
 
-  def index
-  end
-
-	def show
-	end	
-
   def new
     @course = Course.new
     @teacher = Teacher.find(current_user)
@@ -58,11 +52,17 @@ class CoursesController < ApplicationController
   end
 
   def update
-    @course = Course.find(params[:id])
+    # Are we updating the course or assigning a supporting skill?
+    if params[:skill]
+      # Add or remove supporting_skills to this course
+      @course = CourseTerm.find(params[:id]).course
+      @course.supporting_skills.delete(SupportingSkill.find(params[:skill]["false"])) if params[:skill]["false"]
+      @course.supporting_skills << SupportingSkill.find(params[:skill]["true"]) if params[:skill]["true"]
+    else
+      @course = Course.find(params[:id])
+    end
 
-    # Add or remove supporting_skills to this course
-    #    @course.supporting_skills.delete(SupportingSkill.find(params[:skill]["false"])) if params[:skill]["false"]
-    #    @course.supporting_skills << SupportingSkill.find(params[:skill]["true"]) if params[:skill]["true"]
+
 
     respond_to do |format|
       if @course.update_attributes(params[:course])

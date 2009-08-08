@@ -6,7 +6,11 @@
         <li>
           <label for="<%= skill.id -%>">
             <%= check_box_tag skill.id, "1", @course.supporting_skills.include?(skill),
-              :onclick => toggle_skill(@course), :id => skill.id %>
+              :onclick => toggle_skill(
+              :controller => "courses",
+              :id => term.id,
+              :action => "update"
+            ), :id => skill.id, :term => :term %>
             <%= h skill.description %>
           </label>
         </li>
