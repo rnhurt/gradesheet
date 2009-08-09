@@ -1,21 +1,19 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
+exceptional:
   supporting_skill_id: 1
   code: +
   description: Exceptional performance
 
-two:
+satisfactory:
   supporting_skill_id: 1
   code: ✓
   description: Satisfactory performance
 
-three:
+ni:
   supporting_skill_id: 2
   code: N
   description: Need for improvement
 
-four:
+na:
   supporting_skill_id: 3
   code: NA
   description: Not applicable

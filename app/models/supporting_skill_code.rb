@@ -2,9 +2,7 @@ class SupportingSkillCode < ActiveRecord::Base
 #	before_destroy	:ensure_no_children
 #  after_update  :save_ranges
 
-  has_many    :supporting_skill_evaluations
-	belongs_to  :course
-#	has_many  :grade_ranges, :dependent => :destroy
+  has_many    :supporting_skills
 
 	validates_length_of		  :description, :within => 1..50
 	validates_uniqueness_of :description, :case_sensitive => false

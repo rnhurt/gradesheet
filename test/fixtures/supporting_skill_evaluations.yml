@@ -1,11 +1,9 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 one:
-  student_id: 1
-  supporting_skill_id: 1
-  supporting_skill_code: 1
+  student: studenta
+  supporting_skill: langart1
+  score: sa
 
 two:
-  student_id: 1
-  supporting_skill_id: 1
-  supporting_skill_code: 1
+  student: studenta
+  supporting_skill: langart2
+  score: ni

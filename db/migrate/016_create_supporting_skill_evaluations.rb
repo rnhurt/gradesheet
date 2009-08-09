@@ -3,7 +3,7 @@ class CreateSupportingSkillEvaluations < ActiveRecord::Migration
     create_table :supporting_skill_evaluations do |t|
       t.integer :student_id
       t.integer :supporting_skill_id
-      t.integer :supporting_skill_code_id
+      t.string  :score
 
       t.timestamps
     end

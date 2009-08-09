@@ -7,6 +7,16 @@ class EvaluationsController < ApplicationController
     @scalerange = ScaleRange.find_all_by_grading_scale_id(@course_term.course.grading_scale_id)
   end
 
+  def update
+    # What are we updating, skills or grades?
+    if params[:skill]
+      skill_evaluation = SupportingSkillEvaluation.find_or_create_by_student_id_and_supporting_skill_id(
+        params[:id]
+      )
+    elsif params[:grade]
+
+    end
+  end
 
 	# Store the grade for a single student/assignment combination.  We are expecting
 	# an AJAX call with the format below:
@@ -14,7 +24,7 @@ class EvaluationsController < ApplicationController
   def update_grade
   	# Find or create a new grade for this student/assignment
 		@assignment_evaluation = AssignmentEvaluation.find_or_create_by_student_id_and_assignment_id(
-									params[:student], params[:assignment], :include => [:students, :assignments])
+      params[:student], params[:assignment], :include => [:students, :assignments])
 
     # If the score is blank then delete the gradation row
     if params[:score].empty? 

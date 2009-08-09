@@ -1,7 +1,7 @@
 <% skills = @course_term.supporting_skills %>
 
-<form id='grade_grid'>
-<table class='grade-grid sortable scroll master'>
+<form id='skill_grid'>
+<table class='skill-grid sortable scroll master'>
 	<thead>
 		<tr>
 			<th>Student Name</th>
@@ -9,8 +9,8 @@
 				<th>No Skills Found</th>			
 			<% else %>
 				<% skills.each do |skill| %>
-					<th width='50' class='grade' id='<%= skill.id %>'>
-						<div class='skill-name'><%= h skill.name %></div>
+					<th width='50' class='skill' id='<%= skill.id %>'>
+						<div class='skill-name'><%= h skill.description %></div>
 					</th>
 				<% end %>
 			<% end %>
@@ -36,8 +36,8 @@
    				    <% found = nil %>
 
 				      <%# does the student have a entry for this skill? %>
-				      <% number_of_gradations = student.assignment_evaluations.count %>
-				      <% 0.upto(number_of_gradations-1) do |index| %>
+				      <% number_of_evaluations = student.assignment_evaluations.count %>
+				      <% 0.upto(number_of_evaluations-1) do |index| %>
 				        <%# if skill.id == student.gradations[index].skill_id %>
 				          <%# found = student.gradations[index] %>
 				          <%# break %>
@@ -49,7 +49,7 @@
 								    :name		=> 'skill',
 								    :id			=> [:s => student.id, :a => skill.id],
 								    :tabindex	=> a_counter,
-								    :onchange => remote_function( :url => {:action => :update_skill}, 
+								    :onchange => remote_function( :url => {:action => "update"}, :method => "put",
                     :with   => "'student=#{student.id}&skill=#{skill.id}&score=' + value"),
 								    :size		=> '5' %>				      
 				      <% else %>
@@ -57,7 +57,7 @@
 								    :name		=> 'skill',
 								    :id			=> [:s => student.id, :a => skill.id],
 								    :tabindex	=> a_counter,
-								    :onchange => remote_function( :url => {:action => :update_skill}, 
+								    :onchange => remote_function( :url => {:action => "update"}, :method => "put",
                     :with   => "'student=#{student.id}&skill=#{skill.id}&score=' + value"),
 								    :size		=> '5' %>				      
 				      <% end %>

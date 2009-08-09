@@ -1,4 +1,5 @@
 class SupportingSkill < ActiveRecord::Base
+  belongs_to  :supporting_skill_code
   belongs_to  :supporting_skill_category
   has_many    :supporting_skill_evaluations
   has_many    :course_term_skills
