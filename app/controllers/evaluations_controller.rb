@@ -8,13 +8,19 @@ class EvaluationsController < ApplicationController
   end
 
   def update
-    # What are we updating, skills or grades?
-    if params[:skill]
-      skill_evaluation = SupportingSkillEvaluation.find_or_create_by_student_id_and_supporting_skill_id(
-        params[:id]
-      )
-    elsif params[:grade]
-
+    respond_to do |format|
+      format.html { render :nothing => true}
+      format.js {
+        # What are we updating, skills or grades?
+        if params[:skill]
+          skill_evaluation = SupportingSkillEvaluation.find_or_create_by_student_id_and_supporting_skill_id(
+            params[:id]
+          )
+        elsif params[:grade]
+        end
+        
+        render :nothing => true
+      }
     end
   end
 
