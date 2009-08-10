@@ -20,7 +20,6 @@
       <% number_of_students = @course_term.course.students.count %>
       <% counter = 0 %>
 
-<%# Show a default message if there are no students in this course %>	  
       <% if number_of_students == 0 then %>
         <tr><td>No Students Found</td></tr>
       <% end %>
@@ -35,17 +34,16 @@
             <td class='grades'>
               <% found = nil %>
 
-    <%# does the student have a entry for this skill? %>
-              <% number_of_evaluations = student.assignment_evaluations.count %>
+              <% number_of_evaluations = student.supporting_skill_evaluations.count %>
               <% 0.upto(number_of_evaluations-1) do |index| %>
-      <%# if skill.id == student.gradations[index].skill_id %>
-      <%# found = student.gradations[index] %>
-      <%# break %>
-      <%# end %>
+                <% if skill.id == student.supporting_skill_evaluations[index].supporting_skill_id %>
+                  <% found = student.supporting_skill_evaluations[index] %>
+                  <% break %>
+                <% end %>
               <% end %>
 
               <% if found %>
-                <%= text_field_tag 'score', found,
+                <%= text_field_tag 'score', found.score,
                   :name		=> 'skill',
                   :id			=> [:s => student.id, :a => skill.id],
                   :tabindex	=> a_counter,

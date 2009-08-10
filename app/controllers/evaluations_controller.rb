@@ -14,9 +14,18 @@ class EvaluationsController < ApplicationController
         # What are we updating, skills or grades?
         if params[:skill]
           skill_evaluation = SupportingSkillEvaluation.find_or_create_by_student_id_and_supporting_skill_id(
-            params[:id]
-          )
+            params[:student], params[:skill], :include => [:students, :supporting_skills])
+
+          skill_evaluation.student = Student.find(params[:student])
+          skill_evaluation.supporting_skill = SupportingSkill.find(params[:skill])
+          skill_evaluation.score = params[:score]
         elsif params[:grade]
+          # TODO - move the update_grade functionality to here
+        end
+
+        # Save the record
+        if !skill_evaluation.save
+          flash[:error] = 'failed to save evaluation'
         end
         
         render :nothing => true

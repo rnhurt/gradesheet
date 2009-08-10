@@ -1,8 +1,8 @@
 <% content_for :left do %>
-	<%= show_course_term_list %>
+  <%= show_course_term_list %>
 <% end %>
 
-<ul id="tabs_example_one" class="subsection_tabs">  
+<ul id="evaluations" class="subsection_tabs">
   <li class="tab"><a href="#assignments">Assignments</a></li>  
   <li class="tab"><a href="#skills">Supporting Skills</a></li>  
   <li class="tab"><a href="#comments">Comments</a></li>  
@@ -13,5 +13,8 @@
 <div id="comments"><%= render :partial => "comments" %></div>
 
 <% javascript_tag do %>
-  new Control.Tabs('tabs_example_one');  
+  // instantiate the tabbed interface
+  new Control.Tabs('evaluations');
 <% end -%>
+
+<%= javascript_tag render( :partial => "form_control.js") %>

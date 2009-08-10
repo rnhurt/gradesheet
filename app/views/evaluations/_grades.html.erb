@@ -16,7 +16,7 @@
 				<th>No Assignments Found</th>			
 			<% else %>
 				<% for assignment in assignments %>
-					<th width='50' class='grade' id='<%= assignment.id %>'>
+					<th width='50' class='grade nosort' id='<%= assignment.id %>'>
 						<div class='assign-name'><%= h assignment.name %></div>
 						<div class='assign-points'><%= h assignment.possible_points %> pts</div>
 						<div class='assign-date'><%= h assignment.due_date ? assignment.due_date.to_s(:due_date) : '.' %></div>
