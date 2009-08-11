@@ -42,7 +42,7 @@ class LoginLogoutTest < ActionController::IntegrationTest
     assert_response :success
     assert_template "user_sessions/new"
 
-    # Login as a teacher
+    # Login as an administrator
     post "/user_sessions", :user_session => {:login => "admin", :password => "admin"}
     #    Rails.logger.info session.inspect
     assert_equal 'Login successful!', flash[:notice]
