@@ -4,90 +4,95 @@
 
 
 <%# Loop through the gradations and build a table with students as the ROW
-  # and assignments in the COLUMN.  Along the way we'll also alert the user 
-  # when there are missing students or assignments. %>
+# and assignments in the COLUMN.  Along the way we'll also alert the user 
+# when there are missing students or assignments. %>
 <form id='grade_grid'>
-<table class='master grade-grid sortable scroll'>
-	<thead>
-		<tr>
-			<th>Score</th>
-			<th>Student Name</th>
-			<% if assignments.length == 0 then %>
-				<th>No Assignments Found</th>			
-			<% else %>
-				<% for assignment in assignments %>
-					<th width='50' class='grade nosort' id='<%= assignment.id %>'>
-						<div class='assign-name'><%= h assignment.name %></div>
-						<div class='assign-points'><%= h assignment.possible_points %> pts</div>
-						<div class='assign-date'><%= h assignment.due_date ? assignment.due_date.to_s(:due_date) : '.' %></div>
-					</th>
-				<% end %>
-			<% end %>
-		</tr>
-	</thead>
-	<tbody>
-	  <% number_of_students = @course_term.course.students.count %>
-	  <% counter = 0 %>
+  <table class='master grade-grid sortable scroll'>
+    <thead>
+      <tr>
+        <th>Score</th>
+        <th>Student Name</th>
+        <% if assignments.length == 0 then %>
+          <th>No Assignments Found</th>
+        <% else %>
+          <% for assignment in assignments %>
+            <th width='50' class='grade nosort' id='<%= assignment.id %>'>
+              <div class='assign-name'><%= h assignment.name %></div>
+              <div class='assign-points'>
+                <%= link_to_function assignment.possible_points,
+                  "$$('[id*=a#{assignment.id}]').each(function(g) { g.value = #{assignment.possible_points}; g.onchange(); });" %>
+                pts</div>
+              <div class='assign-date'><%= h assignment.due_date ? assignment.due_date.to_s(:due_date) : '.' %></div>
+            </th>
+          <% end %>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% number_of_students = @course_term.course.students.count %>
+      <% counter = 0 %>
 
-	  <%# Show a default message if there are no students in this course %>	  
-		<% if number_of_students == 0 then %>
-			<tr><td>No Students Found</td></tr>
-		<% end %>
+      <% if number_of_students == 0 then %>
+        <tr><td>No Students Found</td></tr>
+      <% end %>
 
       <% students = @course_term.course.students.sort_by {|a| a.last_name } %>
       <% students.each do |student| %>
-			  <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>'>
-				  <td class='score'>0.0</td>
-				  <%= content_tag :td, student.full_name, :id => student.id %>
-				  <% a_counter = counter + 1 %>
-			  
-				  <% for assignment in assignments %>
-				    <td class='grades'>
-   				    <% found = nil %>
+        <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>'>
+          <td class='score'>0.0</td>
+          <%= content_tag :td, student.full_name, :id => student.id %>
+          <% a_counter = counter + 1 %>
 
-				      <%# does the student have a grade for this assignment? %>
-				      <% number_of_gradations = student.assignment_evaluations.count %>
-				      <% 0.upto(number_of_gradations-1) do |index| %>
-				        <% if assignment.id == student.assignment_evaluations[index].assignment_id %>
-				          <% found = student.assignment_evaluations[index] %>
-				          <% break %>
-				        <% end %>
-				      <% end %>
+          <% for assignment in assignments %>
+            <td class='grades'>
+              <% found = nil %>
 
-				      <% if found %>
-						    <%= text_field_tag 'score', found.points_earned, 
-								    :points	=> assignment.possible_points,
-								    :name		=> 'grade',
-								    :id			=> [:s => student.id, :a => assignment.id],
-								    :tabindex	=> a_counter,
-								    :onchange => remote_function( :url => {:action => :update_grade}, 
-                      :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value" ),
-								    :size		=> '10' %>				      
-				      <% else %>
-						    <%= text_field_tag 'score', '', 
-								    :points	=> assignment.possible_points,
-								    :name		=> 'grade',
-								    :id			=> [:s => student.id, :a => assignment.id],
-								    :tabindex	=> a_counter,
-  							    :onchange => remote_function( :url => {:action => :update_grade}, 
-                      :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value" ),
-								    :size		=> '10' %>				      
-				      <% end %>
-				      
-				    </td>
-				    <% a_counter += number_of_students %>
-				  <% end %>
-    
-          <%# Clean up the HTML if no assignments are found in the DB %>
+              <% number_of_gradations = student.assignment_evaluations.count %>
+              <% 0.upto(number_of_gradations-1) do |index| %>
+                <% if assignment.id == student.assignment_evaluations[index].assignment_id %>
+                  <% found = student.assignment_evaluations[index] %>
+                  <% break %>
+                <% end %>
+              <% end %>
+
+              <% if found %>
+                <%= text_field_tag 'score', found.points_earned,
+                  :points	=> assignment.possible_points,
+                  :name		=> 'grade',
+                  :id			=> [:s => student.id, :a => assignment.id],
+                  :tabindex	=> a_counter,
+                  :onchange => remote_function( :url => {:action => :update_grade},
+                  :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value",
+                  :loading => "Element.show('spinner')",
+                  :complete => "Element.hide('spinner')"),
+                  :size		=> '10' %>
+              <% else %>
+                <%= text_field_tag 'score', '',
+                  :points	=> assignment.possible_points,
+                  :name		=> 'grade',
+                  :id			=> [:s => student.id, :a => assignment.id],
+                  :tabindex	=> a_counter,
+                  :onchange => remote_function( :url => {:action => :update_grade},
+                  :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value",
+                  :loading => "Element.show('spinner')",
+                  :complete => "Element.hide('spinner')"),
+                  :size		=> '10' %>
+              <% end %>
+
+            </td>
+            <% a_counter += number_of_students %>
+          <% end %>
+
+  <%# Clean up the HTML if no assignments are found in the DB %>
           <% if assignments.length < 1 then -%>
             <td class='grades'>&nbsp;</td>
           <% end -%>
-				  
-				</tr>
-			  <% counter += 1 %>
+
+        </tr>
+        <% counter += 1 %>
       <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 </form>
 
 <%# Load up the JavaScript that will compute the grades for this course %>

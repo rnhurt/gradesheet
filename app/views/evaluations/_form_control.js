@@ -14,7 +14,7 @@ $$('form').each(function(f) {
   });
 });
 
-// Dont allow the page to be submitted as a form.
+// Don't allow the page to be submitted as a form.
 $$('form').each(function(f) {
   f.observe("submit", function(event){
     event.stop();
