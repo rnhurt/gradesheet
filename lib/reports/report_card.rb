@@ -11,9 +11,9 @@ class ReportCard
   # Build the parameter window to be shown to the user.	
 	def self.get_params()	
 		# Allow the user to select a single student or multiple students.
-		students	= Student.find(:all)
+		students	= Student.all()
 		homerooms	= Student.find_homerooms()
-		terms	= Term.find(:all)
+		terms	= Term.active.all().sort{|a,b| a.end_date <=> b.end_date}
 		
 params = <<-EOS
 	<form action="/reports/report_card.pdf" method="get">

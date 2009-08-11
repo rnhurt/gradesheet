@@ -13,7 +13,7 @@
       <input type="text" value="<%= h @skill_category.name %>" disabled />
       <br />
       <%= f.label :description, {}, :class => 'req' %>
-      <%= f.text_area :description, :rows => 3, :cols => 50 %>
+      <%= f.text_area :description, :rows => 3, :cols => 50, :class => "focus" %>
 
 	    <div class='spacer span-15 last'>
 		    <%= submit_tag 'Update', :class => 'btn positive' %>
@@ -21,5 +21,3 @@
     </fieldset>
   <% end -%>
 </div>
-
-<%= set_focus_to_id 'supporting_skill_description' %>

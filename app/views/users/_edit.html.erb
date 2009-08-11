@@ -8,7 +8,7 @@
       <% end %>
 
       <%= f.label :login, {}, :class => 'req' %>
-      <%= f.text_field :login, :id => 'user_login', :class=>'input' %>
+      <%= f.text_field :login, :id => 'user_login', :class=>"focus input" %>
 
       <%= f.label :first_name, {}, :class => 'req' %>
       <%= f.text_field :first_name, :class => 'input' %>
@@ -46,5 +46,3 @@
     </fieldset>
   <% end %>
 </div>
-
-<%= set_focus_to_id 'user_login' %>

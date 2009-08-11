@@ -56,13 +56,6 @@ module ApplicationHelper
 	end
 
 
-	# Convenience method to set the focus to a specific element on the page
-	def set_focus_to_id(id)
-		javascript_tag("$('#{id}').focus()");
-		javascript_tag("$('#{id}').select()");
-	end
-
-
 	# We need to know the range of years that should be available for our users to
 	# choose from.  This application will be mainly used in schools that have
 	# a limited number of class years.  So we give the user a total of 14 years

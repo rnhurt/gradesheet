@@ -9,8 +9,8 @@
     <fieldset>
       <%= content_tag :legend, 'New Course' %>
 
-      <%= f.label :name, {}, :class => 'req' %>
-      <%= f.text_field :name %>
+      <%= f.label :name, {}, :class => "req" %>
+      <%= f.text_field :name, :class => "focus" %>
       <br />
       <%= f.label :school_year, {}, :class => 'req' %>
       <%= collection_select :school_year, :id, @school_years, :id, :name %>

@@ -17,7 +17,7 @@
       <%= f.select :code, SupportingSkillCode.valid_codes %>
       <br />
       <%= f.label :description, {}, :class => 'req' %>
-      <%= f.text_field :description %>
+      <%= f.text_field :description, :class => "focus" %>
 
 	    <div class='spacer span-15 last'>
 		    <%= submit_tag 'Save', :class => 'btn positive' %>
@@ -26,5 +26,3 @@
     </fieldset>
   <% end -%>
 </div>
-
-<%= set_focus_to_id 'skill_description' %>
