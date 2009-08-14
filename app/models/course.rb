@@ -21,28 +21,7 @@ class Course < ActiveRecord::Base
   named_scope :active, :include => :terms,
     :conditions	=> ["date_ranges.active = ?", true],
     :order => ["courses.name ASC"]
-  
-  # Calculate a students current grade for a particular course.
-  def calculate_grade(student_id)
-    # Set up some variables
-    points_earned       = 0.0
-    possible_points     = 0.0
     
-    # Loop through the assignments for computing the grade as we go
-    self.assignment_evaluations.all(:conditions => { :student_id => student_id}).each do |evaluation|
-      points_earned += evaluation.points_earned.to_f
-      possible_points += evaluation.assignment.possible_points.to_f
-      puts " **** points earned: #{evaluation.points_earned} out of #{evaluation.assignment.possible_points}"
-    end
-    
-    puts "  **** final! #{points_earned} out of #{possible_points} #{self.name}"
-    # Sanitize the score & grade so that we don't try to divide by zero or anything stupid
-    final_score = possible_points > 0 ? ((points_earned/possible_points)*100).round(2) : -1
-    letter_grade = final_score > 0 ? self.grading_scale.calculate_letter_grade(final_score) : 'n/a'
-    
-    return {:letter => letter_grade, :score => final_score }
-  end
-  
   
   # Build a JavaScript function that converts a score to a letter grade based
   # on the grading scale of the course.

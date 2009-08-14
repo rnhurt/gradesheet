@@ -17,60 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <% number_of_students = @course_term.course.students.count %>
-      <% counter = 0 %>
-
-      <% if number_of_students == 0 then %>
-        <tr><td>No Students Found</td></tr>
-      <% end %>
-
-      <% students = @course_term.course.students.sort_by {|a| a.last_name } %>
-      <% students.each do |student| %>
-        <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>'>
-          <%= content_tag :td, student.full_name, :id => student.id %>
-          <% a_counter = counter + 1 %>
-
-          <% for skill in skills %>
-            <td class='grades'>
-              <% found = nil %>
-
-              <% number_of_evaluations = student.supporting_skill_evaluations.count %>
-              <% 0.upto(number_of_evaluations-1) do |index| %>
-                <% if skill.id == student.supporting_skill_evaluations[index].supporting_skill_id %>
-                  <% found = student.supporting_skill_evaluations[index] %>
-                  <% break %>
-                <% end %>
-              <% end %>
-
-              <% if found %>
-                <%= text_field_tag 'score', found.score,
-                  :name		=> 'skill',
-                  :id			=> [:s => student.id, :a => skill.id],
-                  :tabindex	=> a_counter,
-                  :onchange => remote_function( :url => {:action => "update"}, :method => "put",
-                  :with   => "'student=#{student.id}&skill=#{skill.id}&score=' + value",
-                  :loading => "Element.show('spinner')",
-                  :complete => "Element.hide('spinner')"),
-                  :size		=> '5' %>
-              <% else %>
-                <%= text_field_tag 'score', '',
-                  :name		=> 'skill',
-                  :id			=> [:s => student.id, :a => skill.id],
-                  :tabindex	=> a_counter,
-                  :onchange => remote_function( :url => {:action => "update"}, :method => "put",
-                  :with   => "'student=#{student.id}&skill=#{skill.id}&score=' + value",
-                  :loading => "Element.show('spinner')",
-                  :complete => "Element.hide('spinner')"),
-                  :size		=> '5' %>
-              <% end %>
-
-            </td>
-            <% a_counter += number_of_students %>
-          <% end %>
-
-        </tr>
-        <% counter += 1 %>
-      <% end %>
+      <%= skills_body %>
     </tbody>
   </table>
 </form>

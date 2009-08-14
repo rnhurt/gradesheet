@@ -46,6 +46,6 @@
   </div>
 <% end %>
 
-<% javascript_tag do %>
-  new Control.Tabs('course_tabs');
-<% end -%>
+<% content_for :page_footer do %>
+  <%= javascript_tag "new Control.Tabs('course_tabs');" %>
+<% end %>

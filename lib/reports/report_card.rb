@@ -15,48 +15,48 @@ class ReportCard
 		homerooms	= Student.find_homerooms()
 		terms	= Term.active.all().sort{|a,b| a.end_date <=> b.end_date}
 		
-params = <<-EOS
+    params = <<-EOS
 	<form action="/reports/report_card.pdf" method="get">
 	  <fieldset>
 	    <legend>Report Card</legend>
 	    
 		<label>Grading Period</label>
 		<select id="term_id" name="term_id">
-EOS
+    EOS
 
 		# List each active grading period
 		terms.each do |t|
 			params += "<option value='#{t.id}'>#{t.name}</option>"
 		end
 
-params += <<-EOS
+    params += <<-EOS
 		</select>
 
     <hr />
     
 		<label>Homeroom</label>
 		<select size='1' id="homeroom_id" name="homeroom_id">
-EOS
+    EOS
 
 		# List each homeroom
 		homerooms.each do |h|
 			params += "<option value='#{h}'>#{h}</option>"
 		end
 		
-params += <<-EOS
+    params += <<-EOS
 		</select>
 		<br />
 		    
 		<label>OR<br /><br />Student(s)</label>
 		<select multiple size="7" id="student_id" name="student_id[]">
-EOS
+    EOS
 
 		# List all of the students in the school
 		students.each do |s|
 			params += "<option value='#{s[:id]}'>#{s[:first_name]} #{s[:last_name]}</option>"
 		end
 				
-params += <<-EOS
+    params += <<-EOS
 		</select>
 
 		<div class="spacer">
@@ -65,7 +65,7 @@ params += <<-EOS
 		
 		</fieldset>
 	</form>
-EOS
+    EOS
 
 	end
 	
@@ -173,31 +173,46 @@ EOS
     	    # Try not to overflow into the next page
 	        new_page if cursor < 300
 
-    		  # Build the header and data information for this course
-          grade = course.calculate_grade(student.id)
-    		  headers = ["#{course.name} - #{course.term.name}\n  #{course.teacher.full_name}",
-            "#{grade[:letter]}(#{grade[:score]})", "B(86%)", "n/a", "B(90%)"]
-    		  data = [
-    			  ["Application","A","B"," ","B"],
-    			  ["Test/quizes","B","B"," ","B"],
-    			  ["Test/quizes","B","B"," ","B"],
-    			  ["Test/quizes","B","B"," ","B"],
-    			  ["Class participation","C","C"," ","C"],
-    			  ["Projects/activities","A","A"," ","A"],
-    			  ["Homework","C","C"," ","C"],
-    			  ["Work ethic","C","C"," ","C"],
-    			  ["Behavior","C","C"," ","C"],
-    			  ["Work ethic","C","C"," ","C"],
-    			  ["Behavior","C","C"," ","C"],
-    			  ["Work ethic","C","C"," ","C"],
-    			  ["Behavior","C","C"," ","C"],
-    			  ["Work ethic","C","C"," ","C"],
-    			  ["Behavior","C","C"," ","C"],
-    			  ["Work ethic","C","C"," ","C"],
-    			  ["Behavior","C","C"," ","C"],
-    			  [" "," "," "," "," "],
-    			  [" "," "," "," "," "]
-    		  ]
+    		  # Gather the grades for each term in this course
+          data = []
+          skill_hash = {}
+          headers = ["#{course.name}\n  #{course.teacher.full_name}"]
+          course.course_terms.each do |course_term|
+            grade = course_term.calculate_grade(student.id)
+            header = "#{grade[:letter]}"
+            header += " (#{grade[:score].round}%)" if grade[:score] >= 0
+            headers <<  header
+
+            course_term.course_term_skills.each do |ctskill|
+              debugger
+              puts " ****** #{ctskill.score(student.id)}"
+              #              skill_hash[ctskill.supporting_skill] = { :term => course_term, :score => ctskill.score(student.id) }
+              data << ["#{ctskill.supporting_skill.description}","A","B",""]
+            end
+          end
+
+          # Gather the skills assessment scores
+          #          data = [
+          #            ["Application","A","B"," "],
+          #            ["Test/quizes","B","B"," "],
+          #            ["Test/quizes","B","B"," "],
+          #            ["Test/quizes","B","B"," "]
+          #    			  ["Class participation","C","C"," ","C"],
+          #    			  ["Projects/activities","A","A"," ","A"],
+          #    			  ["Homework","C","C"," ","C"],
+          #    			  ["Work ethic","C","C"," ","C"],
+          #    			  ["Behavior","C","C"," ","C"],
+          #    			  ["Work ethic","C","C"," ","C"],
+          #    			  ["Behavior","C","C"," ","C"],
+          #    			  ["Work ethic","C","C"," ","C"],
+          #    			  ["Behavior","C","C"," ","C"],
+          #    			  ["Work ethic","C","C"," ","C"],
+          #    			  ["Behavior","C","C"," ","C"],
+          #    			  ["Work ethic","C","C"," ","C"],
+          #    			  ["Behavior","C","C"," ","C"],
+          #    			  [" "," "," "," "," "],
+          #    			  [" "," "," "," "," "]
+          #          ]
 
 
           # Print the course data alternately on the left & right side of the page

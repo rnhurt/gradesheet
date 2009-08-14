@@ -3,7 +3,6 @@ class CreateCourseTerms < ActiveRecord::Migration
     create_table :course_terms do |t|
       t.integer :term_id
       t.integer :course_id
-      t.integer :supporting_skill_id
 
       t.timestamps
     end
