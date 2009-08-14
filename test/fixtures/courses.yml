@@ -2,22 +2,18 @@ english-08:
   name: English
   teacher: teachera
   grading_scale: s
-  course_att_id: 1
 
 math-08:
   name: Math
   teacher: teachera
   grading_scale: s
-  course_att_id: 1
 
 music-09:
   name: Music
   teacher: teachera
   grading_scale: pf
-  course_att_id: 1
 
 spelling-08:
   name: Spelling
   teacher: teachera
   grading_scale: s
-  course_att_id: 1

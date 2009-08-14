@@ -9,10 +9,28 @@
 </ul>
 
 <div id="assignments"><%= render :partial => "grades" %></div>
-<div id="skills"><%= render :partial => "skills" %></div>
+<div id="skills" class="hidden"><%= render :partial => "skills" %></div>
 <div id="comments" class="hidden"><%#= render :partial => "comments" %></div>
 
 <% content_for :page_footer do %>
-  <%#= javascript_tag "new Control.Tabs('evaluations');" -%>
-  <%= javascript_tag render( :partial => "form_control.js") %>
+  <% javascript_tag do %>
+    // Build the graphical tabs
+    new Control.Tabs("evaluations");
+    $("skills").removeClassName("hidden");
+
+    // Define the function used to calculate the letter grade
+    eval(<%= @course_term.course.letterGradeCalc %>);
+
+    // Load the grade computation engine
+    <%=  render( :partial => 'compute_grades.js') %>
+
+    // Force a recalculation as soon as the HTML is loaded
+    document.observe('dom:loaded', calculate);
+
+    // Don't let the form be submitted
+    <%= render( :partial => "form_control.js") %>
+
+    // Update the grade when the grade_grid form changes
+    new Form.Observer('grade_grid', 1, calculate);
+  <% end %>
 <% end %>

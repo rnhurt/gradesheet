@@ -1,63 +1,27 @@
 r3:
   student: studenta
-  course: math7s
+  course: english-08
 
 a1:
   student: studentb
-  course: english-t1
-
-a2:
-  student: studentb
-  course: english-t2
+  course: english-08
 
 a3:
   student: studenta
-  course: music-t1
+  course: music-09
 
 a4:
   student: studenta
-  course: music-t2
+  course: math-08
 
 a5:
   student: studentb
-  course: math7s
+  course: math-08
 
 a6:
   student: studenta
-  course: spelling-t1
+  course: spelling-08
   
 a7:
-  student: studenta
-  course: spelling-t2
-  
-as3:
-  student: studenta
-  course: spelling-t3
-
-am3:
-  student: studenta
-  course: math-t3
-
-as4:
-  student: studenta
-  course: spelling-t4
-
-am4:
-  student: studenta
-  course: math-t4
-
-as5:
-  student: studenta
-  course: spelling-t5
-
-am5:
-  student: studenta
-  course: math-t5
-
-as6:
-  student: studenta
-  course: spelling-t6
-
-am6:
-  student: studenta
-  course: math-t6
+  student: studentb
+  course: spelling-08

@@ -16,8 +16,6 @@ class EvaluationsController < ApplicationController
           skill_evaluation = SupportingSkillEvaluation.find_or_create_by_student_id_and_course_term_skill_id(
             params[:student], params[:skill], :include => [:students, :course_term_skills])
 
-#          skill_evaluation.student = Student.find(params[:student])
-#          skill_evaluation.course_term_skill = CourseTermSkill.find(params[:skill])
           skill_evaluation.score = params[:score]
         elsif params[:grade]
           # TODO - move the update_grade functionality to here

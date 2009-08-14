@@ -5,7 +5,8 @@
 
 <%# Loop through the gradations and build a table with students as the ROW
 # and assignments in the COLUMN.  Along the way we'll also alert the user 
-# when there are missing students or assignments. %>
+# when there are missing students or assignments.
+# TODO: move this functionality into a helper (i.e. skill_grid)%>
 <form id='grade_grid'>
   <table class='master grade-grid sortable scroll'>
     <thead>
@@ -94,18 +95,3 @@
     </tbody>
   </table>
 </form>
-
-<%# Load up the JavaScript that will compute the grades for this course %>
-<%= javascript_tag render( :partial => 'compute_grades.js') %>
-
-<% javascript_tag do %>
-  // Define the function used to calculate the letter grade
-  eval(<%= @course_term.course.letterGradeCalc %>);
-
-  // Force a recalculation as soon as the HTML is loaded
-  document.observe('dom:loaded', calculate);
-
-  // Watch for changes in the form
-  new Form.Observer('grade_grid', 1, calculate);
-<% end %>
-

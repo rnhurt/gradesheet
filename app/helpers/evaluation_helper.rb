@@ -1,5 +1,6 @@
 module EvaluationHelper
 
+  #  Build the body of the skills evaluation table
   def skills_body
     number_of_students = @course_term.course.students.size
     counter = 0
@@ -19,18 +20,6 @@ module EvaluationHelper
       @course_term.course_term_skills.each do |ctskill|
         body += "<td class = 'skills'>"
         
-#        found = nil
-#        number_of_evals = student.supporting_skill_evaluations.size
-
-        # Try to find out if this student has a existing evaluation for this skill
-        #        0.upto(number_of_evals-1) do |index|
-        #          if skill.id == student.supporting_skill_evaluations[index].course_term_skill.supporting_skill.id
-        #            found = student.course_term_skills[index]
-        #            break
-        #          end
-        #        end
-        found = nil
-
         body += text_field_tag 'score', ctskill.score(student.id),
           :name		=> 'skill',
           :id			=> [:s => student.id, :a => ctskill.id],
