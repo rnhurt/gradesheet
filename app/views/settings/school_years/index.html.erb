@@ -3,13 +3,13 @@
 <% end %>
 
 <% for year in @years %>
-
   <h2>
-    <span style="float:right;"><%= button_to 'Delete',  { :controller => :school_years, :action => "destroy", :id => year.id },
-      :method   => :delete,
-      :class    => "btn negative",
-      :confirm => "Are you sure you want to delete the '#{year.name}' school year?" %></span>
-    <%= link_to year.name, edit_grading_period_path(year) %>
+    <span style="float:right;"><%= button_to 'Delete',
+        { :controller => :school_years, :action => "destroy", :id => year.id },
+        :method   => :delete,
+        :class    => "btn negative",
+        :confirm => "Are you sure you want to delete the '#{year.name}' school year?" %></span>
+      <%= link_to year.name, edit_grading_period_path(year) %>
   </h2>
 
   <table class="master">
@@ -22,7 +22,7 @@
       </tr>
     </thead>
     <tbody>
-      <% for term in year.terms %>
+      <% for term in year.terms.sort {|a,b| a.end_date <=> b.end_date} %>
         <tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= edit_grading_period_path(year) %>'">
           <%= content_tag :td, link_to(term.name, edit_grading_period_path(year)) %>
           <%= content_tag :td, term.begin_date %>

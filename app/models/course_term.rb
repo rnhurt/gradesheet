@@ -11,6 +11,8 @@ class CourseTerm < ActiveRecord::Base
 	validates_existence_of	:course
 	validates_uniqueness_of :course_id, :scope =>  :term_id
 
+  delegate :school_year, :to => :term
+
   # Calculate a students current grade for a particular course & term.
   def calculate_grade(student_id)
     # Set up some variables

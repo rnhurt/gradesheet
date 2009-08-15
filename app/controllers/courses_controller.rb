@@ -37,7 +37,7 @@ class CoursesController < ApplicationController
     @course = Course.new(params[:course])
     
     # Force the course to be created by the current user
-		@course.teacher_id = current_user.id
+		@course.teacher = current_user
 
     # Insert the grading terms
     @course.terms << SchoolYear.find(params[:school_year][:id]).terms

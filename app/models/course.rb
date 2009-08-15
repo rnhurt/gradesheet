@@ -3,12 +3,13 @@ class Course < ActiveRecord::Base
   before_destroy 	:ensure_no_children
   
   belongs_to	:teacher
-  belongs_to  :school_year
   belongs_to  :grading_scale
+  
   has_many		:enrollments
   has_many    :course_terms
   has_many    :terms,                   :through => :course_terms
   has_many		:students,                :through => :enrollments
+
   
   validates_existence_of :teacher, :message => "isn't a known teacher."
   validates_existence_of :grading_scale
@@ -21,7 +22,11 @@ class Course < ActiveRecord::Base
   named_scope :active, :include => :terms,
     :conditions	=> ["date_ranges.active = ?", true],
     :order => ["courses.name ASC"]
-    
+
+#  def self.find_by_school_year
+#    find_all_by_term
+#  end
+
   
   # Build a JavaScript function that converts a score to a letter grade based
   # on the grading scale of the course.
@@ -47,7 +52,7 @@ class Course < ActiveRecord::Base
   
   # Ensure that the user does not delete a record without first cleaning up
   # any records that use it.  This could cause a cascading effect, wiping out
-  # more data than expected.	
+  # more data than expected.
   # FIXME
   def ensure_no_children
     #		unless self.assignments.empty?

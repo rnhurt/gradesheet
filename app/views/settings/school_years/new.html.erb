@@ -1,3 +1,4 @@
+<%# TODO: refactor and combine with the edit view %>
 <% content_for :left do %>
   <%= render :partial => 'settings/settings_list' %>
 <% end %>
@@ -19,7 +20,7 @@
         <%= render :partial => "term", :collection => @year.terms %>
       </div>
       
-      <%= link_to_function "Add a period" do |page|
+      <%= link_to_function "Add a grading period" do |page|
         page.insert_html :bottom, :terms, :partial => "term", :object => Term.new
       end %>
     </fieldset>

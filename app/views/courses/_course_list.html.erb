@@ -2,7 +2,8 @@
   <table id='courses' class='master'>
     <thead>
       <tr>
-        <th>Course Name <%= "(#{@courses.length})" unless @courses.blank? %></th>
+        <th>Name <%= "(#{@courses.length})" unless @courses.blank? %></th>
+        <th>Year</th>
       </tr>
     </thead>
     <tbody>
@@ -12,6 +13,9 @@
             onclick="location.href='<%= url_for( :action => "edit", :id => course.id ) %>'" >
           <td>
             <%= link_to( course.name, :action => "edit", :id => course.id ) %>
+          </td>
+          <td>
+            <%= course.terms[0].school_year.name  %>
           </td>
         </tr>
       <% end %>

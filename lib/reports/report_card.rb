@@ -13,20 +13,20 @@ class ReportCard
 		# Allow the user to select a single student or multiple students.
 		students	= Student.all()
 		homerooms	= Student.find_homerooms()
-		terms	= Term.active.all().sort{|a,b| a.end_date <=> b.end_date}
+		years = SchoolYear.all #.sort{|a,b| a.end_date <=> b.end_date}
 		
     params = <<-EOS
 	<form action="/reports/report_card.pdf" method="get">
 	  <fieldset>
 	    <legend>Report Card</legend>
 	    
-		<label>Grading Period</label>
-		<select id="term_id" name="term_id">
+		<label>School Year</label>
+		<select id="school_year_id" name="school_year_id">
     EOS
 
 		# List each active grading period
-		terms.each do |t|
-			params += "<option value='#{t.id}'>#{t.name}</option>"
+		years.each do |year|
+			params += "<option value='#{year.id}'>#{year.name}</option>"
 		end
 
     params += <<-EOS
@@ -73,7 +73,7 @@ class ReportCard
   # Build the report as a PDF and send it to the browser.
 	def self.draw(params)
 	  # Gather the required data from the database
-	  term = Term.find(params[:term_id])
+	  school_year = SchoolYear.find(params[:school_year_id])
 
 	  if params[:student_id].nil? then
   	  # Process a whole homeroom
@@ -114,10 +114,12 @@ class ReportCard
       
       # Loop through each student
       students.each_with_index do |student, sindex|
-
         # Count the number of pages each student requires so that we can duplex properly
         student_page_count = 0
-                  
+
+        # Get the courses this student is enrolled in for the school year
+        @courses = Course.all
+
         # Build the page header
         header margin_box.top_left do
           # Insert the school logo
@@ -130,7 +132,7 @@ class ReportCard
           
           # Insert the student information
           mask(:y) { text "Homeroom: #{student.homeroom}", :align => :center }
-          mask(:y) { text "Term: #{term.name}", :align => :right }
+          mask(:y) { text "School Year: #{school_year.name}", :align => :right }
           text "Student: #{student.full_name}", :align => :left, :size => 10
           
           stroke_horizontal_rule    # make it look pretty        
@@ -156,7 +158,7 @@ class ReportCard
         # Print the grading keys
         # FIXME: There is probably a more "Ruby" way to do this...
         scales = Array.new
-        student.courses.each { |course| scales.push(course.grading_scale) }
+        @courses.each { |course| scales.push(course.grading_scale) }
         ReportCard.print_keys(scales)
 
         # Set the default column cursor position
@@ -167,8 +169,8 @@ class ReportCard
         font "Helvetica"
         text_options.update(:size => 7, :align => :left)
         
-    	  # Print the grades for each class
-    	  student.courses.each_with_index do |course, index|
+    	  # Print the grades for each course
+    	  @courses.each_with_index do |course, index|
 
     	    # Try not to overflow into the next page
 	        new_page if cursor < 300
@@ -177,42 +179,40 @@ class ReportCard
           data = []
           skill_hash = {}
           headers = ["#{course.name}\n  #{course.teacher.full_name}"]
-          course.course_terms.each do |course_term|
+          course.course_terms.sort{|a,b| a.term.end_date <=> b.term.end_date}.each do |course_term|
             grade = course_term.calculate_grade(student.id)
-            header = "#{grade[:letter]}"
+            header = "#{course_term.term.name}\n #{grade[:letter]}"
             header += " (#{grade[:score].round}%)" if grade[:score] >= 0
             headers <<  header
 
+            # Gather the scores for each skill in each term of this course
             course_term.course_term_skills.each do |ctskill|
-              debugger
-              puts " ****** #{ctskill.score(student.id)}"
+              puts " ***score*** #{ctskill.supporting_skill.description}"
               #              skill_hash[ctskill.supporting_skill] = { :term => course_term, :score => ctskill.score(student.id) }
               data << ["#{ctskill.supporting_skill.description}","A","B",""]
             end
           end
 
           # Gather the skills assessment scores
-          #          data = [
-          #            ["Application","A","B"," "],
-          #            ["Test/quizes","B","B"," "],
-          #            ["Test/quizes","B","B"," "],
-          #            ["Test/quizes","B","B"," "]
-          #    			  ["Class participation","C","C"," ","C"],
-          #    			  ["Projects/activities","A","A"," ","A"],
-          #    			  ["Homework","C","C"," ","C"],
-          #    			  ["Work ethic","C","C"," ","C"],
-          #    			  ["Behavior","C","C"," ","C"],
-          #    			  ["Work ethic","C","C"," ","C"],
-          #    			  ["Behavior","C","C"," ","C"],
-          #    			  ["Work ethic","C","C"," ","C"],
-          #    			  ["Behavior","C","C"," ","C"],
-          #    			  ["Work ethic","C","C"," ","C"],
-          #    			  ["Behavior","C","C"," ","C"],
-          #    			  ["Work ethic","C","C"," ","C"],
-          #    			  ["Behavior","C","C"," ","C"],
-          #    			  [" "," "," "," "," "],
-          #    			  [" "," "," "," "," "]
-          #          ]
+                    data = [
+                      ["Application","A","B"," "],
+                      ["Test/quizes","B","B"," "],
+                      ["Test/quizes","B","B"," "],
+                      ["Test/quizes","B","B"," "]
+#              			  ["Homework","C","C"," ","C"],
+#              			  ["Work ethic","C","C"," ","C"],
+#              			  ["Behavior","C","C"," ","C"],
+#              			  ["Work ethic","C","C"," ","C"],
+#              			  ["Behavior","C","C"," ","C"],
+#              			  ["Work ethic","C","C"," ","C"],
+#              			  ["Behavior","C","C"," ","C"],
+#              			  ["Work ethic","C","C"," ","C"],
+#              			  ["Behavior","C","C"," ","C"],
+#              			  ["Work ethic","C","C"," ","C"],
+#              			  ["Behavior","C","C"," ","C"],
+#              			  [" "," "," "," "," "],
+#              			  [" "," "," "," "," "]
+                    ]
 
 
           # Print the course data alternately on the left & right side of the page

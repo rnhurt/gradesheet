@@ -32,11 +32,11 @@
 
 <div id="students"><%= render :partial => "students_tab" %></div>
 
-<% @course.terms.sort!{ |a,b| a.end_date <=> b.end_date } %>
+<% @course.course_terms.sort!{ |a,b| a.term.end_date <=> b.term.end_date } %>
 
 <ul id="course_tabs" class="subsection_tabs">
-  <% @course.terms.each do |term| %>
-    <li class="tab"><%= link_to term.name, "\##{term.name}" %></li>
+  <% @course.course_terms.each do |course_term| %>
+    <li class="tab"><%= link_to course_term.term.name, "\##{course_term.term.name}" %></li>
   <% end %>
 </ul>
 

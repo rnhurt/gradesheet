@@ -29,31 +29,24 @@ class AssignmentsController < ApplicationController
 
   def create
     @assignment = Assignment.new(params[:assignment])
-#   	course_term = CourseTerm.find_by_course_id(params[:assignment][:course_id])
-#    @course = course_term.course
-#    @terms = Term.find(:all)
 
-    respond_to do |format|
-      if @assignment.save
-        flash[:notice] = "Assignment '#{@assignment.name}' was created successfully."
-        format.html { redirect_to :action => :show, :id => @assignment.course_term.id }
-      else
-        format.html { render :action => :edit }
-      end
+    if @assignment.save
+      flash[:notice] = "Assignment '#{@assignment.name}' was created successfully."
+      redirect_to :action => :show, :id => @assignment.course_term.id
+    else
+      render :action => :edit
     end
   end
 
   def update
     @assignment = Assignment.find(params[:id])
 
-    respond_to do |format|
-      if @assignment.update_attributes(params[:assignment])
-        flash[:notice] = "Assignment '#{@assignment.name}' was updated successfully."
-        format.html { redirect_to :action => :show, :id => @assignment.course_term.id }
-      else
-		   	@course_term = CourseTerm.find(params[:assignment][:course_term_id])
-        format.html { render :action => "edit" }
-      end
+    if @assignment.update_attributes(params[:assignment])
+      flash[:notice] = "Assignment '#{@assignment.name}' was updated successfully."
+      redirect_to :action => :show, :id => @assignment.course_term.id
+    else
+      @course_term = CourseTerm.find(params[:assignment][:course_term_id])
+      render :action => "edit"
     end
   end
 

@@ -11,6 +11,7 @@ class Assignment < ActiveRecord::Base
   validates_presence_of			:possible_points
   
   validates_existence_of		:course_term
+  validates_existence_of		:assignment_category
 
   # Return a date formated for display as an assignment due date.
   def due_date_formated

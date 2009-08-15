@@ -4,7 +4,7 @@ class Term < DateRange
 	
   belongs_to  :school_year
 	belongs_to  :courses
-#	has_many :comments
+  #	has_many :comments
 
 	validates_length_of		:name, :within => 1..20
   validates_date        :begin_date, :before => :end_date
@@ -19,8 +19,8 @@ class Term < DateRange
 	# The current Grading Term is used as a default value in a lot of places.  Creating
 	# a new Course, running a report, etc. all show the user the current term.
 	named_scope	:current, :conditions => ["? BETWEEN begin_date and end_date ", Proc.new { Date.today }]
-
-private   
+  
+  private
 
   # Ensure that the user does not delete a record without first cleaning up
   # any records that use it.  This could cause a cascading effect, wiping out

@@ -8,7 +8,7 @@
     </thead>
     <tbody>
       <% @courses.each do |course| %>
-        <% course.course_terms.each do |ct| %>
+        <% course.course_terms.sort{|a,b| a.term.end_date <=> b.term.end_date}.each do |ct| %>
           <tr class="<%= cycle('even', 'odd') + (current_page?(:id => ct) ? ' current' : '') %>"
               onclick="location.href='<%= url_for( :action => "show", :id => ct.id ) %>'" >
             <td>

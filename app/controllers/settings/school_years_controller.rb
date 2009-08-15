@@ -1,11 +1,11 @@
 class Settings::SchoolYearsController < SettingsController
 
   def index
-    @years = SchoolYear.find(:all, :order => "end_date DESC", :include => :terms)
+    @years = SchoolYear.all(:order => "end_date DESC", :include => :terms)
   end
 
   def show
-    @year = SchoolYear.find(params[:id])
+    @year = SchoolYear.find(params[:id], :include => :terms)
   end
 
 

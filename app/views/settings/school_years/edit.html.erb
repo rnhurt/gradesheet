@@ -16,7 +16,7 @@
       <br />
 
       <div id="terms">
-        <%= render :partial => "term", :collection => @year.terms %>
+        <%= render :partial => "term", :collection => @year.terms.sort {|a,b| a.end_date <=> b.end_date} %>
       </div>
 
       <%= link_to_function "Add a grading period" do |page|
