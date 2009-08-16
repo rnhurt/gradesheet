@@ -10,7 +10,6 @@ class Course < ActiveRecord::Base
   has_many    :terms,                   :through => :course_terms
   has_many		:students,                :through => :enrollments
 
-  
   validates_existence_of :teacher, :message => "isn't a known teacher."
   validates_existence_of :grading_scale
   
@@ -23,14 +22,12 @@ class Course < ActiveRecord::Base
     :conditions	=> ["date_ranges.active = ?", true],
     :order => ["courses.name ASC"]
 
-  named_scope :by_school_year, lambda { |*school_year| { :include => :terms, :conditions => ["date_ranges.school_year_id = ?", school_year ||= SchoolYear.current.first] } }
-
-#  named_scope :current, lambda { |*date| { :conditions => ["? BETWEEN begin_date and end_date ", Date.today] } }
-  
-#  def self.find_by_school_year
-#    find_all_by_term
-#  end
-
+  # Find all the courses for a particular school year
+  named_scope :by_school_year, lambda { |*school_year| 
+    { :include => :terms,
+      :conditions => ["date_ranges.school_year_id = ?", school_year ||= SchoolYear.current]
+    }
+  }
   
   # Build a JavaScript function that converts a score to a letter grade based
   # on the grading scale of the course.
