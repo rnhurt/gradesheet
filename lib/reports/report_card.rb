@@ -118,7 +118,7 @@ class ReportCard
         student_page_count = 0
 
         # Get the courses this student is enrolled in for the school year
-        @courses = Course.all
+        @courses = student.courses.by_school_year(school_year)
 
         # Build the page header
         header margin_box.top_left do
