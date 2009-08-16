@@ -177,6 +177,7 @@ class ReportCard
 
     		  # Gather the grades for each term in this course
           data = []
+          skills = []
           skill_hash = {}
           headers = ["#{course.name}\n  #{course.teacher.full_name}"]
           course.course_terms.sort{|a,b| a.term.end_date <=> b.term.end_date}.each do |course_term|
@@ -185,34 +186,55 @@ class ReportCard
             header += " (#{grade[:score].round}%)" if grade[:score] >= 0
             headers <<  header
 
-            # Gather the scores for each skill in each term of this course
+            # Get a list of all supporting skills for all terms for this course
             course_term.course_term_skills.each do |ctskill|
-              puts " ***score*** #{ctskill.supporting_skill.description}"
-              #              skill_hash[ctskill.supporting_skill] = { :term => course_term, :score => ctskill.score(student.id) }
-              data << ["#{ctskill.supporting_skill.description}","A","B",""]
+              skills << ctskill
             end
+
+            #            # Gather the scores for each skill in each term of this course
+            #              # is it in the hash already?
+            #              if skill_hash.has_key?(ctskill.supporting_skill)
+            #                # yes, add this value to it
+            #                skill_hash[ctskill.supporting_skill] << ctskill.score(student.id)
+            #              else
+            #                # no, insert a new array with this value
+            #                skill_hash[ctskill.supporting_skill] = [ctskill.score(student.id)]
+            #              end
+
+             
+            #              puts "score #{ctskill.score(student.id)} ***skill*** #{ctskill.supporting_skill.description}"
+            #              puts " ***skill*** #{ctskill.supporting_skill.description}"
+            #              skill_hash[ctskill.supporting_skill] = { :term => course_term, :score => ctskill.score(student.id) }
+            #          end
+#            puts " ** skill_hash #{skill_hash.to_a}"
+          end
+          debugger
+
+          # Loop through the supporting skills and get the students score
+          skills.each do |skill|
+            
           end
 
           # Gather the skills assessment scores
-                    data = [
-                      ["Application","A","B"," "],
-                      ["Test/quizes","B","B"," "],
-                      ["Test/quizes","B","B"," "],
-                      ["Test/quizes","B","B"," "]
-#              			  ["Homework","C","C"," ","C"],
-#              			  ["Work ethic","C","C"," ","C"],
-#              			  ["Behavior","C","C"," ","C"],
-#              			  ["Work ethic","C","C"," ","C"],
-#              			  ["Behavior","C","C"," ","C"],
-#              			  ["Work ethic","C","C"," ","C"],
-#              			  ["Behavior","C","C"," ","C"],
-#              			  ["Work ethic","C","C"," ","C"],
-#              			  ["Behavior","C","C"," ","C"],
-#              			  ["Work ethic","C","C"," ","C"],
-#              			  ["Behavior","C","C"," ","C"],
-#              			  [" "," "," "," "," "],
-#              			  [" "," "," "," "," "]
-                    ]
+          data = [
+            ["Application","A","B"," "],
+            ["Test/quizes","B","B"," "],
+            ["Test/quizes","B","B"," "],
+            ["Test/quizes","B","B"," "]]
+          #              			  ["Homework","C","C"," ","C"],
+          #              			  ["Work ethic","C","C"," ","C"],
+          #              			  ["Behavior","C","C"," ","C"],
+          #              			  ["Work ethic","C","C"," ","C"],
+          #              			  ["Behavior","C","C"," ","C"],
+          #              			  ["Work ethic","C","C"," ","C"],
+          #              			  ["Behavior","C","C"," ","C"],
+          #              			  ["Work ethic","C","C"," ","C"],
+          #              			  ["Behavior","C","C"," ","C"],
+          #              			  ["Work ethic","C","C"," ","C"],
+          #              			  ["Behavior","C","C"," ","C"],
+          #              			  [" "," "," "," "," "],
+          #              			  [" "," "," "," "," "]
+          #                    ]
 
 
           # Print the course data alternately on the left & right side of the page
@@ -251,24 +273,24 @@ class ReportCard
     
     
     # Render the document
-	  @pdf.render
-	end
+    @pdf.render
+  end
   	
-	# Print the grading key for a specified course
-	def self.print_keys(scales)
-	  # Check for something to print...
-	  return unless !scales.empty?
+  # Print the grading key for a specified course
+  def self.print_keys(scales)
+    # Check for something to print...
+    return unless !scales.empty?
 	  
-	  # Remove any duplicates
-	  scales.uniq!
+    # Remove any duplicates
+    scales.uniq!
       
     @pdf.instance_eval do
       pad_bottom(0) do
         bounding_box [0, cursor - HEADER_HEIGHT], :width => bounds.width do
 
           # Set up the text options
-    	    font "Helvetica"
-    	    text_options.update(:size => 7, :align => :left)
+          font "Helvetica"
+          text_options.update(:size => 7, :align => :left)
 
           scales.each do |scale|
             # Print the grading scale header
@@ -281,7 +303,7 @@ class ReportCard
               if index.even?
                 mask(:y) {
                   span(bounds.width/2 - GUTTER_SIZE, :position => :left) do
-                    text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"            
+                    text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
                   end
                 }
               else
@@ -295,31 +317,31 @@ class ReportCard
           end
         end # bounding_box
       end # pad_bottom
-		end # instance_eval
+    end # instance_eval
 
 		
-	end
+  end
 
   def self.print_skills
-	  # Subheadings	
-	  bounding_box([250,bounds.height], :width => 250, :height => bounds.height) do
-		  data = [
-			  ["(+)","Exceptional performance"],
+    # Subheadings
+    bounding_box([250,bounds.height], :width => 250, :height => bounds.height) do
+      data = [
+        ["(+)","Exceptional performance"],
         ["(b)","Satisfactory performance"],
-  		  ["(N)","Needs improvement"],
-			  ["(NA)","Not applicable"]]
-		  table data,
-			  :vertical_padding	=> -2,
-			  :border_width => 0
+        ["(N)","Needs improvement"],
+        ["(NA)","Not applicable"]]
+      table data,
+        :vertical_padding	=> -2,
+        :border_width => 0
 
-		  bounding_box([bounds.width/1.5,bounds.height-10], :width => 75, :height => 20) do
-			  fill_color "C0C0C0"
-			  fill_and_stroke_rectangle [bounds.left-2,bounds.top+2], bounds.width, bounds.height
+      bounding_box([bounds.width/1.5,bounds.height-10], :width => 75, :height => 20) do
+        fill_color "C0C0C0"
+        fill_and_stroke_rectangle [bounds.left-2,bounds.top+2], bounds.width, bounds.height
 
-			  fill_color "000000"
-			  text "* - Accommodations and/or modifications"
-		  end
-	  end			
-  end		  
+        fill_color "000000"
+        text "* - Accommodations and/or modifications"
+      end
+    end
+  end
 	
 end
