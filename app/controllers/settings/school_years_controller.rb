@@ -36,6 +36,7 @@ class Settings::SchoolYearsController < SettingsController
     params[:school_year][:existing_term_attributes] ||= {}
 
     @year = SchoolYear.find(params[:id])
+    
     if @year.update_attributes(params[:school_year])
       flash[:notice] = "School year '#{@year.name}' was successfully updated."
       redirect_to :action => :index 

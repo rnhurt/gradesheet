@@ -3,7 +3,8 @@ class Term < DateRange
 	before_destroy	:ensure_no_children
 	
   belongs_to  :school_year
-	belongs_to  :courses
+	has_many    :course_terms
+  has_many    :courses,     :through => :course_terms
   #	has_many :comments
 
 	validates_length_of		:name, :within => 1..20
@@ -18,7 +19,7 @@ class Term < DateRange
 	
 	# The current Grading Term is used as a default value in a lot of places.  Creating
 	# a new Course, running a report, etc. all show the user the current term.
-  named_scope :current, lambda { |*date| { :conditions => ["? BETWEEN begin_date and end_date ", Date.today] } }
+  named_scope :current, lambda { || { :conditions => ["? BETWEEN begin_date and end_date ", Date.today] } }
   
   private
 

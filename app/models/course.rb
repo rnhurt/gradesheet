@@ -7,8 +7,8 @@ class Course < ActiveRecord::Base
   
   has_many		:enrollments
   has_many    :course_terms
-  has_many    :terms,                   :through => :course_terms
-  has_many		:students,                :through => :enrollments
+  has_many    :terms,     :through => :course_terms
+  has_many		:students,  :through => :enrollments
 
   validates_existence_of :teacher, :message => "isn't a known teacher."
   validates_existence_of :grading_scale

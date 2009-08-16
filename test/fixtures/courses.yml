@@ -3,6 +3,11 @@ english-08:
   teacher: teachera
   grading_scale: s
 
+english-09:
+  name: English
+  teacher: teachera
+  grading_scale: s
+
 math-08:
   name: Math
   teacher: teachera
