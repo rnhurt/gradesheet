@@ -6,6 +6,9 @@ class SchoolYear < DateRange
   validates_length_of		:name, :within => 1..20
   validates_associated  :terms, :message => "are not correct."
 
+  named_scope :current, :conditions => { "id" => Term.current.first.school_year_id }
+
+  
   # Calculate the beginning of the school year by finding the begin date of the
   # first term in the school year
   def begin_date

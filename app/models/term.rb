@@ -18,7 +18,7 @@ class Term < DateRange
 	
 	# The current Grading Term is used as a default value in a lot of places.  Creating
 	# a new Course, running a report, etc. all show the user the current term.
-	named_scope	:current, :conditions => ["? BETWEEN begin_date and end_date ", Proc.new { Date.today }]
+  named_scope :current, lambda { |*date| { :conditions => ["? BETWEEN begin_date and end_date ", Date.today] } }
   
   private
 
