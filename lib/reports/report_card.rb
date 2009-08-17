@@ -93,14 +93,18 @@ class ReportCard
 
       # Generate the table containing the course grade information
       def make_table(headers, data)
-        table(
-          data,
-          :headers      => headers,
-          :header_color => "C0C0C0",
-          :font_size    => 7,
-          :border_style => :grid,
-          :border_width => 0.5,
-          :width        => bounds.width)
+        if data.blank?
+          text "No assignments found for course '#{@course.name}'."
+        else
+          table(
+            data,
+            :headers      => headers,
+            :header_color => "C0C0C0",
+            :font_size    => 7,
+            :border_style => :grid,
+            :border_width => 0.5,
+            :width        => bounds.width)
+        end
       end
 
       # Generate a new page for the report.
@@ -172,21 +176,21 @@ class ReportCard
 
 
     	  # Print the grades for each course
-    	  @courses.each_with_index do |course, index|
+    	  @courses.each_with_index do |@course, index|
 
     	    # Try not to overflow into the next page
 	        new_page if cursor < 300
 
           data = []
           data_hash = {}
-          headers = ["#{course.name}\n  #{course.teacher.full_name}"]
+          headers = ["#{@course.name}\n  #{@course.teacher.full_name}"]
 
           test_data = []
-          course.course_terms.each{|ct| test_data << "ct#{ct.id}"}
+          @course.course_terms.each{|ct| test_data << "ct#{ct.id}"}
           skill_score = Struct.new(:supporting_skill, *test_data)
           
     		  # Gather the grades for each term in this course
-          course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each_with_index do |course_term, index|
+          @course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each_with_index do |course_term, ctindex|
             grade = course_term.calculate_grade(student.id)
             header = "#{course_term.term.name}\n #{grade[:letter]}"
             header += " (#{grade[:score].round}%)" if grade[:score] >= 0
@@ -199,7 +203,7 @@ class ReportCard
                 skill_score.new(ctskill.supporting_skill.description))
 
               # Get the score for the current course_term_skill
-              temp[index+1] = ctskill.score(student)
+              temp[ctindex+1] = ctskill.score(student)
               # Store it back into the hash for data
               data_hash[ctskill.supporting_skill] = temp
             end
@@ -207,7 +211,7 @@ class ReportCard
 
           # Create the data for the table
           data_hash.values.each{|value| data << value.to_a}
-          
+
           # Sort the skills alphabetically
           data.sort!
 
