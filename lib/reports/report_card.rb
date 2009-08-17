@@ -1,4 +1,5 @@
 require "date"
+
 # This is the standard report card format and prints on US LEGAL sized paper
 # by default.  It can print a single student or an array of students (i.e. a whole class)
 # and will separate each report into even number of pages so that duplex 
@@ -168,19 +169,23 @@ class ReportCard
         # Set up the text options
         font "Helvetica"
         text_options.update(:size => 7, :align => :left)
-        
+
+
     	  # Print the grades for each course
     	  @courses.each_with_index do |course, index|
 
     	    # Try not to overflow into the next page
 	        new_page if cursor < 300
 
-    		  # Gather the grades for each term in this course
           data = []
-          skills = []
-          skill_hash = {}
           headers = ["#{course.name}\n  #{course.teacher.full_name}"]
-          course.course_terms.sort{|a,b| a.term.end_date <=> b.term.end_date}.each do |course_term|
+
+          test_data = []
+          course.course_terms.each{|ct| test_data << "ct#{ct.id}"}
+          skill_score = Struct.new(:supporting_skill, *test_data)
+          
+    		  # Gather the grades for each term in this course
+          course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each_with_index do |course_term, index|
             grade = course_term.calculate_grade(student.id)
             header = "#{course_term.term.name}\n #{grade[:letter]}"
             header += " (#{grade[:score].round}%)" if grade[:score] >= 0
@@ -188,55 +193,13 @@ class ReportCard
 
             # Get a list of all supporting skills for all terms for this course
             course_term.course_term_skills.each do |ctskill|
-              skills << ctskill
+              blah = skill_score.new()
+              blah.supporting_skill = ctskill.supporting_skill.description
+              blah[index+1] = ctskill.score(student)
+              data << blah.to_a
             end
-
-            #            # Gather the scores for each skill in each term of this course
-            #              # is it in the hash already?
-            #              if skill_hash.has_key?(ctskill.supporting_skill)
-            #                # yes, add this value to it
-            #                skill_hash[ctskill.supporting_skill] << ctskill.score(student.id)
-            #              else
-            #                # no, insert a new array with this value
-            #                skill_hash[ctskill.supporting_skill] = [ctskill.score(student.id)]
-            #              end
-
-             
-            #              puts "score #{ctskill.score(student.id)} ***skill*** #{ctskill.supporting_skill.description}"
-            #              puts " ***skill*** #{ctskill.supporting_skill.description}"
-            #              skill_hash[ctskill.supporting_skill] = { :term => course_term, :score => ctskill.score(student.id) }
-            #          end
-#            puts " ** skill_hash #{skill_hash.to_a}"
           end
-          debugger
-
-          # Loop through the supporting skills and get the students score
-          skills.each do |skill|
-            
-          end
-
-          # Gather the skills assessment scores
-          data = [
-            ["Application","A","B"," "],
-            ["Test/quizes","B","B"," "],
-            ["Test/quizes","B","B"," "],
-            ["Test/quizes","B","B"," "]]
-          #              			  ["Homework","C","C"," ","C"],
-          #              			  ["Work ethic","C","C"," ","C"],
-          #              			  ["Behavior","C","C"," ","C"],
-          #              			  ["Work ethic","C","C"," ","C"],
-          #              			  ["Behavior","C","C"," ","C"],
-          #              			  ["Work ethic","C","C"," ","C"],
-          #              			  ["Behavior","C","C"," ","C"],
-          #              			  ["Work ethic","C","C"," ","C"],
-          #              			  ["Behavior","C","C"," ","C"],
-          #              			  ["Work ethic","C","C"," ","C"],
-          #              			  ["Behavior","C","C"," ","C"],
-          #              			  [" "," "," "," "," "],
-          #              			  [" "," "," "," "," "]
-          #                    ]
-
-
+          
           # Print the course data alternately on the left & right side of the page
           if index.even? then
             bounding_box([0, @left_cursor], :width => (bounds.width / 2) - GUTTER_SIZE) do
