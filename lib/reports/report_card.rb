@@ -178,6 +178,7 @@ class ReportCard
 	        new_page if cursor < 300
 
           data = []
+          data_hash = {}
           headers = ["#{course.name}\n  #{course.teacher.full_name}"]
 
           test_data = []
@@ -193,13 +194,23 @@ class ReportCard
 
             # Get a list of all supporting skills for all terms for this course
             course_term.course_term_skills.each do |ctskill|
-              blah = skill_score.new()
-              blah.supporting_skill = ctskill.supporting_skill.description
-              blah[index+1] = ctskill.score(student)
-              data << blah.to_a
+              # Get the existing skill_score, or create a new one
+              temp = data_hash.fetch(ctskill.supporting_skill,
+                skill_score.new(ctskill.supporting_skill.description))
+
+              # Get the score for the current course_term_skill
+              temp[index+1] = ctskill.score(student)
+              # Store it back into the hash for data
+              data_hash[ctskill.supporting_skill] = temp
             end
           end
+
+          # Create the data for the table
+          data_hash.values.each{|value| data << value.to_a}
           
+          # Sort the skills alphabetically
+          data.sort!
+
           # Print the course data alternately on the left & right side of the page
           if index.even? then
             bounding_box([0, @left_cursor], :width => (bounds.width / 2) - GUTTER_SIZE) do
