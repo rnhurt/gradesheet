@@ -1,7 +1,7 @@
 # Contains the grading scale data used for each course.
 class GradingScale < ActiveRecord::Base
-	before_destroy	:ensure_no_children
-  after_update  :save_ranges
+	before_destroy  :ensure_no_children
+  after_update    :save_ranges
   
 	has_many	:courses
 	has_many  :scale_ranges, :dependent => :destroy
@@ -24,6 +24,9 @@ class GradingScale < ActiveRecord::Base
 
   # Save new grade ranges
   def new_range_attributes=(range_attributes)
+    # Remove invalid ranges
+    range_attributes.reject!{|i| i[:letter_grade].blank? || i[:min_score].blank?}
+    
     range_attributes.each do |attributes|
       scale_ranges.build(attributes)
     end

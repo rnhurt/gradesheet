@@ -7,9 +7,7 @@
 <div class='box span-15 last'>
   <% form_for @scale do |f| %>
     <fieldset>
-      <legend>Grading Scales</legend>
-
-      <%= f.label :name, {}, :class => 'req' %>
+      <%= f.label :name, "Grading Scale Name", :class => 'req' %>
       <%= f.text_field :name, :class => "focus" %>
       <br />
       
