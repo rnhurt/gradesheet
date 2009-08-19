@@ -2,7 +2,9 @@
 
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
-config.cache_classes = true
+# FIXME - this is a work-around for weird migration failures on PostgreSQL.  Should be fixed in Rails 2.3
+#    http://code.google.com/p/activescaffold/issues/detail?id=638#c1
+config.cache_classes = (File.basename($0) == "rake" && ARGV.include?("db:migrate")) ? false : true
 
 # Use a different logger for distributed setups
 # config.logger = SyslogLogger.new
