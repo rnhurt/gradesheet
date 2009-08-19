@@ -6,7 +6,7 @@ class SchoolYear < DateRange
   validates_length_of		:name, :within => 1..20
   validates_associated  :terms, :message => "are not correct."
 
-
+  # Return the current school year record, if there is one.
   def self.current_year
     term = Term.first
     term ? SchoolYear.first(:conditions => { "id" => term.school_year }) : []
@@ -26,6 +26,9 @@ class SchoolYear < DateRange
   
   # Create new terms for this school year
   def new_term_attributes=(term_attributes)
+    # FIXME - Remove all "bad" attributes (empty active? checkboxes)
+    term_attributes.reject!{|i| i[:name].blank?}
+
     term_attributes.each do |attributes|
       terms.build(attributes)
     end
