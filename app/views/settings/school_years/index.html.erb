@@ -2,6 +2,16 @@
   <%= render :partial => 'settings/settings_list' %>
 <% end %>
 
+  <table class="master">
+    <tbody>
+      <tr>
+        <td colspan='0'>
+          <%= link_to "Add Period", new_grading_period_path(), :class => 'btn positive' %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
 <% for year in @years %>
   <h2>
     <span style="float:right;"><%= button_to 'Delete',
@@ -32,4 +42,6 @@
       <% end %>
     </tbody>
   </table>
+
 <% end %>
+
