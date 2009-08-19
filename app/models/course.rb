@@ -25,7 +25,7 @@ class Course < ActiveRecord::Base
   # Find all the courses for a particular school year
   named_scope :by_school_year, lambda { |*school_year| 
     { :include => :terms,
-      :conditions => ["date_ranges.school_year_id = ?", school_year ||= SchoolYear.current]
+      :conditions => ["date_ranges.school_year_id = ?", school_year ||= SchoolYear.current_year]
     }
   }
   
