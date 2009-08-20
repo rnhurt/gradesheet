@@ -10,7 +10,8 @@ class StaticData < ActiveRecord::Base
     @site_name ||= lookup('SITE_NAME') 
   end
   def self.site_name=(value)
-    update('SITE_NAME', value) 
+    update('SITE_NAME', value)
+    @site_name = value
   end
 
   # TAG_LINE
@@ -18,7 +19,8 @@ class StaticData < ActiveRecord::Base
     @tag_line ||= lookup('TAG_LINE') 
   end
   def self.tag_line=(value) 
-    update('TAG_LINE', value) 
+    update('TAG_LINE', value)
+    @tag_line = value
   end
 
   
