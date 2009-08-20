@@ -16,7 +16,7 @@ module ActsAsAuthenticTest
       u = User.new
       u.single_access_token = users(:ben).single_access_token
       assert !u.valid?
-      assert u.errors.on(:single_access_token)
+      assert u.errors[:single_access_token].size > 0
     end
     
     def test_before_validation_reset_single_access_token
@@ -34,6 +34,11 @@ module ActsAsAuthenticTest
       assert_not_equal old_single_access_token, ben.single_access_token
       
       User.change_single_access_token_with_password = false
+    end
+    
+    def test_after_password_set_is_not_called
+      ldaper = Ldaper.new
+      assert ldaper.save
     end
   end
 end

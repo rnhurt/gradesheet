@@ -33,7 +33,7 @@ module ActsAsAuthenticTest
     end
     
     def test_validates_format_of_login_field_options_config
-      default = {:with => /\A\w[\w\.+-_@ ]+\z/, :message => I18n.t('error_messages.login_invalid', :default => "should use only letters, numbers, spaces, and .-_@ please.")}
+      default = {:with => /\A\w[\w\.+\-_@ ]+\z/, :message => I18n.t('error_messages.login_invalid', :default => "should use only letters, numbers, spaces, and .-_@ please.")}
       assert_equal default, User.validates_format_of_login_field_options
       assert_equal default, Employee.validates_format_of_login_field_options
       
@@ -57,41 +57,41 @@ module ActsAsAuthenticTest
       u = User.new
       u.login = "a"
       assert !u.valid?
-      assert u.errors.on(:login)
+      assert u.errors[:login].size > 0
       
       u.login = "aaaaaaaaaa"
       assert !u.valid?
-      assert !u.errors.on(:login)
+      assert u.errors[:login].size == 0
     end
     
     def test_validates_format_of_login_field
       u = User.new
       u.login = "fdsf@^&*"
       assert !u.valid?
-      assert u.errors.on(:login)
+      assert u.errors[:login].size > 0
       
       u.login = "fdsfdsfdsfdsfs"
       assert !u.valid?
-      assert !u.errors.on(:login)
+      assert u.errors[:login].size == 0
       
       u.login = "dakota.dux+1@gmail.com"
       assert !u.valid?
-      assert !u.errors.on(:login)
+      assert u.errors[:login].size == 0
     end
     
     def test_validates_uniqueness_of_login_field
       u = User.new
       u.login = "bjohnson"
       assert !u.valid?
-      assert u.errors.on(:login)
+      assert u.errors[:login].size > 0
       
       u.login = "BJOHNSON"
       assert !u.valid?
-      assert u.errors.on(:login)
+      assert u.errors[:login].size > 0
       
       u.login = "fdsfdsf"
       assert !u.valid?
-      assert !u.errors.on(:login)
+      assert u.errors[:login].size == 0
     end
     
     def test_find_by_smart_case_login_field

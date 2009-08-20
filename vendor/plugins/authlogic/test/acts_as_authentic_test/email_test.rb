@@ -33,7 +33,7 @@ module ActsAsAuthenticTest
     end
     
     def test_validates_format_of_email_field_options_config
-      default = {:with => User.send(:email_regex), :message => I18n.t('error_messages.email_invalid', :default => "should look like an email address.")}
+      default = {:with => Authlogic::Regex.email, :message => I18n.t('error_messages.email_invalid', :default => "should look like an email address.")}
       assert_equal default, User.validates_format_of_email_field_options
       assert_equal default, Employee.validates_format_of_email_field_options
       
@@ -57,41 +57,41 @@ module ActsAsAuthenticTest
       u = User.new
       u.email = "a@a.a"
       assert !u.valid?
-      assert u.errors.on(:email)
+      assert u.errors[:email].size > 0
       
       u.email = "a@a.com"
       assert !u.valid?
-      assert !u.errors.on(:email)
+      assert u.errors[:email].size == 0
     end
     
     def test_validates_format_of_email_field
       u = User.new
       u.email = "aaaaaaaaaaaaa"
       assert !u.valid?
-      assert u.errors.on(:email)
+      assert u.errors[:email].size > 0 
       
       u.email = "a@a.com"
       assert !u.valid?
-      assert !u.errors.on(:email)
+      assert u.errors[:email].size == 0
       
       u.email = "dakota.dux+1@gmail.com"
       assert !u.valid?
-      assert !u.errors.on(:email)
+      assert u.errors[:email].size == 0
     end
     
     def test_validates_uniqueness_of_email_field
       u = User.new
       u.email = "bjohnson@binarylogic.com"
       assert !u.valid?
-      assert u.errors.on(:email)
+      assert u.errors[:email].size > 0
       
       u.email = "BJOHNSON@binarylogic.com"
       assert !u.valid?
-      assert u.errors.on(:email)
+      assert u.errors[:email].size > 0
       
       u.email = "a@a.com"
       assert !u.valid?
-      assert !u.errors.on(:email)
+      assert u.errors[:email].size == 0
     end
   end
 end

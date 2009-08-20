@@ -16,7 +16,7 @@ module Authlogic
         # * <tt>Default:</tt> :login or :username, if they exist
         # * <tt>Accepts:</tt> Symbol
         def login_field(value = nil)
-          config(:login_field, value, first_column_to_exist(nil, :login, :username))
+          rw_config(:login_field, value, first_column_to_exist(nil, :login, :username))
         end
         alias_method :login_field=, :login_field
         
@@ -25,7 +25,7 @@ module Authlogic
         # * <tt>Default:</tt> true
         # * <tt>Accepts:</tt> Boolean
         def validate_login_field(value = nil)
-          config(:validate_login_field, value, true)
+          rw_config(:validate_login_field, value, true)
         end
         alias_method :validate_login_field=, :validate_login_field
         
@@ -38,7 +38,7 @@ module Authlogic
         # * <tt>Default:</tt> {:within => 3..100}
         # * <tt>Accepts:</tt> Hash of options accepted by validates_length_of
         def validates_length_of_login_field_options(value = nil)
-          config(:validates_length_of_login_field_options, value, {:within => 3..100})
+          rw_config(:validates_length_of_login_field_options, value, {:within => 3..100})
         end
         alias_method :validates_length_of_login_field_options=, :validates_length_of_login_field_options
         
@@ -59,10 +59,10 @@ module Authlogic
         # merge options into it. Checkout the convenience function merge_validates_format_of_login_field_options to merge
         # options.</b>
         #
-        # * <tt>Default:</tt> {:with => /\A\w[\w\.\-_@ ]+\z/, :message => I18n.t('error_messages.login_invalid', :default => "should use only letters, numbers, spaces, and .-_@ please.")}
+        # * <tt>Default:</tt> {:with => Authlogic::Regex.login, :message => I18n.t('error_messages.login_invalid', :default => "should use only letters, numbers, spaces, and .-_@ please.")}
         # * <tt>Accepts:</tt> Hash of options accepted by validates_format_of
         def validates_format_of_login_field_options(value = nil)
-          config(:validates_format_of_login_field_options, value, {:with => /\A\w[\w\.+-_@ ]+\z/, :message => I18n.t('error_messages.login_invalid', :default => "should use only letters, numbers, spaces, and .-_@ please.")})
+          rw_config(:validates_format_of_login_field_options, value, {:with => Authlogic::Regex.login, :message => I18n.t('error_messages.login_invalid', :default => "should use only letters, numbers, spaces, and .-_@ please.")})
         end
         alias_method :validates_format_of_login_field_options=, :validates_format_of_login_field_options
         
@@ -80,7 +80,7 @@ module Authlogic
         # * <tt>Default:</tt> {:case_sensitive => false, :scope => validations_scope, :if => "#{login_field}_changed?".to_sym}
         # * <tt>Accepts:</tt> Hash of options accepted by validates_uniqueness_of
         def validates_uniqueness_of_login_field_options(value = nil)
-          config(:validates_uniqueness_of_login_field_options, value, {:case_sensitive => false, :scope => validations_scope, :if => "#{login_field}_changed?".to_sym})
+          rw_config(:validates_uniqueness_of_login_field_options, value, {:case_sensitive => false, :scope => validations_scope, :if => "#{login_field}_changed?".to_sym})
         end
         alias_method :validates_uniqueness_of_login_field_options=, :validates_uniqueness_of_login_field_options
         
@@ -118,7 +118,7 @@ module Authlogic
             if sensitivity
               send("find_by_#{field}", value)
             else
-              first(:conditions => ["LOWER(#{quoted_table_name}.#{field}) = ?", value.downcase])
+              first(:conditions => ["LOWER(#{quoted_table_name}.#{field}) = ?", value.mb_chars.downcase])
             end
           end
       end

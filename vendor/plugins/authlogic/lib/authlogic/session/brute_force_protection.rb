@@ -37,7 +37,7 @@ module Authlogic
         # * <tt>Default:</tt> 50
         # * <tt>Accepts:</tt> Integer, set to 0 to disable
         def consecutive_failed_logins_limit(value = nil)
-          config(:consecutive_failed_logins_limit, value, 50)
+          rw_config(:consecutive_failed_logins_limit, value, 50)
         end
         alias_method :consecutive_failed_logins_limit=, :consecutive_failed_logins_limit
         
@@ -46,21 +46,25 @@ module Authlogic
         # * <tt>Default:</tt> 2.hours
         # * <tt>Accepts:</tt> Fixnum, set to 0 for permanent ban
         def failed_login_ban_for(value = nil)
-          config(:failed_login_ban_for, (!value.nil? && value) || value, 2.hours.to_i)
+          rw_config(:failed_login_ban_for, (!value.nil? && value) || value, 2.hours.to_i)
         end
         alias_method :failed_login_ban_for=, :failed_login_ban_for
       end
       
       # The methods available for an Authlogic::Session::Base object that make up the brute force protection feature.
       module InstanceMethods
+        # Returns true when the consecutive_failed_logins_limit has been exceeded and is being temporarily banned.
+        # Notice the word temporary, the user will not be permanently banned unless you choose to do so with configuration.
+        # By default they will be banned for 2 hours. During that 2 hour period this method will return true.
+        def being_brute_force_protected?
+          exceeded_failed_logins_limit? && (failed_login_ban_for <= 0 ||
+            (attempted_record.respond_to?(:updated_at) && attempted_record.updated_at >= failed_login_ban_for.seconds.ago))
+        end
+        
         private
           def exceeded_failed_logins_limit?
             !attempted_record.nil? && attempted_record.respond_to?(:failed_login_count) && consecutive_failed_logins_limit > 0 &&
               attempted_record.failed_login_count && attempted_record.failed_login_count >= consecutive_failed_logins_limit
-          end
-          
-          def being_brute_force_protected?
-            exceeded_failed_logins_limit? && (failed_login_ban_for <= 0 || (attempted_record.respond_to?(:updated_at) && attempted_record.updated_at >= failed_login_ban_for.seconds.ago))
           end
           
           def reset_failed_login_count?
@@ -73,7 +77,10 @@ module Authlogic
         
           def validate_failed_logins
             errors.clear # Clear all other error messages, as they are irrelevant at this point and can only provide additional information that is not needed
-            errors.add_to_base(I18n.t('error_messages.consecutive_failed_logins_limit_exceeded', :default => "Consecutive failed logins limit exceeded, account is disabled."))
+            errors.add(:base, I18n.t(
+              'error_messages.consecutive_failed_logins_limit_exceeded', 
+              :default => "Consecutive failed logins limit exceeded, account has been" + (failed_login_ban_for == 0 ? "" : " temporarily") + " disabled."
+            ))
           end
           
           def consecutive_failed_logins_limit

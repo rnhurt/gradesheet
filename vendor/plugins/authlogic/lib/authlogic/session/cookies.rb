@@ -26,7 +26,7 @@ module Authlogic
         # * <tt>Default:</tt> "#{klass_name.underscore}_credentials"
         # * <tt>Accepts:</tt> String
         def cookie_key(value = nil)
-          config(:cookie_key, value, "#{klass_name.underscore}_credentials")
+          rw_config(:cookie_key, value, "#{klass_name.underscore}_credentials")
         end
         alias_method :cookie_key=, :cookie_key
         
@@ -35,7 +35,7 @@ module Authlogic
         # * <tt>Default:</tt> false
         # * <tt>Accepts:</tt> Boolean
         def remember_me(value = nil)
-          config(:remember_me, value, false)
+          rw_config(:remember_me, value, false)
         end
         alias_method :remember_me=, :remember_me
         
@@ -44,7 +44,7 @@ module Authlogic
         # * <tt>Default:</tt> 3.months
         # * <tt>Accepts:</tt> Integer, length of time in seconds, such as 60 or 3.months
         def remember_me_for(value = :_read)
-          config(:remember_me_for, value, 3.months, :_read)
+          rw_config(:remember_me_for, value, 3.months, :_read)
         end
         alias_method :remember_me_for=, :remember_me_for
       end
@@ -57,7 +57,7 @@ module Authlogic
           values = value.is_a?(Array) ? value : [value]
           case values.first
           when Hash
-            self.remember_me = values.first.with_indifferent_access[:remember_me]
+            self.remember_me = values.first.with_indifferent_access[:remember_me] if values.first.with_indifferent_access.key?(:remember_me)
           else
             r = values.find { |value| value.is_a?(TrueClass) || value.is_a?(FalseClass) }
             self.remember_me = r if !r.nil?
@@ -69,12 +69,12 @@ module Authlogic
           return @remember_me if defined?(@remember_me)
           @remember_me = self.class.remember_me
         end
-      
+        
         # Accepts a boolean as a flag to remember the session or not. Basically to expire the cookie at the end of the session or keep it for "remember_me_until".
         def remember_me=(value)
           @remember_me = value
         end
-      
+        
         # See remember_me
         def remember_me?
           remember_me == true || remember_me == "true" || remember_me == "1"
@@ -85,7 +85,7 @@ module Authlogic
           return unless remember_me?
           self.class.remember_me_for
         end
-      
+        
         # When to expire the cookie. See remember_me_for configuration option to change this.
         def remember_me_until
           return unless remember_me?
@@ -112,7 +112,7 @@ module Authlogic
               false
             end
           end
-        
+          
           def save_cookie
             controller.cookies[cookie_key] = {
               :value => "#{record.persistence_token}::#{record.send(record.class.primary_key)}",
@@ -120,7 +120,7 @@ module Authlogic
               :domain => controller.cookie_domain
             }
           end
-        
+          
           def destroy_cookie
             controller.cookies.delete cookie_key, :domain => controller.cookie_domain
           end

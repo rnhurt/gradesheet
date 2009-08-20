@@ -1,11 +1,57 @@
-== 2.0.10
+== 2.1.2
+
+* Return the newly create object for the class level create method, instead of a boolean
+* Add a model_name class method for Authlogic::Session for rails 3 compatibility. Will be using ActiveModel eventually, but this should be a quick fix.
+
+== 2.1.1 released 2009-7-04
+
+* Use mb_chars when downcasing the login string to support international characters.
+* Check for the existence of the :remember_me key before setting remember_me off of a hash.
+* Added check to make sure Authlogic is not loaded too late, causing a NotActivated error.
+
+== 2.1.0 released 2009-6-27
+
+* Fixed bug when using act_like_restful_authentication and setting passwords, needed to add a 2nd parameter to tell if to check against the database or not.
+* Don't save record if they are read only.
+
+== 2.0.14 released 2009-6-13
+
+* Fixed issue with using brute force protection AND generalize_credentials_error_messages. Brute force protection was looking to see if there were password errors, which generalize_credentials_error_messages was obfuscating.
+* Added db_setup? method to avoid errors during rake tasks where the db might not be set up. Ex: migrations
+* Stop using errors.on(key) since that is now deprecated in Rails. Use errors[key] instead.
+* Use valid_password? for the method name to validate a password instead of valid_#{password_field}?.
+
+== 2.0.13 released 2009-5-13
+
+* Add authlogic/regex.rb to manifest
+
+== 2.0.12 released 2009-5-13
+
+* Added the ability to add a last_request_update_allowed? method in your controller to pragmatically tell Authlogic when and when not to update the last_request_at field in your database. This only takes effect if the method if present.
+* Extracted Authlogic's regular expressions into it's own module to allow easy use of them outside of Authlogic. See Authlogic::Regex for more info.
+* Made being_brute_force_protected? true for the Authlogic::Session::BruteForceProtection module.
+* Added the configuration option generalize_credentials_error_messages for the Authlogic::Session::Password module. This allows you to generalize your login / password errors messages as to not reveal was the problem was when authenticating. If enabled, when an invalid login is supplied it will use the same exact error message when an invalid password is supplied.
+* Update email regular expression to use A-Z0-9 instead of /w as to not allow for diacritical marks in an email address.
+* Changed config() convenience method to rw_config() to be more descriptive and less vague.
+
+== 2.0.11 released 2009-4-25
+
+* Fix bug when password is turned off and the SingleAccessToken module calls the after_password_set callback.
+* HTTP basic auth can now be toggled on or off. It also checks for the existence of a standard username and password before enabling itself.
+* Added option check_passwords_against_database for Authlogic::ActsAsAuthentic::Password to toggle between checking the password against the database value or the object value. Also added the same functionality to the instance method: valid_password?("password", true), where the second argument tells Authlogic to check the password against the database value. The default for this new feature is true.
+* Add a maintain_sessions configuration option to Authlogic::ActsAsAuthentic::SessionMaintenance as a "clearer" option to disable automatic session maintenance.
+* single_access_allowed_request_types can also be equal to :all instead of just [:all].
+* Refactor params_enabled? so that the single_access_allowed? method in controllers takes precedence.
+* Added testing comments in the README and expanded on the documentation in Authlogic::TestCase
+
+== 2.0.10 released 2009-4-21
 
 * Mock request is now transparent to non existent methods. Since the methods calls really have no functional value when testing authlogic.
 * Allow password confirmation to be disabled.
 * Modified login format validation to allow for the + character since emails addresses allow that as a valid character.
 * Added merge_* configuration methods for acts_as_authentic to make merging options into configuration options that default to hashes. Just a few convenience methods.
 
-== 2.0.9 release 2009-4-9
+== 2.0.9 released 2009-4-9
 
 * Fixed bug where hooks provided by the password module were called when the password module was not being used due to the fact that the password field did not exist.
 * Fixed bug where the find_with_login method was not being aliased if you were using an alternate field besides login.
@@ -14,13 +60,13 @@
 
 * Dont reset the @password_changed instance variable to false because its halts the callback chain, instead reset it to nil.
 
-== 2.0.7 release 2009-4-9
+== 2.0.7 released 2009-4-9
 
 * Rename TestCase::ControllerAdapter to TestCase::RailsRequestAdapter to help clarify it's usage and fix a constant typo.
 
-== 2.0.6 release 2009-4-9
+== 2.0.6 released 2009-4-9
 
-* Don't use second, use [1] instead so older rails systems don't complain.
+* Don't use second, use [1] instead so older rails versions don't complain.
 * Update email regular expression to be less TLD specific: (?:[A-Z]{2,4}|museum|travel)
 * Update shoulda macro for 2.0
 * validates_length_of_password_confirmation_field_options defaults to validates_confirmation_of_password_field_options

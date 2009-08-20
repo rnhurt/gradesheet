@@ -43,17 +43,18 @@ module Authlogic
         # * <tt>Default:</tt> cookie_key
         # * <tt>Accepts:</tt> String
         def params_key(value = nil)
-          config(:params_key, value, cookie_key)
+          rw_config(:params_key, value, cookie_key)
         end
         alias_method :params_key=, :params_key
         
-        # Authentication is allowed via a single access token, but maybe this is something you don't want for your application as a whole. Maybe this is something you only want for specific request types.
-        # Specify a list of allowed request types and single access authentication will only be allowed for the ones you specify. Checkout the "Single Access / Private Feeds Access" section in the README.
+        # Authentication is allowed via a single access token, but maybe this is something you don't want for your application as a whole. Maybe this is
+        # something you only want for specific request types. Specify a list of allowed request types and single access authentication will only be
+        # allowed for the ones you specify.
         #
-        # * <tt>Default:</tt> "application/rss+xml", "application/atom+xml"
-        # * <tt>Accepts:</tt> String of request type, or :all to allow single access authentication for any and all request types
+        # * <tt>Default:</tt> ["application/rss+xml", "application/atom+xml"]
+        # * <tt>Accepts:</tt> String of a request type, or :all or :any to allow single access authentication for any and all request types
         def single_access_allowed_request_types(value = nil)
-          config(:single_access_allowed_request_types, value, ["application/rss+xml", "application/atom+xml"])
+          rw_config(:single_access_allowed_request_types, value, ["application/rss+xml", "application/atom+xml"])
         end
         alias_method :single_access_allowed_request_types=, :single_access_allowed_request_types
       end
@@ -68,10 +69,15 @@ module Authlogic
           end
           
           def params_enabled?
-            params_credentials && klass.column_names.include?("single_access_token") &&
-              (single_access_allowed_request_types.include?(controller.request_content_type) ||
-                single_access_allowed_request_types.include?(:all) ||
-                  controller.single_access_allowed?)
+            return false if !params_credentials || !klass.column_names.include?("single_access_token")
+            return controller.single_access_allowed? if controller.responds_to_single_access_allowed?
+            
+            case single_access_allowed_request_types
+            when Array
+              single_access_allowed_request_types.include?(controller.request_content_type) || single_access_allowed_request_types.include?(:all)
+            else
+              [:all, :any].include?(single_access_allowed_request_types)
+            end
           end
           
           def params_key
