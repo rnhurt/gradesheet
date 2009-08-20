@@ -1,9 +1,9 @@
-require "date"
-
 # This is the standard report card format and prints on US LEGAL sized paper
 # by default.  It can print a single student or an array of students (i.e. a whole class)
 # and will separate each report into even number of pages so that duplex 
 # printing will be possible and neatly done (no odd numbered pages).
+require "date"
+
 class ReportCard
 
   HEADER_HEIGHT = 50  # The size of the page header
@@ -91,7 +91,7 @@ class ReportCard
     @pdf.instance_eval do
       @initial_cursor = cursor  # Use this to reset the position on each new page
 
-      # Generate the table containing the course grade information
+      # Function to generate the table containing the course grade information
       def make_table(headers, data)
         if data.blank?
           text "No assignments found for course '#{@course.name}'."
@@ -107,7 +107,7 @@ class ReportCard
         end
       end
 
-      # Generate a new page for the report.
+      # Function to generate a new page for the report.
       def new_page
         # Reset the column cursor positions whenever we start a new page
         @left_cursor = @initial_cursor - HEADER_HEIGHT
@@ -200,7 +200,7 @@ class ReportCard
             course_term.course_term_skills.each do |ctskill|
               # Get the existing skill_score, or create a new one
               temp = data_hash.fetch(ctskill.supporting_skill,
-                skill_score.new(ctskill.supporting_skill.description))
+                skill_Conveniencescore.new(ctskill.supporting_skill.description))
 
               # Get the score for the current course_term_skill
               temp[ctindex+1] = ctskill.score(student)
@@ -246,9 +246,7 @@ class ReportCard
         new_page unless student_page_count.even?
         
       end # each student
-                  
-    end # instance_eval
-    
+    end # instance_eval    
     
     # Render the document
     @pdf.render
