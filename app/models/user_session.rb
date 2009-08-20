@@ -7,50 +7,51 @@ class UserSession < Authlogic::Session::Base
   after_create  :authorize
   after_destroy :deauthorize
   
-private
+  private
 
   # Builds the [:authorize] parameter of the session object.  This information is
   # used to build the menu bar as well as grant access to a particually controller.
   def authorize
     # If this user is an Admin authorize them for everything
     if record.is_admin?
-          controller.session[:authorize] = [
-              ['Home', 'dashboard'],
-              ['Users', 'users'], 
-                ['', 'students'], 
-                ['', 'teachers'], 
-                ['', 'teacher_assistants'], 
-              ['Courses', 'courses'], 
-              ['Assignments', 'assignments'], 
-              ['Evaluations', 'evaluations'],
-              ['Reports', 'reports'],
-              ['Site Settings', 'settings'],
-                ['', 'assignment_categories'],
-                ['', 'grading_scales'],
-                ['', 'supporting_skills'],
-                ['', 'supporting_skill_codes'],
-                ['', 'supporting_skill_categories'],
-                ['', 'imports'],
-                ['', 'sites'],
-                ['', 'terms'],
-                ['', 'school_years'],
-              ]
+      controller.session[:authorize] = [
+        ['Home', 'dashboard'],
+        ['Users', 'users'],
+        ['', 'students'],
+        ['', 'teachers'],
+        ['', 'teacher_assistants'],
+        ['Courses', 'courses'],
+        ['Assignments', 'assignments'],
+        ['Evaluations', 'evaluations'],
+        ['Reports', 'reports'],
+        ['Admin', 'settings'],
+        ['', 'assignment_categories'],
+        ['', 'grading_scales'],
+        ['', 'imports'],
+        ['', 'school_years'],
+        ['', 'sites'],
+        ['', 'site_settings'],
+        ['', 'supporting_skills'],
+        ['', 'supporting_skill_codes'],
+        ['', 'supporting_skill_categories'],
+        ['', 'terms'],
+      ]
     else
       case record[:type].downcase
-        when 'teacher'
-          controller.session[:authorize] = [
-              ['Home', 'dashboard'],
-              ['Courses', 'courses'], 
-              ['Assignments', 'assignments'], 
-              ['Evaluations', 'evaluations'],
-              ['Reports', 'reports']]
-        when 'student'
-          controller.session[:authorize] = [
-              ['Home', 'dashboard'],
-              ['My Grades', 'grades']] 
-        else
-          # unknown type of user
-          controller.session[:authorize] = [['Home', 'dashboard']]
+      when 'teacher'
+        controller.session[:authorize] = [
+          ['Home', 'dashboard'],
+          ['Courses', 'courses'],
+          ['Assignments', 'assignments'],
+          ['Evaluations', 'evaluations'],
+          ['Reports', 'reports']]
+      when 'student'
+        controller.session[:authorize] = [
+          ['Home', 'dashboard'],
+          ['My Grades', 'grades']]
+      else
+        # unknown type of user
+        controller.session[:authorize] = [['Home', 'dashboard']]
       end
     end
   end  

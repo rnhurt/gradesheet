@@ -1,33 +1,33 @@
 <% content_for :left do %>
-	<%= render :partial => 'settings/settings_list' %>
+  <%= render :partial => 'settings/settings_list' %>
 <% end %>
 
 <%= error_messages_for "import", 
-    :header_message => "The following records did not pass validation:", 
-    :message => 'Please correct these problems and try again' %>
-
-<div class='span-13 last'><h2>Import User Data</h2></div>
+  :header_message => "The following records did not pass validation:",
+  :message => 'Please correct these problems and try again' %>
 
 <div class='box span-13 prepend-5 last'>
   <% form_for :import, :url => { :action => :create }, :html => { :multipart => true } do |f| -%>
-    <div class='label'>Import Student data using this format:<br />
-    <span class='example'>("Login ID","First Name","Last Name","Email Address", Class Of, "Homeroom", "Campus")</span></div>
+    <div class='label'>Import <strong>Student</strong> data using this format:<br />
+      <span class='example'>("Login ID","First Name","Last Name","Email Address", Class Of, "Homeroom", "Campus")</span></div>
     <input type='hidden' name='import_type' value='students' />
     <%= f.file_field :file -%>
 
     <%= submit_tag 'Import', :class => 'btn standard',
-          :confirm => "This will import new STUDENT\ninformation into the system.\n\nClick OK to continue." -%>
+      :confirm => "This will import new STUDENT\ninformation into the system.\n\nClick OK to continue." -%>
   <% end -%>
+</div>
 
-  <div class='spacer'>&nbsp;</div>
-  
+<div class='spacer'>&nbsp;</div>
+
+<div class='box span-13 prepend-5 last'>
   <% form_for :import, :url => { :action => :create }, :html => { :multipart => true } do |f| -%>
-    <div class='label'>Import Teacher data using this format:<br />
-    <span class='example'>("Login ID","First Name","Last Name","Email Address", "Campus")</span></div>
+    <div class='label'>Import <strong>Teacher</strong> data using this format:<br />
+      <span class='example'>("Login ID","First Name","Last Name","Email Address", "Campus")</span></div>
     <input type='hidden' name='import_type' value='teachers' />
     <%= f.file_field :file -%>
 
     <%= submit_tag 'Import', :class => 'btn standard',
-          :confirm => "This will import new TEACHER\ninformation into the system.\n\nClick OK to continue." -%>
+      :confirm => "This will import new TEACHER\ninformation into the system.\n\nClick OK to continue." -%>
   <% end -%>
 </div>

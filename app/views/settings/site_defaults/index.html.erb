@@ -1,0 +1,28 @@
+<% content_for :left do %>
+  <%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for "site_defaults",
+  :header_message => "The following records did not pass validation:",
+  :message => 'Please correct these problems and try again' %>
+
+<div class='box span-13 prepend-5 last'>
+  <% form_for :site_default do |f| -%>
+    <label>Site Name:</label><br />
+    <input type='hidden' name='update_type' value='site_name' />
+    <%= f.text_field :site_name, :value => StaticData.site_name -%>
+
+    <%= submit_tag 'Change', :class => 'btn standard' -%>
+  <% end -%>
+</div>
+
+<div class='box span-13 prepend-5 last'>
+  <% form_for :site_default do |f| -%>
+    <label>Site Tag Line:</label><br />
+    <input type='hidden' name='update_type' value='site_tag' />
+    <%= f.text_field :site_tag, :value => StaticData.tag_line -%>
+
+    <%= submit_tag 'Change', :class => 'btn standard' -%>
+  <% end -%>
+</div>
+
