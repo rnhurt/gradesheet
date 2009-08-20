@@ -3,7 +3,11 @@
 class User < ActiveRecord::Base
   # Authlogic setup
   acts_as_authentic do |c|
+    # Set the timeout to something workable while in development
     c.logged_in_timeout = (RAILS_ENV == 'development' ? 1000.minutes : 10.minutes)
+    
+    # Turn off the email validation as some students/teachers might not have an address.
+    c.validate_email_field = false
   end
   
   belongs_to	:site
@@ -17,7 +21,6 @@ class User < ActiveRecord::Base
   # in the system.
 	validates_uniqueness_of	:first_name, :scope => :last_name
 
-  
 	# Search for a user using the 'will_paginate' plugin
 	def self.search(search, page)
 		search.downcase! if search	# Make sure we don't have any case sensitivity problems
