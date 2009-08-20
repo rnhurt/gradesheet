@@ -1,7 +1,7 @@
 body {background: #FFF url("/images/header-bg.gif") top left repeat-x;}
 
-#header .title {font-size: x-large;font-weight: bolder;color: #EEE;}
-#header .tagline {font-size: small;font-weight: bolder;color: #EEE;line-height: 0.5em;}
+#header .title {font-family:Georgia,"Times New Roman",Serif;font-variant:small-caps;font-size:2em;font-weight:bold;color: #EEE;}
+#header .tagline {font-weight:bold;color: #EEE;margin-top:-3px}
 #header .login {color: #EEE;}
 #header .login a {color: #FF0;}
 #flash {text-align: center;}

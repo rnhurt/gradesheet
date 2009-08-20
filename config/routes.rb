@@ -17,13 +17,13 @@ ActionController::Routing::Routes.draw do |map|
   # and house them under the Settings "master" controller.
   map.namespace :settings do |s|
     s.resources :grading_periods,       :name_prefix => nil, :controller => "school_years"
-#    s.resources :terms,                 :name_prefix => nil
     s.resources :events,                :name_prefix => nil
     s.resources :grading_scales,        :name_prefix => nil
     s.resources :supporting_skills,     :name_prefix => nil
     s.resources :supporting_skill_codes,:name_prefix => nil
     s.resources :supporting_skill_categories,:name_prefix => nil
     s.resources :sites,                 :name_prefix => nil
+    s.resources :site_defaults,         :name_prefix => nil
     s.resources :imports,               :name_prefix => nil
     s.resources :assignment_categories, :name_prefix => nil
   end

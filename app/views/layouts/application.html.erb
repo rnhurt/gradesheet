@@ -22,12 +22,12 @@
 
         <div class='span-2'><img class='top' src='/images/logo.png' alt="logo" width='60px' height='60px' /></div>
 
-        <div class='span-6'>
+        <div class='span-12'>
           <span class='title last'><%= StaticData.site_name %></span>
-          <span class='tagline column span-6'><%= StaticData.tag_line %></span>
+          <span class='tagline column span-12'><%= StaticData.tag_line %></span>
         </div>
 
-        <div id='account-info' class='span-7 push-8 last'>
+        <div id='account-info' class='span-7 push-2 last'>
           <% if !current_user %>
             <span>Welcome</span> |
             <span><%= link_to " log in ", login_path %></span>
