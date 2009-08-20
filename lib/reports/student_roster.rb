@@ -17,7 +17,7 @@ class StudentRoster
 		<label>Homeroom</label>
 			<select name='homeroom'>
 				<option value=''>ALL</option>
-EOS
+    EOS
 		# Add the homerooms
 		homerooms.each do |homeroom|
 			params += "<option value='#{homeroom}'>#{homeroom}</option>"
@@ -31,7 +31,7 @@ EOS
 		</div>
 		</fieldset>
 	</form>
-EOS
+    EOS
 	end
 
 
@@ -45,46 +45,49 @@ EOS
 	  end	
 
 	  # Create a new document
-    pdf = Prawn::Document.new(:skip_page_creation => true, :page => "LETTER")
+    pdf = Prawn::Document.new(:page => "LETTER")
 
 	  # Make it so we don't have to use pdf. everywhere.  :)
 	  pdf.instance_eval do
 
-	  # Build the footer
-	  footer margin_box.bottom_left do 
-		  font "Helvetica", :size => 7
-	   	fill_color "555555"
-      stroke_horizontal_rule
+      # Build the footer
+      footer margin_box.bottom_left do
+        font "Helvetica", :size => 7
+        fill_color "555555"
+        stroke_horizontal_rule
 
-      move_down(5)
-      mask(:y) { text "page #{page_count}", :align => :right }
-      mask(:y) { text "#{Date.today.to_s(:long)}", :align => :left }
-	  end   
+        move_down(5)
+        mask(:y) { text "page #{page_count}", :align => :right }
+        mask(:y) { text "#{Date.today.to_s(:long)}", :align => :left }
+      end
 
-	  # Build a table of students
-	  students.group_by(&:homeroom).sort.each do |homeroom|
-		  start_new_page
+      # Build a table of students
+      students.group_by(&:homeroom).sort.each do |homeroom|	
+        # Print the HEADER
+        fill_color "000000"
+        stroke_color "000000"
+        mask(:y) {text "Student count: #{homeroom[1].count}", :align => :right, :size => 7}
+        text "Homeroom (#{homeroom[0]})", :align => :center, :size => 20
+        move_down 5
 		
-		  # Print the HEADER
-		  fill_color "000000"
-		  stroke_color "000000"
-		  mask(:y) {text "Student count: #{homeroom[1].count}", :align => :right, :size => 7}
-		  text "Homeroom (#{homeroom[0]})", :align => :center, :size => 20
-		  move_down 5
-		
-		  # Print the table of students in this homeroom
-		  data = homeroom[1].map { |h| ["#{h.first_name} #{h.last_name}"] }
-		  table data, 
+        # Print the table of students in this homeroom
+        data = homeroom[1].map { |h| ["#{h.first_name} #{h.last_name}"] }
+        table data,
 				  :border_style	=> :grid, 
 				  :vertical_padding	=> 2,
 				  :row_colors		=> ["DBDBDB", "FFFFFF"],
 				  :width				=> bounds.width
-	  end 
-	
-	  # Render the document
-	  render 
+
+        # Make a new page for the next homeroom
+        start_new_page
+      end
+
+      # Deal with an empty report
+      text "No students found" if students.blank?
+
+      # Render the document
+      render
 	
 	  end # instance_eval
   end # draw
-
 end
