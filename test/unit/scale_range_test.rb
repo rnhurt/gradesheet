@@ -8,33 +8,34 @@ class ScaleRangeTest < ActiveSupport::TestCase
     assert @scale.valid?, 'The initial scale is valid'
 	  
     @range = @scale.scale_ranges.new(
-        :grading_scale_id => 119,
-        :letter_grade     => 'A',
-        :description      => 'Understanding of subject matter is Excellent.', 
-        :max_score        => '100', 
-        :min_score        => '93')
+      :grading_scale_id => 119,
+      :letter_grade     => 'A',
+      :description      => 'Understanding of subject matter is Excellent.',
+      :max_score        => '100',
+      :min_score        => '93')
     assert @range.save, 'The initial range is valid'
 	end
 
 	def teardown
 	end
 
-  def test_scale_range_grading_scale_id
-    @range.grading_scale_id = nil
-    assert !@range.valid?, "Grading Scale is not valid"
-
-    @range.grading_scale_id = -300
-    assert !@range.valid?, "Grading Scale is not valid"
-
-    @range.grading_scale_id = @scale.id
-    assert @range.valid?, "Grading Scale is valid"
-  end
+#  This relationship no longer exists
+#  def test_scale_range_grading_scale_id
+#    @range.grading_scale_id = nil
+#    assert !@range.valid?, "Grading Scale is not valid"
+#
+#    @range.grading_scale_id = -300
+#    assert !@range.valid?, "Grading Scale is not valid"
+#
+#    @range.grading_scale_id = @scale.id
+#    assert @range.valid?, "Grading Scale is valid"
+#  end
   
 	def test_scale_range_description_limits
 		@range.description = "This is a really long name that probably shouldn't be legal because it is too long. This is a really long name that probably shouldn't be legal because it is too long. This is a really long name that probably shouldn't be legal because it is too long."
 		assert !@range.valid?, "Descrpition too long" 	
 
-		@range.description = ""
+		@range.description = nil
 	 	assert !@range.valid?, "Description too short"
 	 	
 	 	@range.description = "Understanding of subject matter and demonstration of skills is Excellent."
