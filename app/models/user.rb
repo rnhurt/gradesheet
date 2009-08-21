@@ -22,11 +22,12 @@ class User < ActiveRecord::Base
 	validates_uniqueness_of	:first_name, :scope => :last_name
 
 	# Search for a user using the 'will_paginate' plugin
-	def self.search(search, page)
+	def self.search(params)
+    search = params[:search]
 		search.downcase! if search	# Make sure we don't have any case sensitivity problems
-		paginate	:per_page => 15, :page => page,
+		paginate	:per_page => 15, :page => params[:page],
 							:conditions => ['LOWER(first_name) like ? or LOWER(last_name) like ?', "%#{search}%", "%#{search}%"], 
-							:order => 'first_name',
+							:order => params[:sort_clause],
 							:include => :site
 	end
 	

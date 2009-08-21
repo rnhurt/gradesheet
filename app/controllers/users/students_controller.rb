@@ -1,9 +1,13 @@
 class Users::StudentsController < ApplicationController
   before_filter :require_user
   append_before_filter :authorized?
+  include SortHelper
 
   def index
-    @students = Student.search(params[:search], params[:page])
+    sort_init 'last_name'
+    sort_update
+    params[:sort_clause] = sort_clause
+    @students = Student.search(params)
 
     respond_to do |format|
       format.html

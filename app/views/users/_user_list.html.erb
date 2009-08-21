@@ -1,31 +1,33 @@
-<% user_type = users[0].class.name %>
-
 <table id="users" class="master">
   <thead>
     <tr>
-      <th>Login</th>
+      <%= sort_header_tag('login', :title => 'Login') %>
       <% form_for users.class.to_s, :html => { :method => :get } do |s| %>
-        <th>Name <%= text_field_tag :search,
-            params[:search],
-            :size => 10,
-            :class => "focus search" %></th>
+        <%= sort_header_tag('first_name', :title => 'First Name') %>
+        <%= sort_header_tag('last_name', :title => 'Last Name') %>
+        <%= sort_header_tag('email', :title => 'Email Address') %>
+        <th>Campus</th>
+        <% if controller.controller_name == 'students' %>
+          <%= sort_header_tag('class_of', :title => 'Class Of') %>
+          <%= sort_header_tag('homeroom', :title => 'Homeroom') %>
         <% end %>
-      <th>Email Address</th>
-      <th>Campus</th>
-      <%= content_tag(:th, 'Class-Of') if user_type == 'Student' %>
-      <%= content_tag(:th, 'Homeroom') if user_type == 'Student' %>
-      <th width='1'></th>
+        <th><%= text_field_tag :search, params[:search],
+          :size => 10, :class => "focus search" %></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
     <% for u in users %>
       <tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for(u)+'/edit' %>'">
         <%= content_tag :td, u.login %>
-        <td width='50%'><%= link_to u.full_name, url_for(u)+'/edit' %></td>
+        <td><%= link_to u.first_name, url_for(u)+'/edit' %></td>
+        <td><%= link_to u.last_name, url_for(u)+'/edit' %></td>
         <%= content_tag :td, u.email %>
         <%= content_tag :td, u.site.name %>
-        <%= content_tag(:td, u.class_of) if user_type == 'Student' %>
-        <%= content_tag(:td, u.homeroom) if user_type == 'Student' %>
+        <% if controller.controller_name == 'students' %>
+          <%= content_tag :td, u.class_of %>
+          <%= content_tag :td, u.homeroom %>
+        <% end %>
         <td><%= button_to 'Delete', u, :method => :delete,
             :confirm => "Are you sure you want to delete\n\n '" + u.full_name + "'?",
             :class => 'btn negative' %></td>

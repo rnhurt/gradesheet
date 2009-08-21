@@ -2,13 +2,13 @@
 class UsersController < ApplicationController
   before_filter :require_user
   append_before_filter :authorized?
+  include SortHelper
 
   def index
-    @users = User.search(params[:search], params[:page])
-
-    respond_to do |format|
-      format.html # index.html.erb
-    end
+    sort_init 'last_name'
+    sort_update
+    params[:sort_clause] = sort_clause
+    @users = User.search(params)
   end
 
 
