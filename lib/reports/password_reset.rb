@@ -50,50 +50,78 @@ class PasswordReset
 	  # Make it so we don't have to use pdf. everywhere.  :)
 	  pdf.instance_eval do
 
+      font "Courier", :size => 10
+      fill_color "000000"
+      stroke_color "dddddd"
+
       # Build the footer
       footer margin_box.bottom_left do
+        # Change the font to make the footer look nice
         font "Helvetica", :size => 7
         fill_color "555555"
+        stroke_color "555555"
         stroke_horizontal_rule
 
         move_down(5)
         mask(:y) { text "page #{page_count}", :align => :right }
         mask(:y) { text "#{Date.today.to_s(:long)}", :align => :left }
-        mask(:y) { text "Homeroom: #{@homeroom}", :align => :center }
+        mask(:y) { text "** CONFIDENTIAL **", :align => :center }
+
+        # Reset the font so that we can draw the next page
+        font "Courier", :size => 10
+        fill_color "000000"
+        stroke_color "dddddd"
       end
+
+      words = %w(welcome hello sunny school teacher paper notebook)
 
       # Build a table of students
       students.group_by(&:homeroom).sort.each do |homeroom|	
-        # Print the HEADER
-        fill_color "000000"
-        stroke_color "000000"
-        move_down 5
+        define_grid(:columns => 2, :rows => 13)
 
-        define_grid(:columns => 2, :rows => 12, :column_gutter => 10)
-
-        grid.rows.times do |row|
-          grid.columns.times do |col|
-            b = grid(row,col)
-            bounding_box b.top_left, :width => b.width, :height => b.height do
-              text b.name
-              stroke do
-                rectangle(bounds.top_left, b.width, b.height)
-              end
-            end
+        row = col = 0
+        homeroom[1].each do |student|
+          # Generate a password
+          password = words[rand(words.length)] + rand(100).to_s
+          
+          # Check for space left on the page
+          if row >= grid.rows
+            start_new_page
+            row = 0
           end
+
+          # Build the cell
+          cell = grid(row,col)
+
+          # Update the users password
+          student.password = password
+          student.password_confirmation = password
+          password = "ERROR: please change manually" unless student.save
+
+          # Write the data into the cell
+          bounding_box cell.top_left, :width => cell.width, :height => cell.height do
+            #            text cell.name
+            move_down 6
+            text " Student Name: #{student.full_name[0..25]}"
+            text "     Login ID: #{student.login}"
+            text "     Homeroom: #{student.homeroom}"
+            text " New Password: #{password}"
+
+            stroke_bounds
+          end
+
+          # Advance to the next cell
+          if col % 2 == 0
+            col = 1
+          else
+            row += 1
+            col = 0
+          end
+
         end
-
-        # Print the table of students in this homeroom
-        #        data = homeroom[1].map { |h| ["#{h.first_name} #{h.last_name}"] }
-        #        table data,
-        #				  :border_style	=> :grid,
-        #				  :vertical_padding	=> 2,
-        #				  :row_colors		=> ["DBDBDB", "FFFFFF"],
-        #				  :width				=> bounds.width
-
+        
         # Make a new page for the next homeroom
-        @homeroom = homeroom[0]
-        start_new_page
+        start_new_page if !homeroom[0].blank?
       end
 
       # Deal with an empty report
