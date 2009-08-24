@@ -1,24 +1,24 @@
 <% content_for :left do %>
-	<%= render :partial => 'report_list' %>
+  <%= render :partial => 'report_list' %>
 <% end %>
 
 <!--
 <h2>Previous Report Cache</h2>
 <%# if @cached_reports.count > 0 %>
-	<ul>
-	<%# for report in @cached_reports %>
-		<li>
-			<%#= link_to File.new(report).mtime.to_s(:long) %>
-			<%#= link_to report.name.titleize %> <%#= report.created_at.to_s(:long) %>
-		</li>
-	<%# end %>
-	</ul>
+<ul>
+<%# for report in @cached_reports %>
+<li>
+<%#= link_to File.new(report).mtime.to_s(:long) %>
+<%#= link_to report.name.titleize %> <%#= report.created_at.to_s(:long) %>
+</li>
+<%# end %>
+</ul>
 <%# else %>
-	<p>No cached reports found.  Run a report below to add  it to the cache.</p>
+<p>No cached reports found.  Run a report below to add  it to the cache.</p>
 <%# end %>
 <hr>
 -->
 
 <div class='box span-13 last'>
- 	<%= @report.get_params() %>
+  <%= @report.get_params() %>
 </div>

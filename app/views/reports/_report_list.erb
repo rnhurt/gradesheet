@@ -1,19 +1,16 @@
-<% reports = [
-		{:name => 'Report Card', :url => '/reports/report_card'},
-		{:name => 'Student Transcript', :url => '/reports/student_transcript'},
-		{:name => 'Student Roster', :url => '/reports/student_roster'}]%>
-		
+<% reports = Report.all() %>
 <table>
-	<thead>
-	 <tr>
+  <thead>
+    <tr>
       <th>Reports</th>
-   </tr>
-	</thead>
-	<tbody>
-		<% reports.each do |r| %>
-			<tr class="<%= cycle('odd', 'even')%>">
-				<td><a href='<%= r[:url]%>'><%= r[:name] %></a></td>
-			</tr>
-		<% end %>
-	</tbody>
+    </tr>
+  </thead>
+  <tbody>
+    <% reports.delete_if{ |r| r.include?(:restricted) } unless current_user.is_admin? %>
+    <% reports.each do |r| %>
+      <tr class="<%= cycle('odd', 'even')%>">
+        <td><%= link_to r.menuname, "/reports/#{r.name}" %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>

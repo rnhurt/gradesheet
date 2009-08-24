@@ -1,27 +1,27 @@
 <% items = [
-		{:name => 'Assignment Types', :url => '/settings/assignment_categories'},
-		{:name => 'Campus Sites', :url => '/settings/sites'},
-		{:name => 'Grading Periods', :url => '/settings/grading_periods'},
-		{:name => 'Grading Scales', :url => '/settings/grading_scales'},
-		{:name => 'Import Data', :url => '/settings/imports'},
-		{:name => 'Site Defaults', :url => '/settings/site_defaults'},
-    {:name => 'Supporting Skills', :url => '/settings/supporting_skill_categories'},
-		{:name => 'Supporting Skill Codes', :url => '/settings/supporting_skill_codes'}]
-#		{:name => 'School Calendar', :url => '/settings/events'}]
+  {:name => 'Assignment Types', :url => '/settings/assignment_categories'},
+  {:name => 'Campus Sites', :url => '/settings/sites'},
+  {:name => 'Grading Periods', :url => '/settings/grading_periods'},
+  {:name => 'Grading Scales', :url => '/settings/grading_scales'},
+  {:name => 'Import Data', :url => '/settings/imports'},
+  {:name => 'Site Defaults', :url => '/settings/site_defaults'},
+  {:name => 'Supporting Skills', :url => '/settings/supporting_skill_categories'},
+  {:name => 'Supporting Skill Codes', :url => '/settings/supporting_skill_codes'},
+]
 %>
-		
+
 <table class='master'>
-	<thead>
-	 <tr>
-		<th>Settings</th>
-	 </tr>
-	</thead>
-	<tbody>
-		<% for item in items %>
-			<tr class="<%= cycle('odd', 'even') + (current_page?(item[:url]) ? ' current' : '') %>"
-					onclick="location.href='<%= url_for(item[:url]) %>'">
-				<td><a href='<%= item[:url]%>'><%= item[:name] %></a></td>
-			</tr>
-		<% end %>
-	</tbody>
+  <thead>
+    <tr>
+      <th>Settings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for item in items %>
+      <tr class="<%= cycle('odd', 'even') + (current_page?(item[:url]) ? ' current' : '') %>"
+          onclick="location.href='<%= url_for(item[:url]) %>'">
+        <td><a href='<%= item[:url]%>'><%= item[:name] %></a></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>

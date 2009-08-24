@@ -1,5 +1,5 @@
-# This report prints a student roster by homeroom.  It will also print
-# students without a homeroom as the last page if 'ALL' is selected.
+# WARNING - this is a restricted report and should only be run by administrators.
+# This report will reset student passwords to a randomly chosen word plus an integer
 class PasswordReset
 
   # Build the parameter screen for this report.
