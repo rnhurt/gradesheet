@@ -15,8 +15,9 @@ class Student < User
     :in => from_year..to_year,
     :message => "must be in the range of #{from_year} to #{to_year}"
 
-	named_scope	:courses, :joins => :courses
-
+  def current_course_terms
+    return CourseTerm.all(:joins => :course)
+  end
 
   # Return an array of unique homerooms that are in the system.
 	def self.find_homerooms(*args)

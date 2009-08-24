@@ -1,42 +1,8 @@
 <% content_for :left do %>
-	<%= render :partial => 'courses/course_list', :object => @courses %>
+  <%= render :partial => 'courses/course_list', :object => @courses %>
 <% end %>
 
-<%# Loop through the courses printing out the assignments %>
-<table class='sortable'>
-  <thead>
-    <tr>
-      <th>Course</th>
-      <th>Term</th>
-      <th>Teacher</th>
-      <th>Grade</th>
-    </tr>
-  </thead>
-  <tbody>
-<% for course in @courses do -%>
-  <tr class="<%= cycle('odd', 'even') %>">
-    <%= content_tag :td, course.name %>
-    <%= content_tag :td, course.term.name %>
-    <%= content_tag :td, course.teacher.full_name %>
-    <td>
-      <% if course.assignments.length < 1 %>
-        n/a
-      <% else %>
-        <% for assignment in course.assignments %>
-          <%#= h assignment.name %>
-          <%#= h assignment.possible_points %>
-          <% gradation = assignment.assignment_evaluations.detect {|i| i.student_id = '808948075' } %>
-          <% if gradation %>
-            <%= h gradation.points_earned -%>
-          <% else %>
-            n/a
-          <% end -%>
-        <% end -%>  
-      <% end -%>
-    </td>
-  </tr>
-<% end -%>
-</table>
+<%= my_grades_table %>
 
 <%#= debug @courses %>
 
