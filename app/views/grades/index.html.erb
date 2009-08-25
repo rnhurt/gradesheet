@@ -2,7 +2,11 @@
   <%= render :partial => 'courses/course_list', :object => @courses %>
 <% end %>
 
-<%= my_grades_table %>
+<h2>
+  <span style="float:left;"><%= h current_user.full_name %> - All Courses</span>
+  <span style="float:right;"><%= h @school_year.name %></span>
+</h2>
+<div class="spacer">&nbsp;</div>
 
-<%#= debug @courses %>
+<%= my_grades_table %>
 

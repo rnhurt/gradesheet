@@ -7,12 +7,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td colspan='0'><%= link_to 'Add New Course', new_course_path, :class=>'btn standard' %></td></tr>
+      <% if current_page?(:controller => "courses") %>
+        <tr><td colspan='0'><%= link_to 'Add New Course', new_course_path, :class=>'btn standard' %></td></tr>
+      <% end %>
       <% @courses.each do |course| %>
         <tr class="<%= cycle('even', 'odd') + (current_page?(:id => course) ? ' current' : '') %>"
             onclick="location.href='<%= url_for( :action => "edit", :id => course.id ) %>'" >
-          <%= content_tag :td, link_to( course.name, :action => "edit", :id => course.id ) %>
-          <%= content_tag :td, course.terms[0].school_year.name  %>
+              <%= content_tag :td, link_to( course.name, :action => "edit", :id => course.id ) %>
+              <%= content_tag :td, course.terms[0].school_year.name  %>
         </tr>
       <% end %>
     </tbody>

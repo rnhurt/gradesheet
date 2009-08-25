@@ -1,0 +1,28 @@
+<% content_for :left do %>
+  <%= render :partial => 'courses/course_list', :object => @courses %>
+<% end %>
+
+<h2>
+  <span style="float:left;"><%= h current_user.full_name %> - <%= @course.name %> </span>
+  <span style="float:right;"><%= h @school_year.name %></span>
+</h2>
+<div class="spacer">&nbsp;</div>
+
+<ul id="term_tabs" class="subsection_tabs">
+  <% @course.terms.each do |term| %>
+    <li class="tab"><%= link_to term.name, "\##{term.name}" %></li>
+  <% end %>
+</ul>
+
+<%# course_term = CourseTerm.find_by_course_id_and_term_id(@course, term) %>
+
+<% @course.terms.each do |term| %>
+  <div id="<%= term.name %>">
+    <% course_term = CourseTerm.find_by_course_id_and_term_id(@course, term) %>
+    <%= my_grades_detail_table(course_term) %>
+  </div>
+<% end %>
+
+<% content_for :page_footer do %>
+  <%= javascript_tag "new Control.Tabs('term_tabs');" %>
+<% end %>

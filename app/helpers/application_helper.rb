@@ -14,7 +14,7 @@ module ApplicationHelper
 	# grading terms.
 	def show_course_term_list
     # FIXME active is not being checked
-		@courses = Course.active.find_all_by_teacher_id(current_user)
+		@courses ||= Course.active.find_all_by_teacher_id(current_user)
 		render :partial => 'shared/course_term_list', :object => @courses
 	end
 
@@ -65,13 +65,6 @@ module ApplicationHelper
 		return (current_year - 1..current_year + 13).to_a
 	end
 
-
-	# This method was built to overcome a weakness in current_page? as reported
-	# in http://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/805.
-	# Here we are overriding the controller_name, mostly used on the 'Courses' page.
-	def current_controller?(c)
-		controller.controller_name == c
-	end
 
   # Toggle the value of a checkbox between T and F using AJAX
   def toggle_value(object)
