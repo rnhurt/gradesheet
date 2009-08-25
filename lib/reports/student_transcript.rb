@@ -101,13 +101,12 @@ class StudentTranscript
         end
 
         # Set up the text options
-        font "Helvetica"
-        text_options.update(:size => 7, :align => :left)
+        font "Helvetica", :size => 7, :align => :left
         move_down(60)
 
         # Gather all the information on this students course history
         history = []
-        student.courses.map { |c| history << {:year => c.term.school_year, :course => c} }
+        student.courses.map { |c| history << {:year => c.school_year, :course => c} }
 
         # Loop through the students history, by year
         history.group_by { |record| record[:year] }.each do |year, detail|

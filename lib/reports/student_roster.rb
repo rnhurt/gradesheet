@@ -66,7 +66,7 @@ class StudentRoster
         # Print the HEADER
         fill_color "000000"
         stroke_color "000000"
-        mask(:y) {text "Student count: #{homeroom[1].count}", :align => :right, :size => 7}
+        mask(:y) {text "Student count: #{homeroom[1].size}", :align => :right, :size => 7}
         text "Homeroom (#{homeroom[0]})", :align => :center, :size => 20
         move_down 5
 		

@@ -1,12 +1,12 @@
 <% reports = Report.all() %>
-<table>
+<table class="master">
   <thead>
     <tr>
       <th>Reports</th>
     </tr>
   </thead>
   <tbody>
-    <% reports.delete_if{ |r| r.include?(:restricted) } unless current_user.is_admin? %>
+    <% reports.delete_if{ |r| r.restricted } unless current_user.is_admin? %>
     <% reports.each do |r| %>
       <tr class="<%= cycle('odd', 'even')%>">
         <td><%= link_to r.menuname, "/reports/#{r.name}" %></td>

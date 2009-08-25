@@ -171,8 +171,7 @@ class ReportCard
         @right_cursor = cursor
 
         # Set up the text options
-        font "Helvetica"
-        text_options.update(:size => 7, :align => :left)
+        font "Helvetica", :size => 7, :align => :left
 
 
     	  # Print the grades for each course
@@ -200,7 +199,7 @@ class ReportCard
             course_term.course_term_skills.each do |ctskill|
               # Get the existing skill_score, or create a new one
               temp = data_hash.fetch(ctskill.supporting_skill,
-                skill_Conveniencescore.new(ctskill.supporting_skill.description))
+                skill_score.new(ctskill.supporting_skill.description))
 
               # Get the score for the current course_term_skill
               temp[ctindex+1] = ctskill.score(student)
@@ -265,8 +264,7 @@ class ReportCard
         bounding_box [0, cursor - HEADER_HEIGHT], :width => bounds.width do
 
           # Set up the text options
-          font "Helvetica"
-          text_options.update(:size => 7, :align => :left)
+          font "Helvetica", :size => 7, :align => :left
 
           scales.each do |scale|
             # Print the grading scale header

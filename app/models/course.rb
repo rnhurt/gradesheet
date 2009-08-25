@@ -28,6 +28,11 @@ class Course < ActiveRecord::Base
       :conditions => ["date_ranges.school_year_id = ?", school_year ||= SchoolYear.current_year]
     }
   }
+
+  # Calculate the school year for this course
+  def school_year
+    return self.terms.first.school_year
+  end
   
   # Build a JavaScript function that converts a score to a letter grade based
   # on the grading scale of the course.
