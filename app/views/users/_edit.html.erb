@@ -9,30 +9,34 @@
 
       <%= f.label :login, {}, :class => 'req' %>
       <%= f.text_field :login, :id => 'user_login', :class=>"focus input" %>
-
+      <br />
       <%= f.label :first_name, {}, :class => 'req' %>
       <%= f.text_field :first_name, :class => 'input' %>
-
+      <br />
       <%= f.label :last_name, {}, :class => 'req' %>
       <%= f.text_field :last_name, :class => 'input' %>
-
+      <br />
       <%= f.label :email, {}, :class => '' %>
       <%= f.text_field :email, :class=>'input' %>
-
+      <br />
       <label><%= content_tag :span, f.object.new_record? ? 'Password' : 'Change password',
         !f.object.new_record? ? nil : :class=>'required' %></label>
       <%= f.password_field :password, :class=>'input' %>
+      <br />
 
       <label><%= content_tag :span, 'Confirm password', !f.object.new_record? ? nil : :class=>'required' %></label>
       <%= f.password_field :password_confirmation, :class=>'input' %>
+      <br />
 
       <%= f.label :site, {}, :class => 'req' %>
       <%= collection_select user.class.name.underscore, :site_id, Site.find(:all), :id, :name, {}, :class=>'input' %>
+      <br />
 
       <% if user.class.name == 'Student' %>
         <%= f.label :class_of, {}, :class => 'req' %>
     <%# FIXME: Get the class time properly and stop hardcoding values %>
         <%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a, {}, :class=>'input') %>
+        <br />
 
         <%= f.label :homeroom %>
         <%= text_field_tag :homeroom1, {}, :maxlength => 20 %>
