@@ -27,8 +27,7 @@ class PasswordReset
 			</select>
 			
 		<div class="spacer">
-			<input class="btn positive" type="submit" value="Run Report" onclick="if (confirm(
-'*WARNING* This will change data in the system.\\nAre you sure you want to continue?'));return false;"/>
+			<input class="btn positive" type="submit" value="Run Report" onclick="return confirm('*WARNING* This will change data in the system.\\nAre you sure you want to continue?');"/>
 		</div>
 		</fieldset>
 	</form>
