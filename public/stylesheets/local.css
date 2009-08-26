@@ -29,6 +29,8 @@ body {background: #FFF url("/images/header-bg.gif") top left repeat-x;}
 div.box {	border: 2px solid #D2DDFE; padding: 0.5em; -moz-border-radius: 7px; -webkit-border-radius: 7px; }
 h3 {border-bottom: 1px solid #DDD;}
 .hidden { display: none; }
+.left { float:left; }
+.right { float:right; }
 
 /*** Check list ***/
 .checklist {

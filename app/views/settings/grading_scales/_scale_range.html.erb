@@ -1,12 +1,17 @@
 <% fields_for_range(scale_range) do |ff| %>
-  <div class='scale_range span-12 last'>
-    Above <%= ff.text_field :min_score, :size => '3' %>%
-    is a <%= ff.text_field :letter_grade, :size => '3' %>
+  <div class='scale_range box span-12 last'>
+    <%= ff.error_messages :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
+    <%= ff.label :max_score, "From" %>
+    <%= ff.text_field :min_score, :size => '3' %>%
+    <strong>&nbsp; up to &nbsp;</strong>
+    <%= ff.text_field :max_score, :size => '3' %>%
+    <strong>&nbsp; is &nbsp;</strong>
+    <%= ff.text_field :letter_grade, :size => '3' %>
+    <br />
+    <%= ff.label :description %>
     <%= ff.text_area :description, :size => '20x2' %>
 
-    <%= link_to_function "remove", "$(this).up('.scale_range').remove()", :class => 'btn standard' %>
+    <%= link_to_function "remove", "$(this).up('.scale_range').remove()", :class => 'btn standard right' %>
   </div>
 <% end %>
-
-

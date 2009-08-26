@@ -11,15 +11,14 @@
       <%= f.text_field :name, :class => "focus" %>
       <br />
       
-      <label>
-        <%= link_to_function "Add a range", :class => 'btn standard' do |page|
-          page.insert_html :bottom, :ranges, :partial => 'scale_range', :object => ScaleRange.new
-        end %>
-      </label>
-
       <div id='ranges' class='prepend-2 span-13 last'>
         <%= render :partial => 'scale_range', :collection => @scale.scale_ranges %>
       </div>
+
+        <%= link_to_function "Add a range", :class => 'btn standard' do |page|
+          page.insert_html :bottom, :ranges, :partial => 'scale_range', :object => ScaleRange.new
+        end %>
+
 
 	    <div class='spacer span-15 last'>
 		    <%= submit_tag 'Save', :class => 'btn positive' %>
