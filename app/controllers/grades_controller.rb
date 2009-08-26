@@ -1,5 +1,7 @@
 # This controller is used by the student/parent to access their grade information
 class GradesController < ApplicationController
+  before_filter :require_user
+  append_before_filter :authorized?
 
   def index
     @courses = current_user.courses.active  # needed for the side bar
