@@ -34,7 +34,8 @@ class AssignmentsController < ApplicationController
       flash[:notice] = "Assignment '#{@assignment.name}' was created successfully."
       redirect_to :action => :show, :id => @assignment.course_term.id
     else
-      render :action => :edit
+      @course_term = CourseTerm.find(@assignment.course_term_id)
+      render :action => "edit"
     end
   end
 
