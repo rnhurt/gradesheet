@@ -37,8 +37,11 @@ module GradeHelper
       @school_year.terms.each do |term|
         course_term = CourseTerm.find_by_course_id_and_term_id(course.id, term.id)
         grade = course_term.calculate_grade(current_user)
-        score = grade[:letter]
-        score += " (#{grade[:score].round}%)" if grade[:score].round >= 0
+
+        # Only show grades for course_terms that have assignments and scores
+        if grade[:score].round >= 0
+          score = "#{grade[:letter]} (#{grade[:score].round}%)"
+        end
         body << "<td><a href='/grades/#{course.id}##{term.name}'>#{score}</a></td>"
       end
 
@@ -69,7 +72,7 @@ module GradeHelper
 
     # Build the body of the table
     if course_term.assignments.size < 1
-     body += "<tr><td colspan='0'>No assignments found</td></tr>"
+      body += "<tr><td colspan='0'>No assignments found</td></tr>"
     else
       course_term.assignments.sort{|a,b| a.due_date <=> b.due_date}.each do |assignment|
         grade = assignment.calculate_grade(current_user.id)
