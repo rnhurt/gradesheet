@@ -1,10 +1,9 @@
 # This script updates the page whenever a student is enrolled or un-enrolled
 # from a course.  It also provides a little visual feedback if the student
 # is already enrolled in the course
-
 page.replace_html 'enrolled_students', { :partial => 'enrolled_students' }
 
 # Only highlight a student when we add it, not when we remove it
-page.visual_effect :highlight, @student.id.to_s, :duration => 3 if @add
+#page.visual_effect :highlight, @student.id.to_s, :duration => 3 if @add
 
 
