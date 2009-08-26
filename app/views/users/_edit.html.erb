@@ -19,15 +19,16 @@
       <%= f.label :email, {}, :class => '' %>
       <%= f.text_field :email, :class=>'input' %>
       <br />
-      <label><%= content_tag :span, f.object.new_record? ? 'Password' : 'Change password',
-        !f.object.new_record? ? nil : :class=>'required' %></label>
+      <% content_tag :label, !f.object.new_record? ? nil : :class=>'required' do %>
+        <%= content_tag :span, f.object.new_record? ? 'Password' : 'Change password' %>
+      <%  end %>
       <%= f.password_field :password, :class=>'input' %>
       <br />
-
-      <label><%= content_tag :span, 'Confirm password', !f.object.new_record? ? nil : :class=>'required' %></label>
+      <% content_tag :label, !f.object.new_record? ? nil : :class=>'required' do %>
+        <%= content_tag :span, 'Confirm password' %>
+      <% end %>
       <%= f.password_field :password_confirmation, :class=>'input' %>
       <br />
-
       <%= f.label :site, {}, :class => 'req' %>
       <%= collection_select user.class.name.underscore, :site_id, Site.find(:all), :id, :name, {}, :class=>'input' %>
       <br />

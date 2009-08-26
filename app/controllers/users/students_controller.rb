@@ -25,22 +25,21 @@ class Users::StudentsController < ApplicationController
 
   def new
     @student = Student.new
-		@homerooms = Student.find(:all, :select => 'homeroom', :group => 'homeroom', :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
-		
+    @homerooms = Student.find_homerooms()
+ 		
 		render :action => :edit
   end
 
 
   def edit
     @student = Student.find(params[:id])
-		@homerooms = Student.find(:all, :select => 'homeroom', :group => 'homeroom', :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
-    
+    @homerooms = Student.find_homerooms()    
   end
 
 
   def create
     @student = Student.new(params[:student])
-		@homerooms = Student.find(:all, :select => 'homeroom', :group => 'homeroom', :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
+    @homerooms = Student.find_homerooms()
 
     respond_to do |format|
       if @student.save
@@ -63,27 +62,22 @@ class Users::StudentsController < ApplicationController
 			params[:student][:homeroom] = params[:homeroom1]
 		end
 
-    respond_to do |format|
-      if @student.update_attributes(params[:student])
-	    	flash[:notice] = "Student  '" + @student.full_name + "'  was successfully updated."
-        format.html { redirect_to(students_url) }
-      else
-				@homerooms = Student.find(:all, :conditions => "homeroom > ''").map { |h| [h.homeroom, h.homeroom] }
-        format.html { render :action => "edit" }
-      end
+    if @student.update_attributes(params[:student])
+      flash[:notice] = "Student  '" + @student.full_name + "'  was successfully updated."
+      redirect_to students_url
+    else
+      @homerooms = Student.find_homerooms()
+      render :action => "edit"
     end
   end
 
-
+  
   def destroy
     @student = Student.find(params[:id])
     
-    respond_to do |format|
-	    if @student.destroy
-	    	flash[:notice] = "Student  '" + @student.full_name + "'  was successfully deleted."
-	    	format.html { redirect_to :action => :index }
-#      format.html { redirect_to :action => :index }
-			end
+    if @student.destroy
+      flash[:notice] = "Student  '" + @student.full_name + "'  was successfully deleted."
+      redirect_to :action => :index
     end
   end
 end

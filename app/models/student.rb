@@ -23,6 +23,6 @@ class Student < User
 	def self.find_homerooms(*args)
     # FIXME: This should probably just return homerooms that are being used by 'valid' students
 		return Student.all(:select => 'homeroom', :group => 'homeroom', 
-      :conditions => "homeroom > ''").map { |h| h.homeroom }
+      :conditions => "homeroom > ''", :order => "homeroom").map { |h| h.homeroom }
 	end
 end
