@@ -7,8 +7,10 @@
   </thead>
   <tbody>
     <% reports.delete_if{ |r| r.restricted } unless current_user.is_admin? %>
+
     <% reports.each do |r| %>
-      <tr class="<%= cycle('odd', 'even')%>">
+      <tr class="<%= cycle('odd', 'even') + (current_page?(:id => r.name) ? ' current' : '') %>"
+          onclick="location.href='<%= url_for( :action => "show", :id => r.name ) %>'" >
         <td><%= link_to r.menuname, "/reports/#{r.name}" %></td>
       </tr>
     <% end %>

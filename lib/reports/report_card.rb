@@ -14,7 +14,7 @@ class ReportCard
 		# Allow the user to select a single student or multiple students.
 		students	= Student.all()
 		homerooms	= Student.find_homerooms()
-		years = SchoolYear.all #.sort{|a,b| a.end_date <=> b.end_date}
+		years = SchoolYear.all(:order => "end_date DESC")
 		
     params = <<-EOS
 	<form action="/reports/report_card.pdf" method="get">
