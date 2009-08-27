@@ -1,16 +1,14 @@
 class Settings::SiteDefaultsController < ApplicationController
   def create
-    case params[:update_type]
-    when "site_name"
-      StaticData.site_name = params[:site_default][:site_name]
-      flash[:notice] = "Site name changed to '#{params[:site_default][:site_name]}'"
-    when "site_tag"
-      StaticData.tag_line = params[:site_default][:site_tag]
-      flash[:notice] = "Site tag line changed to '#{params[:site_default][:site_tag]}'"
+    @site_data = StaticData.find_by_name(params[:update_type].upcase)
+    @site_data.value = params[:site_default][:new_value]
+
+    if @site_data.save
+      flash[:notice] = params[:update_type].humanize + " changed to '#{params[:site_default][:new_value]}'."
     else
-      flash[:error] = "Unknown option.  No change made."
+      flash[:error] = "Failed to update #{params[:update_type].humanize.downcase} to '#{params[:site_default][:new_value]}'!"
     end
-    
+
     redirect_to :action => "index"
   end
 end

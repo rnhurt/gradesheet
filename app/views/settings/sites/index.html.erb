@@ -21,6 +21,7 @@
 			<tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= url_for(site) + '/edit' %>'">
 				<td><%= link_to site.name, edit_site_path(site) %></td>
 				<td><%= button_to 'Delete', site, :method => :delete,
+                  :id => site.id,
 				          :disabled => !site.users.empty?, 
 									:class => "btn negative " + (site.users.empty? ? '' : 'disabled'),
 									:confirm => "Are you sure you want to delete the '" + site.name + "' campus?" %></td>

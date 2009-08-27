@@ -34,39 +34,31 @@ class Settings::SitesController < SettingsController
   def create
     @site = Site.new(params[:site])
 
-    respond_to do |format|
-      if @site.save
-        flash[:notice] = "Campus '#{@site.name}' was successfully created."
-        format.html { redirect_to :action => :index }
-      else
-        format.html { render :action => :edit  }
-      end
+    if @site.save
+      flash[:notice] = "Campus '#{@site.name}' was successfully created."
+      redirect_to :action => "index"
+    else
+      render :action => "edit"
     end
   end
 
-  # PUT /sites/1
-  # PUT /sites/1.xml
   def update
     @site = Site.find(params[:id])
 
-    respond_to do |format|
-      if @site.update_attributes(params[:site])
-        flash[:notice] = "Campus '#{@site.name}' was successfully updated."
-        format.html { redirect_to :action => :index }
-      else
-        format.html { render :action => "edit" }
-      end
+    if @site.update_attributes(params[:site])
+      flash[:notice] = "Campus '#{@site.name}' was successfully updated."
+      redirect_to :action => "index"
+    else
+      render :action => "edit"
     end
   end
 
-  # DELETE /sites/1
-  # DELETE /sites/1.xml
   def destroy
     @site = Site.find(params[:id])
-    @site.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(sites_url) }
+    if @site.destroy
+      flash[:notice] = "Campus '#{@site.name}' was successfully deleted."
+      redirect_to :action => "index"
     end
   end
 end
