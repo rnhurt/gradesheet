@@ -6,22 +6,21 @@ class SchoolYear < DateRange
   validates_length_of		:name, :within => 1..20
   validates_associated  :terms, :message => "are not correct."
 
-  # Return the current school year record, if there is one.
-  def self.current_year
-    term = Term.first
-    term ? SchoolYear.first(:conditions => { "id" => term.school_year }) : []
-  end
-  
+  # Find the current school year
+  named_scope :current, lambda { {
+      :select     => "DISTINCT date_ranges.*",
+      :conditions => ["? BETWEEN terms_date_ranges.begin_date AND terms_date_ranges.end_date", Date.today],
+      :joins      => "INNER JOIN date_ranges terms_date_ranges on terms_date_ranges.school_year_id = date_ranges.id AND terms_date_ranges.type = 'Term' AND date_ranges.type = 'SchoolYear'"
+    } }
+
+
+  # Find all school years that contain active terms
   named_scope :active,
     :select     => "DISTINCT date_ranges.*",
     :joins      => "INNER JOIN date_ranges terms_date_ranges on terms_date_ranges.school_year_id = date_ranges.id AND terms_date_ranges.type = 'Term' AND date_ranges.type = 'SchoolYear'",
     :conditions => "terms_date_ranges.active = 't'",
     :order      => "end_date DESC"
   
-
-# SELECT date_ranges.* FROM date_ranges inner join date_ranges terms_date_ranges on terms_date_ranges.school_year_id = date_ranges.id AND terms_date_ranges.type = "Term" AND date_ranges.type = "SchoolYear" WHERE terms_date_ranges.active = "t";
-# SELECT date_ranges.* FROM date_ranges INNER JOIN date_ranges terms_date_ranges ON terms_date_ranges.school_year_id = date_ranges.id AND terms_date_ranges.type = 'Term' WHERE terms_date_ranges.school_year_id = 'date_ranges.school_year_id' AND date_ranges.type = 'SchoolYear';
-# SELECT date_ranges.* FROM date_ranges INNER JOIN date_ranges terms_date_ranges ON terms_date_ranges.school_year_id = date_ranges.id AND terms_date_ranges.type = 'Term' WHERE terms_date_ranges.school_year_id = 'date_ranges.school_year_id' AND date_ranges.type = 'SchoolYear'
 
   # Calculate the beginning of the school year by finding the begin date of the
   # first term in the school year

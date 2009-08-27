@@ -25,4 +25,13 @@ class Student < User
 		return Student.all(:select => 'homeroom', :group => 'homeroom', 
       :conditions => "homeroom > ''", :order => "homeroom").map { |h| h.homeroom }
 	end
+
+  def self.find_classes_of
+    return Student.all(
+      :select     => "class_of",
+      :group      => "class_of",
+      :conditions => "class_of is not null",
+      :order      => "class_of"
+      )
+  end
 end

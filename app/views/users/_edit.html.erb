@@ -35,8 +35,7 @@
 
       <% if user.class.name == 'Student' %>
         <%= f.label :class_of, {}, :class => 'req' %>
-    <%# FIXME: Get the class time properly and stop hardcoding values %>
-        <%= f.select(:class_of, ((Time.now.year - 1)..(Time.now.year + 10)).to_a, {}, :class=>'input') %>
+        <%= f.select(:class_of, TimeRanges[:classes_of].call.to_a, {}, :class=>'input') %>
         <br />
 
         <%= f.label :homeroom %>

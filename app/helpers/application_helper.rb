@@ -60,10 +60,10 @@ module ApplicationHelper
 	# choose from.  This application will be mainly used in schools that have
 	# a limited number of class years.  So we give the user a total of 14 years
 	# to work with; 1 before the current year, and 12 years after the current year.
-	def class_range
-		current_year = Time.now.year
-		return (current_year - 1..current_year + 13).to_a
-	end
+#	def valid_class_range
+#		current_year = lambda{ Time.now.year }
+#		return (Time.now.year- 1..Time.now.year + 13).to_a
+#	end
 
 
   # Toggle the value of a checkbox between T and F using AJAX

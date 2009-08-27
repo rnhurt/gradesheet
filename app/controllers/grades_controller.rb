@@ -4,12 +4,12 @@ class GradesController < ApplicationController
   append_before_filter :authorized?
 
   def index
-    @school_year = SchoolYear.current_year
+    @school_year = SchoolYear.current
     @courses = current_user.courses.by_school_year(@school_year)  # need for the side bar
   end
   
   def show
-    @school_year = SchoolYear.current_year
+    @school_year = SchoolYear.current
     @courses = current_user.courses.by_school_year(@school_year)  # need for the side bar
     @course = Course.find(params[:id])
     @course.terms.sort!{|a,b| a.end_date <=> b.end_date}
