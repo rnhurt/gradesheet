@@ -10,12 +10,12 @@ class ScaleRange < ActiveRecord::Base
 
   attr_accessor :should_destroy
 
-  def before_validation
-    if min_score >= max_score
+  def before_save
+    # Make sure that the minimum score is less than the maximum score
+    if min_score > max_score
       self.errors.add_to_base("Minimum Score cannot be greater than Maximum Score")
-      return false 
+      return false
     end
-
   end
 
   # This attribute is set in the scale_range partial when the user wants to 
