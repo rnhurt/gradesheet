@@ -5,7 +5,7 @@ class CoursesController < ApplicationController
   def new
     @course = Course.new
     @teacher = Teacher.find(current_user)
-    @school_years = SchoolYear.all(:order => "end_date DESC")
+    @school_years = SchoolYear.active
   end
 
   def edit
