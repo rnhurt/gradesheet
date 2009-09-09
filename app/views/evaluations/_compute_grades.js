@@ -1,7 +1,7 @@
 // Loop through each row in the table and calculate the grades for that student.
 function calculate() {
   // OPTIMIZE - only calculate the rows that have changed.
-	$$('tr.calc').each(calcGrades);
+  $$('tr.calc').each(calcGrades);
 }
 
 // Given a row with student data, calculate the grade for that student
@@ -24,40 +24,48 @@ function calcGrades(row) {
     total_avail_points = 0.0;
     grades.each(function(grade) {
       // Variables
-     	avail_points  = parseFloat(grade.readAttribute('points')); // How many points is this assignment worth?
-    	grade_value   = grade.getValue();                          // What grade did the user enter?
+      avail_points  = parseFloat(grade.readAttribute('points')); // How many points is this assignment worth?
+      grade_value   = grade.getValue();                          // What grade did the user enter?
 
-      // Did the user enter a number or a letter?     
-      if (isNaN(parseFloat(grade_value))) {
-      	// Its not a number so look for any 'special' grades
-      	switch(grade_value.toUpperCase()) {
-      	  case 'M': // This is a missing grade and it is counted as a 0
-      	    score = 0;
-      	    break;
-          case 'E': // This is an excused grade
+      // Reset any CSS names
+      grade.removeClassName('grade-warning');
+      grade.removeClassName('grade-error');
+      grade.removeClassName('grade-empty');
+
+      // Did the user enter a number or a letter?
+      score = parseFloat(grade_value);
+      if (isNaN(score)) {
+        // Its not a number so look for any 'special' grades
+        switch(grade_value.toUpperCase()) {
+          case 'M': // This is a missing grade and it is counted as a 0
+            grade.addClassName('grade-warning');
+            score = 0;
+            break;
+          case 'E': // This is an excused grade and it is given maximum points
+            grade.addClassName('grade-warning');
             score = avail_points;
+            break;
+          case '': // This is a blank grade
+            grade.addClassName('grade-empty');
+            score = null;
             break;
           default:  // This is an invalid grade
             grade.addClassName('grade-error');
             score = 0;
-            break;
-      	}
-      } else {
-        // This is a 'number' score
-        score = parseFloat(grade_value);            
+        }
       }
 
-    	// Make sure they didn't score more points than possible
-    	if (score > avail_points || (score / avail_points) < .40) {
-    		grade.addClassName('grade-warning');
-    	} else {
-    		grade.removeClassName('grade-warning');
-    		grade.removeClassName('grade-error');
-	    }
+      // Don't count blank grades
+      if (score != null) {
+        // Make sure they didn't score more points than possible
+        if (score > avail_points || (score / avail_points) < .40) {
+          grade.addClassName('grade-warning');
+        }
 		    
-      // Keep a running total
-      total_avail_points += avail_points;
-      total_score += score;
+        // Keep a running total
+        total_avail_points += avail_points;
+        total_score += score;
+      }
     });
 
     // Compute the score for this assignment

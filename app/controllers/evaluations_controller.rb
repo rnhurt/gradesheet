@@ -37,7 +37,7 @@ class EvaluationsController < ApplicationController
   def update_grade
   	# Find or create a new grade for this student/assignment
 		@assignment_evaluation = AssignmentEvaluation.find_or_create_by_student_id_and_assignment_id(
-      params[:student], params[:assignment], :include => [:students, :assignments])
+      params[:student], params[:assignment])
 
     # If the score is blank then delete the gradation row
     if params[:score].empty? 

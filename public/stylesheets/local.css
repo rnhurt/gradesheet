@@ -100,6 +100,7 @@ form .input {width:40%;}
 form .select {width:40%;}
 .grade-warning {background:#FFF6BF none repeat scroll 0 0;border-color:#FBC2C4;color:#514721;}
 .grade-error {background:#FBE3E4 none repeat scroll 0 0;border-color:#FBC2C4;color:#8A1F11;}
+.grade-empty {background:#DDFFFF none repeat scroll 0 0;border-color:#FBC2C4;color:#8A1F11;}
 .grade-grid {overflow:scroll;}
 .grade_range {border-bottom: 1px solid #999; margin:3px;}
 

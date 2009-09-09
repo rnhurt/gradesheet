@@ -57,7 +57,7 @@
               <% end %>
 
               <% if found %>
-                <%= text_field_tag 'score', found.points_earned,
+                <%= text_field_tag 'score', found.points_earned_before_type_cast,
                   :points	=> assignment.possible_points,
                   :name		=> 'grade',
                   :id			=> [:s => student.id, :a => assignment.id],
