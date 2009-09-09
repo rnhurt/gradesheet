@@ -1,5 +1,6 @@
 // Loop through each row in the table and calculate the grades for that student.
 function calculate() {
+  // OPTIMIZE - only calculate the rows that have changed.
 	$$('tr.calc').each(calcGrades);
 }
 

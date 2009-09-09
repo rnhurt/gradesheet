@@ -39,7 +39,7 @@
 
       <% students = @course_term.course.students.sort_by {|a| a.last_name } %>
       <% students.each do |student| %>
-        <tr class="calc <%= cycle('odd', 'even') %>"  id='<%= student.id %>'>
+        <tr class="calc <%= cycle('odd', 'even') %>"  id='s<%= student.id %>'>
           <td class='score'>0.0</td>
           <%= content_tag :td, student.full_name, :id => student.id %>
           <% a_counter = counter + 1 %>
