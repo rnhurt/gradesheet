@@ -4,7 +4,7 @@ class GradesController < ApplicationController
   append_before_filter :authorized?
 
   def index
-    @school_year = SchoolYear.current
+    @school_year = SchoolYear.current.first
     @courses = current_user.courses.by_school_year(@school_year)  # need for the side bar
   end
   
