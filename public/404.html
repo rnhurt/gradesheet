@@ -1,30 +1,42 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+  <head>
+    <meta http-equiv='content-type' content='text/html;charset=UTF-8' />
+    <title><%= StaticData.site_name %> - Page not found (404)</title>
+    <%= stylesheet_link_tag 'screen' -%>
+    <!--[if IE]><%= stylesheet_link_tag 'ie' -%><![endif]-->
+    <%= stylesheet_link_tag 'menu', 'tabs', 'local' -%>
 
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <title>The page you were looking for doesn't exist (404)</title>
-	<style type="text/css">
-		body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
-		div.dialog {
-			width: 25em;
-			padding: 0 4em;
-			margin: 4em auto 0 auto;
-			border: 1px solid #ccc;
-			border-right-color: #999;
-			border-bottom-color: #999;
-		}
-		h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
-	</style>
-</head>
+  </head>
 
-<body>
-  <!-- This file lives in public/404.html -->
-  <div class="dialog">
-    <h1>The page you were looking for doesn't exist.</h1>
-    <p>You may have mistyped the address or the page may have moved.</p>
-  </div>
-</body>
+  <body>
+    <div class="container">
+      <div id='header' class='span-25 last'>
+
+        <div class='span-2'><img class='top' src='/images/logo.png' alt="logo" width='60px' height='60px' /></div>
+
+        <div class='span-12'>
+          <span class='title last'><%= StaticData.site_name %></span>
+          <span class='tagline column span-12'><%= StaticData.tag_line %></span>
+        </div>
+      </div>
+
+      <div class="clear span-5 last">&nbsp;</div>
+
+      <div class="box span-15 prepend-4 last" style="text-align:center;margin-top:60px">
+        <h2>Page not found.</h2>
+        <p>
+          The page you were looking for doesn't exist.<br />
+          You may have mistyped the address or the page may have moved.</p>
+
+        <p>Click <a href="/">here</a> to go back to the dashboard.</p>
+      </div>
+
+      <div class='span-24 last' id='footer'>
+        &copy; 2005 - 2009 <a href='http://www.kangaroobox.com'>KangarooBox</a>, LLC.  All rights reserved.
+      </div>
+    </div>
+  </body>
 </html>
