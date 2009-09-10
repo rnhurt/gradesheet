@@ -14,8 +14,6 @@
   <% end %>
 </ul>
 
-<%# course_term = CourseTerm.find_by_course_id_and_term_id(@course, term) %>
-
 <% @course.terms.each do |term| %>
   <div id="<%= term.name %>">
     <% course_term = CourseTerm.find_by_course_id_and_term_id(@course, term) %>

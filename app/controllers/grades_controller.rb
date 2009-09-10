@@ -9,7 +9,7 @@ class GradesController < ApplicationController
   end
   
   def show
-    @school_year = SchoolYear.current
+    @school_year = SchoolYear.current.first
     @courses = current_user.courses.by_school_year(@school_year)  # need for the side bar
     @course = Course.find(params[:id])
     @course.terms.sort!{|a,b| a.end_date <=> b.end_date}

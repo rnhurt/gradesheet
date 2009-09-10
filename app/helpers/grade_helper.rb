@@ -65,6 +65,7 @@ module GradeHelper
         <th>Assignment</th>
         <th>Type</th>
         <th>Due Date</th>
+        <th>Points</th>
         <th>Score</th>
       </tr></thead>
       <body>
@@ -77,18 +78,24 @@ module GradeHelper
       course_term.assignments.sort{|a,b| a.due_date <=> b.due_date}.each do |assignment|
         grade = assignment.calculate_grade(current_user.id)
         score = grade[:letter]
+        assignment_evaluation = assignment.assignment_evaluations.select{|ae| ae.student_id == current_user.id}.first
         score += " (#{grade[:score].round}%)" if grade[:score].round >= 0
         body += %{
         <tr class="#{cycle('odd','even')}">
           <td>#{assignment.name}</td>
           <td>#{assignment.assignment_category.name}</td>
           <td>#{assignment.due_date.to_s(:due_date)}</td>
-          <td>#{score}</td>
-
+          <td>
         }
-
+        if assignment_evaluation
+          body += assignment_evaluation.points_earned.to_f.round.to_s
+        else
+          body += '-'
+        end
         body += %{
-      </tr>
+          / #{assignment.possible_points.round}</td>
+          <td>#{score}</td>
+        </tr>
         }
       end
     end
