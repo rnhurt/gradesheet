@@ -2,14 +2,31 @@
 $$('form').each(function(f) {
   f.observe('keyup', function(event){
     // Move to the next field when the user presses the ENTER key
-    if (event.keyCode == Event.KEY_RETURN) {
-      // Get the current tabIndex and add 1 to it
-      var nextIndex = Event.element(event).tabIndex + 1;
+    switch (event.keyCode) {
+      case Event.KEY_DOWN:
+      case Event.KEY_RETURN:
+        // Get the current tabIndex and add 1 to it
+        var nextIndex = Event.element(event).tabIndex + 1;
 
-      // Find the next field in the tab order and SELECT its contents
-      var element = this.down('input[tabindex="' + nextIndex + '"]')
-      element.focus();
-      element.select();
+        // Find the next field in the tab order and SELECT its contents
+        var element = this.down('input[tabindex="' + nextIndex + '"]')
+        if (element) {
+          element.focus();
+          element.select();
+        }
+        break;
+        
+      case Event.KEY_UP:
+        // Get the current tabIndex and add 1 to it
+        var prevIndex = Event.element(event).tabIndex - 1;
+
+        // Find the next field in the tab order and SELECT its contents
+        var element = this.down('input[tabindex="' + prevIndex + '"]')
+        if (element) {
+          element.focus();
+          element.select();
+        }
+        break;
     }
   });
 });
