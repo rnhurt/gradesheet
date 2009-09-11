@@ -2,7 +2,6 @@
 <% @course_term.assignments.each {|a| unsorted_assignments << a } %>
 <% assignments = unsorted_assignments.sort_by {|a| a.due_date || Time.now}.reverse %>
 
-
 <%# Loop through the gradations and build a table with students as the ROW
 # and assignments in the COLUMN.  Along the way we'll also alert the user 
 # when there are missing students or assignments.
@@ -58,26 +57,26 @@
 
               <% if found %>
                 <%= text_field_tag 'score', found.points_earned_before_type_cast,
-                  :points	=> assignment.possible_points,
-                  :name		=> 'grade',
-                  :id			=> [:s => student.id, :a => assignment.id],
-                  :tabindex	=> a_counter,
+                  :points   => assignment.possible_points,
+                  :name     => 'grade',
+                  :id       => [:s => student.id, :a => assignment.id],
+                  :tabindex => a_counter,
                   :onchange => remote_function( :url => {:action => :update_grade},
-                  :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value",
-                  :loading => "Element.show('spinner')",
+                  :with     => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value",
+                  :loading  => "Element.show('spinner')",
                   :complete => "Element.hide('spinner')"),
-                  :size		=> '10' %>
+                  :size     => '10' %>
               <% else %>
                 <%= text_field_tag 'score', '',
-                  :points	=> assignment.possible_points,
-                  :name		=> 'grade',
-                  :id			=> [:s => student.id, :a => assignment.id],
-                  :tabindex	=> a_counter,
+                  :points   => assignment.possible_points,
+                  :name     => 'grade',
+                  :id       => [:s => student.id, :a => assignment.id],
+                  :tabindex => a_counter,
                   :onchange => remote_function( :url => {:action => :update_grade},
-                  :with   => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value",
-                  :loading => "Element.show('spinner')",
+                  :with     => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value",
+                  :loading  => "Element.show('spinner')",
                   :complete => "Element.hide('spinner')"),
-                  :size		=> '10' %>
+                  :size     => '10' %>
               <% end %>
 
             </td>

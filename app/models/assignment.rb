@@ -6,12 +6,12 @@ class Assignment < ActiveRecord::Base
   belongs_to	:assignment_category
   has_many		:assignment_evaluations
   
-  validates_length_of				:name, :within => 1..20
-  validates_numericality_of	:possible_points
-  validates_presence_of			:possible_points
-  
-  validates_existence_of		:course_term
-  validates_existence_of		:assignment_category
+  validates_length_of       :name, :within => 1..20
+  validates_numericality_of :possible_points
+  validates_presence_of     :possible_points
+  validates_date            :due_date
+  validates_existence_of    :course_term
+  validates_existence_of    :assignment_category
 
   delegate :grading_scale, :to => :course_term
   
