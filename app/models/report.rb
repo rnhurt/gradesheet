@@ -10,6 +10,7 @@ class Report
       report.new("report_card", "Report Card", false),
       report.new("student_transcript", "Student Transcript", false),
       report.new("student_roster", "Student Roster", false),
+      report.new("account_activity", "Account Activity", false),
       report.new("password_reset", "Password Reset", true),
     ]
   end
