@@ -32,7 +32,11 @@ class AssignmentsController < ApplicationController
 
     if @assignment.save
       flash[:notice] = "Assignment '#{@assignment.name}' was created successfully."
-      redirect_to :action => :show, :id => @assignment.course_term.id
+      if params["evaluations"]
+        redirect_to :action => "show", :id => @assignment.course_term.id, :controller => "evaluations"
+      else
+        redirect_to :action => "show", :id => @assignment.course_term.id
+      end
     else
       @course_term = CourseTerm.find(@assignment.course_term_id)
       render :action => "edit"
@@ -44,7 +48,11 @@ class AssignmentsController < ApplicationController
 
     if @assignment.update_attributes(params[:assignment])
       flash[:notice] = "Assignment '#{@assignment.name}' was updated successfully."
-      redirect_to :action => :show, :id => @assignment.course_term.id
+      if params["evaluations"]
+        redirect_to :action => "show", :id => @assignment.course_term.id, :controller => "evaluations"
+      else
+        redirect_to :action => "show", :id => @assignment.course_term.id
+      end
     else
       @course_term = CourseTerm.find(params[:assignment][:course_term_id])
       render :action => "edit"

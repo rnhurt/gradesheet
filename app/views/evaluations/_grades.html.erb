@@ -17,7 +17,9 @@
         <% else %>
           <% for assignment in assignments %>
             <th width='50' class='grade nosort' id='<%= assignment.id %>'>
-              <div class='assign-name'><%= h assignment.name %></div>
+              <div class='assign-name'>
+                <%= link_to assignment.name, edit_assignment_path(assignment.id) %>
+              </div>
               <div class='assign-points'>
                 <%= link_to_function assignment.possible_points,
                   "$$('[id*=a#{assignment.id}]').each(function(g) { g.value = #{assignment.possible_points}; g.onchange(); });" %>

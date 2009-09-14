@@ -28,13 +28,13 @@
       <%= f.label :due_date %>
       <%= f.hidden_field :due_date %>
       <span id='due_date' class='scal tinyscal'></span>
-      <%= f.hidden_field :due_date %>
       <input id='default_due_date' type='hidden'
              value='<%= @assignment.due_date? ? @assignment.due_date.to_s(:long) : DateTime.now.to_s(:long) %>' />
 
       <div class='spacer'>
-        <%= submit_tag 'Save', :class=> 'btn positive' %>
+        <%= submit_tag "Save", :name => "assignments", :class=> 'btn positive' %>
         <%= link_to 'Cancel', assignment_path(@course_term), :class => 'btn standard' %>
+        <%= submit_tag "Evaluate", :name => "evaluations", :class=> "btn standard" %>
       </div>
     </fieldset>
   <% end %>
