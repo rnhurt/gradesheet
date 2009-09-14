@@ -7,7 +7,8 @@ class AssignmentTest < ActiveSupport::TestCase
     @course = Course.first 
     assert @course.valid?, "Initial course is valid"
 
-    @assignment = Assignment.first    
+    @assignment = Assignment.first
+    @assignment.due_date = Date.today
     assert @assignment.valid?, "Initial assignment is valid"
  	end
 	def teardown
@@ -51,12 +52,15 @@ class AssignmentTest < ActiveSupport::TestCase
   	assert @assignment.valid?, "Valid course_term"
   end
   
-  def test_assignment_due_date_format
-  	# FIXME: date checking is hard
+  test "assigment due date" do
   	@assignment.due_date_formated = "Dec 12, 2009"
   	assert @assignment.valid?, "Due date is valid"
   	
-#  	@assignment.due_date_formated = "99, 99 2009"
-#  	assert !@assignment.valid?, "Due date is invalid"  	
+  	@assignment.due_date_formated = "Dec 33, 2009"
+  	assert !@assignment.valid?, "Due date is invalid"
+
+    @assignment.due_date = ''
+    assert !@assignment.valid?, "Due date is null"
   end
+
 end
