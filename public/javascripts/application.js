@@ -4,8 +4,8 @@ document.observe("dom:loaded", function() {
 });
 
 function setFocus() {
-  // Set the focus on the last input tag with a class of "focus"
-  $$("input[class*='focus']").each(function(i) {
+  // Set the focus on the last object with a class of "focus"
+  $$("*[class*='focus']").each(function(i) {
     i.focus();
     i.select();
   });
