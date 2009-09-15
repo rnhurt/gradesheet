@@ -92,19 +92,18 @@ class ReportCard
       @initial_cursor = cursor  # Use this to reset the position on each new page
 
       # Function to generate the table containing the course grade information
-      def make_table(headers, data)
-        if data.blank?
-          text "No assignments found for course '#{@course.name}'."
-        else
-          table(
-            data,
-            :headers      => headers,
-            :header_color => "C0C0C0",
-            :font_size    => 7,
-            :border_style => :grid,
-            :border_width => 0.5,
-            :width        => bounds.width)
-        end
+      def print_data(headers, data)
+        data = [["No supporting skills"] + [""] * (headers.size-1)] if data.blank?
+
+        # Draw the table containing the grade totals and the skill scores
+        table(
+          data,
+          :headers      => headers,
+          :header_color => "C0C0C0",
+          :font_size    => 7,
+          :border_style => :grid,
+          :border_width => 0.5,
+          :width        => bounds.width)
       end
 
       # Function to generate a new page for the report.
@@ -173,7 +172,6 @@ class ReportCard
         # Set up the text options
         font "Helvetica", :size => 7, :align => :left
 
-
     	  # Print the grades for each course
     	  @courses.each_with_index do |@course, index|
 
@@ -184,15 +182,15 @@ class ReportCard
           data_hash = {}
           headers = ["#{@course.name}\n  #{@course.teacher.full_name}"]
 
-          test_data = []
-          @course.course_terms.each{|ct| test_data << "ct#{ct.id}"}
-          skill_score = Struct.new(:supporting_skill, *test_data)
+          temp_data = []
+          @course.course_terms.each{|ct| temp_data << "ct#{ct.id}"}
+          skill_score = Struct.new(:supporting_skill, *temp_data)
           
     		  # Gather the grades for each term in this course
           @course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each_with_index do |course_term, ctindex|
             grade = course_term.calculate_grade(student.id)
             header = "#{course_term.term.name}\n #{grade[:letter]}"
-            header += " (#{grade[:score].round}%)" if grade[:score] >= 0
+            header += " (#{grade[:score].round}%)" if grade[:score] >= 0 && !course_term.grading_scale.simple_view
             headers <<  header
 
             # Get a list of all supporting skills for all terms for this course
@@ -203,6 +201,7 @@ class ReportCard
 
               # Get the score for the current course_term_skill
               temp[ctindex+1] = ctskill.score(student)
+
               # Store it back into the hash for data
               data_hash[ctskill.supporting_skill] = temp
             end
@@ -217,13 +216,13 @@ class ReportCard
           # Print the course data alternately on the left & right side of the page
           if index.even? then
             bounding_box([0, @left_cursor], :width => (bounds.width / 2) - GUTTER_SIZE) do
-              make_table(headers,data)
+              print_data(headers,data)
             end
             move_down(GUTTER_SIZE)
             @left_cursor = cursor
           else
             bounding_box([bounds.left + bounds.width / 2, @right_cursor], :width => (bounds.width / 2) - GUTTER_SIZE) do
-              make_table(headers,data)
+              print_data(headers,data)
             end
             move_down(GUTTER_SIZE)
             @right_cursor = cursor
@@ -299,6 +298,7 @@ class ReportCard
   def self.print_skills
     # Subheadings
     bounding_box([250,bounds.height], :width => 250, :height => bounds.height) do
+      # FIXME: hardcoded data!
       data = [
         ["(+)","Exceptional performance"],
         ["(b)","Satisfactory performance"],
