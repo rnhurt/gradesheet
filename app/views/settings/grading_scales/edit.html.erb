@@ -10,6 +10,9 @@
       <%= f.label :name, "Grading Scale Name", :class => 'req' %>
       <%= f.text_field :name, :class => "focus" %>
       <br />
+      <%= f.label :name, "Hide Percentages?" %>
+      <%= f.check_box :simple_view %>
+      <br />
       
       <div id='ranges' class='prepend-2 span-13 last'>
         <%= render :partial => 'scale_range', :collection => @scale.scale_ranges %>

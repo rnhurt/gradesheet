@@ -40,8 +40,11 @@ module GradeHelper
 
         # Only show grades for course_terms that have assignments and scores
         if grade[:score].round >= 0
-          score = "#{grade[:letter]} (#{grade[:score].round}%)"
+          score = "#{grade[:letter]}"
+          # Only show the percentage for grading scales that are not marked simple
+          score += " (#{grade[:score].round}%)" unless course_term.grading_scale.simple_view
         end
+
         body << "<td><a href='/grades/#{course.id}##{term.name}'>#{score}</a></td>"
       end
 
@@ -79,7 +82,7 @@ module GradeHelper
         grade = assignment.calculate_grade(current_user.id)
         score = grade[:letter]
         assignment_evaluation = assignment.assignment_evaluations.select{|ae| ae.student_id == current_user.id}.first
-        score += " (#{grade[:score].round}%)" if grade[:score].round >= 0
+        score += " (#{grade[:score].round}%)" if grade[:score].round >= 0 && !course_term.grading_scale.simple_view
         body += %{
         <tr class="#{cycle('odd','even')}">
           <td>#{assignment.name}</td>
