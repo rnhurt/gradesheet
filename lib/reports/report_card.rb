@@ -257,7 +257,7 @@ class ReportCard
 	  
     # Remove any duplicates
     scales.uniq!
-      
+
     @pdf.instance_eval do
       pad_bottom(0) do
         bounding_box [0, cursor - HEADER_HEIGHT], :width => bounds.width do
@@ -266,6 +266,9 @@ class ReportCard
           font "Helvetica", :size => 7, :align => :left
 
           scales.each do |scale|
+            # Sort the ranges by maximum score in decreasing order
+            scale.scale_ranges.sort!{|a,b| b.max_score <=> a.max_score}
+
             # Print the grading scale header
             text "#{scale.name}", :size => 8
             stroke_horizontal_rule
