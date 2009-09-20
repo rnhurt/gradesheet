@@ -17,8 +17,8 @@ class AssignmentEvaluation < ActiveRecord::Base
   # Calculate the points earned based on the presence of 'magic' characters
   def points_earned
     case self[:points_earned]
-    when 'E'  # Excused assignment (student gets full credit)
-      points = self.assignment.possible_points
+    when 'E'  # Excused assignment (grade is ignored)
+      points = nil
     when 'M'  # Missing assignment (student gets no credit)
       points = 0.0
     else
@@ -33,7 +33,7 @@ class AssignmentEvaluation < ActiveRecord::Base
 	# There are certain 'magic' characters that can be substituted for a number
 	# grade.  This method makes sure that the user only enters valid ones.
 	#
-	# * 'E' = Excused assignment (student gets full credit)
+	# * 'E' = Excused assignment (assignment is not counted)
 	# * 'M' = Missing assignment (student gets no credit)
 	def valid_string?
 	  ['E', 'M'].include?(self.points_earned) || 

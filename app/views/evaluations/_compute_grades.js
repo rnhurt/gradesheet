@@ -41,9 +41,9 @@ function calcGrades(row) {
             grade.addClassName('grade-warning');
             score = 0;
             break;
-          case 'E': // This is an excused grade and it is given maximum points
+          case 'E': // This is an excused grade and it is ignored
             grade.addClassName('grade-warning');
-            score = avail_points;
+            score = null;
             break;
           case '': // This is a blank grade
             grade.addClassName('grade-empty');

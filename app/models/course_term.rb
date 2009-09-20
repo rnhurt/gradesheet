@@ -23,9 +23,12 @@ class CourseTerm < ActiveRecord::Base
 
     # Loop through the assignments for computing the grade as we go
     self.assignment_evaluations.all(:conditions => { :student_id => student_id}).each do |evaluation|
-      points_earned += evaluation.points_earned.to_f
-      possible_points += evaluation.assignment.possible_points.to_f
-      logger.debug " **** points earned: #{evaluation.points_earned} out of #{evaluation.assignment.possible_points}"
+      valid_points = evaluation.points_earned
+      if valid_points
+        points_earned += valid_points.to_f
+        possible_points += evaluation.assignment.possible_points.to_f
+      end
+      logger.debug " **** points earned: #{valid_points} out of #{evaluation.assignment.possible_points}"
     end
 
     logger.debug  "  **** final! #{points_earned} out of #{possible_points}"
