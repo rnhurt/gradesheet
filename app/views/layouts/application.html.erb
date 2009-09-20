@@ -45,8 +45,7 @@
           <% else %>
             <span><%= current_user.full_name %></span> |
             <span><%= link_to 'My Account', edit_account_path() %></span> |
-            <span><%= link_to "log out", logout_path, :method => :delete,
-              :confirm => 'Are you sure you want to logout?' %></span>
+            <span><%= link_to "log out", logout_path, :method => :delete %></span>
           <% end %>
         </div>
 
