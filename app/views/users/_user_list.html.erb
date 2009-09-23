@@ -11,7 +11,7 @@
           <%= sort_header_tag('class_of', :title => 'Class Of') %>
           <%= sort_header_tag('homeroom', :title => 'Homeroom') %>
         <% end %>
-        <th><%= text_field_tag :search, params[:search],
+        <th colspan="2"><%= text_field_tag :search, params[:search],
           :size => 10, :class => "focus search" %></th>
       <% end %>
     </tr>
@@ -31,6 +31,10 @@
         <td><%= button_to 'Delete', u, :method => :delete,
             :confirm => "Are you sure you want to delete\n\n '" + u.full_name + "'?",
             :class => 'btn negative' %></td>
+        <td><%= button_to 'Imp.', { :action => "impersonate", :id => u.id },
+            :confirm => "Are you sure you want to impersonate\n\n '" + u.full_name + "'?",
+            :class => 'btn negative sml' %></td>
+
       </tr>
     <% end %>
   </tbody>

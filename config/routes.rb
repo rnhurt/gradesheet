@@ -29,7 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
 	# Build the standard routes
-  map.resources	:users
+  map.resources	:users, :member => { :impersonate => :post }
   map.resources :user_sessions
   map.resources :dashboard
   map.resources :assignments

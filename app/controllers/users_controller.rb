@@ -66,4 +66,17 @@ class UsersController < ApplicationController
       format.html { redirect_to(users_url) }
     end
   end
+
+  def impersonate
+    @user = User.find(params[:id])
+
+    if UserSession.create(@user)
+      flash[:warning] = "You are now impersonating '#{@user.full_name}'."
+      redirect_to root_url
+    else
+      flash[:error] = "Impersonation failed."
+      render :action => :show
+    end
+  end
+  
 end
