@@ -1,5 +1,5 @@
 <% content_for :left do %>
-	<%= render :partial => 'settings/settings_list' %>
+  <%= render :partial => 'settings/settings_list' %>
 <% end %>
 
 <%= error_messages_for :scale, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
@@ -13,22 +13,22 @@
       <%= f.label :name, "Hide Percentages?" %>
       <%= f.check_box :simple_view %>
       <br />
-      
+
       <div id='ranges' class='prepend-2 span-13 last'>
-        <%= render :partial => 'scale_range', :collection => @scale.scale_ranges %>
+        <%= render :partial => 'scale_range', :collection => @scale.scale_ranges.sort{|a,b| b.max_score <=> a.max_score} %>
       </div>
 
-        <%= link_to_function "Add a range", :class => 'btn standard' do |page|
-          page.insert_html :bottom, :ranges, :partial => 'scale_range', :object => ScaleRange.new
-        end %>
+      <%= link_to_function "Add a range", :class => 'btn standard' do |page|
+        page.insert_html :bottom, :ranges, :partial => 'scale_range', :object => ScaleRange.new
+      end %>
 
 
-	    <div class='spacer span-15 last'>
-		    <%= submit_tag 'Save', :class => 'btn positive' %>
-		    <%= link_to 'Cancel', grading_scales_path, :class => 'btn standard' %>
-	    </div>
-      
+      <div class='spacer span-15 last'>
+        <%= submit_tag 'Save', :class => 'btn positive' %>
+        <%= link_to 'Cancel', grading_scales_path, :class => 'btn standard' %>
+      </div>
+
     </fieldset>
-    
-<% end %>
+
+  <% end %>
 </div>
