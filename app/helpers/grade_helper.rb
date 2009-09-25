@@ -80,9 +80,13 @@ module GradeHelper
     else
       course_term.assignments.sort{|a,b| a.due_date <=> b.due_date}.each do |assignment|
         grade = assignment.calculate_grade(current_user.id)
-        score = grade[:letter]
         assignment_evaluation = assignment.assignment_evaluations.select{|ae| ae.student_id == current_user.id}.first
-        score += " (#{grade[:score].round}%)" if grade[:score].round >= 0 && !course_term.grading_scale.simple_view
+        if !grade[:desc].blank?
+          score = grade[:desc]
+        else
+          score = grade[:letter]
+          score += " (#{grade[:score].round}%)" if grade[:score].round >= 0 && !course_term.grading_scale.simple_view
+        end
         body += %{
         <tr class="#{cycle('odd','even')}">
           <td>#{assignment.name}</td>
