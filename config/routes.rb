@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Since we subclass the Users into different types,
   # we need to build routes for them.
+  map.resources	:users, :member => { :impersonate => :post }
   map.namespace :users do |u|
     u.resources :students, :name_prefix => nil
     u.resources :teachers, :name_prefix => nil
@@ -29,7 +30,6 @@ ActionController::Routing::Routes.draw do |map|
   end
 
 	# Build the standard routes
-  map.resources	:users, :member => { :impersonate => :post }
   map.resources :user_sessions
   map.resources :dashboard
   map.resources :assignments
