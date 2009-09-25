@@ -90,22 +90,9 @@ class ProgressReport
     # Make it so we don't have to use the 'pdf.' prefix everywhere.  :)
     @pdf.instance_eval do
       @initial_cursor = cursor  # Use this to reset the position on each new page
-
-      # Function to generate a new page for the report.
-      def new_page
-        # Reset the column cursor positions whenever we start a new page
-        @left_cursor = @initial_cursor - HEADER_HEIGHT
-        @right_cursor = @initial_cursor - HEADER_HEIGHT
-        
-        # Trigger a new page
-        start_new_page          
-      end
       
       # Loop through each student
       students.each_with_index do |student, sindex|
-        # Count the number of pages each student requires so that we can duplex properly
-        student_page_count = 0
-
         # Get the courses this student is enrolled in for the school year
         courses = student.courses.by_school_year(school_year)
         terms = school_year.terms.sort!{|a,b| a.end_date <=> b.end_date}
@@ -126,7 +113,6 @@ class ProgressReport
           text "Student: #{student.full_name}", :align => :left, :size => 10
           
           stroke_horizontal_rule    # make it look pretty        
-          student_page_count += 1   # reset the student page counter
         end
         
         # Build the page footer
@@ -166,8 +152,13 @@ class ProgressReport
 
           course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each do |course_term|
             grade = course_term.calculate_grade(student.id)
-            temp = grade[:letter]
-            temp += " (#{grade[:score].round}%)" if grade[:score] >= 0 && !course_term.grading_scale.simple_view
+            if !grade[:desc].blank?
+              temp = grade[:desc]
+            else
+              temp = grade[:letter]
+              temp += " (#{grade[:score].round}%)" if grade[:score] >= 0 && !course_term.grading_scale.simple_view
+            end
+            
             ct_data << temp
           end
 
@@ -176,9 +167,11 @@ class ProgressReport
 
         bounding_box([0, bounds.height-50], :width => (bounds.width)) do
           # Print the student data in table form
+          headers = [["Course"],["Teacher"]] + terms.collect{|t| [t.name]}
+          data    = [["No grades"] + [""] * (headers.size-1)] if data.blank?
           table(
             data,
-            :headers            => [["Course"],["Teacher"]] + terms.collect{|t| [t.name]},
+            :headers            => headers,
             :header_color       => "00AA00",
             :header_text_color  => "ffffff",
             :border_style       => :underline_header,
@@ -188,19 +181,9 @@ class ProgressReport
           )
         end
 
-        # Is this the last student?
-        if sindex < students.size - 1 then
-          # No, force a page break between students
-          new_page
-        else
-          # Yes, make sure we don't add a page break unnecessarily
-          student_page_count = 0
-        end
-
-        # Always print an even number of pages for a student.  This prevents the
-        # start of one report from printing on the back of the previous report.
-        new_page unless student_page_count.even?
         
+        start_new_page unless sindex >= students.size - 1
+
       end # each student
     end # instance_eval
     

@@ -27,6 +27,19 @@ class AssignmentEvaluation < ActiveRecord::Base
     
     return points
   end
+
+  def points_desc
+    case self[:points_earned]
+    when 'E'
+      description = 'Excused'
+    when 'M'
+      description = 'Missing'
+    else
+      description = ''
+    end
+    
+    return description
+  end
   
   private
   

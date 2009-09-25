@@ -38,13 +38,14 @@ class Assignment < ActiveRecord::Base
     possible_points = self.possible_points
     assignment = self.assignment_evaluations.select {|e| e.student_id == student_id}.first
     points_earned = assignment.blank? ? -1 : assignment.points_earned.to_f
+    points_desc   = assignment.blank? ? '' : assignment.points_desc
     logger.debug  "  **** assignment: #{points_earned} out of #{possible_points}"
 
     # Sanitize the score & grade so that we don't try to divide by zero or anything stupid
-    final_score = possible_points > 0 ? ((points_earned/possible_points)*100).round(2) : -1
-    letter_grade = final_score > 0 ? self.grading_scale.calculate_letter_grade(final_score) : 'n/a'
+    final_score   = possible_points > 0 ? ((points_earned/possible_points)*100).round(2) : -1
+    letter_grade  = final_score > 0 ? self.grading_scale.calculate_letter_grade(final_score) : 'n/a'
 
-    return {:letter => letter_grade, :score => final_score }
+    return {:letter => letter_grade, :score => final_score, :desc => points_desc }
   end
   
   private
