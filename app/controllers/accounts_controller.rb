@@ -26,7 +26,7 @@ class AccountsController < ApplicationController
 
   def update
     @user = current_user # makes our views "cleaner" and more consistent
-  
+
     # Since we have different types of users (Student, Teacher, etc.)
     # we have to grab the correct parms to update.
     user_params = params[@user[:type].downcase]
@@ -36,7 +36,7 @@ class AccountsController < ApplicationController
     user_params.delete(:last_name)
     user_params.delete(:login)
 
-    # Perform the update as usual    
+    # Perform the update as usual
     if @user.update_attributes(user_params)
       flash[:notice] = "Account updated!"
       redirect_back_or_default dashboard_index_url
