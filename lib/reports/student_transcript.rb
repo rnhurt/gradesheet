@@ -5,7 +5,7 @@ class StudentTranscript
   # Build the parameter screen for this report.
 	def self.get_params()
 		# Allow the user to select a single student or multiple students.
-		students	= Student.find(:all)
+		students	= Student.all(:order => "last_name ASC")
 		homerooms	= Student.find_homerooms()
 
     params = <<-EOS
@@ -34,7 +34,7 @@ class StudentTranscript
 
 		# List all of the students in the school
 		students.each do |s|
-			params += "<option value='#{s[:id]}'>#{s[:first_name]} #{s[:last_name]}</option>"
+			params += "<option value='#{s[:id]}'>#{s[:last_name]}, #{s[:first_name]}</option>"
 		end
 
     params << <<-EOS

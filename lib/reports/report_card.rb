@@ -12,7 +12,7 @@ class ReportCard
   # Build the parameter window to be shown to the user.	
 	def self.get_params()	
 		# Allow the user to select a single student or multiple students.
-		students	= Student.all()
+		students	= Student.all(:order => "last_name ASC")
 		homerooms	= Student.find_homerooms()
 		years = SchoolYear.all(:order => "end_date DESC")
 		
@@ -54,7 +54,7 @@ class ReportCard
 
 		# List all of the students in the school
 		students.each do |s|
-			params += "<option value='#{s[:id]}'>#{s[:first_name]} #{s[:last_name]}</option>"
+			params += "<option value='#{s[:id]}'>#{s[:last_name]}, #{s[:first_name]}</option>"
 		end
 				
     params += <<-EOS

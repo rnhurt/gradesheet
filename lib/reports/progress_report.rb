@@ -54,7 +54,7 @@ class ProgressReport
 
 		# List all of the students in the school
 		students.each do |s|
-			params += "<option value='#{s[:id]}'>#{s[:first_name]} #{s[:last_name]}</option>"
+			params += "<option value='#{s[:id]}'>#{s[:last_name]}, #{s[:first_name]}</option>"
 		end
 				
     params += <<-EOS
