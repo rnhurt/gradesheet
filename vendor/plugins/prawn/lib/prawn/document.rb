@@ -15,8 +15,10 @@ require "prawn/document/internals"
 require "prawn/document/span"
 require "prawn/document/annotations"
 require "prawn/document/destinations"
+require "prawn/document/snapshot"
 
 module Prawn
+  
   # The Prawn::Document class is how you start creating a PDF document.
   # 
   # There are three basic ways you can instantiate PDF Documents in Prawn, they 
@@ -49,6 +51,7 @@ module Prawn
   # that you want to immediately save or render out.
   # 
   # See the new and generate methods for further details on the above.
+  #
   class Document
 
     include Text
@@ -56,6 +59,7 @@ module Prawn
     include Internals
     include Annotations
     include Destinations
+    include Snapshot
     include Prawn::Graphics
     include Prawn::Images
 
@@ -108,6 +112,7 @@ module Prawn
     # <tt>:compress</tt>:: Compresses content streams before rendering them [false]
     # <tt>:background</tt>:: An image path to be used as background on all pages [nil]
     # <tt>:info</tt>:: Generic hash allowing for custom metadata properties [nil]
+    # <tt>:text_options</tt>:: A set of default options to be handed to text(). Be careful with this.
 
     # Additionally, :page_size can be specified as a simple two value array giving
     # the width and height of the document you need in PDF Points.
@@ -142,10 +147,8 @@ module Prawn
        end
           
        @version = 1.3
-       @objects = []
-       @info    = ref(options[:info])
-       @pages   = ref(:Type => :Pages, :Count => 0, :Kids => [])
-       @root    = ref(:Type => :Catalog, :Pages => @pages)
+       @store = ObjectStore.new(options[:info])
+
        @page_size       = options[:page_size]   || "LETTER"
        @page_layout     = options[:page_layout] || :portrait
        @compress        = options[:compress] || false
@@ -193,8 +196,8 @@ module Prawn
        finish_page_content if @page_content
        build_new_page_content
 
-       @pages.data[:Kids] << @current_page
-       @pages.data[:Count] += 1
+       @store.pages.data[:Kids] << current_page
+       @store.pages.data[:Count] += 1
 
        add_content "q"
 
@@ -211,7 +214,7 @@ module Prawn
     #   pdf.page_count #=> 4
     #
     def page_count
-      @pages.data[:Count]
+      @store.pages.data[:Count]
     end
 
     # The current y drawing position relative to the innermost bounding box,
@@ -373,6 +376,38 @@ module Prawn
       fields.each { |f| send("#{f}=", stored[f]) }
     end
 
+    # Raised if group() is called with a block that is too big to be
+    # rendered in the current context.
+    #
+    CannotGroup = Class.new(StandardError)
+
+    # Attempts to group the given block vertically within the current context.
+    # First attempts to render it in the current position on the current page.
+    # If that attempt overflows, it is tried anew after starting a new context
+    # (page or column).
+    #
+    # Raises CannotGroup if the provided content is too large to fit alone in
+    # the current page or column.
+    #
+    def group(second_attempt=false)
+      old_bounding_box = @bounding_box
+      @bounding_box = SimpleDelegator.new(@bounding_box)
+
+      def @bounding_box.move_past_bottom
+        raise RollbackTransaction
+      end
+
+      success = transaction { yield }
+
+      unless success
+        raise CannotGroup if second_attempt
+        old_bounding_box.move_past_bottom
+        group(second_attempt=true) { yield }
+      end 
+
+      @bounding_box = old_bounding_box
+    end
+
     # Returns true if content streams will be compressed before rendering,
     # false otherwise
     #
@@ -389,9 +424,9 @@ module Prawn
       @page_content = ref(:Length => 0)
 
       @current_page = ref(:Type      => :Page,
-                          :Parent    => @pages,
+                          :Parent    => @store.pages,
                           :MediaBox  => page_dimensions,
-                          :Contents  => @page_content)
+                          :Contents  => page_content)
       update_colors
     end
 
@@ -404,7 +439,8 @@ module Prawn
         :height => page_dimensions[-1] - (@margins[:top] + @margins[:bottom])
       )
 
-      # update bounding box if not flowing from the previous page
+      # we must update bounding box if not flowing from the previous page
+      #
       # FIXME: This may have a bug where the old margin is restored
       # when the bounding box exits.
       @bounding_box = @margin_box if old_margin_box == @bounding_box

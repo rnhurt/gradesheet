@@ -12,8 +12,8 @@ module Prawn
   
   class Reference #:nodoc:
              
-   attr_accessor :gen, :data, :offset
-   attr_reader :identifier, :stream
+   attr_accessor :gen, :data, :offset, :stream
+   attr_reader :identifier
     
     def initialize(id, data, &block)
       @identifier = id 
@@ -47,6 +47,18 @@ module Prawn
       @data[:Filter] = :FlateDecode
       @data[:Length] ||= @stream.length
       @compressed = true
+    end
+
+    def compressed?
+      @compressed
+    end
+    
+    # Replaces the data and stream with that of other_ref. Preserves compressed
+    # status.
+    def replace(other_ref)
+      @data       = other_ref.data
+      @stream     = other_ref.stream
+      @compressed = other_ref.compressed?
     end
   end         
 
