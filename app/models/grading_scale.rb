@@ -16,7 +16,7 @@ class GradingScale < ActiveRecord::Base
   def calculate_letter_grade(score)
     letter_grade = ''
     self.scale_ranges.sort{ |a,b| a.max_score <=> b.max_score }.map {|range|
-      letter_grade = range.letter_grade if score > range.min_score
+      letter_grade = range.letter_grade if score >= range.min_score
     }
 
     return letter_grade

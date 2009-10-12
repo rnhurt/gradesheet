@@ -31,7 +31,7 @@ class CourseTerm < ActiveRecord::Base
       logger.debug " **** points earned: #{valid_points} out of #{evaluation.assignment.possible_points}"
     end
 
-    logger.debug  "  **** final! #{points_earned} out of #{possible_points}"
+    logger.debug  " **** final! #{points_earned} out of #{possible_points}"
     # Sanitize the score & grade so that we don't try to divide by zero or anything stupid
     final_score = possible_points > 0 ? ((points_earned/possible_points)*100).round(2) : -1
     letter_grade = final_score > 0 ? self.course.grading_scale.calculate_letter_grade(final_score) : 'n/a'
