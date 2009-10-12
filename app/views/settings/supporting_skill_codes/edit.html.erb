@@ -9,15 +9,15 @@
     <fieldset>
       <legend>Supporting Skill Code</legend>
 
-      <%#= text_field_tag :homeroom1, {}, :maxlength => 20 %>
-      <%#= f.select :homeroom, @homerooms, :include_blank => true %>
-
       <%= f.label :code, {}, :class => 'req' %>
-      <%= text_field_tag :code1, {}, :maxlength => 20 %>
       <%= f.select :code, SupportingSkillCode.valid_codes %>
+      <%= text_field_tag :code1, {}, :maxlength => 1, :size => 1 %>
       <br />
       <%= f.label :description, {}, :class => 'req' %>
       <%= f.text_field :description, :class => "focus" %>
+      <br />
+      <%= f.label :active, "Active?" %>
+      <%= f.check_box :active %>
 
 	    <div class='spacer span-15 last'>
 		    <%= submit_tag 'Save', :class => 'btn positive' %>

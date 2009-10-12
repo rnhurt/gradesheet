@@ -75,6 +75,7 @@ class ReportCard
 	def self.draw(params)
 	  # Gather the required data from the database
 	  school_year = SchoolYear.find(params[:school_year_id])
+    skills = SupportingSkillCode.active
 
 	  if params[:student_id].nil? then
   	  # Process a whole homeroom
@@ -159,12 +160,15 @@ class ReportCard
           stroke_color orig_stroke_color
         end   
 
-        # Print the grading keys
-        # FIXME: There is probably a more "Ruby" way to do this...
+        # Print the grading keys & supporting skill codes
+        # OPTIMIZE: There is probably a more "Ruby" way to do this...
         scales = Array.new
         @courses.each { |course| scales.push(course.grading_scale) }
-        ReportCard.print_keys(scales)
-
+        bounding_box [0, cursor - HEADER_HEIGHT], :width => bounds.width do
+          ReportCard.print_skills(skills)
+          ReportCard.print_keys(scales)
+        end
+        
         # Set the default column cursor position
         @left_cursor = cursor
         @right_cursor = cursor
@@ -259,66 +263,80 @@ class ReportCard
     scales.uniq!
 
     @pdf.instance_eval do
-      pad_bottom(0) do
-        bounding_box [0, cursor - HEADER_HEIGHT], :width => bounds.width do
+      # Set up the text options
+      font "Helvetica", :size => 7, :align => :left
 
-          # Set up the text options
-          font "Helvetica", :size => 7, :align => :left
+      scales.each do |scale|
+        # Sort the ranges by maximum score in decreasing order
+        scale.scale_ranges.sort!{|a,b| b.max_score <=> a.max_score}
 
-          scales.each do |scale|
-            # Sort the ranges by maximum score in decreasing order
-            scale.scale_ranges.sort!{|a,b| b.max_score <=> a.max_score}
+        # Print the grading scale header
+        text "#{scale.name}", :size => 8
+        stroke_horizontal_rule
+        move_down 2
 
-            # Print the grading scale header
-            text "#{scale.name}", :size => 8
-            stroke_horizontal_rule
-            move_down 2
-
-            # Print the grading scale details
-            scale.scale_ranges.each_with_index do |range, index|
-              if index.even?
-                mask(:y) {
-                  span(bounds.width/2 - GUTTER_SIZE, :position => :left) do
-                    text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
-                  end
-                }
-              else
-                span((bounds.width/2) - GUTTER_SIZE, :position => :right) do
-                  text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
-                end
+        # Print the grading scale details
+        scale.scale_ranges.each_with_index do |range, index|
+          if index.even?
+            mask(:y) {
+              span(bounds.width/2 - GUTTER_SIZE, :position => :left) do
+                text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
               end
-            end # scale_range.each
-
-            move_down GUTTER_SIZE + 20
+            }
+          else
+            span((bounds.width/2) - GUTTER_SIZE, :position => :right) do
+              text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
+            end
           end
-        end # bounding_box
-      end # pad_bottom
-    end # instance_eval
+        end # scale_range.each
 
-		
+        move_down GUTTER_SIZE + font.height
+            
+      end
+    end # instance_eval		
   end
 
-  def self.print_skills
-    # Subheadings
-    bounding_box([250,bounds.height], :width => 250, :height => bounds.height) do
-      # FIXME: hardcoded data!
-      data = [
-        ["(+)","Exceptional performance"],
-        ["(b)","Satisfactory performance"],
-        ["(N)","Needs improvement"],
-        ["(NA)","Not applicable"]]
-      table data,
-        :vertical_padding	=> -2,
-        :border_width => 0
 
-      bounding_box([bounds.width/1.5,bounds.height-10], :width => 75, :height => 20) do
-        fill_color "C0C0C0"
+  def self.print_skills(skills)
+    # Check for something to print...
+    return unless !skills.empty?
+
+    @pdf.instance_eval do
+      # Set up the text options
+      font "Helvetica", :size => 7, :align => :left
+
+      # Print the skills header
+      text "Supporting Skills", :size => 8
+      stroke_horizontal_rule
+      move_down 2
+
+      # Print the grading scale details
+      skills.each_with_index do |skill, index|
+        if index.even?
+          mask(:y) {
+            span(bounds.width/2 - GUTTER_SIZE, :position => :left) do
+              text "  #{skill.code} - #{skill.description}"
+            end
+          }
+        else
+          span((bounds.width/2) - GUTTER_SIZE, :position => :right) do
+            text "  #{skill.code} - #{skill.description}"
+          end
+        end
+      end # skills.each
+
+      # Print the "accommodations" box
+      bounding_box([bounds.width-75, bounds.height-15], :width => 75, :height => 20) do
+        fill_color "EEEEEE"
         fill_and_stroke_rectangle [bounds.left-2,bounds.top+2], bounds.width, bounds.height
 
         fill_color "000000"
         text "* - Accommodations and/or modifications"
       end
-    end
+          
+      move_down GUTTER_SIZE + font.height
+
+    end # pdf instance
   end
-	
+  
 end

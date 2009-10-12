@@ -2,13 +2,8 @@ class Settings::SupportingSkillCodesController < SettingsController
   before_filter :authorized?
 
   def index
-    @skill_codes = SupportingSkillCode.find(:all)
+    @skill_codes = SupportingSkillCode.all(:order => :description)
   end
-
-  def show
-    @skill_code = SupportingSkillCode.find(params[:id])
-  end
-
 
   def new
     @skill_code = SupportingSkillCode.new

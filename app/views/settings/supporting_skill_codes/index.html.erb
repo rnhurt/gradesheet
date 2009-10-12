@@ -2,14 +2,13 @@
 	<%= render :partial => 'settings/settings_list' %>
 <% end %>
 
-<%= error_messages_for :skill, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
-
 <table class='master'>
 	<thead>
 	 <tr>
   	  <th width='1'>Code</th>
 	 	<th>Description</th>
-	 	<th width='1'></th>		
+	 	<th>Active?</th>
+	 	<th width='1'></th>
     </tr>
 	</thead>
 	<tbody>
@@ -22,6 +21,7 @@
 			<tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= url_for(skill) + '/edit' %>'">
 				<td><%= h skill.code %></td>
 				<td><%= link_to skill.description, edit_supporting_skill_code_path(skill) %></td>
+        <%= content_tag :td, ( check_box_tag :active, skill.active, skill.active, :disabled => true ) %>
 				<td><%= button_to 'Delete', supporting_skill_code_path(skill), :method => :delete,
 										:class => "btn negative ",
 										:confirm => "Are you sure you want to delete\n\n '" + skill.description + "'?" %></td>
