@@ -65,6 +65,6 @@
     </div>
 
     <%= @content_for_page_footer -%>
-    <%= render :file => "analytics.inc" resuce nil %>
+    <%= render :file => 'layouts/analytics.inc' if File.exist?(RAILS_ROOT + '/app/views/layouts/analytics.inc') %>
   </body>
 </html>
