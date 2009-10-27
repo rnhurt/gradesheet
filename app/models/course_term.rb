@@ -14,6 +14,7 @@ class CourseTerm < ActiveRecord::Base
   delegate :school_year,    :to => :term
   delegate :active,         :to => :term
   delegate :grading_scale,  :to => :course
+  delegate :students,       :to => :course
 
   # Calculate a students current grade for a particular course & term.
   def calculate_grade(student_id)

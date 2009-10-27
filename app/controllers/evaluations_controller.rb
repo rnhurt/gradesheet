@@ -3,8 +3,10 @@ class EvaluationsController < ApplicationController
   append_before_filter :authorized?
 
   def show
-    @course_term = CourseTerm.find(params[:id])
-    @scalerange = ScaleRange.find_all_by_grading_scale_id(@course_term.course.grading_scale_id)
+    @course_term  = CourseTerm.find(params[:id])
+    @assignments  = Assignment.find_all_by_course_term_id(@course_term, :order => "due_date DESC")
+    @students     = @course_term.students.sort_by {|a| a.last_name }
+    @scalerange   = ScaleRange.find_all_by_grading_scale_id(@course_term.course.grading_scale_id)
   end
 
   def update

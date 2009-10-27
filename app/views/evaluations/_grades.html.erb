@@ -1,10 +1,6 @@
-<% unsorted_assignments = [] %>
-<% @course_term.assignments.each {|a| unsorted_assignments << a } %>
-<% assignments = unsorted_assignments.sort_by {|a| a.due_date || Time.now}.reverse %>
-
-<%# Loop through the gradations and build a table with students as the ROW
-# and assignments in the COLUMN.  Along the way we'll also alert the user 
-# when there are missing students or assignments.
+<%# Loop through the gradations and build a table with @students as the ROW
+# and @assignments in the COLUMN.  Along the way we'll also alert the user
+# when there are missing @students or @assignments.
 # TODO: move this functionality into a helper (i.e. skill_grid)%>
 <form id='grade_grid'>
   <table class='master grade-grid sortable scroll'>
@@ -12,10 +8,10 @@
       <tr>
         <th>Score</th>
         <th>Student Name</th>
-        <% if assignments.length == 0 then %>
+        <% if @assignments.size == 0 then %>
           <th>No Assignments Found</th>
         <% else %>
-          <% for assignment in assignments %>
+          <% for assignment in @assignments %>
             <th width='50' class='grade nosort' id='<%= assignment.id %>'>
               <div class='assign-name'>
                 <%= link_to assignment.name, edit_assignment_path(assignment.id) %>
@@ -30,35 +26,36 @@
         <% end %>
       </tr>
     </thead>
+
     <tbody>
-      <% number_of_students = @course_term.course.students.count %>
       <% counter = 0 %>
 
-      <% if number_of_students == 0 then %>
+      <% if @students.size == 0 then %>
         <tr><td>No Students Found</td></tr>
       <% end %>
 
-      <% students = @course_term.course.students.sort_by {|a| a.last_name } %>
-      <% students.each do |student| %>
-        <tr class="calc <%= cycle('odd', 'even') %>"  id='s<%= student.id %>'>
+      <% @students.each do |student| %>
+        <tr class="calc <%= cycle('odd', 'even') %>" id='s<%= student.id %>'>
           <td class='score'>0.0</td>
           <%= content_tag :td, student.full_name, :id => student.id %>
           <% a_counter = counter + 1 %>
 
-          <% for assignment in assignments %>
+          <% for assignment in @assignments %>
             <td class='grades'>
-              <% found = nil %>
+              <%# found = nil %>
 
-              <% number_of_gradations = student.assignment_evaluations.count %>
-              <% 0.upto(number_of_gradations-1) do |index| %>
-                <% if assignment.id == student.assignment_evaluations[index].assignment_id %>
-                  <% found = student.assignment_evaluations[index] %>
-                  <% break %>
-                <% end %>
-              <% end %>
+              <%# number_of_gradations = student.assignment_evaluations.size %>
+              <%# 0.upto(number_of_gradations-1) do |index| %>
+                <%# if assignment.id == student.assignment_evaluations[index].assignment_id %>
+                  <%# found = student.assignment_evaluations[index] %>
+                  <%# break %>
+                <%# end %>
+              <%# end %>
+
+              <% found = student.assignment_evaluations.select{|a| a.assignment_id == assignment.id}.first %>
 
               <% if found %>
-                <%= text_field_tag 'score', found.points_earned_before_type_cast,
+                <%= text_field_tag 'score', found.points_earned,
                   :points   => assignment.possible_points,
                   :name     => 'grade',
                   :id       => [:s => student.id, :a => assignment.id],
@@ -82,11 +79,11 @@
               <% end %>
 
             </td>
-            <% a_counter += number_of_students %>
+            <% a_counter += @students.size %>
           <% end %>
 
-  <%# Clean up the HTML if no assignments are found in the DB %>
-          <% if assignments.length < 1 then -%>
+  <%# Clean up the HTML if no @assignments are found in the DB %>
+          <% if @assignments.size < 1 then -%>
             <td class='grades'>&nbsp;</td>
           <% end -%>
 
