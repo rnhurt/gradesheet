@@ -2,6 +2,9 @@
   <%= show_course_term_list %>
 <% end %>
 
+<%# This is an expensive operation and I don't want to haul this data from the controller %>
+<% @students = @course_term.students.sort_by {|a| a.last_name } %>
+
 <ul id="evaluations" class="subsection_tabs">
   <li class="tab"><a href="#assignments">Assignments</a></li>  
   <li class="tab"><a href="#skills">Supporting Skills</a></li>  
@@ -18,19 +21,8 @@
     new Control.Tabs("evaluations");
     $("skills").removeClassName("hidden");
 
-    // Define the function used to calculate the letter grade
-    eval(<%= @course_term.course.letterGradeCalc %>);
+    // Set up the keyboard controls for this form
+    <%= render :partial => 'form_control.js' %>
 
-    // Load the grade computation engine
-    <%=  render( :partial => 'compute_grades.js') %>
-
-    // Force a recalculation as soon as the HTML is loaded
-    document.observe('dom:loaded', calculate);
-
-    // Don't let the form be submitted
-    <%= render( :partial => "form_control.js") %>
-
-    // Update the grade when the grade_grid form changes
-    new Form.Observer('grade_grid', 1, calculate);
   <% end %>
 <% end %>

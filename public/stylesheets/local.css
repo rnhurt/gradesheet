@@ -74,6 +74,11 @@ table.master {
 .assign-points {font-size: 0.8em;}
 .assign-date {font-size: 0.8em;}
 .skill-name {font-size: 0.9em; text-align:left;}
+table.grade-grid { table-layout:fixed; width:100%; }
+table.grade-grid-header { width: 98%; margin-bottom: -1px;}
+/*.grade-grid tbody { height:500px; overflow:auto; }*/
+
+
 
 tr.help td {
   background-color: #006600;
@@ -101,8 +106,9 @@ form .select {width:40%;}
 .grade-warning {background:#FFF6BF none repeat scroll 0 0;border-color:#FBC2C4;color:#514721;}
 .grade-error {background:#FBE3E4 none repeat scroll 0 0;border-color:#FBC2C4;color:#8A1F11;}
 .grade-empty {background:#DDFFFF none repeat scroll 0 0;border-color:#FBC2C4;color:#8A1F11;}
-.grade-grid {overflow:scroll;}
 .grade_range {border-bottom: 1px solid #999; margin:3px;}
+
+.grade-updating { background-color: #FFFF99 !important;  }
 
 /*** Buttons ***/
 .btn {

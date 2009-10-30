@@ -4,64 +4,50 @@ class EvaluationsController < ApplicationController
 
   def show
     @course_term  = CourseTerm.find(params[:id])
-    @assignments  = Assignment.find_all_by_course_term_id(@course_term, :order => "due_date DESC")
-    @students     = @course_term.students.sort_by {|a| a.last_name }
+    @assignments  = Assignment.paginate_by_course_term_id(@course_term, 
+      :per_page => 6,
+      :page     => params[:page],
+      :order    => "due_date DESC")
     @scalerange   = ScaleRange.find_all_by_grading_scale_id(@course_term.course.grading_scale_id)
   end
 
   def update
     respond_to do |format|
+      # This data is only updated via AJAX
       format.html { render :nothing => true}
+      
       format.js {
         # What are we updating, skills or grades?
         if params[:skill]
-          skill_evaluation = SupportingSkillEvaluation.find_or_create_by_student_id_and_course_term_skill_id(
+          evaluation = SupportingSkillEvaluation.find_or_create_by_student_id_and_course_term_skill_id(
             params[:student], params[:skill], :include => [:students, :course_term_skills])
 
-          skill_evaluation.score = params[:score]
-        elsif params[:grade]
-          # TODO - move the update_grade functionality to here
+          evaluation.score = params[:score]
+
+        elsif params[:assignment]
+          evaluation = AssignmentEvaluation.find_or_create_by_student_id_and_assignment_id(
+            params[:student], params[:assignment])
+
+          # If the score is blank then delete the gradation row
+          if params[:score].empty?
+            AssignmentEvaluation.destroy(evaluation)
+          else
+            evaluation.points_earned = params[:score]
+          end
         end
 
         # Save the record
-        if !skill_evaluation.save
-          flash[:error] = 'failed to save evaluation'
+        evaluation.save ? status = 200 : status = 444
+
+        # Return the necessary info
+        if params[:skill]
+          render :nothing => true
+        elsif params[:assignment]
+          grade = CourseTerm.find(params[:id]).calculate_grade(params[:student])
+          render :text => "#{grade[:letter]} (#{grade[:score].round}%)", :status => status
         end
-        
-        render :nothing => true
       }
     end
   end
 
-	# Store the grade for a single student/assignment combination.  We are expecting
-	# an AJAX call with the format below:
-  #     "'student=#{student.id}&assignment=#{assignment.id}&score=' + value"
-  def update_grade
-  	# Find or create a new grade for this student/assignment
-		@assignment_evaluation = AssignmentEvaluation.find_or_create_by_student_id_and_assignment_id(
-      params[:student], params[:assignment])
-
-    # If the score is blank then delete the gradation row
-    if params[:score].empty? 
-      AssignmentEvaluation.destroy(@assignment_evaluation)
-    end
-    
-    # Format the SCORE as either a positive float or an upper case letter.
-		if params[:score].is_a? String
-			# The user entered a 'magic' letter instead of a grade
-			@assignment_evaluation.points_earned = params[:score].upcase	# Only store UPPER CASE
-		else
-			# The user entered a real number
-			@assignment_evaluation.points_earned = params[:score].abs			# Remove any negatives
-		end
-
-		# Save the record 		
-		if !@assignment_evaluation.save
-			flash[:error] = 'Gradation failed to save'
-			redirect_to :action => :show 
-		else
-		  render :nothing => true
-		end
- 		
-  end
 end

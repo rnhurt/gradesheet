@@ -2,12 +2,12 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class LoginLogoutTest < ActionController::IntegrationTest
 
-    def test_bad_password
-      post "/user_sessions", :login => "teachera", :password => "badpass"
-      assert_equal 'Login failed!', flash[:error]
-      assert_response :success
-      assert_template "user_sessions/new"
-    end
+  def test_bad_password
+    post "/user_sessions", :login => "teachera", :password => "badpass"
+    assert_equal 'Login failed!', flash[:error]
+    assert_response :success
+    assert_template "user_sessions/new"
+  end
 
   def test_teacher_login
     # Test the login route

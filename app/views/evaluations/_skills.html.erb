@@ -1,23 +1,15 @@
-<% skills = @course_term.supporting_skills %>
-
 <form id="skill_grid">
-  <table class="skill-grid sortable scroll master">
-    <thead>
-      <tr>
-        <th>Student Name</th>
-        <% if skills.length == 0 then %>
-          <th>No Skills Found</th>
-        <% else %>
-          <% skills.each do |skill| %>
-            <th width='50' class='skill' id='<%= skill.id %>'>
-              <div class='skill-name'><%= h skill.description %></div>
-            </th>
-          <% end %>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <%= skills_body %>
-    </tbody>
+  <table class='master grade-grid grade-grid-header'>
+    <thead><%= skills_header %></thead>
   </table>
+
+  <div style="height: 500px; overflow:auto;">
+    <table class="skill-grid master">
+      <thead>
+      </thead>
+      <tbody>
+        <%= skills_body %>
+      </tbody>
+    </table>
+  </div>
 </form>
