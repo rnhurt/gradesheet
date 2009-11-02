@@ -4,7 +4,7 @@ class AssignmentsController < ApplicationController
   
   def show
     @course_term = CourseTerm.find(params[:id])
-    @assignments = @course_term.assignments
+    @assignments = @course_term.assignments.sort{|a,b| a.due_date <=> b.due_date}.reverse
 
 	  respond_to do |format|
 			format.html

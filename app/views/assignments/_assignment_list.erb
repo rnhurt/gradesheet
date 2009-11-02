@@ -1,7 +1,7 @@
 <table class='master sortable'>
   <thead>
     <tr>
-      <th>Assignment Name <%= h '(' + @assignments.count.to_s + ')'%></th>
+      <th>Assignment Name <%= h '(' + @assignments.size.to_s + ')'%></th>
       <th>Possible points</th>
       <th>Type</th>
       <th>Due Date</th>
@@ -21,6 +21,7 @@
       <tr><td colspan='0'>No Assignments Found</td></tr>
     <% else %>
       <% for assignment in @assignments %>
+      <% evaluations = assignment.assignment_evaluations.empty? %>
         <tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for( :action => :edit, :id => assignment.id ) %>'">
           <%= content_tag :td, assignment.name %>
           <%= content_tag :td, assignment.possible_points %>
@@ -28,8 +29,8 @@
           <%= content_tag :td, assignment.due_date_formated %>
           <td><%= button_to 'Delete', assignment,
               :method => :delete,
-              :disabled => !assignment.assignment_evaluations.empty?,
-              :class => "btn negative " + (assignment.assignment_evaluations.empty? ? '' : 'disabled'),
+              :disabled => !evaluations,
+              :class => "btn negative " + (evaluations ? '' : 'disabled'),
               :confirm => "Are you sure you want to delete the '" + assignment.name + "' assignment?" %></td>
         </tr>
       <% end %>
