@@ -13,7 +13,10 @@
 </form>
 
 <span class="paginate">
-  <%= will_paginate @assignments %>
+  <%= will_paginate @assignments,
+    :previous_label => '« Newer',
+    :next_label     => 'Older »',
+    :separator      => '&nbsp;&nbsp;' %>
 </span>
 
 <% javascript_tag do %>

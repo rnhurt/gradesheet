@@ -7,7 +7,7 @@ class EvaluationsController < ApplicationController
     @assignments  = Assignment.paginate_by_course_term_id(@course_term, 
       :per_page => 6,
       :page     => params[:page],
-      :order    => "due_date DESC")
+      :order    => "due_date DESC, created_at ASC")
     @scalerange   = ScaleRange.find_all_by_grading_scale_id(@course_term.course.grading_scale_id)
   end
 
