@@ -28,7 +28,7 @@ module EvaluationHelper
       @students.each_with_index do |student, index|
         #  Set up the row for this student
         body << "<tr class='calc #{cycle('odd','even')}' id='#{student.id}'>"
-        body += content_tag :td, student.full_name, :id => student.id
+        body << "<td width='10' id='#{student.id}>student.full_name</td>"
         a_counter = index + 1
 
         # Build the table and form entries for each skill for this student
@@ -36,14 +36,15 @@ module EvaluationHelper
           body << "<td class = 'skills'>"
         
           body += text_field_tag 'score', ctskill.score(student.id),
-            :name		=> 'skill',
-            :id			=> [:s => student.id, :a => ctskill.id],
+            :name     => 'skill',
+            :id       => [:s => student.id, :a => ctskill.id],
             :tabindex	=> a_counter,
+            :size     => '5',
+            :width    => '17',
             :onchange => remote_function( :url => {:action => "update"}, :method => "put",
-            :with   => "'student=#{student.id}&skill=#{ctskill.id}&score=' + value",
-            :loading => "Element.show('spinner')",
-            :complete => "Element.hide('spinner')"),
-            :size		=> '5'
+            :with     => "'student=#{student.id}&skill=#{ctskill.id}&score=' + value",
+            :loading  => "Element.show('spinner')",
+            :complete => "Element.hide('spinner')")
 
           body << "</td>"
           a_counter += @students.size
@@ -57,15 +58,16 @@ module EvaluationHelper
 
   # Build the header for the grade evaluation partial
   def grades_header
-    body = "<tr><th width='10'>Score</th><th width='30'>Student Name</th>"
+    body = "<tr><th width='20'>Score</th><th width='60'>Student Name</th>"
 
     if @assignments.size == 0 then
       body << '<th>No Assignments Found</th>'
     else
       @assignments.each do |assignment|
         body << "<th width='17' class='grade nosort' id='#{assignment.id}'>"
-        body << "<div class='assign-name'><a href='/assignments/#{assignment.id}/edit'>#{assignment.name}</a></div>"
-        body << "<div class='assign-points'>"
+        body << "<div class='assign-name'>"
+        body << "<a href='/assignments/#{assignment.id}/edit'>#{word_wrap(assignment.name, :line_width => 10).gsub(/\n/,'<br />')}</a>"
+        body << "</div><div class='assign-points'>"
         body += link_to_function assignment.possible_points,
           "$$('[id*=a#{assignment.id}]').each(function(g) { g.value = #{assignment.possible_points}; g.onchange(); });"
         body << " pts</div>"
@@ -73,7 +75,7 @@ module EvaluationHelper
         body << '</th>'
       end
     end
-    body << '</tr>'
+    body << "</tr>"
   end
 
   # Build the body for the grade evaluation partial
@@ -84,20 +86,19 @@ module EvaluationHelper
     else
       @students.each_with_index do |student, index|
         # Calculate the students grade.
-        # OPTIMIZE: This is an *extremely* expensive operation!
+        # OPTIMIZE: I think this is an expensive operation
         grade = @course_term.calculate_grade(student.id)
-#debugger
 
         # Set up the row for this student
         body << "<tr class='calc #{cycle('odd','even')}' id='#{student.id}'>"
-        body << "<td id='score#{student.id}' class='score' width='60'>"
+        body << "<td id='score#{student.id}' class='score' width='20'>"
         body << "#{grade[:letter]} (#{grade[:score].round}%)</td>"
-        body << "<td id=#{student.id} width='100'>#{student.full_name}</td>"
+        body << "<td id=#{student.id} width='60'>#{student.full_name}</td>"
         a_counter = index + 1
 
         # Build the cells to hold each grade
         @assignments.each do |assignment|
-          body << "<td class='grades'>"
+          body << "<td width='17' class='grades'>"
           found = student.assignment_evaluations.select{|a| a.assignment_id == assignment.id}.first
 
           body += text_field_tag 'score', found ? found.points_earned : '',
@@ -105,14 +106,14 @@ module EvaluationHelper
             :name     => 'grade',
             :id       => [:s => student.id, :a => assignment.id],
             :tabindex => a_counter,
+            :size     => '5',
             :onchange => remote_function( :url => {:action => "update"}, :method => "put",
             :with     => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value",
             :update   => "score#{student.id}",
             :loading  => "status('loading', #{student.id}, #{assignment.id})",
             :failure  => "status('failure', #{student.id}, #{assignment.id})",
             :success  => "status('success', #{student.id}, #{assignment.id})",
-            :complete => "status('complete', #{student.id}, #{assignment.id})"),
-            :size     => '5'
+            :complete => "status('complete', #{student.id}, #{assignment.id})")
 
           body << '</td>'
           
@@ -120,7 +121,7 @@ module EvaluationHelper
         end
 
         # Clean up the HTML if no @assignments are found in the DB
-        body << "<td class='grades'>&nbsp;</td>" if @assignments.size < 1
+        body << "<td width='30' class='grades'>&nbsp;</td>" if @assignments.size < 1
 
         body << '</tr>'
 
