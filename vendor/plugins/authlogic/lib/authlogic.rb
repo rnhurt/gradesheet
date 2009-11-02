@@ -1,4 +1,4 @@
-require "active_support"
+require "active_record"
 
 require File.dirname(__FILE__) + "/authlogic/i18n"
 require File.dirname(__FILE__) + "/authlogic/random"
@@ -11,6 +11,7 @@ require File.dirname(__FILE__) + "/authlogic/controller_adapters/sinatra_adapter
 
 require File.dirname(__FILE__) + "/authlogic/crypto_providers/md5"
 require File.dirname(__FILE__) + "/authlogic/crypto_providers/sha1"
+require File.dirname(__FILE__) + "/authlogic/crypto_providers/sha256"
 require File.dirname(__FILE__) + "/authlogic/crypto_providers/sha512"
 require File.dirname(__FILE__) + "/authlogic/crypto_providers/bcrypt"
 require File.dirname(__FILE__) + "/authlogic/crypto_providers/aes256"
