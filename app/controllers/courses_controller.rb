@@ -142,6 +142,10 @@ class CoursesController < ApplicationController
   private
 
   def expire_cache
-    expire_fragment "course_list_#{current_user.id}"
+    # Expire this users cache
+    # OPTIMIZE: The way I understand it, manually coding these expires is more
+    #           efficient than using a RegEx.
+    expire_fragment "course_list_#{current_user.id}_assignments"
+    expire_fragment "course_list_#{current_user.id}_evaluations"
   end
 end
