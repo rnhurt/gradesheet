@@ -5,6 +5,7 @@ class Settings::SiteDefaultsController < ApplicationController
 
     if @site_data.save
       flash[:notice] = params[:update_type].humanize + " changed to '#{params[:site_default][:new_value]}'."
+      expire_fragment 'layout_header'
     else
       flash[:error] = "Failed to update #{params[:update_type].humanize.downcase} to '#{params[:site_default][:new_value]}'!"
     end

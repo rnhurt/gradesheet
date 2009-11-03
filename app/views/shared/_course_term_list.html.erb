@@ -1,28 +1,32 @@
-<div id='course_list'>
-  <table id='courses' class='master'>
-    <thead>
-      <tr>
-        <th>Course <%= "(#{@courses.length})" unless @courses.blank? %></th>
-        <th>Term</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @courses.each do |course| %>
-        <% course.course_terms.delete_if {|ct| !ct.active } %>
-        <% course.course_terms.sort{|a,b| a.term.end_date <=> b.term.end_date}.each do |ct| %>
-          <tr class="<%= cycle('even', 'odd') + (current_page?(:id => ct) ? ' current' : '') %>"
-              onclick="location.href='<%= url_for( :action => "show", :id => ct.id ) %>'" >
-            <td>
-              <%= link_to "#{ct.course.name}",
-                :action => "show", :id => ct.id %>
-            </td>
-            <td>
-              <%= link_to "#{ct.term.name}",
-                :action => "show", :id => ct.id %>
-            </td>
-          </tr>
+<% cache "course_list_#{current_user.id}" do %>
+  <% courses = Course.active.find_all_by_teacher_id(current_user) %>
+
+  <div id='course_list'>
+    <table id='courses' class='master'>
+      <thead>
+        <tr>
+          <th>Course <%= "(#{courses.size})" unless @courses.blank? %></th>
+          <th>Term</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% courses.each do |course| %>
+          <% course.course_terms.delete_if {|ct| !ct.active } %>
+          <% course.course_terms.sort{|a,b| a.term.end_date <=> b.term.end_date}.each do |ct| %>
+            <tr class="<%= cycle('even', 'odd') + (current_page?(:id => ct) ? ' current' : '') %>"
+                onclick="location.href='<%= url_for( :action => "show", :id => ct.id ) %>'" >
+              <td>
+                <%= link_to "#{ct.course.name}",
+                  :action => "show", :id => ct.id %>
+              </td>
+              <td>
+                <%= link_to "#{ct.term.name}",
+                  :action => "show", :id => ct.id %>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+      </tbody>
+    </table>
+  </div>
+<% end %>

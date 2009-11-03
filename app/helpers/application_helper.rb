@@ -13,9 +13,8 @@ module ApplicationHelper
 	# they want to work with.  It should only show "active" courses in "active"
 	# grading terms.
 	def show_course_term_list
-    # FIXME active is not being checked
-		@courses ||= Course.active.find_all_by_teacher_id(current_user)
-		render :partial => 'shared/course_term_list', :object => @courses
+    # OPTIMIZE: remove this simple redirection
+		render :partial => 'shared/course_term_list'
 	end
 
 

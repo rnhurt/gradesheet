@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
   before_filter :require_user
   append_before_filter :authorized?
+  after_filter :expire_cache, :only => [:create, :update, :destroy]
 
   def new
     @course = Course.new
@@ -137,5 +138,10 @@ class CoursesController < ApplicationController
     
     render :nothing => true
   end
-      
+
+  private
+
+  def expire_cache
+    expire_fragment "course_list_#{current_user.id}"
+  end
 end
