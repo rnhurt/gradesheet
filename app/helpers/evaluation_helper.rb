@@ -80,11 +80,13 @@ module EvaluationHelper
 
   # Build the body for the grade evaluation partial
   def grades_body
+    students = @course_term.students.sort_by {|a| a.last_name }
+
     body = ''
-    if @students.size == 0 then
+    if students.size == 0 then
       body << "<tr><td>No Students Found</td></tr>"
     else
-      @students.each_with_index do |student, index|
+      students.each_with_index do |student, index|
         # Calculate the students grade.
         # OPTIMIZE: I think this is an expensive operation
         grade = @course_term.calculate_grade(student.id)
@@ -117,7 +119,7 @@ module EvaluationHelper
 
           body << '</td>'
           
-          a_counter += @students.size
+          a_counter += students.size
         end
 
         # Clean up the HTML if no @assignments are found in the DB

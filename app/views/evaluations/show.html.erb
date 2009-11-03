@@ -2,27 +2,66 @@
   <%= show_course_term_list %>
 <% end %>
 
-<%# This is an expensive operation and I don't want to haul this data from the controller %>
-<% @students = @course_term.students.sort_by {|a| a.last_name } %>
-
 <ul id="evaluations" class="subsection_tabs">
-  <li class="tab"><a href="#assignments">Assignments</a></li>  
-  <li class="tab"><a href="#skills">Supporting Skills</a></li>  
-  <li class="tab hidden"><a href="#comments">Comments</a></li>
+  <li class="tab"><a href="#assignments">Assignments</a></li>
+  <li class="tab"><a href="#skills">Supporting Skills</a></li>
+  <li class="tab"><a href="#comments">Comments</a></li>
 </ul>
 
-<div id="assignments"><%= render :partial => "grades" %></div>
-<div id="skills" class="hidden"><%#= render :partial => "skills" %></div>
-<div id="comments" class="hidden"><%#= render :partial => "comments" %></div>
+<div id="assignments"></div>
+<div id="skills"></div>
+<div id="comments"></div>
+
+<%= link_to_remote '', { :update => "assignments",
+  :method => "get",
+  :loading  => "show_message('assignments')",
+  :complete => "$('loading').hide();",
+  :url => { :controller => "evaluations", :action => "show", :id => @course_term.id } },
+  :id => 'tab_assignments' -%>
+
+<%= link_to_remote '', { :update => "skills",
+  :method => "get",
+  :loading  => "show_message('skills')",
+  :complete => "$('loading').hide();",
+  :url => { :controller => "courses", :action => "show", :id => @course_term.id } },
+  :id => 'tab_skills' -%>
+
+<%= link_to_remote '', { :update => "comments",
+  :method   => "get",
+  :loading  => "show_message('comments')",
+  :complete => "$('loading').hide();",
+  :url => { :controller => "courses", :action => "show", :id => @course_term.id } },
+  :id => 'tab_comments' -%>
+
+<div id="loading" class="box" style="display:none;text-align:center;">
+  <span id="loading_message">Loading data ...</span><br />
+  <img alt="" src="/images/ajax-loader.gif"/>
+</div>
 
 <% content_for :page_footer do %>
   <% javascript_tag do %>
     // Build the graphical tabs
-    new Control.Tabs("evaluations");
-    $("skills").removeClassName("hidden");
+    new Control.Tabs("evaluations", {
+    afterChange: function(container){
+    if (container.empty()) {$('tab_' + container.id).onclick();}}
+    });
 
     // Set up the keyboard controls for this form
     <%= render :partial => 'form_control.js' %>
 
+    // Center the "loading" animation
+    element = $('loading');
+    var offsets = document.viewport.getScrollOffsets();
+
+    var centerX = document.viewport.getWidth() / 2 + offsets.left - element.getWidth() / 2;
+    var centerY = 200;
+
+    element.setStyle( { position: 'absolute', top: Math.floor(centerY) + 'px', left: Math.floor(centerX) + 'px' } );
+
+    // Let the user know what's going on
+    function show_message(data){
+      $('loading_message').update('Loading ' + data + ' ...');
+      $('loading').show();
+    }
   <% end %>
 <% end %>
