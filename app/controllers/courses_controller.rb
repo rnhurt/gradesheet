@@ -13,7 +13,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
     @homerooms = Student.find_homerooms()
     @skill_cats = SupportingSkillCategory.active
-
+    
 		respond_to do |format|
 			format.html
 			format.js {
@@ -35,7 +35,8 @@ class CoursesController < ApplicationController
 		end  end
 
   def create
-    @course = Course.new(params[:course])
+    @course       = Course.new(params[:course])
+    @school_years = SchoolYear.active
     
     # Force the course to be created by the current user
 		@course.teacher = current_user
