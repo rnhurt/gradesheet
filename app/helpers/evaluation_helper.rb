@@ -103,21 +103,39 @@ module EvaluationHelper
           body << "<td width='17' class='grades'>"
           found = student.assignment_evaluations.select{|a| a.assignment_id == assignment.id}.first
 
-          body += text_field_tag 'score', found ? found.points_earned : '',
-            :points   => assignment.possible_points,
-            :name     => 'grade',
-            :id       => [:s => student.id, :a => assignment.id],
-            :tabindex => a_counter,
-            :size     => '5',
-            :onchange => remote_function( :url => {:action => "update"}, :method => "put",
-            :with     => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value",
-            :update   => "score#{student.id}",
-            :loading  => "status('loading', #{student.id}, #{assignment.id})",
-            :failure  => "status('failure', #{student.id}, #{assignment.id})",
-            :success  => "status('success', #{student.id}, #{assignment.id})",
-            :complete => "status('complete', #{student.id}, #{assignment.id})")
+          # This is being built by hand because it is a tight loop with performance problems
+          body << "<input type='text' value=\'#{found ? found.points_earned : ''}\' "
+          body << " tabindex='#{a_counter}' size='5'"
+          body << " points='#{assignment.possible_points}'"
+          body << " name='grade' id='#{[:s => student.id, :a => assignment.id]}'"
 
-          body << '</td>'
+          # Build the complex remote_function by hand
+          body += <<DOC
+onchange="new Ajax.Updater('score#{student.id}', '/evaluations/#{@course_term.id}',
+ {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){status('complete', #{student.id}, #{assignment.id})},
+ onFailure:function(request){status('failure', #{student.id}, #{assignment.id})},
+ onLoading:function(request){status('loading', #{student.id}, #{assignment.id})},
+ onSuccess:function(request){status('success', #{student.id}, #{assignment.id})},
+ parameters:'student=#{student.id}&amp;assignment=#{assignment.id}&amp;score=' + value + '&amp;authenticity_token=' + encodeURIComponent('#{form_authenticity_token}')}
+)"
+
+DOC
+          body << ' /> </td>'
+
+          #                    FIXME: Remove this when we are done optimizing
+          #                    body += text_field_tag 'score', found ? found.points_earned : '',
+          #                      :points   => assignment.possible_points,
+          #                      :name     => 'grade',
+          #                      :id       => [:s => student.id, :a => assignment.id],
+          #                      :tabindex => a_counter,
+          #                      :size     => '5',
+          #                      :onchange => remote_function( :url => {:action => "update"}, :method => "put",
+          #                      :with     => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value",
+          #                      :update   => "score#{student.id}",
+          #                      :loading  => "status('loading', #{student.id}, #{assignment.id})",
+          #                      :failure  => "status('failure', #{student.id}, #{assignment.id})",
+          #                      :success  => "status('success', #{student.id}, #{assignment.id})",
+          #                      :complete => "status('complete', #{student.id}, #{assignment.id})")
           
           a_counter += students.size
         end
