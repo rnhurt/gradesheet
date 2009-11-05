@@ -42,7 +42,7 @@ $$('form').each(function(f) {
 var name = $$('.pagination')[0].getAttribute('name');
 $$('.pagination a').each(function(p) {
   p.observe("click", function(e){
-    new Ajax.Updater('assignments', p.href,
+    new Ajax.Updater(name, p.href,
     {asynchronous:true, evalScripts:true, method:'get',
       onComplete:function(request){$('loading').hide();},
       onLoading:function(request){show_message(name)},

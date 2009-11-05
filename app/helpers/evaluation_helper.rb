@@ -2,14 +2,14 @@ module EvaluationHelper
 
   # Build the header for the skill evaluation partial
   def skills_header
-    body = "<tr><th width='83'>Student Name</th>"
+    body = "<tr><th width='100'>Student Name</th>"
 
-    if @course_term.supporting_skills.size == 0
+    if @ctskills.size == 0
       body << '<th>No Skills Found</th>'
     else
-      @course_term.supporting_skills.each do |skill|
-        body << "<th width='50' class='skill' id='#{skill.id}'>"
-        body << "<div class='skill-name'>#{skill.description}</div>"
+      @ctskills.each do |skill|
+        body << "<th width='60' class='skill' id='#{skill.id}'>"
+        body << "<div class='skill-name'>#{word_wrap(skill.supporting_skill.description, :line_width => 10).gsub(/\n/,'<br />')}</div>"
         body << "</th>"
       end
     end
@@ -19,35 +19,35 @@ module EvaluationHelper
 
   # Build the body for the skills evaluation partial
   def skills_body
+    students = @course_term.students.sort_by {|a| a.last_name }
     body = ''
 
-    if @students.size == 0
+    if students.size == 0
       body << "<tr><td>No Students Found</td></tr>"
     else
       # Process each student
-      @students.each_with_index do |student, index|
+      students.each_with_index do |student, index|
         #  Set up the row for this student
         body << "<tr class='calc #{cycle('odd','even')}' id='#{student.id}'>"
-        body << "<td width='10' id='#{student.id}>student.full_name</td>"
+        body << "<td width='100' id='#{student.id}'>#{student.full_name}</td>"
         a_counter = index + 1
 
         # Build the table and form entries for each skill for this student
-        @course_term.course_term_skills.each do |ctskill|
-          body << "<td class = 'skills'>"
+        @ctskills.each do |ctskill|
+          body << "<td class='skills' width='60'>"
         
           body += text_field_tag 'score', ctskill.score(student.id),
             :name     => 'skill',
             :id       => [:s => student.id, :a => ctskill.id],
             :tabindex	=> a_counter,
             :size     => '5',
-            :width    => '17',
             :onchange => remote_function( :url => {:action => "update"}, :method => "put",
             :with     => "'student=#{student.id}&skill=#{ctskill.id}&score=' + value",
             :loading  => "Element.show('spinner')",
             :complete => "Element.hide('spinner')")
 
           body << "</td>"
-          a_counter += @students.size
+          a_counter += students.size
         end
       
         body << "</tr>"
@@ -64,7 +64,7 @@ module EvaluationHelper
       body << '<th>No Assignments Found</th>'
     else
       @assignments.each do |assignment|
-        body << "<th width='17' class='grade nosort' id='#{assignment.id}'>"
+        body << "<th width='17' class='grade' id='#{assignment.id}'>"
         body << "<div class='assign-name'>"
         body << "<a href='/assignments/#{assignment.id}/edit'>#{word_wrap(assignment.name, :line_width => 10).gsub(/\n/,'<br />')}</a>"
         body << "</div><div class='assign-points'>"

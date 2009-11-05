@@ -16,21 +16,21 @@
   :method => "get",
   :loading  => "show_message('assignments')",
   :complete => "$('loading').hide();",
-  :url => { :controller => "evaluations", :action => "show", :id => @course_term.id } },
+  :url => { :tab => "assignments", :controller => "evaluations", :action => "show", :id => @course_term.id } },
   :id => 'tab_assignments' -%>
 
 <%= link_to_remote '', { :update => "skills",
   :method => "get",
   :loading  => "show_message('skills')",
   :complete => "$('loading').hide();",
-  :url => { :controller => "courses", :action => "show", :id => @course_term.id } },
+  :url => { :tab => "skills", :controller => "evaluations", :action => "show", :id => @course_term.id } },
   :id => 'tab_skills' -%>
 
 <%= link_to_remote '', { :update => "comments",
   :method   => "get",
   :loading  => "show_message('comments')",
   :complete => "$('loading').hide();",
-  :url => { :controller => "courses", :action => "show", :id => @course_term.id } },
+  :url => { :tab => "comments", :controller => "evaluations", :action => "show", :id => @course_term.id } },
   :id => 'tab_comments' -%>
 
 <div id="loading" class="box" style="display:none;text-align:center;">

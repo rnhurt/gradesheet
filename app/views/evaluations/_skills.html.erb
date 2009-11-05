@@ -1,10 +1,10 @@
 <form id="skill_grid">
-  <table class='master grade-grid grade-grid-header'>
+  <table class='master fixed-grid fixed-grid-header'>
     <thead><%= skills_header %></thead>
   </table>
 
   <div style="height: 500px; overflow:auto;">
-    <table class="skill-grid master">
+    <table class="fixed-grid master">
       <thead>
       </thead>
       <tbody>
@@ -13,3 +13,14 @@
     </table>
   </div>
 </form>
+
+<span class="paginate">
+  <%= will_paginate @ctskills,
+    :name           => 'skills',
+    :separator      => '&nbsp;&nbsp;' %>
+</span>
+
+<% javascript_tag do %>
+  // Set up the keyboard controls for this form
+  <%= render :partial => 'form_control.js' %>
+<% end %>
