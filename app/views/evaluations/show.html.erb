@@ -46,9 +46,6 @@
     if (container.empty()) {$('tab_' + container.id).onclick();}}
     });
 
-    // Set up the keyboard controls for this form
-    <%= render :partial => 'form_control.js' %>
-
     // Center the "loading" animation
     element = $('loading');
     var offsets = document.viewport.getScrollOffsets();
@@ -60,8 +57,13 @@
 
     // Let the user know what's going on
     function show_message(data){
-      $('loading_message').update('Loading ' + data + ' ...');
-      $('loading').show();
+    $('loading_message').update('Loading ' + data + ' ...');
+    $('loading').show();
     }
+
+    // Load the grade display helpers
+    <%= render :partial => 'grade_display.js' %>
+
+
   <% end %>
 <% end %>
