@@ -39,16 +39,25 @@ $$('form').each(function(f) {
 });
 
 // Fix the pagination links
-var name = $$('.pagination')[0].getAttribute('name');
-$$('.pagination a').each(function(p) {
-  p.observe("click", function(e){
-    new Ajax.Updater(name, p.href,
-    {asynchronous:true, evalScripts:true, method:'get',
-      onComplete:function(request){$('loading').hide();},
-      onLoading:function(request){show_message(name)},
-      onFailure: function(){alert('Something went wrong...')}
+$$('.pagination').each(function(m){
+  name = m.getAttribute('name');
+  
+  m.select('a').each(function(a) {
+    a.observe("click", function(e){
+      new Ajax.Updater(name, a.href,
+      {
+        asynchronous:true,
+        evalScripts:true,
+        method:'get',
+        onComplete:function(request){
+          $('loading').hide();
+        },
+        onLoading:function(request){
+          show_message(name)
+        }
+      });
+      e.stop();
     });
-    e.stop();
-  });
+  })
 });
 
