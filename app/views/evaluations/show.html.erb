@@ -15,21 +15,21 @@
 <%= link_to_remote '', { :update => "assignments",
   :method => "get",
   :loading  => "show_message('assignments')",
-  :complete => "$('loading').hide();",
+  #:complete => "processPage('assignments');",
   :url => { :tab => "assignments", :controller => "evaluations", :action => "show", :id => @course_term.id } },
   :id => 'tab_assignments' -%>
 
 <%= link_to_remote '', { :update => "skills",
   :method => "get",
   :loading  => "show_message('skills')",
-  :complete => "$('loading').hide();",
+  #:complete => "processPage('skills');",
   :url => { :tab => "skills", :controller => "evaluations", :action => "show", :id => @course_term.id } },
   :id => 'tab_skills' -%>
 
 <%= link_to_remote '', { :update => "comments",
   :method   => "get",
   :loading  => "show_message('comments')",
-  :complete => "$('loading').hide();",
+  #:complete => "processPage('comments');",
   :url => { :tab => "comments", :controller => "evaluations", :action => "show", :id => @course_term.id } },
   :id => 'tab_comments' -%>
 
@@ -62,8 +62,10 @@
     }
 
     // Load the grade display helpers
-    <%= render :partial => 'grade_display.js' %>
-
+    <%#= render :partial => 'grade_display.js' %>
+    <%= render :partial => 'form_control.js' %>
 
   <% end %>
 <% end %>
+
+    <div id="stinky"></div>

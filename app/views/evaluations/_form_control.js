@@ -1,6 +1,25 @@
-// Control the movement between fields in the form
-$$('form').each(function(f) {
-  f.observe('keyup', function(event){
+window.processPage = function(mode) {
+  if (mode == 'assignments') {
+    console.log('Processing assignments...')
+    controlKeyboard('grade_grid');
+    restrictSubmit('grade_grid');
+    rewritePagination('assignments_pagination');
+    
+  } else if (mode == 'skills') {
+    console.log('Processing skills...')
+    controlKeyboard('skills_grid');
+    restrictSubmit('skills_grid');
+    rewritePagination('skills_pagination');
+  } else {
+    alert("WARNING - mode not defined: " + mode);
+  }
+
+  $('loading').hide();
+}
+
+window.controlKeyboard = function(form){
+  // Control the movement between fields in the form
+  $(form).observe('keyup', function(event){
     // Move to the next field when the user presses the ENTER key
     switch (event.keyCode) {
       case Event.KEY_DOWN:
@@ -29,35 +48,40 @@ $$('form').each(function(f) {
         break;
     }
   });
-});
+}
 
-// Don't allow the page to be submitted as a form.
-$$('form').each(function(f) {
-  f.observe("submit", function(event){
+window.restrictSubmit = function(form){
+  // Don't allow the page to be submitted as a form.
+  $(form).observe("submit", function(event){
     event.stop();
   });
-});
+}
 
-// Fix the pagination links
-$$('.pagination').each(function(m){
-  name = m.getAttribute('name');
+window.rewritePagination = function(element){
+  // Fix the pagination links
+  name = $(element).readAttribute('name');
+  console.log("rewritePagination name = " + name);
   
-  m.select('a').each(function(a) {
+  $(element).select('a').each(function(a) {
+    console.log("rewriting " + a + " from " + element);
+
+    // Clean up old observers
+    a.stopObserving();
+
+    // Add a new 'click' observer
     a.observe("click", function(e){
-      new Ajax.Updater(name, a.href,
-      {
+      new Ajax.Updater(name, a.href,  {
         asynchronous:true,
         evalScripts:true,
         method:'get',
         onComplete:function(request){
-          $('loading').hide();
+        //processPage(name);
         },
-        onLoading:function(request){
+        onLoading:function(request){ 
           show_message(name)
         }
       });
-      e.stop();
+      e.stop();   // Stop the link from being followed
     });
-  })
-});
-
+  });
+}
