@@ -36,7 +36,7 @@ window.update_grade_status = function(mode, student_id, assignment_id) {
 
 window.update_skill_status = function(mode, student_id, skill_id) {
   // Define the objects we need
-  var skill = $('s' + student_id + 'a' + skill_id)   // Get the "skill" object
+  var skill = $('s' + student_id + 'k' + skill_id)   // Get the "skill" object
 
   // Reset any CSS names
   skill.removeClassName('grade-warning');

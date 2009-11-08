@@ -18,11 +18,14 @@ class EvaluationsController < ApplicationController
           @scalerange   = ScaleRange.find_all_by_grading_scale_id(@course_term.course.grading_scale_id)
 
           render :partial => "assignments"
+
         when "skills"
           @ctskills = @course_term.course_term_skills.paginate(
             :per_page => 5,
             :page     => params[:page])
+
           render :partial => "skills"
+
         when"comments"
           render :partial => "comments"
         else

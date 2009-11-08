@@ -2,7 +2,13 @@ module EvaluationHelper
 
   # Build the header for the skill evaluation partial
   def skills_header
-    body = "<tr><th width='100'>Student Name</th>"
+    body    = "<tr><th width='100'>Student Name</th>"
+
+    # Build the <option> elements
+    options = '<option> </option>'
+    SupportingSkillCode.all.each do |option|
+      options << "<option value='#{option.code}'>#{option.code}</option>"
+    end
 
     if @ctskills.size == 0
       body << '<th>No Skills Found</th>'
@@ -10,7 +16,12 @@ module EvaluationHelper
       @ctskills.each do |skill|
         body << "<th width='60' class='skill' id='#{skill.id}'>"
         body << "<div class='skill-name'>#{word_wrap(skill.supporting_skill.description, :line_width => 10).gsub(/\n/,'<br />')}</div>"
-        body << "</th>"
+
+        # Build the <select> element by hand
+        body += <<END
+<select onchange="$$('[id*=k#{skill.id}]').each(function(g) { g.value = value; g.onchange(); });">
+END
+        body << "#{options}</select></th>"
       end
     end
 
@@ -38,7 +49,7 @@ module EvaluationHelper
           body << "<td class='skills' width='60'>"
 
           # Build the complex remote_function by hand
-          body << "<select name='skill' id='#{[:s => student.id, :a => ctskill.id]}' "
+          body << "<select name='skill' id='#{[:s => student.id, :k => ctskill.id]}' "
           body += <<END
 onchange="new Ajax.Updater('score#{student.id}', '/evaluations/#{@course_term.id}',
  {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){update_skill_status('complete', #{student.id}, #{ctskill.id})},
@@ -47,10 +58,11 @@ onchange="new Ajax.Updater('score#{student.id}', '/evaluations/#{@course_term.id
  onSuccess:function(request){update_skill_status('success', #{student.id}, #{ctskill.id})},
  parameters:'student=#{student.id}&amp;skill=#{ctskill.id}&amp;score=' + value + '&amp;authenticity_token=' + encodeURIComponent('#{form_authenticity_token}')})"
 END
+          score = ctskill.score(student.id)
           body << '<option> </option>'
           options.each do |option|
             body << '<option '
-            body << 'SELECTED ' if option.code == ctskill.score(student.id)
+            body << 'SELECTED ' if option.code == score
             body << "value='#{option.code}'>#{option.code}</option>"
           end
           body << '</select></td>'
@@ -58,7 +70,7 @@ END
           a_counter += students.size
         end
       
-        body << "</tr>"
+        body << '</tr>'
       end
     end
     return body
