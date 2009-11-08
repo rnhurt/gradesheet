@@ -110,33 +110,16 @@ module EvaluationHelper
           body << " name='grade' id='#{[:s => student.id, :a => assignment.id]}'"
 
           # Build the complex remote_function by hand
-          body += <<DOC
+          body += <<END
 onchange="new Ajax.Updater('score#{student.id}', '/evaluations/#{@course_term.id}',
- {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){status('complete', #{student.id}, #{assignment.id})},
- onFailure:function(request){status('failure', #{student.id}, #{assignment.id})},
- onLoading:function(request){status('loading', #{student.id}, #{assignment.id})},
- onSuccess:function(request){status('success', #{student.id}, #{assignment.id})},
- parameters:'student=#{student.id}&amp;assignment=#{assignment.id}&amp;score=' + value + '&amp;authenticity_token=' + encodeURIComponent('#{form_authenticity_token}')}
-)"
-
-DOC
+ {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){update_status('complete', #{student.id}, #{assignment.id})},
+ onFailure:function(request){update_status('failure', #{student.id}, #{assignment.id})},
+ onLoading:function(request){update_status('loading', #{student.id}, #{assignment.id})},
+ onSuccess:function(request){update_status('success', #{student.id}, #{assignment.id})},
+ parameters:'student=#{student.id}&amp;assignment=#{assignment.id}&amp;score=' + value + '&amp;authenticity_token=' + encodeURIComponent('#{form_authenticity_token}')})"
+END
           body << ' /> </td>'
 
-          #                    FIXME: Remove this when we are done optimizing
-          #                    body += text_field_tag 'score', found ? found.points_earned : '',
-          #                      :points   => assignment.possible_points,
-          #                      :name     => 'grade',
-          #                      :id       => [:s => student.id, :a => assignment.id],
-          #                      :tabindex => a_counter,
-          #                      :size     => '5',
-          #                      :onchange => remote_function( :url => {:action => "update"}, :method => "put",
-          #                      :with     => "'student=#{student.id}&assignment=#{assignment.id}&score=' + value",
-          #                      :update   => "score#{student.id}",
-          #                      :loading  => "status('loading', #{student.id}, #{assignment.id})",
-          #                      :failure  => "status('failure', #{student.id}, #{assignment.id})",
-          #                      :success  => "status('success', #{student.id}, #{assignment.id})",
-          #                      :complete => "status('complete', #{student.id}, #{assignment.id})")
-          
           a_counter += students.size
         end
 
@@ -144,7 +127,6 @@ DOC
         body << "<td width='30' class='grades'>&nbsp;</td>" if @assignments.size < 1
 
         body << '</tr>'
-
       end
     end
 

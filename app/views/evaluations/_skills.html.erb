@@ -16,9 +16,9 @@
 
 <span class="paginate" id="skills_pagination" name="skills">
   <%= will_paginate @ctskills,
+    :renderer       => 'RemoteLinkRenderer',
+    :remote         => {:update => 'skills', :loading => "show_message('skills');"},
     :separator      => '&nbsp;&nbsp;' %>
 </span>
 
-<% javascript_tag do %>
-  window.processPage('skills');
-<% end %>
+<%= javascript_tag "window.processPage('skills');" %>

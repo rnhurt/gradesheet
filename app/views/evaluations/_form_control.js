@@ -1,15 +1,15 @@
-window.processPage = function(mode) {
+// Get everything ready for a particular page type (mode)
+function processPage(mode) {
   if (mode == 'assignments') {
-    console.log('Processing assignments...')
     controlKeyboard('grade_grid');
     restrictSubmit('grade_grid');
-    rewritePagination('assignments_pagination');
+    $('grade_grid').getInputs().each(cell_status);
     
   } else if (mode == 'skills') {
-    console.log('Processing skills...')
     controlKeyboard('skills_grid');
     restrictSubmit('skills_grid');
-    rewritePagination('skills_pagination');
+
+  } else if (mode == 'comments'){
   } else {
     alert("WARNING - mode not defined: " + mode);
   }
@@ -17,8 +17,8 @@ window.processPage = function(mode) {
   $('loading').hide();
 }
 
-window.controlKeyboard = function(form){
-  // Control the movement between fields in the form
+// Control the movement between fields in the form
+function controlKeyboard(form){
   $(form).observe('keyup', function(event){
     // Move to the next field when the user presses the ENTER key
     switch (event.keyCode) {
@@ -50,38 +50,9 @@ window.controlKeyboard = function(form){
   });
 }
 
-window.restrictSubmit = function(form){
-  // Don't allow the page to be submitted as a form.
+// Don't allow the page to be submitted as a form, only update with AJAX
+function restrictSubmit(form){
   $(form).observe("submit", function(event){
     event.stop();
-  });
-}
-
-window.rewritePagination = function(element){
-  // Fix the pagination links
-  name = $(element).readAttribute('name');
-  console.log("rewritePagination name = " + name);
-  
-  $(element).select('a').each(function(a) {
-    console.log("rewriting " + a + " from " + element);
-
-    // Clean up old observers
-    a.stopObserving();
-
-    // Add a new 'click' observer
-    a.observe("click", function(e){
-      new Ajax.Updater(name, a.href,  {
-        asynchronous:true,
-        evalScripts:true,
-        method:'get',
-        onComplete:function(request){
-        //processPage(name);
-        },
-        onLoading:function(request){ 
-          show_message(name)
-        }
-      });
-      e.stop();   // Stop the link from being followed
-    });
   });
 }

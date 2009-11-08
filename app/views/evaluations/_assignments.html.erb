@@ -14,16 +14,18 @@
 
 <span class="paginate" id="assignments_pagination" name="assignments">
   <%= will_paginate @assignments,
+    :renderer       => 'RemoteLinkRenderer',
+    :remote         => {:update => 'assignments', :loading => "show_message('assignments');"},
     :previous_label => '« Newer',
     :next_label     => 'Older »',
     :separator      => '&nbsp;&nbsp;' %>
 </span>
 
 <% javascript_tag do %>
-  <%#= render :partial => 'grade_display.js' %>
+  <%= render :partial => 'grade_display.js' %>
 
   // Update the status of each grade
-  //$('grade_grid').getInputs().each(grade_status);
+  //$('grade_grid').getInputs().each(cell_status);
 
   window.processPage('assignments');
 <% end %>

@@ -1,5 +1,5 @@
-// Update the CSS for the score
-function status(mode, student_id, assignment_id) {
+// Keep the user informed of what is going on in the background.
+window.update_status = function(mode, student_id, assignment_id) {
   // Define the objects we need
   var grade         = $('s' + student_id + 'a' + assignment_id)   // Get the "grade" object
   var score         = $('score' + student_id)                     // Get the "score" object
@@ -28,13 +28,14 @@ function status(mode, student_id, assignment_id) {
     case('complete'):
       // Update is complete
       score.removeClassName('grade-updating');
-      grade_status(grade)
+      cell_status(grade)
       
       break;
   }
 }
 
-function grade_status(e){
+// Change the look of a cell depending on the value entered by the user
+window.cell_status = function(e){
   var avail_points  = parseFloat(e.readAttribute('points'));  // How many points is this assignment worth?
   var grade_value   = e.getValue();                           // What grade did the user enter?
 
