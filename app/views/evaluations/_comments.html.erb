@@ -1,13 +1,48 @@
-<form>
-  <table class='grade-grid sortable scroll master'>
-    <thead>
-      <tr>
-        <th>Student Name</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-</form>
+<div class="span-14">
+  <form id="comments_grid">
+    <table class='master fixed-grid fixed-grid-header'>
+      <thead>
+        <tr>
+          <th width='100'>Student Name</th>
+          <th>Comments</th>
+        </tr>
+      </thead>
+    </table>
 
-<%= javascript_tag do this.processPage('comments'); %>
+    <div style="height: 500px; overflow:auto;">
+      <table class="fixed-grid master">
+        <thead>
+        </thead>
+        <tbody>
+          <%= comments_body %>
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>
+
+<div class="span-4">
+  <form id="quick_comments">
+    <table class="master">
+      <thead>
+        <tr><th>Quick Comments</th></tr>
+      </thead>
+      <tbody>
+        <% @quick_comments.each do |comment| %>
+          <%= "<tr class='#{cycle('odd','even')}'>" %>
+          <%= "<td><div id='qc#{comment.id}'>#{comment.description}</div></td>" %>
+
+          <%= draggable_element("qc#{comment.id}",
+            :revert => true, :ghosting => true,
+            :reverteffect => "function(element, top_offset, left_offset) { new Effect.MoveBy(element, -top_offset, -left_offset, {duration:0});}",
+            :onstart      => "function() { console.log('we are moving'); }"
+          ) %>
+
+          <%= '</tr>' %>
+        <% end %>
+      </tbody>
+    </table>
+  </form>
+</div>
+
+<%= javascript_tag "this.processPage('comments');" %>

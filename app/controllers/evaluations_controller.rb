@@ -27,6 +27,8 @@ class EvaluationsController < ApplicationController
           render :partial => "skills"
 
         when"comments"
+          @quick_comments = QuickComment.active
+          
           render :partial => "comments"
         else
         end
@@ -40,7 +42,7 @@ class EvaluationsController < ApplicationController
       format.html { render :nothing => true}
       
       format.js {
-        # What are we updating, skills or grades?
+        # What are we updating, skills, grades or comments?
         if params[:skill]
           evaluation = SupportingSkillEvaluation.find_or_create_by_student_id_and_course_term_skill_id(
             params[:student], params[:skill], :include => [:students, :course_term_skills])
@@ -62,6 +64,8 @@ class EvaluationsController < ApplicationController
           else
             evaluation.points_earned = params[:score]
           end
+        elsif params[:comment]
+          
         end
 
         # Save the record

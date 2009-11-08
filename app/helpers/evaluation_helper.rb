@@ -152,5 +152,39 @@ END
 
     return body
   end
-  
+
+  # Build the header for the skill evaluation partial
+  def comments_body
+    students = @course_term.students.sort_by {|a| a.last_name }
+
+    body = ''
+    if students.size == 0 then
+      body << "<tr><td>No Students Found</td></tr>"
+    else
+      students.each_with_index do |student, index|
+        body << "<tr class='calc #{cycle('odd','even')}' id='c#{student.id}'>"
+        body << "<td width='120'>#{student.full_name}</td>"
+        body << "<td><input type='text' value='Comment goes here' size='45' /></td>"
+        body << '</tr>'
+        body += drop_receiving_element("c#{student.id}",
+          :method     => :put,
+          :url        => {:student => student.id,
+            :controller => "evaluations",
+            :action     => "update"},
+          :with => "'comment=' + element.innerHTML",
+          :hoverclass => 'current')
+      end
+    end
+
+    return body
+  end
 end
+
+
+# Parameters: {"assignment"=>"1882",
+# "action"=>"update",
+# "authenticity_token"=>"ad92f4a0771db1300b6684736faed64f3d79fb9d", "_method"=>"put",
+# "id"=>"151",
+# "student"=>"575",
+# "controller"=>"evaluations",
+# "score"=>"12"}
