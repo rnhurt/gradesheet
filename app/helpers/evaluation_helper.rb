@@ -162,16 +162,18 @@ END
       body << "<tr><td>No Students Found</td></tr>"
     else
       students.each_with_index do |student, index|
-        body << "<tr class='calc #{cycle('odd','even')}' id='c#{student.id}'>"
+        body << "<tr class='calc #{cycle('odd','even')}' id='s#{student.id}'>"
         body << "<td width='120'>#{student.full_name}</td>"
-        body << "<td><input type='text' value='Comment goes here' size='45' /></td>"
+        body << "<td><input id='c#{student.id}' type='text' value='Comment goes here' size='45' /></td>"
         body << '</tr>'
-        body += drop_receiving_element("c#{student.id}",
+        body += drop_receiving_element("s#{student.id}",
           :method     => :put,
           :url        => {:student => student.id,
             :controller => "evaluations",
             :action     => "update"},
           :with => "'comment=' + element.innerHTML",
+          :onDrop => "function(draggable_element, droppable_element, event)
+              { droppable_element.innerHTML = 'BLAH' }",
           :hoverclass => 'current')
       end
     end
