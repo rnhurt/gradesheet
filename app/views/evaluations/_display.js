@@ -1,8 +1,8 @@
 // Keep the user informed of what is going on in the background.
-window.update_status = function(mode, student_id, assignment_id) {
+window.update_grade_status = function(mode, student_id, assignment_id) {
   // Define the objects we need
-  var grade         = $('s' + student_id + 'a' + assignment_id)   // Get the "grade" object
-  var score         = $('score' + student_id)                     // Get the "score" object
+  var grade = $('s' + student_id + 'a' + assignment_id)   // Get the "grade" object
+  var score = $('score' + student_id)                     // Get the "score" object
 
   // Reset any CSS names
   grade.removeClassName('grade-warning');
@@ -32,6 +32,40 @@ window.update_status = function(mode, student_id, assignment_id) {
       
       break;
   }
+}
+
+window.update_skill_status = function(mode, student_id, skill_id) {
+  // Define the objects we need
+  var skill = $('s' + student_id + 'a' + skill_id)   // Get the "skill" object
+
+  // Reset any CSS names
+  skill.removeClassName('grade-warning');
+  skill.removeClassName('grade-error');
+  skill.removeClassName('grade-empty');
+
+  switch (mode) {
+    case('loading'):
+      // Begin the update process...
+      skill.addClassName('grade-updating');
+
+      break;
+    case('success'):
+      // Data was saved successfully
+      skill.removeClassName('grade-error');
+
+      break;
+    case('failure'):
+      // Data did not save successfully
+      skill.addClassName('grade-error');
+
+      break;
+    case('complete'):
+      // Update is complete
+      skill.removeClassName('grade-updating');
+
+      break;
+  }
+
 }
 
 // Change the look of a cell depending on the value entered by the user

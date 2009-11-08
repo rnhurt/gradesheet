@@ -19,7 +19,8 @@ module EvaluationHelper
 
   # Build the body for the skills evaluation partial
   def skills_body
-    students = @course_term.students.sort_by {|a| a.last_name }
+    students  = @course_term.students.sort_by {|a| a.last_name }
+    options   = SupportingSkillCode.all
     body = ''
 
     if students.size == 0
@@ -28,25 +29,32 @@ module EvaluationHelper
       # Process each student
       students.each_with_index do |student, index|
         #  Set up the row for this student
-        body << "<tr class='calc #{cycle('odd','even')}' id='#{student.id}'>"
+        body << "<tr class='calc #{cycle('odd','even')}' id='score#{student.id}'>"
         body << "<td width='100' id='#{student.id}'>#{student.full_name}</td>"
         a_counter = index + 1
 
         # Build the table and form entries for each skill for this student
         @ctskills.each do |ctskill|
           body << "<td class='skills' width='60'>"
-        
-          body += text_field_tag 'score', ctskill.score(student.id),
-            :name     => 'skill',
-            :id       => [:s => student.id, :a => ctskill.id],
-            :tabindex	=> a_counter,
-            :size     => '5',
-            :onchange => remote_function( :url => {:action => "update"}, :method => "put",
-            :with     => "'student=#{student.id}&skill=#{ctskill.id}&score=' + value",
-            :loading  => "Element.show('spinner')",
-            :complete => "Element.hide('spinner')")
 
-          body << "</td>"
+          # Build the complex remote_function by hand
+          body << "<select name='skill' id='#{[:s => student.id, :a => ctskill.id]}' "
+          body += <<END
+onchange="new Ajax.Updater('score#{student.id}', '/evaluations/#{@course_term.id}',
+ {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){update_skill_status('complete', #{student.id}, #{ctskill.id})},
+ onFailure:function(request){update_skill_status('failure', #{student.id}, #{ctskill.id})},
+ onLoading:function(request){update_skill_status('loading', #{student.id}, #{ctskill.id})},
+ onSuccess:function(request){update_skill_status('success', #{student.id}, #{ctskill.id})},
+ parameters:'student=#{student.id}&amp;skill=#{ctskill.id}&amp;score=' + value + '&amp;authenticity_token=' + encodeURIComponent('#{form_authenticity_token}')})"
+END
+          body << '<option> </option>'
+          options.each do |option|
+            body << '<option '
+            body << 'SELECTED ' if option.code == ctskill.score(student.id)
+            body << "value='#{option.code}'>#{option.code}</option>"
+          end
+          body << '</select></td>'
+
           a_counter += students.size
         end
       
@@ -112,10 +120,10 @@ module EvaluationHelper
           # Build the complex remote_function by hand
           body += <<END
 onchange="new Ajax.Updater('score#{student.id}', '/evaluations/#{@course_term.id}',
- {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){update_status('complete', #{student.id}, #{assignment.id})},
- onFailure:function(request){update_status('failure', #{student.id}, #{assignment.id})},
- onLoading:function(request){update_status('loading', #{student.id}, #{assignment.id})},
- onSuccess:function(request){update_status('success', #{student.id}, #{assignment.id})},
+ {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){update_grade_status('complete', #{student.id}, #{assignment.id})},
+ onFailure:function(request){update_grade_status('failure', #{student.id}, #{assignment.id})},
+ onLoading:function(request){update_grade_status('loading', #{student.id}, #{assignment.id})},
+ onSuccess:function(request){update_grade_status('success', #{student.id}, #{assignment.id})},
  parameters:'student=#{student.id}&amp;assignment=#{assignment.id}&amp;score=' + value + '&amp;authenticity_token=' + encodeURIComponent('#{form_authenticity_token}')})"
 END
           body << ' /> </td>'

@@ -21,12 +21,5 @@
     :separator      => '&nbsp;&nbsp;' %>
 </span>
 
-<% javascript_tag do %>
-  <%= render :partial => 'grade_display.js' %>
-
-  // Update the status of each grade
-  //$('grade_grid').getInputs().each(cell_status);
-
-  window.processPage('assignments');
-<% end %>
+<%= javascript_tag "processPage('assignments');" %>
 

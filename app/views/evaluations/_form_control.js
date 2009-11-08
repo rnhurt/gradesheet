@@ -1,5 +1,5 @@
 // Get everything ready for a particular page type (mode)
-function processPage(mode) {
+window.processPage = function(mode) {
   if (mode == 'assignments') {
     controlKeyboard('grade_grid');
     restrictSubmit('grade_grid');
@@ -18,7 +18,7 @@ function processPage(mode) {
 }
 
 // Control the movement between fields in the form
-function controlKeyboard(form){
+window.controlKeyboard = function(form){
   $(form).observe('keyup', function(event){
     // Move to the next field when the user presses the ENTER key
     switch (event.keyCode) {
@@ -51,7 +51,7 @@ function controlKeyboard(form){
 }
 
 // Don't allow the page to be submitted as a form, only update with AJAX
-function restrictSubmit(form){
+window.restrictSubmit = function(form){
   $(form).observe("submit", function(event){
     event.stop();
   });

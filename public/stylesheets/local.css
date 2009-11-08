@@ -76,10 +76,9 @@ table.master {
 .assign-date {font-size: 0.8em;}
 .skill-name {font-size: 0.9em; text-align:left;}
 table.fixed-grid { table-layout:fixed; width:100%; }
+table.fixed-grid td,tr { padding: 1px;}
 table.fixed-grid-header { width: 98%; margin-bottom: -1px; padding:0px;}
 .grades { text-align:center; }
-
-
 
 tr.help td {
   background-color: #006600;
@@ -99,7 +98,7 @@ fieldset {border:none; margin:0px; padding:0px;}
 fieldset legend {text-align: center; font-size:2em;}
 fieldset label {display:block;margin-top:4px;float:left; width:125px;text-align:right;padding-right:15px;clear:right;font-weight:bold;}
 fieldset .req {background: transparent url(/images/bullet_red.png) no-repeat scroll right center;}
-fieldset input, select {margin:5px 0; }
+fieldset input, select { margin:2px 0; }
 
 form .required {background: transparent url(/images/bullet_red.png) no-repeat scroll right center;}
 form .input {width:40%;}

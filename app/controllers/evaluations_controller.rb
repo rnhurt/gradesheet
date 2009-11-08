@@ -42,13 +42,18 @@ class EvaluationsController < ApplicationController
           evaluation = SupportingSkillEvaluation.find_or_create_by_student_id_and_course_term_skill_id(
             params[:student], params[:skill], :include => [:students, :course_term_skills])
 
-          evaluation.score = params[:score]
-
+          # If the score is blank then delete the evaluation
+          if params[:score].empty?
+            SupportingSkillEvaluation.destroy(evaluation)
+          else
+            evaluation.score = params[:score]
+          end
+          
         elsif params[:assignment]
           evaluation = AssignmentEvaluation.find_or_create_by_student_id_and_assignment_id(
             params[:student], params[:assignment])
 
-          # If the score is blank then delete the gradation row
+          # If the score is blank then delete the evaluation
           if params[:score].empty?
             AssignmentEvaluation.destroy(evaluation)
           else
