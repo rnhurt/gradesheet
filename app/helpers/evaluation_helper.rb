@@ -180,13 +180,21 @@ END
 
     return body
   end
+
+  def quick_comments_body
+    body = ''
+
+    @quick_comments.each do |comment|
+      body << "<tr class='#{cycle('odd','even')}'>"
+      body << "<td><div id='qc#{comment.id}'>#{comment.description}</div></td>"
+
+      body += draggable_element("qc#{comment.id}",
+        :revert => true, :ghosting => true,
+        :reverteffect => "function(element, top_offset, left_offset) { new Effect.MoveBy(element, -top_offset, -left_offset, {duration:0});}",
+        :onstart      => "function() { console.log('we are moving'); }")
+      body << '</tr>'
+    end
+
+    return body
+  end
 end
-
-
-# Parameters: {"assignment"=>"1882",
-# "action"=>"update",
-# "authenticity_token"=>"ad92f4a0771db1300b6684736faed64f3d79fb9d", "_method"=>"put",
-# "id"=>"151",
-# "student"=>"575",
-# "controller"=>"evaluations",
-# "score"=>"12"}

@@ -28,18 +28,7 @@
         <tr><th>Quick Comments</th></tr>
       </thead>
       <tbody>
-        <% @quick_comments.each do |comment| %>
-          <%= "<tr class='#{cycle('odd','even')}'>" %>
-          <%= "<td><div id='qc#{comment.id}'>#{comment.description}</div></td>" %>
-
-          <%= draggable_element("qc#{comment.id}",
-            :revert => true, :ghosting => true,
-            :reverteffect => "function(element, top_offset, left_offset) { new Effect.MoveBy(element, -top_offset, -left_offset, {duration:0});}",
-            :onstart      => "function() { console.log('we are moving'); }"
-          ) %>
-
-          <%= '</tr>' %>
-        <% end %>
+        <%= quick_comments_body %>
       </tbody>
     </table>
   </form>
