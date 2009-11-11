@@ -275,25 +275,16 @@ class ReportCard
         stroke_horizontal_rule
         move_down 2
 
-        # Print the grading scale details
-        scale.scale_ranges.each_with_index do |range, index|
-          if index.even?
-            mask(:y) {
-              span(bounds.width/2 - GUTTER_SIZE, :position => :left) do
-                text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
-              end
-            }
-          else
-            span((bounds.width/2) - GUTTER_SIZE, :position => :right) do
-              text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
-            end
+        # Print the grading scale in columns 
+        column_box [0,cursor],
+          :width => bounds.width,
+          :height => (scale.scale_ranges.size * font.height) / 2 do
+          scale.scale_ranges.each do |range|
+            text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
           end
-        end # scale_range.each
-
-        move_down GUTTER_SIZE + font.height
-            
+        end            
       end
-    end # instance_eval		
+    end # instance_eval
   end
 
 
