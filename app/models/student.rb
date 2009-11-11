@@ -7,6 +7,8 @@ class Student < User
   has_many    :supporting_skill_evaluations
   has_many    :course_term_skills,  :through => :supporting_skill_evaluations
 
+  has_one    :comment, :as => :commentable
+
 	validates_length_of	:homeroom, :maximum => 20
 	
 	from_year = Time.now.year - 1

@@ -6,6 +6,8 @@ class CourseTerm < ActiveRecord::Base
   has_many    :supporting_skills,       :through => :course_term_skills
   has_many    :assignments
 	has_many    :assignment_evaluations,  :through => :assignments
+
+  has_many    :comments, :as => :commentable
   
 	validates_existence_of	:term
 	validates_existence_of	:course
