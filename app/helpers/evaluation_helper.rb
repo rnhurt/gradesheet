@@ -40,7 +40,7 @@ END
       # Process each student
       students.each_with_index do |student, index|
         #  Set up the row for this student
-        body << "<tr class='calc #{cycle('odd','even')}' id='score#{student.id}'>"
+        body << "<tr class='calc #{cycle('odd','even')}' id='skill#{student.id}'>"
         body << "<td width='100' id='#{student.id}'>#{student.full_name}</td>"
         a_counter = index + 1
 
@@ -51,7 +51,7 @@ END
           # Build the complex remote_function by hand
           body << "<select name='skill' id='#{[:s => student.id, :k => ctskill.id]}' "
           body += <<END
-onchange="new Ajax.Updater('score#{student.id}', '/evaluations/#{@course_term.id}',
+onchange="new Ajax.Request('/evaluations/#{@course_term.id}',
  {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){update_skill_status('complete', #{student.id}, #{ctskill.id})},
  onFailure:function(request){update_skill_status('failure', #{student.id}, #{ctskill.id})},
  onLoading:function(request){update_skill_status('loading', #{student.id}, #{ctskill.id})},
