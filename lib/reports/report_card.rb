@@ -182,9 +182,12 @@ class ReportCard
     	    # Try not to overflow into the next page
 	        new_page if cursor < 300
 
+          # Build the Course header
           data = []
           data_hash = {}
-          headers = ["#{@course.name}\n  #{@course.teacher.full_name}"]
+          course_header = @course.enrollments.select{|e| e.student_id == student.id}.first.accommodation? ? '* ' : ''
+          course_header << "#{@course.name}\n  #{@course.teacher.full_name}"
+          headers = [course_header]
 
           temp_data = []
           @course.course_terms.each{|ct| temp_data << "ct#{ct.id}"}
@@ -194,7 +197,7 @@ class ReportCard
           @course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each_with_index do |course_term, ctindex|
             grade = course_term.calculate_grade(student.id)
             header = "#{course_term.term.name}\n #{grade[:letter]}"
-            header += " (#{grade[:score].round}%)" if grade[:score] >= 0 && !course_term.grading_scale.simple_view
+            header << " (#{grade[:score].round}%)" if grade[:score] >= 0 && !course_term.grading_scale.simple_view
             headers <<  header
 
             # Get a list of all supporting skills for all terms for this course
