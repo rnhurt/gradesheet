@@ -12,7 +12,7 @@ window.update_grade_status = function(mode, student_id, assignment_id) {
   switch (mode) {
     case('loading'):
       // Begin the update process...
-      score.addClassName('grade-updating');
+      grade.addClassName('grade-updating');
 
       break;
     case('success'):
@@ -27,7 +27,7 @@ window.update_grade_status = function(mode, student_id, assignment_id) {
       break;
     case('complete'):
       // Update is complete
-      score.removeClassName('grade-updating');
+      grade.removeClassName('grade-updating');
       cell_status(grade)
       
       break;

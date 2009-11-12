@@ -49,13 +49,13 @@ END
           body << "<td class='skills' width='60'>"
 
           # Build the complex remote_function by hand
-          body << "<select name='skill' id='#{[:s => student.id, :k => ctskill.id]}' "
+          body << "<select name='skill' id='s#{student.id}k#{ctskill.id}' "
           body += <<END
 onchange="new Ajax.Request('/evaluations/#{@course_term.id}',
- {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){update_skill_status('complete', #{student.id}, #{ctskill.id})},
- onFailure:function(request){update_skill_status('failure', #{student.id}, #{ctskill.id})},
- onLoading:function(request){update_skill_status('loading', #{student.id}, #{ctskill.id})},
- onSuccess:function(request){update_skill_status('success', #{student.id}, #{ctskill.id})},
+ {asynchronous:true, evalScripts:true, method:'put', onComplete:function(){update_skill_status('complete', #{student.id}, #{ctskill.id})},
+ onFailure:function(){update_skill_status('failure', #{student.id}, #{ctskill.id})},
+ onLoading:function(){update_skill_status('loading', #{student.id}, #{ctskill.id})},
+ onSuccess:function(){update_skill_status('success', #{student.id}, #{ctskill.id})},
  parameters:'student=#{student.id}&amp;skill=#{ctskill.id}&amp;score=' + value + '&amp;authenticity_token=' + encodeURIComponent('#{form_authenticity_token}')})"
 END
           score = ctskill.score(student.id)
@@ -127,7 +127,7 @@ END
           body << "<input type='text' value=\'#{found ? found.points_earned : ''}\' "
           body << " tabindex='#{a_counter}' size='5'"
           body << " points='#{assignment.possible_points}'"
-          body << " name='grade' id='#{[:s => student.id, :a => assignment.id]}'"
+          body << " name='grade' id='s#{student.id}a#{assignment.id}'"
 
           # Build the complex remote_function by hand
           body += <<END
