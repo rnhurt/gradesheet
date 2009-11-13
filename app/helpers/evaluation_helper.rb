@@ -164,7 +164,7 @@ END
       students.each_with_index do |student, index|
         body << "<tr class='calc #{cycle('odd','even')}' id='s#{student.id}'>"
         body << "<td width='120'>#{student.full_name}</td>"
-        body << "<td><input id='c#{student.id}' type='text' value='Comment goes here' size='45' /></td>"
+        body << "<td><input id='c#{student.id}' type='text' value='Comments go here' size='45' /></td>"
         body << '</tr>'
         body += drop_receiving_element("s#{student.id}",
           :method     => :put,
@@ -173,7 +173,9 @@ END
             :action     => "update"},
           :with => "'comment=' + element.innerHTML",
           :onDrop => "function(draggable_element, droppable_element, event)
-              { droppable_element.innerHTML = 'BLAH' }",
+              { new_comment = draggable_element.innerHTML.gsub('%fn', droppable_element.childNodes[0].childNodes[0].textContent.split(' ',1));
+                droppable_element.childNodes[1].childNodes[0].setValue(new_comment);
+              }",
           :hoverclass => 'current')
       end
     end
@@ -186,12 +188,11 @@ END
 
     @quick_comments.each do |comment|
       body << "<tr class='#{cycle('odd','even')}'>"
-      body << "<td><div id='qc#{comment.id}'>#{comment.description}</div></td>"
+      body << "<td><div id='qc#{comment.id}'>#{comment.content}</div></td>"
 
       body += draggable_element("qc#{comment.id}",
         :revert => true, :ghosting => true,
-        :reverteffect => "function(element, top_offset, left_offset) { new Effect.MoveBy(element, -top_offset, -left_offset, {duration:0});}",
-        :onstart      => "function() { console.log('we are moving'); }")
+        :reverteffect => "function(element, top_offset, left_offset) { new Effect.MoveBy(element, -top_offset, -left_offset, {duration:0});}")
       body << '</tr>'
     end
 

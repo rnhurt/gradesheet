@@ -27,7 +27,7 @@ class EvaluationsController < ApplicationController
           render :partial => "skills"
 
         when"comments"
-          @quick_comments = QuickComment.active
+          @quick_comments = Comment.quick.active
           
           render :partial => "comments"
         else
