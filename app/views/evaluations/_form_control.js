@@ -4,15 +4,13 @@ window.processPage = function(mode) {
     controlKeyboard('grade_grid');
     restrictSubmit('grade_grid');
     $('grade_grid').getInputs().each(cell_status);
-    
   } else if (mode == 'skills') {
     controlKeyboard('skills_grid');
     restrictSubmit('skills_grid');
-
   } else if (mode == 'comments'){
-  } else {
-    alert("WARNING - mode not defined: " + mode);
-  }
+    controlKeyboard('comments_grid');
+    restrictSubmit('comments_grid');
+  } else { alert("WARNING - mode not defined: " + mode); }
 
   $('loading').hide();
 }

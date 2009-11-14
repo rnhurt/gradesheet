@@ -64,8 +64,16 @@ class EvaluationsController < ApplicationController
           else
             evaluation.points_earned = params[:score]
           end
+
         elsif params[:comment]
-          
+          evaluation = Comment.find_or_create_by_user_id_and_commentable_id(params[:student], params[:id])
+
+          # If the comment is empty then delete the evaluation
+          if params[:comment].empty?
+            Comment.destroy(evaluation)
+          else
+            evaluation.content = params[:comment]
+          end
         end
 
         # Save the record
@@ -77,6 +85,9 @@ class EvaluationsController < ApplicationController
         elsif params[:assignment]
           grade = CourseTerm.find(params[:id]).calculate_grade(params[:student])
           render :text => "#{grade[:letter]} (#{grade[:score].round}%)", :status => status
+        elsif params[:comment]
+          student = Student.find(params[:student])
+          render :text => "YOU SUCK"
         end
       }
     end

@@ -162,21 +162,42 @@ END
       body << "<tr><td>No Students Found</td></tr>"
     else
       students.each_with_index do |student, index|
-        body << "<tr class='calc #{cycle('odd','even')}' id='s#{student.id}'>"
+        comment = Comment.find_by_user_id_and_commentable_id(student.id, @course_term.id.to_s)
+
+        body << "<tr class='calc #{cycle('odd','even')}' id='comment#{student.id}'>"
         body << "<td width='120'>#{student.full_name}</td>"
-        body << "<td><input id='c#{student.id}' type='text' value='Comments go here' size='45' /></td>"
-        body << '</tr>'
-        body += drop_receiving_element("s#{student.id}",
-          :method     => :put,
-          :url        => {:student => student.id,
-            :controller => "evaluations",
-            :action     => "update"},
-          :with => "'comment=' + element.innerHTML",
-          :onDrop => "function(draggable_element, droppable_element, event)
-              { new_comment = draggable_element.innerHTML.gsub('%fn', droppable_element.childNodes[0].childNodes[0].textContent.split(' ',1));
-                droppable_element.childNodes[1].childNodes[0].setValue(new_comment);
-              }",
+        body << "<td><input id='c#{student.id}' type='text' value='"
+        body += comment.content if comment
+        body << "' tabindex=#{index} size='50' "
+
+        # Build the remote_function by hand
+        body += <<END
+onchange="new Ajax.Request('/evaluations/#{@course_term.id}',
+ {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){update_comment_status('complete', #{student.id})},
+ onFailure:function(request){update_comment_status('failure', #{student.id})},
+ onLoading:function(request){update_comment_status('loading', #{student.id})},
+ onSuccess:function(request){update_comment_status('success', #{student.id})},
+ parameters:'student=#{student.id}&amp;comment=' + encodeURIComponent(value) + '&amp;authenticity_token=' + encodeURIComponent('#{form_authenticity_token}')})"
+END
+        body << ' /> </td>'
+
+
+        body += drop_receiving_element("comment#{student.id}",
+          :onDrop => "function(draggable_element, droppable_element, event) {
+                         new_comment = draggable_element.innerHTML.gsub('%fn', droppable_element.childNodes[0].childNodes[0].textContent.split(' ',1));
+                         droppable_element.childNodes[1].childNodes[0].setValue(new_comment);
+                         droppable_element.childNodes[1].childNodes[0].simulate('change');}",
           :hoverclass => 'current')
+       
+        # Build the drop_receiving_element javascript by hand
+        # OPTIMIZE: This code doesn't quite work for some reason...
+        #        body << "<script type='text/javascript'>//<![CDATA[ "
+        #        body << "Droppables.add('comment#{student.id}', {hoverclass:'current', onDrop:function(draggable_element, droppable_element, event) {"
+        #        body << " new_comment = draggable_element.innerHTML.gsub('%fn', droppable_element.childNodes[0].childNodes[0].textContent.split(' ',1));"
+        #        body << " droppable_element.childNodes[1].childNodes[0].setValue(new_comment);"
+        #        body << " droppable_element.childNodes[1].childNodes[0].simulate('change');}}) "
+        #        body << '//]]></script>'
+        body << '</tr>'
       end
     end
 
@@ -191,7 +212,7 @@ END
       body << "<td><div id='qc#{comment.id}'>#{comment.content}</div></td>"
 
       body += draggable_element("qc#{comment.id}",
-        :revert => true, :ghosting => true,
+        :revert => true, :ghosting => true, :scroll => :window,
         :reverteffect => "function(element, top_offset, left_offset) { new Effect.MoveBy(element, -top_offset, -left_offset, {duration:0});}")
       body << '</tr>'
     end
