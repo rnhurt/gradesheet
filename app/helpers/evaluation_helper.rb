@@ -166,9 +166,9 @@ END
 
         body << "<tr class='calc #{cycle('odd','even')}' id='comment#{student.id}'>"
         body << "<td width='120'>#{student.full_name}</td>"
-        body << "<td><input id='c#{student.id}' type='text' value='"
-        body += comment.content if comment
-        body << "' tabindex=#{index} size='50' "
+        body << "<td><input id='c#{student.id}' type='text' value=\""
+        body += h comment.content if comment
+        body << "\" tabindex=#{index} size='50' "
 
         # Build the remote_function by hand
         body += <<END
