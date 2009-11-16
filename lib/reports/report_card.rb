@@ -97,7 +97,8 @@ class ReportCard
         data = [["No supporting skills"] + [""] * (headers.size-1)] if data.blank?
 
         # Draw the table containing the grade totals and the skill scores
-        table(
+       font "#{Prawn::BASEDIR}/data/fonts/unifont.ttf", :size => 7  
+       table(
           data,
           :headers      => headers,
           :header_color => "C0C0C0",
@@ -127,6 +128,8 @@ class ReportCard
 
         # Build the page header
         header margin_box.top_left do
+          font 'Helvetica', :size => 7
+
           # Insert the school logo
           logo = "#{RAILS_ROOT}/public/images/logo.png"
           image logo, :at => bounds.top_left, :height => 20
@@ -145,12 +148,12 @@ class ReportCard
         end
         
         # Build the page footer
-        footer margin_box.bottom_left do 
-          font "Helvetica", :size => 7
+        footer margin_box.bottom_left do
+          font 'Helvetica', :size => 7
           orig_fill_color = fill_color
           orig_stroke_color = stroke_color
-          fill_color "555555"
-          stroke_color "555555"
+          fill_color '555555'
+          stroke_color '555555'
           stroke_horizontal_rule
     
           move_down(5)
@@ -281,11 +284,14 @@ class ReportCard
         # Print the grading scale in columns 
         column_box [0,cursor],
           :width => bounds.width,
-          :height => (scale.scale_ranges.size * font.height) / 2 do
+          :height => scale.scale_ranges.size * 7 do
+#          :height => (scale.scale_ranges.size * font.height) / 2 do
           scale.scale_ranges.each do |range|
             text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
           end
-        end            
+        end
+        
+        move_down 7
       end
     end # instance_eval
   end
