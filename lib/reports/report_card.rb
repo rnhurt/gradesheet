@@ -93,7 +93,7 @@ class ReportCard
       @initial_cursor = cursor  # Use this to reset the position on each new page
 
       # Function to generate the table containing the course grade information
-      def print_data(headers, data)
+      def print_grades(headers, data)
         data = [["No supporting skills"] + [""] * (headers.size-1)] if data.blank?
 
         # Draw the table containing the grade totals and the skill scores
@@ -102,7 +102,22 @@ class ReportCard
        table(
           data,
           :headers      => headers,
-          :header_color => "C0C0C0",
+          :header_color => 'C0C0C0',
+          :font_size    => 7,
+          :border_style => :grid,
+          :border_width => 0.5,
+          :width        => bounds.width)
+      end
+
+      # Function to print the table of comments
+      def print_comments(data)
+        data = [[""] + ["No comments"]] if data.blank?
+
+        # Draw the table of comments by term
+        table(
+          data,
+          :headers      => ['Comments', ''],
+          :header_color => 'C0C0C0',
           :font_size    => 7,
           :border_style => :grid,
           :border_width => 0.5,
@@ -189,6 +204,7 @@ class ReportCard
           # Build the Course header
           data = []
           data_hash = {}
+          comments = []
           course_header = @course.enrollments.select{|e| e.student_id == student.id}.first.accommodation? ? '* ' : ''
           course_header << "#{@course.name}\n  #{@course.teacher.full_name}"
           headers = [course_header]
@@ -200,6 +216,7 @@ class ReportCard
     		  # Gather the grades for each term in this course
           @course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each_with_index do |course_term, ctindex|
             grade = course_term.calculate_grade(student.id)
+            comments << [course_term.term.name, course_term.comments(student.id)]
             header = "#{course_term.term.name}\n #{grade[:letter]}"
             header << " (#{grade[:score].round}%)" if grade[:score] >= 0 && !course_term.grading_scale.simple_view
             headers <<  header
@@ -222,18 +239,20 @@ class ReportCard
           data_hash.values.each{|value| data << value.to_a}
 
           # Sort the skills alphabetically
-          data.sort!
+          data.sort!{|a,b| a[0] <=> b[0]}
 
           # Print the course data alternately on the left & right side of the page
           if index.even? then
             bounding_box([0, @left_cursor], :width => (bounds.width / 2) - GUTTER_SIZE) do
-              print_data(headers,data)
+              print_grades(headers,data)
+              print_comments(comments)
             end
             move_down(GUTTER_SIZE)
             @left_cursor = cursor
           else
             bounding_box([bounds.left + bounds.width / 2, @right_cursor], :width => (bounds.width / 2) - GUTTER_SIZE) do
-              print_data(headers,data)
+              print_grades(headers,data)
+              print_comments(comments)
             end
             move_down(GUTTER_SIZE)
             @right_cursor = cursor

@@ -42,4 +42,10 @@ class CourseTerm < ActiveRecord::Base
     return {:letter => letter_grade, :score => final_score }
   end
 
+  # Retrieve comments for a student in this course term
+  def comments(student_id)
+    comment = Comment.find_by_user_id_and_commentable_id(student_id, self.id.to_s)
+    return comment ? comment.content : ''
+  end
+  
 end
