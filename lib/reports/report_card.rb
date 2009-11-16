@@ -97,7 +97,8 @@ class ReportCard
         data = [["No supporting skills"] + [""] * (headers.size-1)] if data.blank?
 
         # Draw the table containing the grade totals and the skill scores
-       font "#{Prawn::BASEDIR}/data/fonts/unifont.ttf", :size => 7  
+#       font "#{Prawn::BASEDIR}/data/fonts/unifont.ttf", :size => 7  
+       font "#{Prawn::BASEDIR}/data/fonts/FreeSerif.ttf", :size => 7  
        table(
           data,
           :headers      => headers,
