@@ -91,7 +91,7 @@ class ReportCard
     # Make it so we don't have to use the 'pdf.' prefix everywhere.  :)
     @pdf.instance_eval do
       @initial_cursor = cursor  # Use this to reset the position on each new page
-      skills = SupportingSkillCode.all
+      skills = SupportingSkillCode.all  # FIXME: This should probably only include "active" codes
 
       # Function to generate the table containing the course grade information
       def print_grades(headers, data)
