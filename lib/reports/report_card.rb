@@ -91,6 +91,7 @@ class ReportCard
     # Make it so we don't have to use the 'pdf.' prefix everywhere.  :)
     @pdf.instance_eval do
       @initial_cursor = cursor  # Use this to reset the position on each new page
+      skills = SupportingSkillCode.all
 
       # Function to generate the table containing the course grade information
       def print_grades(headers, data)
@@ -102,8 +103,8 @@ class ReportCard
         column_widths[0] = (bounds.width - (40 * (headers.size-1))) + (headers.size * 4.17)
 
         # Draw the table containing the grade totals and the skill scores
-       font "#{Prawn::BASEDIR}/data/fonts/FreeSerif.ttf", :size => 7  
-       table(
+        font "#{Prawn::BASEDIR}/data/fonts/FreeSerif.ttf"
+        table(
           data,
           :headers        => headers,
           :header_color   => 'C0C0C0',
@@ -189,6 +190,7 @@ class ReportCard
         # OPTIMIZE: There is probably a more "Ruby" way to do this...
         scales = Array.new
         @courses.each { |course| scales.push(course.grading_scale) }
+        
         bounding_box [0, cursor - HEADER_HEIGHT], :width => bounds.width do
           ReportCard.print_skills(skills)
           ReportCard.print_keys(scales)
@@ -310,8 +312,8 @@ class ReportCard
         # Print the grading scale in columns 
         column_box [0,cursor],
           :width => bounds.width,
-#          :height => scale.scale_ranges.size * 6.5 do
-          :height => (scale.scale_ranges.size * font.height) / 2 do
+          #          :height => scale.scale_ranges.size * 6.5 do
+        :height => (scale.scale_ranges.size * font.height) / 2 do
           scale.scale_ranges.each do |range|
             text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
           end
@@ -337,21 +339,31 @@ class ReportCard
       move_down 2
 
       # Print the grading scale details
-      skills.each_with_index do |skill, index|
-        if index.even?
-          mask(:y) {
-            span(bounds.width/2 - GUTTER_SIZE, :position => :left) do
-              text "  #{skill.code} - #{skill.description}"
-            end
-          }
-        else
-          span((bounds.width/2) - GUTTER_SIZE, :position => :right) do
-            text "  #{skill.code} - #{skill.description}"
-          end
+      font "#{Prawn::BASEDIR}/data/fonts/FreeSerif.ttf", :size => 8
+      column_box [0,cursor],
+        :width => bounds.width,
+        :height => (skills.size * font.height) / 2 do
+        skills.each do |skill|
+          text "  #{skill.code} - #{skill.description}"
         end
-      end # skills.each
+      end
+
+      #      skills.each_with_index do |skill, index|
+      #        if index.even?
+      #          mask(:y) {
+      #            span(bounds.width/2 - GUTTER_SIZE, :position => :left) do
+      #              text "  #{skill.code} - #{skill.description}"
+      #            end
+      #          }
+      #        else
+      #          span((bounds.width/2) - GUTTER_SIZE, :position => :right) do
+      #            text "  #{skill.code} - #{skill.description}"
+      #          end
+      #        end
+      #      end # skills.each
 
       # Print the "accommodations" box
+      font "Helvetica", :size => 7, :align => :left
       bounding_box([bounds.width-75, bounds.height-15], :width => 75, :height => 20) do
         fill_color "EEEEEE"
         fill_and_stroke_rectangle [bounds.left-2,bounds.top+2], bounds.width, bounds.height
