@@ -95,18 +95,23 @@ class ReportCard
       # Function to generate the table containing the course grade information
       def print_grades(headers, data)
         data = [["No supporting skills"] + [""] * (headers.size-1)] if data.blank?
+        column_widths = Hash.new(40)
+        # FIXME: This is a really hokey calculation that has to do with some sort
+        # of gutter on the Prawn table column_widths.  Notice the little adjustment
+        # at the end, it works when number of terms = 3, mostly.  :/
+        column_widths[0] = (bounds.width - (40 * (headers.size-1))) + (headers.size * 4.17)
 
         # Draw the table containing the grade totals and the skill scores
-#       font "#{Prawn::BASEDIR}/data/fonts/unifont.ttf", :size => 7  
        font "#{Prawn::BASEDIR}/data/fonts/FreeSerif.ttf", :size => 7  
        table(
           data,
-          :headers      => headers,
-          :header_color => 'C0C0C0',
-          :font_size    => 7,
-          :border_style => :grid,
-          :border_width => 0.5,
-          :width        => bounds.width)
+          :headers        => headers,
+          :header_color   => 'C0C0C0',
+          :font_size      => 7,
+          :border_style   => :grid,
+          :border_width   => 0.5,
+          :width          => bounds.width,
+          :column_widths  => column_widths)
       end
 
       # Function to print the table of comments
@@ -116,12 +121,13 @@ class ReportCard
         # Draw the table of comments by term
         table(
           data,
-          :headers      => ['Comments', ''],
-          :header_color => 'C0C0C0',
-          :font_size    => 7,
-          :border_style => :grid,
-          :border_width => 0.5,
-          :width        => bounds.width)
+          :headers        => ['Comments', ''],
+          :header_color   => 'C0C0C0',
+          :font_size      => 7,
+          :border_style   => :grid,
+          :border_width   => 0.5,
+          :width          => bounds.width,
+          :column_widths  => {0=>40, 1=> (bounds.width - 40)})
       end
 
       # Function to generate a new page for the report.
@@ -199,7 +205,7 @@ class ReportCard
     	  @courses.each_with_index do |@course, index|
 
     	    # Try not to overflow into the next page
-	        new_page if cursor < 300
+	        new_page if cursor < 100
 
           # Build the Course header
           data = []
@@ -304,8 +310,8 @@ class ReportCard
         # Print the grading scale in columns 
         column_box [0,cursor],
           :width => bounds.width,
-          :height => scale.scale_ranges.size * 7 do
-#          :height => (scale.scale_ranges.size * font.height) / 2 do
+#          :height => scale.scale_ranges.size * 6.5 do
+          :height => (scale.scale_ranges.size * font.height) / 2 do
           scale.scale_ranges.each do |range|
             text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
           end
