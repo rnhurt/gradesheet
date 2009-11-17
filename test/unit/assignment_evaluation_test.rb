@@ -25,39 +25,46 @@ class AssignmentEvaluationTest < ActiveSupport::TestCase
 	# Make sure we can not have invalid points_earned
   def test_gradation_points_earned_as_number
     @assignment_evaluation.points_earned = -1.4
-    assert !@assignment_evaluation.valid?, "set points_earned to an invalid float."
+    assert @assignment_evaluation.valid?, "set points_earned to an invalid float."
+    assert_equal @assignment_evaluation.points_earned, 1.4, "points_earned converted to positive float"
 
     @assignment_evaluation.points_earned = 10.6
     assert @assignment_evaluation.valid?, "set points_earned to a valid float."
+    assert_equal @assignment_evaluation.points_earned, 10.6, "points_earned converted to positive float"
 
     @assignment_evaluation.points_earned = -5
-    assert !@assignment_evaluation.valid?, "set points_earned to an invalid int."
+    assert @assignment_evaluation.valid?, "set points_earned to an invalid int."
+    assert_equal @assignment_evaluation.points_earned, 5.0, "points_earned converted to positive float"
 
     @assignment_evaluation.points_earned = 16
     assert @assignment_evaluation.valid?, "set points_earned to a valid int."
+    assert_equal @assignment_evaluation.points_earned, 16.0, "points_earned converted to positive float"
   end
   
   def test_gradation_points_earned_as_string
     @assignment_evaluation.points_earned = 'E'  # = 'E'xcused assignment
-    assert @assignment_evaluation.valid?, "set points_earned to a valid String."
+    assert @assignment_evaluation.valid?, "set points_earned to a valid upper case string."
+    assert_equal @assignment_evaluation.points_earned, 'E', "points_earned converted to upper case string"
 
     @assignment_evaluation.points_earned = 'M'  # = 'M'issing assignment
-    assert @assignment_evaluation.valid?, "set points_earned to a valid String."
-
-    @assignment_evaluation.points_earned = 'Q'  # = some invalid type
-    assert !@assignment_evaluation.valid?, "set points_earned to an invalid String."
+    assert @assignment_evaluation.valid?, "set points_earned to a valid upper case string."
+    assert_equal @assignment_evaluation.points_earned, 'M', "points_earned converted to upper case string"
 
     @assignment_evaluation.points_earned = 'm'  # = lower case
-    assert !@assignment_evaluation.valid?, "set points_earned to an invalid String."
+    assert @assignment_evaluation.valid?, "set points_earned to a valid lower case string."
+    assert_equal @assignment_evaluation.points_earned, 'M', "points_earned converted to upper case string"
+
+    @assignment_evaluation.points_earned = 'Q'  # = some invalid type
+    assert !@assignment_evaluation.valid?, "set points_earned to an invalid string."
 
     @assignment_evaluation.points_earned = 'Moo'  # = some invalid type but starts with a good string
-    assert !@assignment_evaluation.valid?, "set points_earned to an invalid String."
+    assert !@assignment_evaluation.valid?, "set points_earned to an invalid string."
 
     @assignment_evaluation.points_earned = 'MM'
-    assert !@assignment_evaluation.valid?, "set points_earned to an invalid String."
+    assert !@assignment_evaluation.valid?, "set points_earned to an invalid string."
 
     @assignment_evaluation.points_earned = 'This is a really long string'
-    assert !@assignment_evaluation.valid?, "set points_earned to a long String."
+    assert !@assignment_evaluation.valid?, "set points_earned to a long string."
 	end
 	
 	# Make sure that we can't have duplicates
