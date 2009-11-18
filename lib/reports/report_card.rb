@@ -207,7 +207,7 @@ class ReportCard
     	  @courses.each_with_index do |@course, index|
 
     	    # Try not to overflow into the next page
-	        new_page if cursor < 100
+	        new_page if cursor < 200
 
           # Build the Course header
           data = []
