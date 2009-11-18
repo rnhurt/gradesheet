@@ -56,7 +56,7 @@ onchange="new Ajax.Request('/evaluations/#{@course_term.id}',
  onFailure:function(){update_skill_status('failure', #{student.id}, #{ctskill.id})},
  onLoading:function(){update_skill_status('loading', #{student.id}, #{ctskill.id})},
  onSuccess:function(){update_skill_status('success', #{student.id}, #{ctskill.id})},
- parameters:'student=#{student.id}&amp;skill=#{ctskill.id}&amp;score=' + value + '&amp;authenticity_token=' + encodeURIComponent('#{form_authenticity_token}')})"
+ parameters:'student=#{student.id}&amp;skill=#{ctskill.id}&amp;score=' + value + '&amp;authenticity_token=' + encodeURIComponent('#{form_authenticity_token}')})">
 END
           score = ctskill.score(student.id)
           body << '<option> </option>'
