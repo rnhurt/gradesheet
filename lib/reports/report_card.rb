@@ -97,19 +97,19 @@ class ReportCard
       def print_grades(headers, data)
         data = [["No supporting skills"] + [""] * (headers.size-1)] if data.blank?
         column_widths = Hash.new(40)
-        # FIXME: This is a really hokey calculation that has to do with some sort
-        # of gutter on the Prawn table column_widths.  Notice the little adjustment
-        # at the end, it works when number of terms = 3, mostly.  :/
-        column_widths[0] = (bounds.width - (40 * (headers.size-1))) + (headers.size * 4.17)
+        # FIXME: The addition at the end of this is the result of Prawn 0.5.x tables
+        # not knowing the proper width based on font size.  This is fixed in Prawn 0.6.x
+        column_widths[0] = (bounds.width - (40 * (headers.size-1))) + (headers.size * 8)
 
         # Draw the table containing the grade totals and the skill scores
         font "#{Prawn::BASEDIR}/data/fonts/FreeSerif.ttf"
         table(
           data,
           :headers        => headers,
-          :header_color   => 'C0C0C0',
+          :header_color   => 'E0E0E0',
           :font_size      => 7,
           :border_style   => :grid,
+          :padding        => 2,
           :border_width   => 0.5,
           :width          => bounds.width,
           :column_widths  => column_widths)
@@ -123,9 +123,10 @@ class ReportCard
         table(
           data,
           :headers        => ['Comments', ''],
-          :header_color   => 'C0C0C0',
+          :header_color   => 'E0E0E0',
           :font_size      => 7,
           :border_style   => :grid,
+          :padding        => 2,
           :border_width   => 0.5,
           :width          => bounds.width,
           :column_widths  => {0=>40, 1=> (bounds.width - 40)})
@@ -204,7 +205,7 @@ class ReportCard
         font "Helvetica", :size => 7, :align => :left
 
     	  # Print the grades for each course
-    	  @courses.each_with_index do |@course, index|
+    	  @courses.each_with_index do |course, index|
 
     	    # Try not to overflow into the next page
 	        new_page if cursor < 200
@@ -213,16 +214,16 @@ class ReportCard
           data = []
           data_hash = {}
           comments = []
-          course_header = @course.enrollments.select{|e| e.student_id == student.id}.first.accommodation? ? '* ' : ''
-          course_header << "#{@course.name}\n  #{@course.teacher.full_name}"
+          course_header = course.enrollments.select{|e| e.student_id == student.id}.first.accommodation? ? '* ' : ''
+          course_header << "#{course.name}\n  #{course.teacher.full_name}"
           headers = [course_header]
 
           temp_data = []
-          @course.course_terms.each{|ct| temp_data << "ct#{ct.id}"}
+          course.course_terms.each{|ct| temp_data << "ct#{ct.id}"}
           skill_score = Struct.new(:supporting_skill, *temp_data)
           
     		  # Gather the grades for each term in this course
-          @course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each_with_index do |course_term, ctindex|
+          course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each_with_index do |course_term, ctindex|
             grade = course_term.calculate_grade(student.id)
             comments << [course_term.term.name, course_term.comments(student.id)]
             header = "#{course_term.term.name}\n #{grade[:letter]}"
@@ -255,18 +256,20 @@ class ReportCard
               print_grades(headers,data)
               print_comments(comments)
             end
-            move_down(GUTTER_SIZE)
+            move_down(GUTTER_SIZE * 2)
             @left_cursor = cursor
           else
             bounding_box([bounds.left + bounds.width / 2, @right_cursor], :width => (bounds.width / 2) - GUTTER_SIZE) do
               print_grades(headers,data)
               print_comments(comments)
             end
-            move_down(GUTTER_SIZE)
+            move_down(GUTTER_SIZE * 2)
             @right_cursor = cursor
           end
-
         end	# each course
+
+        ReportCard.print_attendance([0, @left_cursor], school_year.terms)
+        # ReportCard.print_signature_block([bounds.left + bounds.width / 2, @right_cursor])
 
         # Is this the last student?
         if sindex < students.size - 1 then
@@ -324,7 +327,6 @@ class ReportCard
     end # instance_eval
   end
 
-
   def self.print_skills(skills)
     # Check for something to print...
     return unless !skills.empty?
@@ -348,20 +350,6 @@ class ReportCard
         end
       end
 
-      #      skills.each_with_index do |skill, index|
-      #        if index.even?
-      #          mask(:y) {
-      #            span(bounds.width/2 - GUTTER_SIZE, :position => :left) do
-      #              text "  #{skill.code} - #{skill.description}"
-      #            end
-      #          }
-      #        else
-      #          span((bounds.width/2) - GUTTER_SIZE, :position => :right) do
-      #            text "  #{skill.code} - #{skill.description}"
-      #          end
-      #        end
-      #      end # skills.each
-
       # Print the "accommodations" box
       font "Helvetica", :size => 7, :align => :left
       bounding_box([bounds.width-75, bounds.height-15], :width => 75, :height => 20) do
@@ -376,5 +364,51 @@ class ReportCard
 
     end # pdf instance
   end
-  
+
+  # Print the attendance information
+  def self.print_attendance(position, terms)
+    @pdf.instance_eval do
+      # Set up the text options
+      font "Helvetica", :size => 7, :align => :left
+
+      bounding_box(position, :width => (bounds.width / 2) - GUTTER_SIZE) do
+        column_widths = Hash.new(40)
+        # FIXME: The addition at the end of this is the result of Prawn 0.5.x tables
+        # not knowing the proper width based on font size.  This is fixed in Prawn 0.6.x
+        column_widths[0] = (bounds.width - (40 * (terms.size+1))) + (terms.size * 20)
+
+        data = [
+          ['Absent'] + [''] * (terms.size+1),
+          ['Tardy'] + [''] * (terms.size+1),
+          ['Early Dismissal'] + [''] * (terms.size+1)
+        ]
+
+        table(
+          data,
+          :headers        => ['Attendance'] + terms.map{|t| t.name} + ['Total'],
+          :header_color   => 'E0E0E0',
+          :font_size      => 7,
+          :border_style   => :grid,
+          :padding        => 2,
+          :border_width   => 0.5,
+          :width          => bounds.width,
+          :column_widths  => column_widths)
+      end
+    end
+  end
+
+  # Print the signature information
+  def self.print_signature_block(position)
+    @pdf.instance_eval do
+      # Set up the text options
+      font "Helvetica", :size => 7, :align => :left
+
+      bounding_box(position, :width => (bounds.width / 2) - GUTTER_SIZE, :height => 200) do
+        text 'Promoted ____________________'
+        text 'Retained ____________________'
+        stroke_bounds
+      end
+    end
+  end
+
 end
