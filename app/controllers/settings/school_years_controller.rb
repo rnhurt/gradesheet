@@ -1,4 +1,5 @@
 class Settings::SchoolYearsController < SettingsController
+  after_filter :expire_cache, :only => [:create, :update, :destroy]
 
   def index
     @years = SchoolYear.all(:order => "end_date DESC", :include => :terms)
@@ -54,5 +55,11 @@ class Settings::SchoolYearsController < SettingsController
       flash[:error] = "School year '#{@year.name}' could not be deleted."
     end
     redirect_to :action => :index
+  end
+
+  private
+
+  def expire_cache
+    expire_fragment %r{course_list_*}   # Expire all the course caches
   end
 end
