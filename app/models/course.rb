@@ -4,6 +4,7 @@ class Course < ActiveRecord::Base
   
   belongs_to	:teacher
   belongs_to  :grading_scale
+  belongs_to  :course_type
   
   has_many		:enrollments
   has_many    :course_terms

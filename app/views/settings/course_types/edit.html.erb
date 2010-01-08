@@ -1,0 +1,28 @@
+<% content_for :left do %>
+  <%= render :partial => 'settings/settings_list' %>
+<% end %>
+
+<%= error_messages_for :course_type,
+  :header_message => "Please Try Again!",
+  :message => "We had some problems saving your changes:" %>
+
+<div class='box span-15 last'>
+  <% form_for @course_type do |f| %>
+    <fieldset>
+      <%= f.label :name, "Course Type Name", :class => 'req' %>
+      <%= f.text_field :name, :class => "focus" %>
+      <br />
+
+      <div id='ranges' class='prepend-2 span-13 last'>
+        <%#= render :partial => 'scale_range', :collection => @course_type.scale_ranges.sort{|a,b| b.max_score <=> a.max_score} %>
+      </div>
+
+      <div class='spacer span-15 last'>
+        <%= submit_tag 'Save', :class => 'btn positive' %>
+        <%= link_to 'Cancel', course_types_path, :class => 'btn standard' %>
+      </div>
+
+    </fieldset>
+
+  <% end %>
+</div>

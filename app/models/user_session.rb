@@ -11,7 +11,7 @@ class UserSession < Authlogic::Session::Base
   private
 
   # Builds the [:authorize] parameter of the session object.  This information is
-  # used to build the menu bar as well as grant access to a particually controller.
+  # used to build the menu bar as well as grant access to a particular controller.
   def authorize
     # If this user is an Admin authorize them for everything
     if record.is_admin?
@@ -35,6 +35,7 @@ class UserSession < Authlogic::Session::Base
         ['', 'supporting_skills'],
         ['', 'supporting_skill_codes'],
         ['', 'supporting_skill_categories'],
+        ['', 'course_types'],
         ['', 'terms'],
       ]
     else
