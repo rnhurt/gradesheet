@@ -75,7 +75,8 @@ class ReportCard
 	def self.draw(params)
 	  # Gather the required data from the database
 	  school_year = SchoolYear.find(params[:school_year_id])
-    skills = SupportingSkillCode.active
+    skills      = SupportingSkillCode.active
+    cutoff_date = Date.today()
 
 	  if params[:student_id].nil? then
   	  # Process a whole homeroom
@@ -224,11 +225,17 @@ class ReportCard
           
     		  # Gather the grades for each term in this course
           course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each_with_index do |course_term, ctindex|
-            grade = course_term.calculate_grade(student.id)
+            # Only gather grades from completed Terms
+            if course_term.term.end_date <= cutoff_date
+              grade = course_term.calculate_grade(student.id)
+            else
+              grade = {:letter => '', :score => -1 }
+            end
+            
             comments << [course_term.term.name, course_term.comments(student.id)]
             header = "#{course_term.term.name}\n #{grade[:letter]}"
             header << " (#{grade[:score].round}%)" if grade[:score] >= 0 && !course_term.grading_scale.simple_view
-            headers <<  header
+            headers << header
 
             # Get a list of all supporting skills for all terms for this course
             course_term.course_term_skills.each do |ctskill|
