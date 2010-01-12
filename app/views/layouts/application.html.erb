@@ -2,17 +2,16 @@
 <html lang='en'>
   <head>
     <meta charset='UTF-8'>
-    <title><%= StaticData.site_name %> - <%= controller.controller_name.humanize %></title>
+      <title><%= StaticData.site_name %> - <%= controller.controller_name.humanize %></title>
 
-    <%= stylesheet_link_tag 'screen', 'menu', 'tabs', 'local', :cache => true -%>
+      <%= stylesheet_link_tag 'screen', 'menu', 'tabs', 'local', :cache => '../system/all' -%>
 
-    <%= javascript_include_tag 'protoaculous.1.8.3.min', 'livepipe', 'tabs',
-      'scal', 'tablekit', 'event.simulate', 'application', :cache => true -%>
-    <% javascript_tag do %>
-      TableKit.options.rowEvenClass = 'even';
-      TableKit.options.rowOddClass = 'odd';
-    <% end %>
-
+      <%= javascript_include_tag 'protoaculous.1.8.3.min', 'livepipe', 'tabs',
+        'scal', 'tablekit', 'event.simulate', 'application', :cache => '../system/all' -%>
+      <% javascript_tag do %>
+        TableKit.options.rowEvenClass = 'even';
+        TableKit.options.rowOddClass = 'odd';
+      <% end %>
     <%= @content_for_page_header -%>
 
   </head>
@@ -22,15 +21,15 @@
     <div class='container showgri'>
       <div id='header' class='span-25 last'>
 
-        <div class='span-2'>
-          <a href='/'><img class='top' src='/images/logo.png' alt="logo" width='60px' height='60px' /></a>
-        </div>
-
         <% cache 'layout_header' do %>
-        <div class='span-12'>
-          <span class='title last'><%= StaticData.site_name %></span>
-          <span class='tagline column span-12'><%= StaticData.tag_line %></span>
-        </div>
+          <div class='span-2'>
+            <a href='/'><img class='top' src='/images/logo.png' alt="logo" width='60px' height='60px' /></a>
+          </div>
+
+          <div class='span-12'>
+            <span class='title last'><%= StaticData.site_name %></span>
+            <span class='tagline column span-12'><%= StaticData.tag_line %></span>
+          </div>
         <% end %>
 
         <div id='account-info' class='span-9 last'>

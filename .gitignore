@@ -14,6 +14,7 @@ doc/app_horo
 doc/*.png
 .DS_Store
 .svn
+public/system/*
 config/analytics.js
 nbproject/*
 vendor/plugins/prawn-format
