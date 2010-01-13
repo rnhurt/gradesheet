@@ -1,42 +1,37 @@
-<%# FIXME: This is completely yucky and should be pretty easy to clean up. %>
-<% students = @course.students.sort_by &:last_name if @course %>
-<% students ||= [] %>
-<% enrollments = @course.enrollments %>
+<table class='master'>
+  <thead>
+    <tr>
+      <th width='1px'><acronym title="This student has an accommodation in this course">Acm?</acronym></th>
+      <th colspan='0'>Enrolled Students (<%= @course.enrollments.size %>)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @course.enrollments.blank? %>
+      <tr class='help'><td colspan='0'>Add students to this course from the list of students &nbsp;--></td></tr>
+    <% else %>
+      <% @course.enrollments.sort_by{|e| e.student.last_name}.each do |enrollment| %>
+        <tr class="<%= cycle('odd', 'even') %>" id="<%= enrollment.student.id %>">
+          <td>
+            <%= check_box_tag enrollment.id, enrollment.id, enrollment.accommodation,
+              :onclick => remote_function(
+              :url => { :action => :toggle_accommodation, :id => enrollment.id },
+              :loading => "Element.show('spinner')",
+              :complete => "Element.hide('spinner')" ) %>
+          </td>
+          <%= content_tag :td, enrollment.student.full_name %>
+          <td>
+            <% form_remote_tag :url => { :action => 'remove_student', :student_id => enrollment.student.id },
+              :method => :delete,
+              :confirm => "Are you sure you want to remove this '#{enrollment.student.full_name}' from this course?",
+              :loading => "Element.show('spinner')",
+              :complete => "Element.hide('spinner')" do %>
+              <%= submit_tag 'Remove', :class => 'smallbtn negative' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
 
-	<table class='master'>
-		<thead>
-			<tr>
-				<th width='1px'><acronym title="This student has an accommodation in this course">Acm?</acronym></th>
-				<th colspan='0'>Enrolled Students (<%= enrollments.size %>)</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% if enrollments.blank? %>
-				<tr class='help'><td colspan='0'>Add students to this course from the list of students &nbsp;--></td></tr>
-			<% else %>
-				<% for enrollment in enrollments %>
-					<tr class="<%= cycle('odd', 'even') %>" id="<%= enrollment.student.id %>">
-						<td>
-   						<%= check_box_tag enrollment.id, enrollment.id, enrollment.accommodation,
-   						      :onclick => remote_function(
-   						        :url => { :action => :toggle_accommodation, :id => enrollment.id },
-  										:loading => "Element.show('spinner')",	
-  										:complete => "Element.hide('spinner')" ) %>
-						</td>
-						<%= content_tag :td, enrollment.student.full_name %>
-						<td>
-							<% form_remote_tag :url => { :action => 'remove_student', :student_id => enrollment.student.id },
-										:method => :delete,
-										:confirm => "Are you sure you want to remove this '#{enrollment.student.full_name}' from this course?",
-										:loading => "Element.show('spinner')",	
-										:complete => "Element.hide('spinner')" do %>
-								<%= submit_tag 'Remove', :class => 'smallbtn negative' %>
-							<% end %>
-						</td>
-					</tr>
-				<% end %>
-			<% end %>
-		</tbody>
-	</table>
-	
 

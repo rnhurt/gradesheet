@@ -10,9 +10,11 @@ class CoursesController < ApplicationController
   end
 
   def edit
-    @course = Course.find(params[:id])
+    @course = Course.find(params[:id], :include => [:enrollments, :students])
+    @course_terms = CourseTerm.find_all_by_course_id(@course, 
+      :include => [:supporting_skills, :term], :order => "date_ranges.end_date")
     @homerooms = Student.find_homerooms()
-    @skill_cats = SupportingSkillCategory.active
+    @skill_cats = SupportingSkillCategory.active.all( :include => :supporting_skills )
     
 		respond_to do |format|
 			format.html
@@ -32,7 +34,8 @@ class CoursesController < ApplicationController
 
 				render :partial => "student_list"
 			}
-		end  end
+		end
+  end
 
   def create
     @course       = Course.new(params[:course])

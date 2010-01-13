@@ -5,7 +5,6 @@
 <%= error_messages_for :course, :header_message => "Please Try Again!", :message => "We had some problems saving your changes:" %>
 
 <div class='box span-14'>
-<%# form_for( @course, :url => {}, :html => {:id => 'edit_course'} ) do |f| %>
   <% form_for @course do |f| %>
     <fieldset>
       <%= f.label :name, {}, :class => 'req' %>
@@ -22,28 +21,22 @@
       <%= submit_tag 'Save', :class=> 'btn positive' %>
       <%= link_to 'Cancel', courses_path, :class => 'btn standard' %>
       <%= button_to 'Delete Course', @course,
-        :method   => :delete,
-        #					    :disabled => !@course.course_terms.assignments.empty?,
-      #				    :class    => "btn negative " + (@course.assignments.empty? ? '' : 'disabled'),
-      :class => "btn negative",
+        :method   => :delete, :class => "btn negative",
         :confirm => "Are you sure you want to delete the '#{@course.name}' course?" %>
     </div>
   </fieldset>
 
-<%#= observe_form "edit_course_#{@course.id}", :url => {:action => :update} %>
 </div>
 
 <div id="students"><%= render :partial => "students_tab" %></div>
 
-<% @course.course_terms.sort!{ |a,b| a.term.end_date <=> b.term.end_date } %>
-
 <ul id="course_tabs" class="subsection_tabs">
-  <% @course.course_terms.each do |course_term| %>
+  <% @course_terms.each do |course_term| %>
     <li class="tab"><%= link_to course_term.term.name, "\##{course_term.term.name}" %></li>
   <% end %>
 </ul>
 
-<% @course.course_terms.each do |course_term| %>
+<% @course_terms.each do |course_term| %>
   <div id="<%= course_term.term.name %>">
     <%= render :partial => "skills_tab", :locals => {:course_term => course_term} %>
   </div>

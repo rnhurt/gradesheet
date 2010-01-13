@@ -1,8 +1,8 @@
 <div class="box span-14 last">
   <ul class="checklist">
-    <% for category in @skill_cats %>
+    <% @skill_cats.each do |category| %>
       <%= content_tag :li, category.name, :class=>"category" %>
-      <% for skill in category.supporting_skills.active %>
+      <% category.supporting_skills.each do |skill| %>
         <li>
           <label for="<%= "#{skill.id}-#{course_term.id}" -%>">
             <%= check_box_tag skill.id, "1", course_term.supporting_skills.include?(skill),
@@ -12,7 +12,6 @@
               :action => "update"
             ), :id => "#{skill.id}-#{course_term.id}" %>
             <%= h skill.description %>
-            <%#= debug course_term %>
           </label>
         </li>
       <% end  %>
