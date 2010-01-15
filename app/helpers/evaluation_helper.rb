@@ -106,8 +106,7 @@ END
       @course_term.students.sort_by{|s| s.last_name}.each_with_index do |student, index|
         # Calculate the students grade.
         # OPTIMIZE: I think this is an expensive operation
-        #grade = @course_term.calculate_grade(student.id)
-        grade = {:letter => 'ZZ', :score => 0}
+        grade = @course_term.calculate_grade(student.id)
 
         # Set up the row for this student
         body << "<tr class='calc #{cycle('odd','even')}' id='#{student.id}'>"
