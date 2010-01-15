@@ -34,9 +34,10 @@ class Assignment < ActiveRecord::Base
   	errors.add(:due_date, "is invalid") if @due_date_invalid
   end
 
+  # Calculate a students grade for this assignment
   def calculate_grade(student_id)
     possible_points = self.possible_points
-    assignment = self.assignment_evaluations.select {|e| e.student_id == student_id}.first
+    assignment = get_evaluation(student_id)
     points_earned = assignment.blank? ? -1 : assignment.points_earned.to_f
     points_desc   = assignment.blank? ? '' : assignment.points_desc
     logger.debug  "  **** assignment: #{points_earned} out of #{possible_points}"
@@ -47,6 +48,12 @@ class Assignment < ActiveRecord::Base
 
     return {:letter => letter_grade, :score => final_score, :desc => points_desc }
   end
+
+  # Retrieve the evaluation for this assignment for a particular student
+  def get_evaluation(student_id)
+    self.assignment_evaluations.detect{|e| e.student_id == student_id}
+  end
+
   
   private
   

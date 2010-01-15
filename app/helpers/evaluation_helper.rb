@@ -100,16 +100,15 @@ END
 
   # Build the body for the grade evaluation partial
   def grades_body
-    students = @course_term.students.sort_by {|a| a.last_name }
-
     body = ''
-    if students.size == 0 then
+    if @course_term.students.size == 0 then
       body << "<tr><td>No Students Found</td></tr>"
     else
-      students.each_with_index do |student, index|
+      @course_term.students.sort_by{|s| s.last_name}.each_with_index do |student, index|
         # Calculate the students grade.
         # OPTIMIZE: I think this is an expensive operation
-        grade = @course_term.calculate_grade(student.id)
+        #grade = @course_term.calculate_grade(student.id)
+        grade = {:letter => 'ZZ', :score => 0}
 
         # Set up the row for this student
         body << "<tr class='calc #{cycle('odd','even')}' id='#{student.id}'>"
@@ -121,10 +120,10 @@ END
         # Build the cells to hold each grade
         @assignments.each do |assignment|
           body << "<td width='17' class='grades'>"
-          found = student.assignment_evaluations.select{|a| a.assignment_id == assignment.id}.first
+          evaluation = assignment.get_evaluation(student.id)
 
           # This is being built by hand because it is a tight loop with performance problems
-          body << "<input type='text' value=\'#{found ? found.points_earned : ''}\' "
+          body << "<input type='text' value=\'#{evaluation ? evaluation.points_earned : ''}\' "
           body << " tabindex='#{a_counter}' size='5'"
           body << " points='#{assignment.possible_points}'"
           body << " name='grade' id='s#{student.id}a#{assignment.id}'"
@@ -140,7 +139,7 @@ onchange="new Ajax.Updater('score#{student.id}', '/evaluations/#{@course_term.id
 END
           body << ' /> </td>'
 
-          a_counter += students.size
+          a_counter += @course_term.students.size
         end
 
         # Clean up the HTML if no @assignments are found in the DB

@@ -5,16 +5,17 @@ class EvaluationsController < ApplicationController
   def show
     @course_term  = CourseTerm.find(params[:id])
 
-    # OPTIMIZE: Could this be moved to individual *.js.erb files??
     respond_to do |format|
       format.html { }
       format.js {
+        # OPTIMIZE: Could this be moved to individual *.js.erb files??
         case params[:tab]
         when "assignments"
           @assignments  = Assignment.paginate_by_course_term_id(@course_term,
             :per_page => 6,
             :page     => params[:page],
-            :order    => "due_date DESC, created_at ASC")
+            :order    => "due_date DESC, created_at ASC",
+            :include  => :assignment_evaluations)
           @scalerange   = ScaleRange.find_all_by_grading_scale_id(@course_term.course.grading_scale_id)
 
           render :partial => "assignments"
