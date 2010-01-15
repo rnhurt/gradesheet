@@ -130,6 +130,21 @@ form .select {width:40%;}
 .disabled { background-color:#f2f2f2;color:#D4D4D4}
 .sml { width: 50px }
 
+ul.table {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+
+}
+ul.table .handle{
+    font-size: 12px;
+    cursor: move;
+    color: #777;
+}
+ul.table table {
+    margin: 0px;
+}
+
 /*** Scaffold defaults ***/
 .fieldWithErrors {background-color:#FFA2A2; border:1px solid #FF0000}
 #errorExplanation {

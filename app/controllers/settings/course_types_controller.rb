@@ -2,7 +2,7 @@ class Settings::CourseTypesController < SettingsController
   before_filter :authorized?
 
   def index
-    @course_types = CourseType.all
+    @course_types = CourseType.all(:order => :position)
   end
 
   def show
@@ -52,5 +52,13 @@ class Settings::CourseTypesController < SettingsController
     
     redirect_to course_types_url
     
+  end
+
+  def sort
+    params[:types].each_with_index do |id, index|
+      CourseType.update_all(['position=?', index+1], ['id=?', id])
+    end
+    render :nothing => true
+
   end
 end

@@ -6,29 +6,23 @@
   :header_message => "Please Try Again!",
   :message => "We had some problems saving your changes:" %>
 
-<table class='master'>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th width='1'></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="<%= cycle('odd', 'even')%>">
-      <td colspan='0'>
-        <%= link_to "Add Course Type", new_course_type_path, :class => 'btn positive' %>
-      </td>
-    </tr>
-    <% for ctype in @course_types %>
-      <tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%#= url_for(ctype) + '/edit' %>'">
-        <td><%= link_to ctype.name, edit_course_type_path(ctype) %></td>
-        <td><%= button_to 'Delete', course_type_path(ctype), :method => :delete,
-            :disabled => !ctype.courses.empty?,
-            :class => "btn negative " + (ctype.courses.empty? ? '' : 'disabled'),
-            :confirm => "Are you sure you want to delete\n\n '" + ctype.name + "'?" %></td>
-      </tr>
+<%= link_to "Add Course Type", new_course_type_path, :class => 'btn positive' %>
+<div class="box">
+<ul id="types" class="table">
+  <% @course_types.each do |type| %>
+    <% content_tag_for :li, type do %>
+      <table><tr>
+          <td width="90%"><%= link_to type.name, edit_course_type_path(type) %></td>
+          <td width="10%"><%= button_to 'Delete', course_type_path(type), :method => :delete,
+              :disabled => !type.courses.empty?,
+              :class => "btn negative " + (type.courses.empty? ? '' : 'disabled'),
+              :confirm => "Are you sure you want to delete\n\n '" + type.name + "'?" %></td>
+          <td class="handle">[drag]</td>
+        </tr>
+      </table>
     <% end %>
-  </tbody>
-</table>
+  <% end %>
+</ul>
+</div>
 
-
+<%= sortable_element("types", :url => sort_course_types_path, :handle => 'handle') %>

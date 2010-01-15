@@ -27,7 +27,7 @@ ActionController::Routing::Routes.draw do |map|
     s.resources :site_defaults,         :name_prefix => nil
     s.resources :imports,               :name_prefix => nil
     s.resources :assignment_categories, :name_prefix => nil
-    s.resources :course_types,          :name_prefix => nil
+    s.resources :course_types,          :name_prefix => nil, :collection => { :sort => :post }
   end
 
 	# Build the standard routes
