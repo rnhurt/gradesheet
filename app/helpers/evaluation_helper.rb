@@ -30,15 +30,14 @@ END
 
   # Build the body for the skills evaluation partial
   def skills_body
-    students  = @course_term.students.sort_by {|a| a.last_name }
-    options   = SupportingSkillCode.all
-    body = ''
+    options = SupportingSkillCode.all
+    body    = ''
 
-    if students.size == 0
+    if @course_term.students.size == 0
       body << "<tr><td>No Students Found</td></tr>"
     else
       # Process each student
-      students.each_with_index do |student, index|
+      @course_term.students.sort_by {|a| a.last_name }.each_with_index do |student, index|
         #  Set up the row for this student
         body << "<tr class='calc #{cycle('odd','even')}' id='skill#{student.id}'>"
         body << "<td width='100' id='#{student.id}'>#{student.full_name}</td>"
@@ -67,7 +66,7 @@ END
           end
           body << '</select></td>'
 
-          a_counter += students.size
+          a_counter += @course_term.students.size
         end
       
         body << '</tr>'

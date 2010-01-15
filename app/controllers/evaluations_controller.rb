@@ -23,7 +23,8 @@ class EvaluationsController < ApplicationController
         when "skills"
           @ctskills = @course_term.course_term_skills.paginate(
             :per_page => 5,
-            :page     => params[:page])
+            :page     => params[:page],
+            :include  => [:supporting_skill, :supporting_skill_evaluations])
 
           render :partial => "skills"
 
