@@ -1,5 +1,5 @@
 <% content_for :left do %>
-	<%= render :partial => 'report_list' %>
+  <%= render :partial => 'report_list', :locals => {:reports => @reports} %>
 <% end %>
 
 <h2>Choose your report</h2>

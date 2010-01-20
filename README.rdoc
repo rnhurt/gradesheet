@@ -13,7 +13,7 @@ communicate with their teacher(s).
 
 == Requirements
 * Ruby 1.8 (working on moving to v1.9)
-* Rails 2.2.2
+* Rails 2.2.3
 * Dependencies (aka Rails plugins):
 * will_paginate[http://github.com/mislav/will_paginate] - Most awesome pagination system for Ruby
 * Authlogic[http://github.com/binarylogic/authlogic] - A clean, simple, and unobtrusive ruby authentication solution.

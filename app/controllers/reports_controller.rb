@@ -1,9 +1,9 @@
 class ReportsController < ApplicationController
   before_filter :require_user
+  before_filter :load_reports, :only => [:index, :show]
   append_before_filter :authorized?
 
   def index
-    @reports = Report.all()
   end
 
   def show
@@ -59,4 +59,10 @@ class ReportsController < ApplicationController
       end
     end
   end
+  
+  protected
+  def load_reports
+    @reports = Report.all()
+  end
+  
 end
