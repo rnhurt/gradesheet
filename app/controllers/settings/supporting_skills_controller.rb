@@ -1,27 +1,19 @@
 class Settings::SupportingSkillsController < SettingsController
   before_filter :authorized?
+  before_filter :find_skill, :only => [:show, :edit, :update, :destroy]
 
   def index
     @categories = SupportingSkillCategory.all
   end
 
-  def show
-    @skill = SupportingSkill.find(params[:id])
-  end
-
-
   def new
     @skill = SupportingSkill.new
-
     render :action => :edit
   end
 
-
   def edit
-    @skill = SupportingSkill.find(params[:id])
     @skill_category = SupportingSkillCategory.find(@skill.supporting_skill_category_id)
   end
-
 
   def create
     @skill = SupportingSkill.new(params[:supporting_skill])
@@ -38,8 +30,6 @@ class Settings::SupportingSkillsController < SettingsController
 
 
   def update
-    @skill = SupportingSkill.find(params[:id])
-
     respond_to do |format|
       if @skill.update_attributes(params[:supporting_skill])
         format.html {
@@ -59,11 +49,7 @@ class Settings::SupportingSkillsController < SettingsController
     end
   end
 
-
-
   def destroy
-    @skill = SupportingSkill.find(params[:id])
-
     if @skill.destroy
       flash[:notice] = "Supporting skill was successfully deleted."
     else
@@ -74,5 +60,12 @@ class Settings::SupportingSkillsController < SettingsController
       :controller => :supporting_skill_categories,
       :id => @skill.supporting_skill_category_id
   end
-  
+
+  private
+
+  # Find the supporting skill
+  def find_skill
+    @skill = SupportingSkill.find(params[:id])
+  end
+
 end
