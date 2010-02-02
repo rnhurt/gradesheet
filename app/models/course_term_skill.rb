@@ -9,7 +9,8 @@ class CourseTermSkill < ActiveRecord::Base
 
   # Calculate a students current score for a particular course & term.
   def score(student_id)
-    temp = self.supporting_skill_evaluations.detect{|e| e.student_id == student_id}
+    # OPTIMIZE: temp = self.supporting_skill_evaluations.detect{|e| e.student_id == student_id}
+    temp = self.supporting_skill_evaluations.first(:conditions => { :student_id => student_id})
     return temp.blank? ? "" : temp.score
   end
 
