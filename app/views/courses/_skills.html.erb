@@ -1,0 +1,33 @@
+<div class="box span-14 last">
+  <ul class="checklist">
+    <% @skill_cats.each do |category| %>
+      <table class="master">
+        <thead>
+          <tr>
+            <%= content_tag :td, category.name, :class=>"category" %>
+            <% course_terms.each do |course_term| %>
+              <%= content_tag :td, course_term.term.name, :class=>"category", :width=>"50px;" %>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% category.supporting_skills.each do |skill| %>
+            <tr class="even">
+              <td><%= h skill.description %></td>
+              <% course_terms.each do |course_term| %>
+                <td><%= check_box_tag skill.id, "1", course_term.supporting_skills.include?(skill),
+                    :onclick => toggle_skill(
+                    :controller => "courses",
+                    :id => course_term.id,
+                    :action => "update"
+                  ), :id => "#{skill.id}-#{course_term.id}" %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+
+    <% end %>
+  </ul>
+</div>

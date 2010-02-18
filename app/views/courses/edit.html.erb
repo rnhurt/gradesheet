@@ -28,20 +28,12 @@
 
 </div>
 
-<div id="students"><%= render :partial => "students_tab" %></div>
+<div id="students">
+  <%= render :partial => "students_tab" %>
+</div>
 
-<ul id="course_tabs" class="subsection_tabs">
-  <% @course_terms.each do |course_term| %>
-    <li class="tab"><%= link_to course_term.term.name, "\##{course_term.term.name}" %></li>
-  <% end %>
-</ul>
-
-<% @course_terms.each do |course_term| %>
-  <div id="<%= course_term.term.name %>">
-    <%= render :partial => "skills_tab", :locals => {:course_term => course_term} %>
-  </div>
-<% end %>
+<%= render :partial => "skills", :locals => {:course_terms => @course_terms} %>
 
 <% content_for :page_footer do %>
-  <%= javascript_tag "new Control.Tabs('course_tabs');" %>
+  <%#= javascript_tag "new Control.Tabs('course_tabs');" %>
 <% end %>
