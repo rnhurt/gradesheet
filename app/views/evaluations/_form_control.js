@@ -10,6 +10,7 @@ window.processPage = function(mode) {
   } else if (mode == 'comments'){
     controlKeyboard('comments_grid');
     restrictSubmit('comments_grid');
+  } else if (mode == 'summary'){
   } else { alert("WARNING - mode not defined: " + mode); }
 
   $('loading').hide();

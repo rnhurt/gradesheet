@@ -6,11 +6,13 @@
   <li class="tab"><a href="#assignments">Assignments</a></li>
   <li class="tab"><a href="#skills">Supporting Skills</a></li>
   <li class="tab"><a href="#comments">Comments</a></li>
+  <li class="tab"><a href="#summary">Summary</a></li>
 </ul>
 
 <div id="assignments"></div>
 <div id="skills"></div>
 <div id="comments"></div>
+<div id="summary"></div>
 
 <%= link_to_remote '', { :update => "assignments",
   :method => "get",
@@ -33,6 +35,12 @@
   :url => { :tab => "comments", :controller => "evaluations", :action => "show", :id => @course_term.id } },
   :id => 'tab_comments' -%>
 
+<%= link_to_remote '', { :update => "summary",
+  :method   => "get",
+  :loading  => "show_message('summary')",
+  :url => { :tab => "summary", :controller => "evaluations", :action => "show", :id => @course_term.id } },
+  :id => 'tab_summary' -%>
+
 <div id="loading" class="box" style="display:none;text-align:center;">
   <span id="loading_message">Loading data ...</span><br />
   <img alt="" src="/images/ajax-loader.gif"/>
@@ -43,9 +51,9 @@
     // Build the graphical tabs
     new Control.Tabs("evaluations", {
     afterChange: function(container){
-    if (container.empty()) {$('tab_' + container.id).onclick();}}
+    // Only load empty tabs; always refresh the 'summary' tab
+    if (container.empty() || container.id == 'summary') {$('tab_' + container.id).onclick();}}
     });
-
 
     // Center the "loading" animation
     element = $('loading');

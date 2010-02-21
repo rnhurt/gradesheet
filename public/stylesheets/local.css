@@ -93,6 +93,10 @@ tr.help:hover td{background-color: #009900;}
 .paginate {text-align: center;}
 div.fixed-table { max-height:500px; overflow:auto; }
 
+table.simple thead {background-color: #C3D9FF; font-weight: bold;}
+
+
+
 /*** Forms ***/
 .spacer {padding-left:80px; color:#555555; padding-top: 20px;}
 fieldset {border:none; margin:0px; padding:0px;}
