@@ -1,0 +1,38 @@
+<table class="simple box">
+
+  <% @course_term.students.each do |student| %>
+    <% grade = @course_term.calculate_grade(student) %>
+    <thead>
+      <tr>
+        <td>
+          <%= h "#{grade[:letter]} (#{grade[:score].round}%) - #{student.full_name}" %>
+        </td>
+        <td></td><td></td>
+      </tr>
+    </thead>
+    <tr>
+      <td colspan="3">
+        "<%= h @course_term.comments(student) %>"
+      </td>
+    </tr>
+
+
+    <% @course_term.course_term_skills.in_groups_of(3, "blah") do |row_ctskills| %>
+      <tr>
+        <% for ctskill in row_ctskills %>
+          <% score = ctskill.score(student) %>
+          <td>
+            <%= score.empty? ? "&nbsp;&nbsp;" : score %>
+            <%= h " \"#{ctskill.supporting_skill.description}\"" %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+
+    <tr class="spacer"><td colspan="3">&nbsp;</td></tr>
+  <% end %>
+
+</table>
+
+
+<%= javascript_tag "this.processPage('summary');" %>
