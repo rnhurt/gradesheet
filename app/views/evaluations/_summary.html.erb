@@ -1,6 +1,5 @@
 <table class="simple box">
-
-  <% @course_term.students.each do |student| %>
+  <% @course_term.students.sort_by {|a| a.last_name }.each do |student| %>
     <% grade = @course_term.calculate_grade(student) %>
     <thead>
       <tr>
