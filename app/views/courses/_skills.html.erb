@@ -17,12 +17,7 @@
             <tr class="even">
               <td><%= h skill.description %></td>
               <% course_terms.each do |course_term| %>
-                <td><%#= check_box_tag skill.id, "1", course_term.supporting_skills.to_set.include?(skill),
-      :onclick => toggle_skill(
-      :controller => "courses",
-      :id => course_term.id,
-      :action => "update"
-      ), :id => "#{skill.id}-#{course_term.id}" %>
+                <td>
                   <input type="checkbox" <%= course_term.supporting_skills.to_set.include?(skill) ? 'checked' : '' %>
                          name="<%= skill.id %>" id="<%= "#{skill.id}-#{course_term.id}" %>"
                          onclick="Element.show('spinner'); new Ajax.Request('/courses/<%= course_term.id %> ', {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){Element.hide('spinner')}, parameters:'skill[' + this.checked + ']=' + this.name + '&authenticity_token=<%= auth_token %>'})">
