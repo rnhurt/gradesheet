@@ -1,12 +1,14 @@
+<% auth_token = url_encode(form_authenticity_token) %>
+
 <div class="box span-14 last">
   <ul class="checklist">
     <% @skill_cats.each do |category| %>
       <table class="master">
         <thead>
           <tr>
-            <%= content_tag :td, category.name, :class=>"category" %>
+            <td class="category"><%= category.name %> </td>
             <% course_terms.each do |course_term| %>
-              <%= content_tag :td, course_term.term.name, :class=>"category", :width=>"50px;" %>
+              <td class="category" width="50px;"><%= course_term.term.name %></td>
             <% end %>
           </tr>
         </thead>
@@ -15,19 +17,23 @@
             <tr class="even">
               <td><%= h skill.description %></td>
               <% course_terms.each do |course_term| %>
-                <td><%= check_box_tag skill.id, "1", course_term.supporting_skills.include?(skill),
-                    :onclick => toggle_skill(
-                    :controller => "courses",
-                    :id => course_term.id,
-                    :action => "update"
-                  ), :id => "#{skill.id}-#{course_term.id}" %></td>
+                <td><%#= check_box_tag skill.id, "1", course_term.supporting_skills.to_set.include?(skill),
+      :onclick => toggle_skill(
+      :controller => "courses",
+      :id => course_term.id,
+      :action => "update"
+      ), :id => "#{skill.id}-#{course_term.id}" %>
+                  <input type="checkbox" <%= course_term.supporting_skills.to_set.include?(skill) ? 'checked' : '' %>
+                         name="<%= skill.id %>" id="<%= "#{skill.id}-#{course_term.id}" %>"
+                         onclick="Element.show('spinner'); new Ajax.Request('/courses/<%= course_term.id %> ', {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){Element.hide('spinner')}, parameters:'skill[' + this.checked + ']=' + this.name + '&authenticity_token=<%= auth_token %>'})">
+                </td>
               <% end %>
             </tr>
           <% end %>
         </tbody>
       </table>
-
-
     <% end %>
   </ul>
 </div>
+
+<%= auth_token %>
