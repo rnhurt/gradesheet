@@ -68,13 +68,11 @@ class CoursesController < ApplicationController
       @course = Course.find(params[:id])
     end
 
-
-
     respond_to do |format|
       if @course.update_attributes(params[:course])
         flash[:notice] = "Course '#{@course.name}' was successfully updated."
 	      format.html { redirect_to(courses_url) }
-	      format.js { render :action => "update" }
+	      format.js { render :nothing => true }
       else
         flash[:error] = "Course '#{@course.name}' failed to update."
         format.html { redirect_to(:action => "edit") }
