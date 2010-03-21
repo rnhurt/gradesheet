@@ -2,17 +2,17 @@
 <html lang='en'>
   <head>
     <meta charset='UTF-8'>
-      <title><%= StaticData.site_name %> - <%= controller.controller_name.humanize %></title>
+    <title><%= StaticData.site_name %> - <%= controller.controller_name.humanize %></title>
 
-      <%= stylesheet_link_tag 'screen', 'menu', 'tabs', 'local', :cache => '../system/all' -%>
+    <%= stylesheet_link_tag 'screen', 'menu', 'tabs', 'local', :cache => '../system/all' -%>
 
-      <%= javascript_include_tag 'protoaculous.1.8.3.min', 'livepipe', 'tabs',
-        'scal', 'tablekit', 'event.simulate', 'application', :cache => '../system/all' -%>
+    <%= javascript_include_tag 'protoaculous.1.8.3.min', 'livepipe', 'tabs',
+      'scal', 'tablekit', 'event.simulate', 'application', :cache => '../system/all' -%>
 
-      <% javascript_tag do %>
-        TableKit.options.rowEvenClass = 'even';
-        TableKit.options.rowOddClass = 'odd';
-      <% end %>
+    <% javascript_tag do %>
+      TableKit.options.rowEvenClass = 'even';
+      TableKit.options.rowOddClass = 'odd';
+    <% end %>
     <%= @content_for_page_header -%>
 
   </head>
@@ -59,7 +59,8 @@
       </div>
     </div>
 
-    <%= @content_for_page_footer -%>
-    <%= render :file => 'layouts/analytics.inc' if File.exist?(RAILS_ROOT + '/app/views/layouts/analytics.inc') %>
+    <% cache 'layout_footer' do %>
+      <%= render :file => 'layouts/analytics.inc' if File.exist?(RAILS_ROOT + '/app/views/layouts/analytics.inc') %>
+    <% end %>
   </body>
 </html>
