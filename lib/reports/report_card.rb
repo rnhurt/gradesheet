@@ -93,6 +93,8 @@ class ReportCard
     @pdf.instance_eval do
       @initial_cursor = cursor  # Use this to reset the position on each new page
       skills = SupportingSkillCode.all  # FIXME: This should probably only include "active" codes
+      debugger
+      @terms = school_year.terms.sort!{|a,b| a.end_date <=> b.end_date}
 
       # Function to generate the table containing the course grade information
       def print_grades(headers, data)
@@ -275,7 +277,7 @@ class ReportCard
           end
         end	# each course
 
-        ReportCard.print_attendance([0, @left_cursor], school_year.terms)
+        ReportCard.print_attendance([0, @left_cursor], @terms)
         # ReportCard.print_signature_block([bounds.left + bounds.width / 2, @right_cursor])
 
         # Is this the last student?
