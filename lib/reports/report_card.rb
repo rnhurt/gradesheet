@@ -92,13 +92,13 @@ class ReportCard
     # Make it so we don't have to use the 'pdf.' prefix everywhere.  :)
     @pdf.instance_eval do
       @initial_cursor = cursor  # Use this to reset the position on each new page
-      skills = SupportingSkillCode.all  # FIXME: This should probably only include "active" codes
-      debugger
+      skills = SupportingSkillCode.active
       @terms = school_year.terms.sort!{|a,b| a.end_date <=> b.end_date}
 
       # Function to generate the table containing the course grade information
       def print_grades(headers, data)
         data = [["No supporting skills"] + [""] * (headers.size-1)] if data.blank?
+        
         column_widths = Hash.new(40)
         # FIXME: The addition at the end of this is the result of Prawn 0.5.x tables
         # not knowing the proper width based on font size.  This is fixed in Prawn 0.6.x
@@ -152,7 +152,10 @@ class ReportCard
 
         # Get the courses this student is enrolled in for the school year
         @courses = student.courses.by_school_year(school_year)
+        # and sort them by course type
 
+        @courses.sort! { |a,b| a.course_type.position <=> b.course_type.position }
+        
         # Build the page header
         header margin_box.top_left do
           font 'Helvetica', :size => 7
@@ -214,9 +217,11 @@ class ReportCard
 	        new_page if cursor < 200
 
           # Build the Course header
-          data = []
-          data_hash = {}
-          comments = []
+          data        = []
+          data_hash   = {}
+          comments    = []
+          final_score = 0
+          terms_complete = 0
           course_header = course.enrollments.select{|e| e.student_id == student.id}.first.accommodation? ? '* ' : ''
           course_header << "#{course.name}\n  #{course.teacher.full_name}"
           headers = [course_header]
@@ -230,6 +235,8 @@ class ReportCard
             # Only gather grades from completed Terms
             if course_term.term.end_date <= cutoff_date
               grade = course_term.calculate_grade(student.id)
+              final_score += grade[:score].round
+              terms_complete += 1
             else
               grade = {:letter => '', :score => -1 }
             end
@@ -253,8 +260,20 @@ class ReportCard
             end
           end
 
-          # Create the data for the table
-          data_hash.values.each{|value| data << value.to_a}
+          # Add the FINAL information, only if the school year is complete
+          unless terms_complete < course.course_terms.size
+            # Create the "Final" header section
+            final_score = final_score/terms_complete
+            header = "Final\n #{final_score > 0 ? course.grading_scale.calculate_letter_grade(final_score) : 'n/a'}"
+            header << " (#{final_score})" if final_score >= 0 && !course.grading_scale.simple_view
+            headers << header
+
+            # Create the data for the table and add one for a blank "Final" score
+            data_hash.values.each{|value| data << value.to_a.insert(-1, '')}
+          else
+            # Create the data for the table
+            data_hash.values.each{|value| data << value.to_a}
+          end
 
           # Sort the skills alphabetically
           data.sort!{|a,b| a[0] <=> b[0]}

@@ -1,2 +1,2 @@
-require "prawn/core"
-require "prawn/layout"
+#require "prawn"
+#require "prawn/layout"
