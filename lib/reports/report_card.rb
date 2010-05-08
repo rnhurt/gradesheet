@@ -152,9 +152,8 @@ class ReportCard
 
         # Get the courses this student is enrolled in for the school year
         @courses = student.courses.by_school_year(school_year)
-        # and sort them by course type
-
-        @courses.sort! { |a,b| a.course_type.position <=> b.course_type.position }
+        # and sort them by course type (taking into account any NIL course types)
+        @courses.sort! { |a,b| a.course_type.nil? || b.course_type.nil? ? 0 : a.course_type.position <=> b.course_type.position }
         
         # Build the page header
         header margin_box.top_left do
