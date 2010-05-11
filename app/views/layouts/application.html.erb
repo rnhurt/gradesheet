@@ -54,12 +54,13 @@
       <div class='span-4 colborder'><%= yield :left  %></div>
       <div class='span-19 last'><%= yield  %></div>
 
-    <% cache 'layout_footer' do %>
       <div class='span-24 last' id='footer'>
         &copy; 2005 - <%= Time.now.year %>  <a href='http://www.kangaroobox.com'>KangarooBox</a>, LLC.  All rights reserved.
       </div>
     </div>
+    <%= @content_for_page_footer -%>
 
+    <% cache 'layout_footer' do %>
       <%= render :file => 'layouts/analytics.inc' if File.exist?(RAILS_ROOT + '/app/views/layouts/analytics.inc') %>
     <% end %>
   </body>
