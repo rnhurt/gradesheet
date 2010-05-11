@@ -99,16 +99,18 @@ class ReportCard
       def print_grades(headers, data)
         data = [["No supporting skills"] + [""] * (headers.size-1)] if data.blank?
         
-        column_widths = Hash.new(40)
+        column_widths = Hash.new
         # FIXME: The addition at the end of this is the result of Prawn 0.5.x tables
         # not knowing the proper width based on font size.  This is fixed in Prawn 0.6.x
-        column_widths[0] = (bounds.width - (40 * (headers.size-1))) + (headers.size * 8)
+        column_widths[0] = (bounds.width - (50 * (headers.size-1))) + (headers.size * 7.5)
 
         # Draw the table containing the grade totals and the skill scores
         font "#{Prawn::BASEDIR}/data/fonts/FreeSerif.ttf"
         table(
           data,
-          :headers        => headers,
+          :headers        => headers.map do |text|
+            { :text => text, :font_size => 8 }
+          end,
           :header_color   => 'E0E0E0',
           :font_size      => 7,
           :border_style   => :grid,
@@ -264,7 +266,7 @@ class ReportCard
             # Create the "Final" header section
             final_score = final_score/terms_complete
             header = "Final\n #{final_score > 0 ? course.grading_scale.calculate_letter_grade(final_score) : 'n/a'}"
-            header << " (#{final_score})" if final_score >= 0 && !course.grading_scale.simple_view
+            header << " (#{final_score}%)" if final_score >= 0 && !course.grading_scale.simple_view
             headers << header
 
             # Create the data for the table and add one for a blank "Final" score
@@ -399,10 +401,13 @@ class ReportCard
       font "Helvetica", :size => 7, :align => :left
 
       bounding_box(position, :width => (bounds.width / 2) - GUTTER_SIZE) do
-        column_widths = Hash.new(40)
+        column_widths = Hash.new
+        
         # FIXME: The addition at the end of this is the result of Prawn 0.5.x tables
         # not knowing the proper width based on font size.  This is fixed in Prawn 0.6.x
-        column_widths[0] = (bounds.width - (40 * (terms.size+1))) + (terms.size * 20)
+        column_widths[0] = (bounds.width - (50 * (terms.size+1))) + (terms.size * 20)
+
+        headers = ['Attendance'] + terms.map{|term| term.name} + ['Total']
 
         data = [
           ['Absent'] + [''] * (terms.size+1),
@@ -412,7 +417,9 @@ class ReportCard
 
         table(
           data,
-          :headers        => ['Attendance'] + terms.map{|t| t.name} + ['Total'],
+          :headers        => headers.map do |text|
+            { :text => text, :font_size => 8 }
+          end,
           :header_color   => 'E0E0E0',
           :font_size      => 7,
           :border_style   => :grid,
