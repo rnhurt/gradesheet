@@ -80,10 +80,10 @@ class ReportCard
 
 	  if params[:student_id].nil? then
   	  # Process a whole homeroom
-  	  students = Student.find_all_by_homeroom(params[:homeroom_id])
+  	  students = Student.find_all_by_homeroom(params[:homeroom_id], :order => 'last_name')
   	else
 	    # Search for individual student(s)
-  	  students = Student.find(:all, :conditions => { :id => params[:student_id]})
+  	  students = Student.find(:all, :conditions => { :id => params[:student_id]}, :order => 'last_name')
   	end
 
     # Create a new document
