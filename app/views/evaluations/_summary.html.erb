@@ -1,38 +1,45 @@
 <table class="simple box">
 
   <% @course_term.students.sort_by {|a| a.last_name }.each do |student| %>
-  <thead><th><td colspan="3"><%= h student.full_name %></td></th></thead>
-    <% @course_term.course.course_terms.each do |ct| %>
-      <% grade = ct.calculate_grade(student) %>
-      <thead>
-        <tr>
-          <td colspan="3">
-            <%= h "#{ct.term.name}: #{grade[:letter]} (#{grade[:score].round}%)" %>
-          </td>
-        </tr>
-      </thead>
-      <tr>
-        <td colspan="3">
-          "<%= h ct.comments(student) %>"
-        </td>
-      </tr>
-
-
-      <% ct.course_term_skills.in_groups_of(3, false) do |row_ctskills| %>
-        <tr>
-          <% for ctskill in row_ctskills %>
-            <% score = ctskill.score(student) %>
-            <td>
-              <%= score.empty? ? "&nbsp;&nbsp;" : score %>
-              <%= h " \"#{ctskill.supporting_skill.description}\"" %>
-            </td>
-          <% end %>
-        </tr>
-      <% end %>
-
-      <tr class="spacer"><td colspan="3">&nbsp;</td></tr>
+    <thead><th><td colspan="3"><%= h student.full_name %></td></th></thead>
+  <% final_score = 0 %>
+  <% terms_complete = 0 %>
+  <% @course_term.course.course_terms.each do |ct| %>
+    <% grade = ct.calculate_grade(student) %>
+    <% if grade[:score] > -1 %>
+      <% final_score += grade[:score]; terms_complete += 1 %>
     <% end %>
+    <thead>
+      <tr><td colspan="3">
+          <%= h "#{ct.term.name}: #{grade[:letter]} " %>
+          <%= "(#{grade[:score].round}%)" if grade[:score] > -1 %>
+        </td></tr>
+    </thead>
+    <tr>
+      <td colspan="3">
+        "<%= h ct.comments(student) %>"
+      </td>
+    </tr>
+
+
+    <% ct.course_term_skills.in_groups_of(3, false) do |row_ctskills| %>
+      <tr>
+        <% for ctskill in row_ctskills %>
+          <% score = ctskill.score(student) %>
+          <td>
+            <%= score.empty? ? "&nbsp;&nbsp;" : score %>
+            <%= h " \"#{ctskill.supporting_skill.description}\"" %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+
   <% end %>
+  <tr><td colspan="3">
+      <%= "Final: #{@course_term.course.grading_scale.calculate_letter_grade(final_score/terms_complete)} (#{(final_score / terms_complete).round}%)" %>
+      <hr />
+    </td></tr>
+<% end %>
 </table>
 
 
