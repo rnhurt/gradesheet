@@ -264,7 +264,7 @@ class ReportCard
           # Add the FINAL information, only if the school year is complete
           unless terms_complete < course.course_terms.size
             # Create the "Final" header section
-            final_score = final_score/terms_complete
+            final_score = (final_score/terms_complete).round
             header = "Final\n #{final_score > 0 ? course.grading_scale.calculate_letter_grade(final_score) : 'n/a'}"
             header << " (#{final_score}%)" if final_score >= 0 && !course.grading_scale.simple_view
             headers << header
