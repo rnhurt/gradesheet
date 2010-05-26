@@ -202,6 +202,7 @@ class ReportCard
         bounding_box [0, cursor - HEADER_HEIGHT], :width => bounds.width do
           ReportCard.print_skills(skills)
           ReportCard.print_keys(scales)
+          ReportCard.print_signature_block
         end
         
         # Set the default column cursor position
@@ -432,16 +433,37 @@ class ReportCard
   end
 
   # Print the signature information
-  def self.print_signature_block(position)
+  def self.print_signature_block
+    #CHECKBOX = "\xE2\x98\x90" # "☐"
+    
     @pdf.instance_eval do
       # Set up the text options
-      font "Helvetica", :size => 7, :align => :left
+      font "#{Prawn::BASEDIR}/data/fonts/FreeSerif.ttf", :size => 9
 
-      bounding_box(position, :width => (bounds.width / 2) - GUTTER_SIZE, :height => 200) do
-        text 'Promoted ____________________'
-        text 'Retained ____________________'
+      bounding_box [0,cursor], :width => bounds.width - GUTTER_SIZE, :height => font.height * 4 do
+        move_down GUTTER_SIZE
+        
+        # Print the status of the student
+        column_box [0,cursor], :width => bounds.width, :height => font.height do
+          ['Promoted', 'Promoted Conditionally', 'Detained'].each do |s|
+            text "  \xE2\x98\x90 #{s}"
+          end
+        end
+
+        move_down GUTTER_SIZE * 2
+
+        # Print the signature box
+        column_box [0,cursor], :width => bounds.width, :height => font.height, :columns => 2 do
+          ['Teacher', 'Principal'].each do |s|
+            text "  #{s}: #{'_'* 25}   Date: #{'_'* 15}"
+          end
+        end
+
+        # Draw a border around the signature block to make it pretty
         stroke_bounds
       end
+
+      move_down GUTTER_SIZE
     end
   end
 
