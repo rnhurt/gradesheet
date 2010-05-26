@@ -94,6 +94,7 @@ class ReportCard
       @initial_cursor = cursor  # Use this to reset the position on each new page
       skills = SupportingSkillCode.active
       @terms = school_year.terms.sort!{|a,b| a.end_date <=> b.end_date}
+      print_final = true if @terms.last.end_date <= Date.today
 
       # Function to generate the table containing the course grade information
       def print_grades(headers, data)
@@ -234,15 +235,14 @@ class ReportCard
           
     		  # Gather the grades for each term in this course
           course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each_with_index do |course_term, ctindex|
-            # Only gather grades from completed Terms
-            if course_term.term.end_date <= cutoff_date
-              grade = course_term.calculate_grade(student.id)
+            # Gather data for the Final Grade
+            grade = course_term.calculate_grade(student.id)
+            unless grade[:score] < 0
               final_score += grade[:score].round
               terms_complete += 1
-            else
-              grade = {:letter => '', :score => -1 }
             end
-            
+
+            # Print the students grade for this term
             comments << [course_term.term.name, course_term.comments(student.id)]
             header = "#{course_term.term.name}\n #{grade[:letter]}"
             header << " (#{grade[:score].round}%)" if grade[:score] >= 0 && !course_term.grading_scale.simple_view
@@ -263,9 +263,9 @@ class ReportCard
           end
 
           # Add the FINAL information, only if the school year is complete
-          unless terms_complete < course.course_terms.size
+          if print_final
             # Create the "Final" header section
-            final_score = final_score.quo(terms_complete).round
+            final_score = terms_complete > 0 ? final_score.quo(terms_complete).round : -1
             header = "Final\n #{final_score > 0 ? course.grading_scale.calculate_letter_grade(final_score) : 'n/a'}"
             header << " (#{final_score}%)" if final_score >= 0 && !course.grading_scale.simple_view
             headers << header
@@ -348,7 +348,7 @@ class ReportCard
           #          :height => scale.scale_ranges.size * 6.5 do
         :height => (scale.scale_ranges.size * font.height) / 2 do
           scale.scale_ranges.each do |range|
-            text "  #{range.letter_grade} - #{range.description} (#{range.min_score}% and above)"
+            text "  #{range.letter_grade} - #{range.description} (#{range.min_score.round}% and above)"
           end
         end
         
@@ -440,23 +440,22 @@ class ReportCard
       # Set up the text options
       font "#{Prawn::BASEDIR}/data/fonts/FreeSerif.ttf", :size => 9
 
-      bounding_box [0,cursor], :width => bounds.width - GUTTER_SIZE, :height => font.height * 4 do
+      bounding_box [0,cursor], :width => bounds.width - GUTTER_SIZE, :height => font.height * 6 do
         move_down GUTTER_SIZE
         
         # Print the status of the student
         column_box [0,cursor], :width => bounds.width, :height => font.height do
-          ['Promoted', 'Promoted Conditionally', 'Detained'].each do |s|
+          ['Promoted', 'Promoted Conditionally', 'Retained'].each do |s|
             text "  \xE2\x98\x90 #{s}"
           end
         end
 
-        move_down GUTTER_SIZE * 2
+        move_down GUTTER_SIZE * 5
 
         # Print the signature box
         column_box [0,cursor], :width => bounds.width, :height => font.height, :columns => 2 do
-          ['Teacher', 'Principal'].each do |s|
-            text "  #{s}: #{'_'* 25}   Date: #{'_'* 15}"
-          end
+          text "  Teacher: #{'_'* 25}   Date: #{'_'* 15}"
+          text "  Principal: #{'_'* 45}"
         end
 
         # Draw a border around the signature block to make it pretty
