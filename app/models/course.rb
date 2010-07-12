@@ -21,7 +21,7 @@ class Course < ActiveRecord::Base
   # Courses are considered 'active' only if they are in a grading term that is 'active'.
   named_scope :active, :include => :terms,
     :conditions	=> ["date_ranges.active = ?", true],
-    :order => ["courses.name ASC"]
+    :order => "courses.name ASC"
 
   # Find all the courses for a particular school year
   named_scope :by_school_year, lambda { |*school_year| 
