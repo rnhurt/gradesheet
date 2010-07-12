@@ -13,7 +13,7 @@ module ApplicationHelper
 	# they want to work with.  It should only show "active" courses in "active"
 	# grading terms.
 	def show_course_term_list
-    # OPTIMIZE: remove this simple redirection
+    @courses = Course.active.sorted.find_all_by_teacher_id(current_user, :include => :course_terms)
 		render :partial => 'shared/course_term_list'
 	end
 
@@ -59,18 +59,18 @@ module ApplicationHelper
 	# choose from.  This application will be mainly used in schools that have
 	# a limited number of class years.  So we give the user a total of 14 years
 	# to work with; 1 before the current year, and 12 years after the current year.
-#	def valid_class_range
-#		current_year = lambda{ Time.now.year }
-#		return (Time.now.year- 1..Time.now.year + 13).to_a
-#	end
+  #	def valid_class_range
+  #		current_year = lambda{ Time.now.year }
+  #		return (Time.now.year- 1..Time.now.year + 13).to_a
+  #	end
 
 
   # Toggle the value of a checkbox between T and F using AJAX
   def toggle_value(object)
     remote_function(:url      => url_for(object),
-                    :method   => :put,
-                    :before   => "Element.show('spinner-#{object.id}')",
-                    :complete => "Element.hide('spinner-#{object.id}')",
-                    :with     => "this.name + '=' + this.checked")
+      :method   => :put,
+      :before   => "Element.show('spinner-#{object.id}')",
+      :complete => "Element.hide('spinner-#{object.id}')",
+      :with     => "this.name + '=' + this.checked")
   end
 end

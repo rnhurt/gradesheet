@@ -41,8 +41,8 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :key => '_gradesheet_session',
-    :secret      => 'd06a2bc6ad726acfe58d4ed3d3bc1e50f17306dac633bb94b72cb0719889be59350678601698e9d47d4608ac44708679b6bfc03e5b2e12cb1483f0f00078cbb6'
+    :key    => '_gradesheet_session',
+    :secret => 'd06a2bc6ad726acfe58d4ed3d3bc1e50f17306dac633bb94b72cb0719889be59350678601698e9d47d4608ac44708679b6bfc03e5b2e12cb1483f0f00078cbb6'
   }
 
   # Use the database for sessions instead of the cookie-based default,

@@ -14,7 +14,7 @@ module CourseHelper
 	# they want to work with.  It should only show "active" courses in "active"
 	# grading terms.
 	def show_course_list
-		@courses = Course.active.find_all_by_teacher_id(current_user)
+		@courses = Course.active.sorted.find_all_by_teacher_id(current_user)
 		render :partial => 'course_list', :object => @courses
 	end
 

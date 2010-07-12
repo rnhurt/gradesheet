@@ -1,18 +1,15 @@
 <% cache "course_list_#{current_user.id}_#{controller.controller_name}" do -%>
-  <% courses = Course.active.find_all_by_teacher_id(current_user) -%>
-
   <div id='course_list'>
     <table id='courses' class='master'>
       <thead>
         <tr>
-          <th>Course <%= "(#{courses.size})" unless @courses.blank? -%></th>
+          <th>Course <%= "(#{@courses.size})" unless @courses.blank? -%></th>
           <th>Term</th>
         </tr>
       </thead>
       <tbody>
-        <% courses.each do |course| -%>
-          <% course.course_terms.delete_if {|ct| !ct.active } -%>
-          <% course.course_terms.sort{|a,b| a.term.end_date <=> b.term.end_date}.each do |ct| -%>
+        <% @courses.each do |course| -%>
+          <% course.course_terms.active.sorted.each do |ct| -%>
             <tr class="<%= cycle('even', 'odd') -%>"
                 onclick="location.href='<%= url_for( :action => "show", :id => ct.id ) -%>'" >
               <td>
