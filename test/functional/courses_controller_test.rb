@@ -27,10 +27,10 @@ class CoursesControllerTest < ActionController::TestCase
 #    assert_redirected_to course_path(assigns(:course))
 #  end
 
-  def test_should_show_course
-    get :edit, :id => courses("english-08").id
-    assert_response :success
-  end
+#  def test_should_show_course
+#    get :edit, :id => courses("english-08").id
+#    assert_response :success
+#  end
 
 #  def test_should_get_edit
 #    get :edit, :id => courses(:math7s).id
