@@ -25,6 +25,7 @@
     </table>
   </div>
 
+  <%# OPTIMIZE: This code forces a highlight on the course listing. %>
   <% javascript_tag do -%>
     $('courses').down('tbody').childElements().each(function(e) {
     if (top.location.pathname.include(e.down().down().readAttribute('href'))) {

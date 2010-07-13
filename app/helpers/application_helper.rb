@@ -13,7 +13,7 @@ module ApplicationHelper
 	# they want to work with.  It should only show "active" courses in "active"
 	# grading terms.
 	def show_course_term_list
-    @courses = Course.active.sorted.find_all_by_teacher_id(current_user, :include => :course_terms)
+    @courses = Course.active.sorted.find_all_by_teacher_id(current_user)
 		render :partial => 'shared/course_term_list'
 	end
 
