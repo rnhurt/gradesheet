@@ -58,7 +58,7 @@ and am very impressed with it and all of the integration tests (or the majority 
 will be soon converted to it.  So, if you want to run the full test suite, you'll
 have to install the Webrat gem.
 
-Performance testing is being implemented with the excellent JMeter package.  This project
+Performance testing is being implemented with the excellent JMeter[http://jakarta.apache.org/jmeter/] package.  This project
 uses Authlogic for user authentication and I have had no end of trouble trying to get
 some performance numbers out of the system.  However, a little time spent with JMeter
 has gotten me a least a little way toward being able to measure the speed of the system.
