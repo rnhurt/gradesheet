@@ -15,14 +15,14 @@ communicate with their teacher(s).
 * Ruby 1.8 (working on moving to v1.9)
 * Rails 2.3.5
 * Dependencies (aka Rails plugins):
-** will_paginate[http://github.com/mislav/will_paginate] - Most awesome pagination system for Ruby
-** Authlogic[http://github.com/binarylogic/authlogic] - A clean, simple, and unobtrusive ruby authentication solution.
-** validates_existence[http://github.com/joshsusser/validates_existence] - Rails plugin that provides a validates_existence_of method for ActiveRecord models to check existence of records referenced by belongs_to associations.
-** validates_date_time[http://svn.viney.net.nz/things/rails/plugins/validates_date_time/] - Rails plugin that provides an easy way to validate dates and times
-** livepipe_ui[http://livepipe.net/] -  A suite of high quality widgets and controls for web 2.0 applications built using the Prototype JavaScript Framework.
-** Prawn[http://prawn.majesticseacreature.com/] - PDF framework for report generation
-*** Prawn-Layout[http://github.com/sandal/prawn-layout/tree/master/] - An extension to Prawn offering table support, grid layouts and other things.
-*** Prawn-Format[http://github.com/jamis/prawn-format/tree/master] - An extension to the Prawn PDF generation library that allows you to use HTML-ish tags
+* will_paginate[http://github.com/mislav/will_paginate] - Most awesome pagination system for Ruby
+* Authlogic[http://github.com/binarylogic/authlogic] - A clean, simple, and unobtrusive ruby authentication solution.
+* validates_existence[http://github.com/joshsusser/validates_existence] - Rails plugin that provides a validates_existence_of method for ActiveRecord models to check existence of records referenced by belongs_to associations.
+* validates_date_time[http://svn.viney.net.nz/things/rails/plugins/validates_date_time/] - Rails plugin that provides an easy way to validate dates and times
+* livepipe_ui[http://livepipe.net/] -  A suite of high quality widgets and controls for web 2.0 applications built using the Prototype JavaScript Framework.
+* Prawn[http://prawn.majesticseacreature.com/] - PDF framework for report generation
+* Prawn-Layout[http://github.com/sandal/prawn-layout/tree/master/] - An extension to Prawn offering table support, grid layouts and other things.
+* Prawn-Format[http://github.com/jamis/prawn-format/tree/master] - An extension to the Prawn PDF generation library that allows you to use HTML-ish tags
 
 == Installation
 This is a typical Ruby on Rails project and it is installed just like any other RoR
