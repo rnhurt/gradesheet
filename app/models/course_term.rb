@@ -31,10 +31,11 @@ class CourseTerm < ActiveRecord::Base
 
     cached_points = Rails.cache.read("#{self.id}|#{student_id}")
 
-    # FIXME: I'm not sure this is what I want here.
-    if !cached_points
-
-      # Loop through the assignments for computing the grade as we go
+    if cached_points
+      # Woot!  We don't have to do the expensive operation to generate a score for this course-term
+      final_score = cached_points
+    else
+      # We don't have a cached score for this course-term so we much generate one
       self.assignment_evaluations.all(:conditions => { :student_id => student_id}).each do |evaluation|
         valid_points = evaluation.points_earned_as_number
         if valid_points
@@ -48,9 +49,8 @@ class CourseTerm < ActiveRecord::Base
       # Sanitize the score & grade so that we don't try to divide by zero or anything stupid
       final_score = possible_points > 0 ? ((points_earned/possible_points)*100).round(2) : -1
 
+      # Cache this score for later use
       Rails.cache.write("#{self.id}|#{student_id}", final_score)
-    else
-      final_score = cached_points
     end
     
     letter_grade = final_score > 0 ? self.course.grading_scale.calculate_letter_grade(final_score) : 'n/a'

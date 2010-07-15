@@ -2,6 +2,7 @@
 # the students "grade" for an assignment, if you will.
 class AssignmentEvaluation < ActiveRecord::Base
   before_validation :massage_points_earned
+  after_save :invalidate_cache
 
 	belongs_to :student
 	belongs_to :assignment
@@ -59,5 +60,11 @@ class AssignmentEvaluation < ActiveRecord::Base
     self.points_earned = self.points_earned.to_f.abs  if points_earned.is_a?(Numeric)
     self.points_earned = self.points_earned.upcase    if points_earned.is_a?(String)
   end
-  
+
+  # The course-term model caches its final score, so when we change/update an
+  # assignments grade then we have to remove the cache so that it will be regenerated
+  # the next time its needed.
+  def invalidate_cache
+    Rails.cache.delete("#{self.assignment.course_term.id}|#{self.student.id}")
+  end
 end
