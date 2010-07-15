@@ -15,6 +15,8 @@ class Assignment < ActiveRecord::Base
 
   delegate :grading_scale, :to => :course_term
   
+  named_scope :active, :conditions => { :active => true }
+
   # Return a date formated for display as an assignment due date.
   def due_date_formated
   	due_date.strftime("%a %b %e, %Y") if due_date?

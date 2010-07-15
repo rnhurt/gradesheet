@@ -6,6 +6,8 @@ class Site < ActiveRecord::Base
 	
 	validates_size_of        :name, :within => 1..20
   validates_uniqueness_of  :name, :case_sensitive => false
+
+  named_scope :active, :conditions => { :active => true }
   
 private
 

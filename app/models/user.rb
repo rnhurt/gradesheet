@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   # in the system.
 	validates_uniqueness_of	:first_name, :scope => :last_name
 
+  named_scope :active, :conditions => { :active => true }
+
 	# Search for a user using the 'will_paginate' plugin
 	def self.search(params)
     search = params[:search]

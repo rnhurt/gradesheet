@@ -9,11 +9,11 @@ class CreateUsers < ActiveRecord::Migration
       t.string  :email
       t.integer :class_of
       t.string  :homeroom
-      
+
       t.timestamps
     end
 
-		# Add a UNIQUE index since there is a race condition possiblity here
+		# Add a UNIQUE index since there is a possible race condition here
 		add_index(:users, [:first_name, :last_name], :unique => true)
   end
 	
