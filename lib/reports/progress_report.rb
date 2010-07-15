@@ -95,6 +95,8 @@ class ProgressReport
       students.each_with_index do |student, sindex|
         # Get the courses this student is enrolled in for the school year
         courses = student.courses.by_school_year(school_year)
+        courses.sort! { |a,b| a.course_type.nil? || b.course_type.nil? ? 0 : a.course_type.position <=> b.course_type.position }
+
         terms = school_year.terms.sort!{|a,b| a.end_date <=> b.end_date}
 
         # Build the page header
@@ -147,7 +149,7 @@ class ProgressReport
     	    # Try not to overflow into the next page
 	        new_page if cursor < 300
 
-          row_header = [[course.name],[course.teacher.full_name]]
+          row_header = [course.name,course.teacher.full_name]
           ct_data = []
 
           course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each do |course_term|
@@ -167,8 +169,8 @@ class ProgressReport
 
         bounding_box([0, bounds.height-50], :width => (bounds.width)) do
           # Print the student data in table form
-          headers = [["Course"],["Teacher"]] + terms.collect{|t| [t.name]}
-          data    = [["No grades"] + [""] * (headers.size-1)] if data.blank?
+          headers = ["Course","Teacher"] + terms.collect{|t| t.name}
+          data    = [["No grades have been recorded"] + [""] * (headers.size-1)] if data.blank?
           table(
             data,
             :headers            => headers,
