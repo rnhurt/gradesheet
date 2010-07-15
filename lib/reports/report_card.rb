@@ -8,6 +8,7 @@ class ReportCard
 
   HEADER_HEIGHT = 50  # The size of the page header
   GUTTER_SIZE   = 5   # The size of the buffer between elements
+  CHECKBOX      = "\xE2\x98\x90".force_encoding('utf-8') # "☐"
   
   # Build the parameter window to be shown to the user.	
 	def self.get_params()	
@@ -434,7 +435,6 @@ class ReportCard
 
   # Print the signature information
   def self.print_signature_block
-    #CHECKBOX = "\xE2\x98\x90" # "☐"
     
     @pdf.instance_eval do
       # Set up the text options
@@ -446,7 +446,7 @@ class ReportCard
         # Print the status of the student
         column_box [0,cursor], :width => bounds.width, :height => font.height do
           ['Promoted', 'Promoted Conditionally', 'Retained'].each do |s|
-            text "  \xE2\x98\x90 #{s}"
+            text "  #{CHECKBOX} #{s}"
           end
         end
 
