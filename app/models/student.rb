@@ -7,7 +7,7 @@ class Student < User
   has_many    :supporting_skill_evaluations
   has_many    :course_term_skills,  :through => :supporting_skill_evaluations
 
-  has_one    :comment, :as => :commentable
+  has_one     :comment, :as => :commentable
 
 	validates_length_of	:homeroom, :maximum => 20
 	
@@ -24,7 +24,7 @@ class Student < User
   # Return an array of unique homerooms that are in the system.
 	def self.find_homerooms(*args)
     # FIXME: This should probably just return homerooms that are being used by 'valid' students
-		return Student.all(:select => 'homeroom', :group => 'homeroom', 
+		return Student.active(:select => 'homeroom', :group => 'homeroom',
       :conditions => "homeroom > ''", :order => "homeroom").map { |h| h.homeroom }
 	end
 
