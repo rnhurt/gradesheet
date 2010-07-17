@@ -10,20 +10,32 @@ namespace :db do
     MAX_YEARS       = 9               # How many school years you want to inject
     NUMBER_OF_TERMS = 3               # Number of school terms you have per school year
 
-
-    puts 'Building SchoolYear records...'
+    
+    puts 'Building SchoolYear & Term records...'
+    Term.delete_all
     SchoolYear.delete_all
-    counter = 0
-    SchoolYear.populate MAX_YEARS do |p|
-      p.name    = "#{CURRENT_YEAR - counter - 1} - #{CURRENT_YEAR - counter}"
-      p.active  = 0 == p.id ? true : false
-      p.begin_date  = "#{CURRENT_YEAR - counter}/1/1".to_date
-      p.end_date    = "#{CURRENT_YEAR - counter}/12/31".to_date
 
-      p.active = 0 == counter ? true : false  # Only the most recent year is active
-      counter = counter + 1
+    year_index = 0
+    SchoolYear.populate MAX_YEARS do |s|
+      s.name = "#{CURRENT_YEAR - year_index - 1} - #{CURRENT_YEAR - year_index}"
+
+      year_index += 1
+      term_index = 0
+      term_start_date = "#{CURRENT_YEAR - year_index}/8/15".to_date
+
+      Term.populate NUMBER_OF_TERMS do |p|
+        p.id    = Faker.numerify '##########'   # Since these models are STI their IDs are overlapping.  :(
+        p.name    = "Term #{term_index}"
+        p.active  = (0 == term_index) && (1 == year_index)
+        
+        p.begin_date  = term_start_date >> (9 / NUMBER_OF_TERMS) * term_index
+        p.end_date    = (p.begin_date >> (9 / NUMBER_OF_TERMS)) - 1.day
+
+        p.school_year_id = s.id
+
+        term_index += 1
+      end
     end
-
 
     puts 'Building Site records...'
     Site.delete_all
@@ -62,7 +74,7 @@ namespace :db do
     puts 'Building Student records...'
     Student.delete_all
     current_class_of = CURRENT_YEAR
-    Student.populate 40 * MAX_YEARS do |p|
+    Student.populate 100 * MAX_YEARS do |p|
       p.site_id     = Site.first.id
       p.first_name  = Faker::Name.first_name
       p.last_name   = Faker::Name.last_name
