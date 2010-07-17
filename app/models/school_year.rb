@@ -22,16 +22,16 @@ class SchoolYear < DateRange
     :order      => "end_date DESC"
   
 
-  # Calculate the beginning of the school year by finding the begin date of the
+  # The school year begin date is calculated by finding the begin date of the
   # first term in the school year
   def begin_date
-    self.terms.sort{|a,b| a.end_date <=> b.end_date}.first.begin_date
+    self.terms.sort{|a,b| a.end_date <=> b.end_date}.first.try(:begin_date)
   end
 
-  # Calculate the end of the school year by finding the end date of the
+  # The school year end date is calculated by finding the end date of the
   # last term in the school year
   def end_date
-    self.terms.sort{|a,b| a.end_date <=> b.end_date}.last.end_date
+    self.terms.sort{|a,b| a.end_date <=> b.end_date}.last.try(:end_date)
   end
   
   # Create new terms for this school year
