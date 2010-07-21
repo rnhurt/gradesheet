@@ -9,7 +9,7 @@ class Report
     return [
       report.new("report_card", "Report Card", false),
       report.new("progress_report", "Progress Report", false),
-      report.new("student_transcript", "Student Transcript", false),
+#      report.new("student_transcript", "Student Transcript", false),
       report.new("student_roster", "Student Roster", false),
       report.new("account_activity", "Account Activity", false),
       report.new("password_reset", "Password Reset", true),

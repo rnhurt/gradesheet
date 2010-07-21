@@ -13,8 +13,8 @@ class ReportCard
   # Build the parameter window to be shown to the user.	
 	def self.get_params()	
 		# Allow the user to select a single student or multiple students.
-		students	= Student.all(:order => "last_name ASC")
-		homerooms	= Student.find_homerooms()
+		students	= Student.active.sorted
+		homerooms	= Student.homerooms
 		years = SchoolYear.all(:order => "end_date DESC")
 		
     params = <<-EOS
@@ -42,7 +42,7 @@ class ReportCard
 
 		# List each homeroom
 		homerooms.each do |h|
-			params += "<option value='#{h}'>#{h}</option>"
+			params += "<option value='#{h.name}'>#{h.name}</option>"
 		end
 		
     params += <<-EOS
@@ -79,12 +79,12 @@ class ReportCard
     skills      = SupportingSkillCode.active
     cutoff_date = Date.today()
 
-	  if params[:student_id].nil? then
+	  if params[:student_id].nil?
   	  # Process a whole homeroom
-  	  students = Student.find_all_by_homeroom(params[:homeroom_id], :order => 'last_name')
+  	  students = Student.active.sorted.find_all_by_homeroom(params[:homeroom_id])
   	else
 	    # Search for individual student(s)
-  	  students = Student.find(:all, :conditions => { :id => params[:student_id]}, :order => 'last_name')
+      students = Student.sorted.find_all_by_id(params[:student_id])
   	end
 
     # Create a new document
@@ -93,7 +93,6 @@ class ReportCard
     # Make it so we don't have to use the 'pdf.' prefix everywhere.  :)
     @pdf.instance_eval do
       @initial_cursor = cursor  # Use this to reset the position on each new page
-      skills = SupportingSkillCode.active
       @terms = school_year.terms.sort!{|a,b| a.end_date <=> b.end_date}
       print_final = true if @terms.last.end_date <= Date.today
 

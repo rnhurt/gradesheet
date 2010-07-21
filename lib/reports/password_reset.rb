@@ -4,9 +4,6 @@ class PasswordReset
 
   # Build the parameter screen for this report.
 	def self.get_params()
-		# Get the homeroom information
-		homerooms = Student.find_homerooms()
-		
 		# Build the parameter screen
 		params = <<-EOS
 
@@ -19,8 +16,8 @@ class PasswordReset
 				<option value=''>ALL</option>
     EOS
 		# Add the homerooms
-		homerooms.each do |homeroom|
-			params += "<option value='#{homeroom}'>#{homeroom}</option>"
+		Student.homerooms.each do |h|
+			params += "<option value='#{h.name}'>#{h.name}</option>"
 		end
 
 		params += <<-EOS
@@ -37,12 +34,11 @@ class PasswordReset
 
   # Build the report in PDF form and sent it to the users browser
   def self.draw(params)
-	  # Find all the students in a homeroom
-	  if params[:homeroom].length > 0
-		  students = Student.find_all_by_homeroom(params[:homeroom])
+	  if params[:homeroom].size > 0
+		  students = Student.active.sorted.find_all_by_homeroom(params[:homeroom])
 	  else
-		  students = Student.find(:all)
-	  end	
+		  students = Student.active.sorted
+	  end
 
 	  # Create a new document
     pdf = Prawn::Document.new(:page => "LETTER")

@@ -3,10 +3,7 @@
 class StudentRoster
 
   # Build the parameter screen for this report.
-	def self.get_params()
-		# Get the homeroom information
-		homerooms = Student.find_homerooms()
-		
+	def self.get_params()	
 		# Build the parameter screen
 		params = <<-EOS
 
@@ -19,8 +16,8 @@ class StudentRoster
 				<option value=''>ALL</option>
     EOS
 		# Add the homerooms
-		homerooms.each do |homeroom|
-			params += "<option value='#{homeroom}'>#{homeroom}</option>"
+		Student.homerooms.each do |h|
+			params += "<option value='#{h.name}'>#{h.name}</option>"
 		end
 
 		params += <<-EOS
@@ -38,10 +35,10 @@ class StudentRoster
   # Build the report in PDF form and sent it to the users browser
   def self.draw(params)
 	  # Find all the students in a homeroom
-	  if params[:homeroom].length > 0
-		  students = Student.find_all_by_homeroom(params[:homeroom])
+	  if params[:homeroom].size > 0
+		  students = Student.active.sorted.find_all_by_homeroom(params[:homeroom])
 	  else
-		  students = Student.find(:all)
+		  students = Student.active.sorted
 	  end	
 
 	  # Create a new document
@@ -59,6 +56,9 @@ class StudentRoster
         move_down(5)
         mask(:y) { text "page #{page_count}", :align => :right }
         mask(:y) { text "#{Date.today.to_s(:long)}", :align => :left }
+
+        font "Helvetica", :size => 10
+        fill_color "000000"
       end
 
       # Build a table of students
@@ -73,8 +73,9 @@ class StudentRoster
         # Print the table of students in this homeroom
         data = homeroom[1].map { |h| ["#{h.first_name} #{h.last_name}"] }
         table data,
-				  :border_style	=> :grid, 
+				  :border_style	=> :grid,
 				  :vertical_padding	=> 2,
+          :font_size    => 10,
 				  :row_colors		=> ["DBDBDB", "FFFFFF"],
 				  :width				=> bounds.width
 

@@ -3,9 +3,6 @@ class ReportsController < ApplicationController
   before_filter :load_reports, :only => [:index, :show]
   append_before_filter :authorized?
 
-  def index
-  end
-
   def show
     report = Report.find_by_name(params[:id])
 

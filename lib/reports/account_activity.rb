@@ -4,9 +4,6 @@ class AccountActivity
 
   # Build the parameter screen for this report.
 	def self.get_params()
-		# Get the homeroom information
-		homerooms = Student.find_homerooms()
-		
 		# Build the parameter screen
 		params = <<-EOS
 
@@ -19,8 +16,8 @@ class AccountActivity
 				<option value=''>ALL</option>
     EOS
 		# Add the homerooms
-		homerooms.each do |homeroom|
-			params += "<option value='#{homeroom}'>#{homeroom}</option>"
+		Student.homerooms.each do |h|
+			params += "<option value='#{h.name}'>#{h.name}</option>"
 		end
 
 		params += <<-EOS
@@ -38,11 +35,11 @@ class AccountActivity
   # Build the report in PDF form and sent it to the users browser
   def self.draw(params)
 	  # Find all the students in a homeroom
-	  if params[:homeroom].length > 0
-		  students = Student.find_all_by_homeroom(params[:homeroom], :order => "first_name")
+	  if params[:homeroom].size > 0
+		  students = Student.active.sorted.find_all_by_homeroom(params[:homeroom])
 	  else
-		  students = Student.all(:order => "first_name")
-	  end	
+		  students = Student.active.sorted
+	  end
 
 	  # Create a new document
     pdf = Prawn::Document.new(:page => "LETTER")
@@ -50,6 +47,7 @@ class AccountActivity
 	  # Make it so we don't have to use pdf. everywhere.  :)
 	  pdf.instance_eval do
 
+      site_name = StaticData.site_name
       fill_color "000000"
 
       # Build the page header
@@ -61,7 +59,7 @@ class AccountActivity
         image logo, :at => bounds.top_left, :height => 35
 
         # Insert the school name
-        text StaticData.site_name,  :align => :center, :size => 11
+        text site_name,  :align => :center, :size => 11
         text "ACCOUNT ACTIVITY",    :align => :center, :size => 20
         stroke_horizontal_rule    # make it look pretty
       end

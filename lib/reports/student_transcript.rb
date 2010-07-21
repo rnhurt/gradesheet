@@ -5,8 +5,8 @@ class StudentTranscript
   # Build the parameter screen for this report.
 	def self.get_params()
 		# Allow the user to select a single student or multiple students.
-		students	= Student.all(:order => "last_name ASC")
-		homerooms	= Student.find_homerooms()
+		students	= Student.active.sorted
+		homerooms	= Student.homerooms
 
     params = <<-EOS
 	<form action="/reports/student_transcript.pdf" method="get">
@@ -21,7 +21,7 @@ class StudentTranscript
 
 		# List each homeroom
 		homerooms.each do |h|
-			params += "<option value='#{h}'>#{h}</option>"
+			params += "<option value='#{h.name}'>#{h.name}</option>"
 		end
 
     params += <<-EOS
@@ -59,10 +59,10 @@ class StudentTranscript
 	def self.draw(params)    
 	  if params[:student_id].nil? then
   	  # Process a whole homeroom
-  	  students = Student.find_all_by_homeroom(params[:homeroom_id])
+  	  students = Student.active.sorted.find_all_by_homeroom(params[:homeroom_id])
   	else
 	    # Search for individual student(s)
-  	  students = Student.find(:all, :conditions => { :id => params[:student_id]})
+      students = Student.sorted.find_all_by_id(params[:student_id])
   	end
 
     # Create a new document
