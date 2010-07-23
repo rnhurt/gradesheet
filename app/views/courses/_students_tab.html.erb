@@ -15,7 +15,7 @@
 
     <div class='span-4 append-1 last'>
       <form id='homeroom_form'>
-        <%= collection_select :homeroom, :name, @homerooms, :to_s, :to_s, {:include_blank => 'Home Room'}, {
+        <%= collection_select :homeroom, :name, @homerooms, :homeroom, :homeroom, {:include_blank => 'Home Room'}, {
           :onchange =>
             remote_function(
             :update => 'student_list',

@@ -33,22 +33,18 @@ class User < ActiveRecord::Base
 							:include => :site
 	end
 	
-	# Return the valid user types available to be instaciated.
-	# FIXME: I'm sure there is a better way to do this, but I didn't know how at the time.
-	def self.find_user_types(*args)
-		return {
-		    'ALL'       => Users, 
-		    'Teachers'  => Teacher, 
-		    'Students'  => Student, 
-		    'Teacher Assistants' => TeacherAssistant}
+	# Return the valid user types available
+	def self.user_types
+    return 'All (active)' => nil, 'Students' => Student,
+      'Teachers' => Teacher, 'Teacher Assistants' => TeacherAssistant
 	end
 
-	# Convienience method to display the users full name.
+	# Display the user's full name.
 	def full_name
 		[first_name, last_name].join(' ')
 	end
 	
-	# Convieniene method to break a users full name into its components
+	# Break a user's full name into its components
 	def full_name=(name)
 		split = name.split(' ', 2)
 		self.first_name = split.first

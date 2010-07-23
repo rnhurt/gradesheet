@@ -17,16 +17,12 @@ class Student < User
     :in => from_year..to_year,
     :message => "must be in the range of #{from_year} to #{to_year}"
 
+  named_scope :homerooms, :select => 'DISTINCT homeroom name', :conditions => {:active => true}
+  named_scope :sorted, :order => 'last_name ASC'
+
   def current_course_terms
     return CourseTerm.all(:joins => :course)
   end
-
-  # Return an array of unique homerooms that are in the system.
-	def self.find_homerooms(*args)
-    # FIXME: This should probably just return homerooms that are being used by 'valid' students
-		return Student.active(:select => 'homeroom', :group => 'homeroom',
-      :conditions => "homeroom > ''", :order => "homeroom").map { |h| h.homeroom }
-	end
 
   def self.find_classes_of
     return Student.all(

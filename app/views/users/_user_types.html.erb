@@ -8,12 +8,14 @@
   <tbody>
     <% User.user_types.each do |key, value| %>
       <% url = %W{/users #{value.try(:name).try(:tableize)}}.join('/') %>
-      <tr class="<%= cycle('odd', 'even')%>" onclick="location.href='<%= url -%>'">
+      <tr class="<%= "#{cycle('odd', 'even')} #{value.nil? || current_page?(:controller => url) ? ' current' : ''}"%>"
+          onclick="location.href='<%= url -%>'">
             <%= content_tag :td, key %>
             <%= content_tag :td, value.nil? ? '' : button_to( 
               'New', "#{url}/new", :method => :get, :class => 'btn standard sml' ) %>
       </tr>
     <% end %>
+
   </tbody>
 </table>
 

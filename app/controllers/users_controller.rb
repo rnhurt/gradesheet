@@ -1,6 +1,5 @@
-# FIXME: Meld all the sub-controllers (Students, Teachers, TA) into this controller
 class UsersController < ApplicationController
-  before_filter :require_user
+  before_filter :require_user, :decode_user_type
   append_before_filter :authorized?
   include SortHelper
 
@@ -8,19 +7,23 @@ class UsersController < ApplicationController
     sort_init 'last_name'
     sort_update
     params[:sort_clause] = sort_clause
-    @users = User.search(params)
+    @users = @user_type.search(params)
   end
 
 
-  # We don't really want to show an individual person but rather the listing
-  # of all people.
+  # Show the group of users
   def show
-		redirect_to :action => :index
+    sort_init 'last_name'
+    sort_update
+    params[:sort_clause] = sort_clause
+    @users = @user_type.active.search(params)
+    
+		render :index
   end
 
 
   def new
-    @user = User.new
+    @user = @user_type.new
     render :action => 'edit'
   end
 
@@ -31,29 +34,26 @@ class UsersController < ApplicationController
 
 
   def create
-    @user = User.new(params[:user])
+    @user = @user_type.new(params[:user])
 
-    respond_to do |format|
-      if @user.save
-        flash[:notice] = 'User was successfully created.'
-        format.html { redirect_to(@user) }
-      else
-        format.html { render :action => "new" }
-      end
+    if @user.save
+      flash[:notice] = 'User was successfully created.'
+      redirect_to @user
+    else
+      render :action => :new
     end
+    
   end
 
 
   def update
     @user = User.find(params[:id])
 
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        flash[:notice] = 'User was successfully updated.'
-        format.html { redirect_to(@user) }
-      else
-        format.html { render :action => "edit" }
-      end
+    if @user.update_attributes(params[:user])
+      flash[:notice] = 'User was successfully updated.'
+      redirect_to @user
+    else
+      render :action => :edit
     end
   end
 
@@ -62,11 +62,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(users_url) }
-    end
+    redirect_to users_url
   end
 
+  
   def impersonate
     @user = User.find(params[:id])
 
@@ -78,5 +77,11 @@ class UsersController < ApplicationController
       render :action => :show
     end
   end
-  
+
+  private
+
+  # Decode the URL to figure out what type of user we are working with
+  def decode_user_type
+    @user_type = params[:id].nil? ? User : params[:id].camelcase.singularize.constantize
+  end
 end

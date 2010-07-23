@@ -13,7 +13,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id], :include => [:enrollments, :students])
     @course_terms = CourseTerm.find_all_by_course_id(@course, 
       :include => [:supporting_skills, :term], :order => "date_ranges.end_date")
-    @homerooms = Student.find_homerooms()
+    @homerooms  = Student.homerooms
     @skill_cats = SupportingSkillCategory.active.all( :include => :supporting_skills )
     
 		respond_to do |format|
