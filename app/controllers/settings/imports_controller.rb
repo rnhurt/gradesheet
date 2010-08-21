@@ -5,7 +5,7 @@ class Settings::ImportsController < SettingsController
   # to re-use the same 'create' action for different types of data.
   def create
     
-    @parsed_file=CSV::Reader.parse(params[:import][:file])
+    @parsed_file = CSV::Reader.parse(params[:import][:file])
     @import = User.new
     @valid_records = 0
     @record_counter = 0
