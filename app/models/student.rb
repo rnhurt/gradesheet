@@ -17,7 +17,7 @@ class Student < User
     :in => from_year..to_year,
     :message => "must be in the range of #{from_year} to #{to_year}"
 
-  named_scope :homerooms, :select => 'DISTINCT homeroom name', :conditions => {:active => true}
+  named_scope :homerooms, :select => 'DISTINCT homeroom', :conditions => {:active => true}
   named_scope :sorted, :order => 'last_name ASC'
 
   def current_course_terms

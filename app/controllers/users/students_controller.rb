@@ -25,7 +25,7 @@ class Users::StudentsController < ApplicationController
 
   def new
     @student = Student.new
-    @homerooms = Student.find_homerooms()
+    @homerooms = Student.homerooms.active
  		
 		render :action => :edit
   end
@@ -33,13 +33,13 @@ class Users::StudentsController < ApplicationController
 
   def edit
     @student = Student.find(params[:id])
-    @homerooms = Student.find_homerooms()    
+    @homerooms = Student.homerooms
   end
 
 
   def create
     @student = Student.new(params[:student])
-    @homerooms = Student.find_homerooms()
+    @homerooms = Student.homerooms
 
     respond_to do |format|
       if @student.save
@@ -57,16 +57,14 @@ class Users::StudentsController < ApplicationController
   def update
     @student = Student.find(params[:id])
     
-		## If an alternate HOMEROOM is provided then use it instead
-		if !params[:homeroom1].empty?
-			params[:student][:homeroom] = params[:homeroom1]
-		end
+		## If an alternate HOMEROOM is provided then use it instead		
+    params[:student][:homeroom] = params[:homeroom1] if !params[:homeroom1].empty?
 
     if @student.update_attributes(params[:student])
       flash[:notice] = "Student  '" + @student.full_name + "'  was successfully updated."
       redirect_to students_url
     else
-      @homerooms = Student.find_homerooms()
+      @homerooms = Student.homerooms.active
       render :action => "edit"
     end
   end
