@@ -25,7 +25,7 @@ class Users::StudentsController < ApplicationController
 
   def new
     @student = Student.new
-    @homerooms = Student.homerooms.active
+    @homerooms = Student.homerooms
  		
 		render :action => :edit
   end
@@ -41,15 +41,11 @@ class Users::StudentsController < ApplicationController
     @student = Student.new(params[:student])
     @homerooms = Student.homerooms
 
-    respond_to do |format|
       if @student.save
         flash[:notice] = 'Student was successfully created.'
-        format.html { redirect_to(@student) }
-        format.xml  { render :xml => @student, :status => :created, :location => @student }
+        redirect_to @student
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @student.errors, :status => :unprocessable_entity }
-      end
+        render :action => :edit
     end
   end
 
@@ -64,7 +60,7 @@ class Users::StudentsController < ApplicationController
       flash[:notice] = "Student  '" + @student.full_name + "'  was successfully updated."
       redirect_to students_url
     else
-      @homerooms = Student.homerooms.active
+      @homerooms = Student.homerooms
       render :action => "edit"
     end
   end

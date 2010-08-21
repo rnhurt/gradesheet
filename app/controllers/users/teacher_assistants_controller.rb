@@ -34,30 +34,22 @@ class Users::TeacherAssistantsController < ApplicationController
   def create
     @teacher_assistant = TeacherAssistant.new(params[:teacher_assistant])
 
-    respond_to do |format|
-      if @teacher_assistant.save
-        flash[:notice] = "Teacher Assistant '#{@teacher_assistant.full_name}' was successfully created."
-        format.html { redirect_to(@teacher_assistant) }
-        format.xml  { render :xml => @teacher_assistant, :status => :created, :location => @teacher_assistant }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @teacher_assistant.errors, :status => :unprocessable_entity }
-      end
+    if @teacher_assistant.save
+      flash[:notice] = "Teacher Assistant '#{@teacher_assistant.full_name}' was successfully created."
+      redirect_to @teacher_assistant
+    else
+      render :action => :new
     end
   end
 
   def update
     @teacher_assistant = TeacherAssistant.find(params[:id])
 
-    respond_to do |format|
-      if @teacher_assistant.update_attributes(params[:teacher_assistant])
-        flash[:notice] = 'TeacherAssistant was successfully updated.'
-        format.html { redirect_to(@teacher_assistant) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @teacher_assistant.errors, :status => :unprocessable_entity }
-      end
+    if @teacher_assistant.update_attributes(params[:teacher_assistant])
+      flash[:notice] = 'TeacherAssistant was successfully updated.'
+      redirect_to @teacher_assistant
+    else
+      render :action => :edit
     end
   end
 
@@ -65,9 +57,7 @@ class Users::TeacherAssistantsController < ApplicationController
     @teacher_assistant = TeacherAssistant.find(params[:id])
     @teacher_assistant.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(teacher_assistants_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to teacher_assistants_url
+      
   end
 end

@@ -37,13 +37,11 @@ class Users::TeachersController < ApplicationController
   def create
     @teacher = Teacher.new(params[:teacher])
 
-    respond_to do |format|
-      if @teacher.save
-        flash[:notice] = "Teacher was '#{@teacher.full_name}' successfully created."
-        format.html { redirect_to(teachers_url) }
-      else
-        format.html { render :action => "new" }
-      end
+    if @teacher.save
+      flash[:notice] = "Teacher was '#{@teacher.full_name}' successfully created."
+      redirect_to teachers_url
+    else
+      render :action => :edit
     end
   end
 
@@ -51,13 +49,11 @@ class Users::TeachersController < ApplicationController
   def update
     @teacher = Teacher.find(params[:id])
 
-    respond_to do |format|
-      if @teacher.update_attributes(params[:teacher])
-        flash[:notice] = "Teacher was '#{@teacher.full_name}' successfully updated."
-        format.html { redirect_to(teachers_url) }
-      else
-        format.html { render :action => "edit" }
-      end
+    if @teacher.update_attributes(params[:teacher])
+      flash[:notice] = "Teacher was '#{@teacher.full_name}' successfully updated."
+      redirect_to teachers_url
+    else
+      render :action => :edit
     end
   end
 
@@ -66,9 +62,7 @@ class Users::TeachersController < ApplicationController
     @teacher = Teacher.find(params[:id])
     @teacher.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(teachers_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to teachers_url
   end
+  
 end

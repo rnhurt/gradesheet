@@ -31,8 +31,9 @@ class User < ActiveRecord::Base
 	
 	# Return the valid user types available
 	def self.user_types
-    return 'All (active)' => nil, 'Students' => Student,
-      'Teachers' => Teacher, 'Teacher Assistants' => TeacherAssistant
+    types = []
+    types << {'All (active)' => nil} << {'Students' => Student}
+    types << {'Teachers' => Teacher} << {'Teacher Assistants' => TeacherAssistant}
 	end
 
 	# Display the user's full name.
