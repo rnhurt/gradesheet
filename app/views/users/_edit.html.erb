@@ -40,7 +40,6 @@
 
         <%= f.label :homeroom %>
         <%= text_field_tag :homeroom1, {}, :maxlength => 20 %>
-        <%#= f.select :homeroom, @homerooms, :include_blank => true %>
         <%= collection_select :student, :homeroom, @homerooms, :homeroom, :homeroom %>
       <% end %>
 
