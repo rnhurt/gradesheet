@@ -1,3 +1,5 @@
+<% auth_token = url_encode(form_authenticity_token) %>
+
 <table id="users" class="master">
   <thead>
     <tr>
@@ -5,35 +7,46 @@
       <% form_for users.class.to_s, :html => { :method => :get } do |s| %>
         <%= sort_header_tag('first_name', :title => 'First Name') %>
         <%= sort_header_tag('last_name', :title => 'Last Name') %>
-        <%= sort_header_tag('email', :title => 'Email Address') %>
+        <%= sort_header_tag('homeroom', :title => 'Homeroom') %>
         <th>Campus</th>
-        <% if controller.controller_name == 'students' %>
-          <%= sort_header_tag('class_of', :title => 'Class Of') %>
-          <%= sort_header_tag('homeroom', :title => 'Homeroom') %>
-        <% end %>
-        <th colspan="2"><%= text_field_tag :search, params[:search],
-          :size => 10, :class => "focus search" %></th>
+        <%= sort_header_tag('class_of', :title => 'Class Of') %>
+        <%= sort_header_tag('email', :title => 'Email Address') %>
+
+        <th><%= text_field_tag :search, params[:search],
+            :size => 10, :class => "focus search" %></th>
+
+        <th>
+          <select id="options" onchange="this.ids=$$('input:checked').invoke('identify').join(',');<%= remote_function(
+                    :url => { :action => :modify_users, :id => 0 }, :with=>"'change_to='+this.value+':'+this.ids") %>">
+            <option value="">Action...</option>
+            <option value="archive">Archive</option>
+            <option value="impersonate">Impersonate</option>
+            <option value="delete">Delete</option>
+          </select>
+        </th>
+
       <% end %>
     </tr>
   </thead>
   <tbody>
     <% for u in users %>
-      <tr class="<%= cycle('odd', 'even') %>" onclick="location.href='<%= url_for(u)+'/edit' %>'">
+      <tr class="<%= cycle('odd', 'even') %>" nclick="location.href='<%= url_for(u)+'/edit' %>'">
         <%= content_tag :td, u.login %>
         <td><%= link_to u.first_name, url_for(u)+'/edit' %></td>
         <td><%= link_to u.last_name, url_for(u)+'/edit' %></td>
-        <%= content_tag :td, u.email %>
+        <%= content_tag :td, u.homeroom %>
         <%= content_tag :td, u.site.name %>
-        <% if controller.controller_name == 'students' %>
-          <%= content_tag :td, u.class_of %>
-          <%= content_tag :td, u.homeroom %>
-        <% end %>
-        <td><%= button_to 'Delete', u, :method => :delete,
-            :confirm => "Are you sure you want to delete\n\n '" + u.full_name + "'?",
-            :class => 'btn negative' %></td>
-        <td><%= button_to 'Imp.', { :action => "impersonate", :id => u.id },
-            :confirm => "Are you sure you want to impersonate\n\n '" + u.full_name + "'?",
-            :class => 'btn negative sml' %></td>
+        <%= content_tag :td, u.class_of %>
+        <%= content_tag :td, u.email, :colspan => "2" %>
+
+        <td><input type="checkbox" name="<%= u.id %>" id="<%= u.id %>" class="checkbox" /></td>
+
+  <%#= button_to 'Delete', u, :method => :delete,
+  :confirm => "Are you sure you want to delete\n\n '" + u.full_name + "'?",
+  :class => 'btn negative' %>
+  <%#= button_to 'Imp.', { :action => "impersonate", :id => u.id },
+  :confirm => "Are you sure you want to impersonate\n\n '" + u.full_name + "'?",
+  :class => 'btn negative sml' %>
 
       </tr>
     <% end %>
@@ -43,3 +56,5 @@
 <span class="paginate">
   <%= will_paginate users %>
 </span>
+
+<%#= javascript_tag "$$('input:checked')" %>

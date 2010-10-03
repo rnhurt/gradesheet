@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  before_filter :require_user, :decode_user_type
+  before_filter :require_user
+  before_filter :decode_user_type, :except => "modify_users"
+    
   append_before_filter :authorized?
   include SortHelper
 
@@ -76,6 +78,13 @@ class UsersController < ApplicationController
       flash[:error] = "Impersonation failed."
       render :action => :show
     end
+  end
+
+  def modify_users
+    debugger
+
+    puts "I got #{params[:change_to]}"
+    render :nothing => true
   end
 
   private
