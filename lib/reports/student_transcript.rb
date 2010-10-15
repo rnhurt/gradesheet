@@ -21,7 +21,7 @@ class StudentTranscript
 
 		# List each homeroom
 		homerooms.each do |h|
-			params += "<option value='#{h.name}'>#{h.name}</option>"
+			params += "<option value='#{h.homeroom}'>#{h.homeroom}</option>"
 		end
 
     params += <<-EOS
