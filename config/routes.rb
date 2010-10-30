@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Since we subclass the Users into different types,
   # we need to build routes for them.
-  map.resources	:users, :member => { :modify_users => :post }
+  map.resources	:users, :member => { :archive => :post }
   map.namespace :users do |u|
     u.resources :students, :name_prefix => nil
     u.resources :teachers, :name_prefix => nil

@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 	validates_existence_of 	:site
 
   named_scope :active, :conditions => { :active => true }
+  scope :archived, :conditions => { :active => false }
 
 	# Search for a user using the 'will_paginate' plugin
 	def self.search(params)
@@ -34,6 +35,7 @@ class User < ActiveRecord::Base
     types = []
     types << {'All (active)' => nil} << {'Students' => Student}
     types << {'Teachers' => Teacher} << {'Teacher Assistants' => TeacherAssistant}
+    types << {'Archived' => nil}
 	end
 
 	# Display the user's full name.
@@ -48,4 +50,9 @@ class User < ActiveRecord::Base
 		self.last_name = split.last
 	end
 
+  # Archive a user by setting its "active" bit to false
+  def archive
+    self.active = false
+    self.save!
+  end
 end

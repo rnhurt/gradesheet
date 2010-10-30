@@ -1,5 +1,3 @@
-<% auth_token = url_encode(form_authenticity_token) %>
-
 <table id="users" class="master">
   <thead>
     <tr>
@@ -14,32 +12,30 @@
 
         <th><%= text_field_tag :search, params[:search],
             :size => 10, :class => "focus search" %></th>
-
-        <th>
-          <select id="options" onchange="this.ids=$$('input:checked').invoke('identify').join(',');<%= remote_function(
-                    :url => { :action => :modify_users, :id => 0 }, :with=>"'change_to='+this.value+':'+this.ids") %>">
-            <option value="">Action...</option>
-            <option value="archive">Archive</option>
-            <option value="impersonate">Impersonate</option>
-            <option value="delete">Delete</option>
-          </select>
-        </th>
-
       <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% for u in users %>
-      <tr class="<%= cycle('odd', 'even') %>" nclick="location.href='<%= url_for(u)+'/edit' %>'">
-        <%= content_tag :td, u.login %>
-        <td><%= link_to u.first_name, url_for(u)+'/edit' %></td>
-        <td><%= link_to u.last_name, url_for(u)+'/edit' %></td>
-        <%= content_tag :td, u.homeroom %>
-        <%= content_tag :td, u.site.name %>
-        <%= content_tag :td, u.class_of %>
-        <%= content_tag :td, u.email, :colspan => "2" %>
 
-        <td><input type="checkbox" name="<%= u.id %>" id="<%= u.id %>" class="checkbox" /></td>
+  <form method="post" action="/users/0/archive">
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+    <th><%= submit_tag "Archive" %></th>
+
+    </tr>
+    </thead>
+    <tbody>
+      <% for u in users %>
+        <tr class="<%= cycle('odd', 'even') %>" nclick="location.href='<%= url_for(u)+'/edit' %>'">
+          <%= content_tag :td, u.login %>
+          <td><%= link_to u.first_name, url_for(u)+'/edit' %></td>
+          <td><%= link_to u.last_name, url_for(u)+'/edit' %></td>
+          <%= content_tag :td, u.homeroom %>
+          <%= content_tag :td, u.site.name %>
+          <%= content_tag :td, u.class_of %>
+          <%= content_tag :td, u.email, :colspan => "2" %>
+
+          <td>
+            <% unless u.is_admin? %>
+              <input type="checkbox" name="<%= u.id %>" class="checkbox" />
+            <% end %>
+          </td>
 
   <%#= button_to 'Delete', u, :method => :delete,
   :confirm => "Are you sure you want to delete\n\n '" + u.full_name + "'?",
@@ -48,9 +44,10 @@
   :confirm => "Are you sure you want to impersonate\n\n '" + u.full_name + "'?",
   :class => 'btn negative sml' %>
 
-      </tr>
-    <% end %>
-  </tbody>
+        </tr>
+      <% end %>
+  </form>
+</tbody>
 </table>
 
 <span class="paginate">
