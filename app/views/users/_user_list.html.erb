@@ -1,3 +1,5 @@
+<% archived = current_page?(:action => :archived) %>
+
 <table id="users" class="master">
   <thead>
     <tr>
@@ -16,7 +18,7 @@
 
   <form method="post" action="/users/0/archive">
     <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
-    <th><%= submit_tag "Archive" %></th>
+    <th><%= submit_tag archived ? "Restore" : "Archive" %></th>
 
     </tr>
     </thead>
@@ -53,5 +55,3 @@
 <span class="paginate">
   <%= will_paginate users %>
 </span>
-
-<%#= javascript_tag "$$('input:checked')" %>

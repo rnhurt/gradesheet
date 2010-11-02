@@ -1,15 +1,24 @@
 class UsersController < ApplicationController
   before_filter :require_user
-  before_filter :decode_user_type, :except => "archive"
+  before_filter :decode_user_type, :except => ["archive"]
     
   append_before_filter :authorized?
   include SortHelper
 
+  # Show 'active' users
   def index
     sort_init 'last_name'
     sort_update
     params[:sort_clause] = sort_clause
     @users = @user_type.active.search(params)
+  end
+  # Show 'archived' users
+  def archived
+    sort_init 'last_name'
+    sort_update
+    params[:sort_clause] = sort_clause
+    @users = @user_type.archived.search(params)
+    render :index
   end
 
 
@@ -22,7 +31,6 @@ class UsersController < ApplicationController
     
 		render :index
   end
-
 
   def new
     @user = @user_type.new
@@ -85,7 +93,7 @@ class UsersController < ApplicationController
     # The list of users is sent to this method using the "on" value.  Therefor we grab all the
     # elements in the params array that has a value of "on" and process them.
     params.reject{|k,v| v !="on" }.keys.each do |id|
-      User.find(id).archive
+      User.find(id).toggle_archive
     end
 
     redirect_to users_url
