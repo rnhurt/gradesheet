@@ -24,10 +24,11 @@
     </thead>
     <tbody>
       <% for u in users %>
-        <tr class="<%= cycle('odd', 'even') %>" nclick="location.href='<%= url_for(u)+'/edit' %>'">
-          <%= content_tag :td, u.login %>
-          <td><%= link_to u.first_name, url_for(u)+'/edit' %></td>
-          <td><%= link_to u.last_name, url_for(u)+'/edit' %></td>
+        <% url = url_for(u) %>
+        <tr class="<%= cycle('odd', 'even') %>" nclick="location.href='<%#= url_for(u)+'/edit' %>'">
+          <td><%= link_to u.login,      "#{url}/edit" %></td>
+          <td><%= link_to u.first_name, "#{url}/edit" %></td>
+          <td><%= link_to u.last_name,  "#{url}/edit" %></td>
           <%= content_tag :td, u.homeroom %>
           <%= content_tag :td, u.site.name %>
           <%= content_tag :td, u.class_of %>

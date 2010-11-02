@@ -10,16 +10,13 @@
       <% key,value = type.shift %>
       <% if Class == value.class %>
         <% url = %W{/users #{value.try(:name).try(:tableize)}}.join('/') %>
-        <% current = current_page?(:controller => url) %>
       <% elsif !type[:name].nil? %>
         <% url = "/users/#{type[:name]}" %>
-        <% current = true if current_page?(:action => type[:name]) %>
       <% else %>
         <% url = "/users" %>
-        <% current = current_page?(:controller => url) %>
       <% end %>
 
-      <tr class="<%= "#{cycle('odd', 'even')}  #{current ? ' current' : ''}" %>"
+      <tr class="<%= "#{cycle('odd', 'even')}  #{request.path == url ? ' current' : ''}" %>"
           onclick="location.href='<%= url -%>'">
             <%= content_tag :td, key %>
             <%= content_tag :td, value.nil? ? '' : button_to(
