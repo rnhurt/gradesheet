@@ -1,11 +1,9 @@
 <div class='box span-13'>
   <% form_for user do |f| %>
     <fieldset>
-      <% if user.new_record? %>
-        <%= content_tag :legend, "New #{user.class.name.titleize}" %>
-      <% else %>
-        <%= content_tag :legend, "Editing: #{user.full_name}" %>
-      <% end %>
+      <%= content_tag :legend, user.new_record? ? "New #{user.class.name.titleize}" : "Editing: #{user.full_name}" %>
+
+      <div class="clear">&nbsp;</div>
 
       <%= f.label :login, {}, :class => 'req' %>
       <%= f.text_field :login, :id => 'user_login', :class=>"focus input" %>
@@ -46,6 +44,14 @@
       <div class="spacer">
         <%= submit_tag 'Save', :class => 'btn positive' %>
         <%= link_to 'Cancel', {:action=> 'index', :controller=> 'users/'+user.class.name.tableize}, :class => 'btn standard' %>
+
+        <%= link_to "Impersonate", impersonate_user_path(user),
+          :confirm => "Are you sure you want to impresonate '#{user.full_name}'?",
+          :method => :post, :class => "btn standard right" unless user.new_record? %>
+
+        <%= link_to "Delete", { :action => "destroy", :id => user },
+          :confirm => "** WARNING ** You are about to delete '#{user.full_name}'!  Are you sure you want to proceed?",
+          :method => :delete, :class => "btn negative right" unless user.new_record? || user.is_admin? %>
       </div>
     </fieldset>
   <% end %>

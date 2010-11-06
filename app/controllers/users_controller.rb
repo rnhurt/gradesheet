@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :require_user
-  before_filter :decode_user_type, :except => ["archive"]
+  before_filter :decode_user_type, :except => ["archive", "impersonate"]
     
   append_before_filter :authorized?
   include SortHelper
@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     params[:sort_clause] = sort_clause
     @users = @user_type.active.search(params)
   end
+
   # Show 'archived' users
   def archived
     sort_init 'last_name'
@@ -20,7 +21,6 @@ class UsersController < ApplicationController
     @users = @user_type.archived.search(params)
     render :index
   end
-
 
   # Show the group of users
   def show
