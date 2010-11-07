@@ -50,7 +50,13 @@
           :method => :post, :class => "btn standard right" unless user.new_record? %>
 
         <%= link_to "Delete", { :action => "destroy", :id => user },
-          :confirm => "** WARNING ** You are about to delete '#{user.full_name}'!  Are you sure you want to proceed?",
+          :confirm => "** WARNING ** You are about to delete '#{user.full_name}'!
+
+
+This will remove them from the system completely, including any previous grades or assignments.
+
+
+Are you sure you want to proceed?",
           :method => :delete, :class => "btn negative right" unless user.new_record? || user.is_admin? %>
       </div>
     </fieldset>
