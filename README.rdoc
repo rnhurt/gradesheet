@@ -35,8 +35,10 @@ it should run on any system that runs Rails.
 3. Modify <tt>database.yml</tt> to point to your database
 4. Run <tt>rake db:migrate</tt> to create the database schema
 5. Run <tt>rake fixtures:load</tt> to load the test data
-6. Run <tt>./script/server</tt> to start the development web server
-7. Fire up your web browser and point it to http://localhost:3000
+6. Run <tt>rake db:seed</tt> to load a bootstrap admin user
+7. Run <tt>./script/server</tt> to start the development web server
+8. Fire up your web browser and point it to http://localhost:3000
+9. Log in as <tt>admin</tt> with a password of <tt>password</tt> and enjoy!
 
 == Building Documentation
 Gradesheet is documented using the standard, built-in RDoc system.  To build 
