@@ -14,7 +14,7 @@ class ProgressReport
 		# Allow the user to select a single student or multiple students.
 		students	= Student.active.sorted
 		homerooms	= Student.homerooms
-		years = SchoolYear.all(:order => "end_date DESC")
+		years = SchoolYear.all.sort{|a,b| b.end_date <=> a.end_date}
 		
     params = <<-EOS
 	<form action="/reports/progress_report.pdf" method="get">

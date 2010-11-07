@@ -95,12 +95,12 @@ module GradeHelper
           <td>
         }
         if assignment_evaluation
-          body += assignment_evaluation.points_earned.to_f.round.to_s
+          body += assignment_evaluation.points_earned
         else
           body += '-'
         end
         body += %{
-          / #{assignment.possible_points.round}</td>
+          / #{assignment.possible_points}</td>
           <td>#{score}</td>
         </tr>
         }

@@ -36,7 +36,8 @@
 
   <% end %>
   <tr><td colspan="3">
-      <%= "Final: #{@course_term.course.grading_scale.calculate_letter_grade(final_score/terms_complete)} (#{(final_score / terms_complete).round}%)" %>
+      Final: <%= terms_complete > 0 ?
+        "#{@course_term.course.grading_scale.calculate_letter_grade(final_score/terms_complete)} (#{(final_score / terms_complete).round}%)" : 'n/a'%>
       <hr />
     </td></tr>
 <% end %>

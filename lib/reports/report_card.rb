@@ -8,14 +8,14 @@ class ReportCard
 
   HEADER_HEIGHT = 50  # The size of the page header
   GUTTER_SIZE   = 5   # The size of the buffer between elements
-  CHECKBOX      = "\xE2\x98\x90".force_encoding('utf-8') # "☐"
+  CHECKBOX      = "\xE2\x98\x90" #.force_encoding('utf-8') # "☐"  force_encoding is for Ruby 1.9
   
   # Build the parameter window to be shown to the user.	
 	def self.get_params()	
 		# Allow the user to select a single student or multiple students.
 		students	= Student.active.sorted
 		homerooms	= Student.homerooms
-		years = SchoolYear.all(:order => "end_date DESC")
+		years = SchoolYear.all.sort{|a,b| b.end_date <=> a.end_date}
 		
     params = <<-EOS
 	<form action="/reports/report_card.pdf" method="get">
@@ -42,7 +42,7 @@ class ReportCard
 
 		# List each homeroom
 		homerooms.each do |h|
-			params += "<option value='#{h.name}'>#{h.name}</option>"
+			params += "<option value='#{h.homeroom}'>#{h.homeroom}</option>"
 		end
 		
     params += <<-EOS
