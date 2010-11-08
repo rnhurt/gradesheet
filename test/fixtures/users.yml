@@ -183,8 +183,9 @@ s6:
     end
     w.join(" ")
   end
-
 %>
+
+<% CURRENT_YEAR = Time.now.year %>
 
 <% for t in 1..30 %>
 user_<%= t %>:
@@ -209,7 +210,7 @@ user_<%= i %>:
   login: <%= i * i %>
   first_name: <%= first_name.capitalize %> 
   last_name: <%= random_words(1).capitalize %>
-  class_of: <%= 2000 + rand(2018-2000) %>
+  class_of: <%= CURRENT_YEAR + rand(12) %>
   homeroom: 8P
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt(first_name + salt) %>
@@ -226,7 +227,7 @@ user_<%= i %>:
   login: <%= i * i %>
   first_name: <%= first_name.capitalize %> 
   last_name: <%= random_words(1).capitalize %>
-  class_of: <%= 2000 + rand(2018-2000) %>
+  class_of: <%= CURRENT_YEAR + rand(12) %>
   homeroom: 7S
   password_salt: <%= salt = Authlogic::Random.hex_token %>
   crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt(first_name + salt) %>

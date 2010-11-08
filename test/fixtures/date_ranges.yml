@@ -21,7 +21,7 @@ t1-08:
   name: GP1-08
   begin_date: 2008-08-01
   end_date: 2008-11-17
-  school_year_id: 594005756
+  school_year_id: 883559903
   active: true
 	
 t2-08:
@@ -29,7 +29,7 @@ t2-08:
   name: GP2-08
   begin_date: 2008-11-17
   end_date: 2009-03-28
-  school_year_id: 594005756
+  school_year_id: 883559903
   active: true
 
 t3-08:
@@ -37,7 +37,7 @@ t3-08:
   name: GP3-08
   begin_date: 2009-03-28
   end_date: 2009-06-28
-  school_year_id: 594005756
+  school_year_id: 883559903
   active: false
   
 t1-09:
@@ -45,7 +45,7 @@ t1-09:
   name: GP1-09
   begin_date: 2009-08-01
   end_date: 2009-11-17
-  school_year_id: 594005757
+  school_year_id: 61685068
   active: true
 	
 t2-09:
@@ -53,7 +53,7 @@ t2-09:
   name: GP2-09
   begin_date: 2009-11-17
   end_date: 2010-03-28
-  school_year_id: 594005757
+  school_year_id: 61685068
   active: true
 
 t3-09:
@@ -61,5 +61,5 @@ t3-09:
   name: GP3-10
   begin_date: 2010-03-28
   end_date: 2010-06-28
-  school_year_id: 594005757
+  school_year_id: 61685068
   active: false
