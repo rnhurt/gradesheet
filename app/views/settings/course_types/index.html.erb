@@ -7,22 +7,26 @@
   :message => "We had some problems saving your changes:" %>
 
 <%= link_to "Add Course Type", new_course_type_path, :class => 'btn positive' %>
+* indicates a HomeRoom course type
 <div class="box">
-<ul id="types" class="table">
-  <% @course_types.each do |type| %>
-    <% content_tag_for :li, type do %>
-      <table><tr>
-          <td width="90%"><%= link_to type.name, edit_course_type_path(type) %></td>
-          <td width="10%"><%= button_to 'Delete', course_type_path(type), :method => :delete,
-              :disabled => !type.courses.empty?,
-              :class => "btn negative " + (type.courses.empty? ? '' : 'disabled'),
-              :confirm => "Are you sure you want to delete\n\n '" + type.name + "'?" %></td>
-          <td class="handle">[drag]</td>
-        </tr>
-      </table>
+  <ul id="types" class="table">
+    <% @course_types.each do |type| %>
+      <% content_tag_for :li, type do %>
+        <table><tr>
+            <td width="90%">
+              <%= "*" if type.is_homeroom? %>
+              <%= link_to type.name, edit_course_type_path(type) %>
+            </td>
+            <td width="10%"><%= button_to 'Delete', course_type_path(type), :method => :delete,
+                :disabled => !type.courses.empty?,
+                :class => "btn negative " + (type.courses.empty? ? '' : 'disabled'),
+                :confirm => "Are you sure you want to delete\n\n '" + type.name + "'?" %></td>
+            <td class="handle">[drag]</td>
+          </tr>
+        </table>
+      <% end %>
     <% end %>
-  <% end %>
-</ul>
+  </ul>
 </div>
 
 <%= sortable_element("types", :url => sort_course_types_path, :handle => 'handle') %>

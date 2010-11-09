@@ -14,8 +14,12 @@
       <br />
 
       <div id='ranges' class='prepend-2 span-13 last'>
-        <%#= render :partial => 'scale_range', :collection => @course_type.scale_ranges.sort{|a,b| b.max_score <=> a.max_score} %>
+  <%#= render :partial => 'scale_range', :collection => @course_type.scale_ranges.sort{|a,b| b.max_score <=> a.max_score} %>
       </div>
+
+      <%= f.label :is_homeroom, "Homeroom" %>
+      <%= f.check_box :is_homeroom %>
+      <br />
 
       <div class='spacer span-15 last'>
         <%= submit_tag 'Save', :class => 'btn positive' %>
