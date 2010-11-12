@@ -22,6 +22,7 @@ class Settings::CourseTypesController < SettingsController
 
   def create
     @course_type = CourseType.new(params[:course_type])
+    @course_type.position = 0
 
     if @course_type.save
       flash[:notice] = "Course type '#{@course_type.name}' was successfully created."
