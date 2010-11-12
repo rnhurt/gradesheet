@@ -11,6 +11,7 @@ window.processPage = function(mode) {
     controlKeyboard('comments_grid');
     restrictSubmit('comments_grid');
   } else if (mode == 'summary'){
+  } else if (mode == 'attendance'){
   } else { alert("WARNING - mode not defined: " + mode); }
 
   $('loading').hide();

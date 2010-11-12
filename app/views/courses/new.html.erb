@@ -17,6 +17,9 @@
       <br />
       <%= f.label :grading_scale_id, {}, :class => 'req' %>
       <%= collection_select :course, :grading_scale_id, GradingScale.find(:all), :id, :name %>
+      <br />
+      <%= f.label :course_type_id, {}, :class => 'req' %>
+      <%= collection_select :course, :course_type_id, CourseType.active, :id, :name %>
 
       <div class="spacer">
         <%= f.submit 'Create', :class=> 'btn positive' %>

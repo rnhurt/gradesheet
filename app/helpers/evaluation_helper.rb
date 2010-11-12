@@ -216,4 +216,73 @@ END
 
     return body
   end
+
+  # Build the header for the grade attendance partial
+  def attendance_header
+    body = "<tr><th width='60'>Student Name</th>"
+
+    if @assignments.size == 0 then
+      body << '<th>No Assignments Found</th>'
+    else
+      @assignments.each do |assignment|
+        body << "<th width='17' class='grade' id='#{assignment.id}'>"
+        body << "<div class='assign-name'>"
+        body << "<a href='/assignments/#{assignment.id}/edit'>#{word_wrap(assignment.name, :line_width => 10).gsub(/\n/,'<br />')}</a>"
+        body << "</div><div class='assign-points'>"
+        body += link_to_function assignment.possible_points,
+          "$$('[id*=a#{assignment.id}]').each(function(g) { g.value = #{assignment.possible_points}; g.onchange(); });"
+        body << " pts</div>"
+        body << "<div class='assign-date'>#{h assignment.due_date ? assignment.due_date.to_s(:due_date) : '.'}</div>"
+        body << '</th>'
+      end
+    end
+    body << "</tr>"
+  end
+  
+  # Build the body for the grade attendance partial
+  def attendance_body
+    body = ''
+    if @course_term.students.size == 0 then
+      body << "<tr><td>No Students Found</td></tr>"
+    else
+      @course_term.students.sort_by{|s| s.last_name}.each_with_index do |student, index|
+        # Set up the row for this student
+        body << "<tr class='calc #{cycle('odd','even')}' id='#{student.id}'>"
+        body << "<td id=#{student.id} width='60'>#{student.full_name}</td>"
+        a_counter = index + 1
+
+        # Build the cells to hold each grade
+        @assignments.each do |assignment|
+          body << "<td width='17' class='grades'>"
+          evaluation = assignment.get_evaluation(student.id)
+
+          # This is being built by hand because it is a tight loop with performance problems
+          body << "<input type='text' value=\'#{evaluation ? evaluation.points_earned : ''}\' "
+          body << " tabindex='#{a_counter}' size='5'"
+          body << " points='#{assignment.possible_points}'"
+          body << " name='grade' id='s#{student.id}a#{assignment.id}'"
+
+          # Build the complex remote_function by hand
+          body += <<END
+onchange="new Ajax.Updater('score#{student.id}', '/evaluations/#{@course_term.id}',
+ {asynchronous:true, evalScripts:true, method:'put', onComplete:function(request){update_grade_status('complete', #{student.id}, #{assignment.id})},
+ onFailure:function(request){update_grade_status('failure', #{student.id}, #{assignment.id})},
+ onLoading:function(request){update_grade_status('loading', #{student.id}, #{assignment.id})},
+ onSuccess:function(request){update_grade_status('success', #{student.id}, #{assignment.id})},
+ parameters:'student=#{student.id}&amp;assignment=#{assignment.id}&amp;score=' + value + '&amp;authenticity_token=' + encodeURIComponent('#{form_authenticity_token}')})"
+END
+          body << ' /> </td>'
+
+          a_counter += @course_term.students.size
+        end
+
+        # Clean up the HTML if no @assignments are found in the DB
+        body << "<td width='30' class='grades'>&nbsp;</td>" if @assignments.size < 1
+
+        body << '</tr>'
+      end
+    end
+
+    return body
+  end
 end

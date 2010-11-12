@@ -1,0 +1,15 @@
+<form id='grade_grid'>
+  <table class='master fixed-grid fixed-grid-header'>
+    <thead><%= attendance_header %></thead>
+  </table>
+
+  <div class='fixed-table'>
+    <table class='master fixed-grid'>
+      <tbody>
+        <%= attendance_body %>
+      </tbody>
+    </table>
+  </div>
+</form>
+
+<%= javascript_tag "this.processPage('attendance');" %>

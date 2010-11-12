@@ -6,7 +6,23 @@ class EvaluationsController < ApplicationController
     @course_term  = CourseTerm.find(params[:id])
 
     respond_to do |format|
-      format.html { }
+      format.html {
+        if @course_term.course.course_type.is_homeroom? && @course_term.assignments.blank?
+          # Add attendance "assignments"
+          ["Absent", "Tardy", "Early Dismissal"].each do |key|
+            @course_term.assignments.build(:name => key, :possible_points => 0,
+              :due_date => Date.today, :active => true, :assignment_category => AssignmentCategory.first)
+          end
+
+          # Now save the new "assignments"
+          if @course_term.save
+            flash[:notice] = "Attendance keys were successfully added."
+          else
+            flash[:notice] = "Adding attendance keys failed."
+            render :action => :index
+          end
+        end
+      }
       format.js {
         # OPTIMIZE: Could this be moved to individual *.js.erb files??
         case params[:tab]
@@ -35,6 +51,15 @@ class EvaluationsController < ApplicationController
 
         when 'summary'
           render :partial => 'summary'
+
+        when 'attendance'
+          @assignments  = Assignment.paginate_by_course_term_id(@course_term,
+            :per_page => 6,
+            :page     => params[:page],
+            :order    => "due_date DESC, created_at ASC",
+            :include  => :assignment_evaluations)
+          render :partial => 'attendance'
+
         else
         end
       }
@@ -92,7 +117,7 @@ class EvaluationsController < ApplicationController
           render :text => "#{grade[:letter]} (#{grade[:score].round}%)", :status => status
         elsif params[:comment]
           student = Student.find(params[:student])
-          render :text => "YOU SUCK"
+          render :text => "Error"
         end
       }
     end

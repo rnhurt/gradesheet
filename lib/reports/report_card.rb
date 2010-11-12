@@ -215,6 +215,7 @@ class ReportCard
 
     	  # Print the grades for each course
     	  @courses.each_with_index do |course, index|
+          next if course.course_type.is_homeroom? # Don't print the 'homeroom' courses
 
     	    # Try not to overflow into the next page
 	        new_page if cursor < 200
@@ -298,7 +299,7 @@ class ReportCard
           end
         end	# each course
 
-        ReportCard.print_attendance([0, @left_cursor], @terms)
+        ReportCard.print_attendance([0, @left_cursor], @terms, student.courses)
         # ReportCard.print_signature_block([bounds.left + bounds.width / 2, @right_cursor])
 
         # Is this the last student?
@@ -396,7 +397,7 @@ class ReportCard
   end
 
   # Print the attendance information
-  def self.print_attendance(position, terms)
+  def self.print_attendance(position, terms, courses)
     @pdf.instance_eval do
       # Set up the text options
       font "Helvetica", :size => 7, :align => :left
@@ -410,10 +411,16 @@ class ReportCard
 
         headers = ['Attendance'] + terms.map{|term| term.name} + ['Total']
 
+        debugger
+
+#        courses.reject!{|c| !c.course_type.is_homeroom?}  # Get rid of all non-homeroom courses
+#        ae = courses.first.course_terms.collect{|ct| ct.assignment_evaluations}.flatten
+
+    
         data = [
-          ['Absent'] + [''] * (terms.size+1),
-          ['Tardy'] + [''] * (terms.size+1),
-          ['Early Dismissal'] + [''] * (terms.size+1)
+          ['Absent'] + ['1'] * (terms.size+1),
+          ['Tardy'] + ['2'] * (terms.size+1),
+          ['Early Dismissal'] + ['3'] * (terms.size+1)
         ]
 
         table(

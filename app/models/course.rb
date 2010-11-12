@@ -6,8 +6,8 @@ class Course < ActiveRecord::Base
   belongs_to  :grading_scale
   belongs_to  :course_type
   
-  has_many		:enrollments
-  has_many    :course_terms
+  has_many		:enrollments,   :dependent => :destroy
+  has_many    :course_terms,  :dependent => :destroy
   has_many    :terms,     :through => :course_terms
   has_many		:students,  :through => :enrollments
 

@@ -3,10 +3,14 @@
 <% end %>
 
 <ul id="evaluations" class="subsection_tabs">
-  <li class="tab"><a href="#assignments">Assignments</a></li>
-  <li class="tab"><a href="#skills">Supporting Skills</a></li>
-  <li class="tab"><a href="#comments">Comments</a></li>
-  <li class="tab"><a href="#summary">Summary</a></li>
+  <% if !@course_term.course.course_type.is_homeroom? %>
+    <li class="tab"><a href="#assignments">Assignments</a></li>
+    <li class="tab"><a href="#skills">Supporting Skills</a></li>
+    <li class="tab"><a href="#comments">Comments</a></li>
+    <li class="tab"><a href="#summary">Summary</a></li>
+  <% else %>
+    <li class="tab"><a href="#assignments">Attendance</a></li>
+  <% end %>
 </ul>
 
 <div id="assignments"></div>
@@ -14,32 +18,41 @@
 <div id="comments"></div>
 <div id="summary"></div>
 
-<%= link_to_remote '', { :update => "assignments",
-  :method => "get",
-  :loading  => "show_message('assignments')",
-  #:complete => "processPage('assignments');",
-  :url => { :tab => "assignments", :controller => "evaluations", :action => "show", :id => @course_term.id } },
-  :id => 'tab_assignments' -%>
+<%  if !@course_term.course.course_type.is_homeroom? %>
+  <%= link_to_remote '', { :update => "assignments",
+    :method => "get",
+    :loading  => "show_message('assignments')",
+    #:complete => "processPage('assignments');",
+    :url => { :tab => "assignments", :controller => "evaluations", :action => "show", :id => @course_term.id } },
+    :id => 'tab_assignments' -%>
 
-<%= link_to_remote '', { :update => "skills",
-  :method => "get",
-  :loading  => "show_message('skills')",
-  #:complete => "processPage('skills');",
-  :url => { :tab => "skills", :controller => "evaluations", :action => "show", :id => @course_term.id } },
-  :id => 'tab_skills' -%>
+  <%= link_to_remote '', { :update => "skills",
+    :method => "get",
+    :loading  => "show_message('skills')",
+    #:complete => "processPage('skills');",
+    :url => { :tab => "skills", :controller => "evaluations", :action => "show", :id => @course_term.id } },
+    :id => 'tab_skills' -%>
 
-<%= link_to_remote '', { :update => "comments",
-  :method   => "get",
-  :loading  => "show_message('comments')",
-  #:complete => "processPage('comments');",
-  :url => { :tab => "comments", :controller => "evaluations", :action => "show", :id => @course_term.id } },
-  :id => 'tab_comments' -%>
+  <%= link_to_remote '', { :update => "comments",
+    :method   => "get",
+    :loading  => "show_message('comments')",
+    #:complete => "processPage('comments');",
+    :url => { :tab => "comments", :controller => "evaluations", :action => "show", :id => @course_term.id } },
+    :id => 'tab_comments' -%>
 
-<%= link_to_remote '', { :update => "summary",
-  :method   => "get",
-  :loading  => "show_message('summary')",
-  :url => { :tab => "summary", :controller => "evaluations", :action => "show", :id => @course_term.id } },
-  :id => 'tab_summary' -%>
+  <%= link_to_remote '', { :update => "summary",
+    :method   => "get",
+    :loading  => "show_message('summary')",
+    :url => { :tab => "summary", :controller => "evaluations", :action => "show", :id => @course_term.id } },
+    :id => 'tab_summary' -%>
+
+<% else %>
+  <%= link_to_remote '', { :update => "assignments",
+    :method   => "get",
+    :loading  => "show_message('attendance')",
+    :url => { :tab => "attendance", :controller => "evaluations", :action => "show", :id => @course_term.id } },
+    :id => 'tab_assignments' -%>
+<% end %>
 
 <div id="loading" class="box" style="display:none;text-align:center;">
   <span id="loading_message">Loading data ...</span><br />
