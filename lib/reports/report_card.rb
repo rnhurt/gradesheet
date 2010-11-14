@@ -299,8 +299,7 @@ class ReportCard
           end
         end	# each course
 
-        ReportCard.print_attendance([0, @left_cursor], @terms, student.courses)
-        # ReportCard.print_signature_block([bounds.left + bounds.width / 2, @right_cursor])
+        ReportCard.print_attendance([0, @left_cursor], student)
 
         # Is this the last student?
         if sindex < students.size - 1 then
@@ -397,7 +396,7 @@ class ReportCard
   end
 
   # Print the attendance information
-  def self.print_attendance(position, terms, courses)
+  def self.print_attendance(position, student)
     @pdf.instance_eval do
       # Set up the text options
       font "Helvetica", :size => 7, :align => :left
@@ -407,22 +406,32 @@ class ReportCard
         
         # FIXME: The addition at the end of this is the result of Prawn 0.5.x tables
         # not knowing the proper width based on font size.  This is fixed in Prawn 0.6.x
-        column_widths[0] = (bounds.width - (50 * (terms.size+1))) + (terms.size * 20)
+        column_widths[0] = (bounds.width - (50 * (@terms.size+1))) + (@terms.size * 20)
 
-        headers = ['Attendance'] + terms.map{|term| term.name} + ['Total']
+        headers = ["Attendance"] + @terms.map{|term| term.name} + ["Total"]
+        data_hash = {}
+        attendance = Struct.new(:name, *(@terms.collect{|t| t.name} << :total))
 
-        debugger
+        homeroom_course = student.courses.reject{|c| !c.course_type.is_homeroom?}.first
+        homeroom_course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each do |course_term|
 
-#        courses.reject!{|c| !c.course_type.is_homeroom?}  # Get rid of all non-homeroom courses
-#        ae = courses.first.course_terms.collect{|ct| ct.assignment_evaluations}.flatten
+          # Only use *this* students assignments
+          evaluations = course_term.assignment_evaluations.reject{|i| i.student != student}
 
-    
-        data = [
-          ['Absent'] + ['1'] * (terms.size+1),
-          ['Tardy'] + ['2'] * (terms.size+1),
-          ['Early Dismissal'] + ['3'] * (terms.size+1)
-        ]
+          # Collect the attendance "assignment" data
+          evaluations.each do |eval|
+            data_hash[eval.assignment.name] = attendance.new(eval.assignment.name) if data_hash[eval.assignment.name].blank?
+            data_hash[eval.assignment.name][course_term.term.name] = eval.points_earned
 
+            # Aggregate the total attendance
+            data_hash[eval.assignment.name][:total] = 0 if !data_hash[eval.assignment.name][:total]
+            data_hash[eval.assignment.name][:total] += eval.points_earned.to_i unless eval.points_earned.blank?
+          end
+        end
+
+        # Turn the hash of attendance structures into a flat(ish) array
+        data = data_hash.collect{|i| i[1].to_a.collect{|a| a.nil? ? "" : a}}
+        
         table(
           data,
           :headers        => headers.map do |text|
