@@ -430,8 +430,10 @@ class ReportCard
               data_hash[eval.assignment.name][:total] += eval.points_earned.to_i unless eval.points_earned.blank?
             end
           end
-        else
-          # This student has no "homeroom" course defined; default an attendance array
+        end
+
+        # This student has no "homeroom" course defined; default an attendance array
+        if data_hash.blank?
           ATTENDANCE_KEYS.each do |key|
             data_hash[key] = attendance.new(key)
           end
