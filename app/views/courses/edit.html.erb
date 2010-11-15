@@ -15,11 +15,11 @@
       <br />
       <%= f.label :course_type_id, {}, :class => 'req' %>
       <%= collection_select :course, :course_type_id, CourseType.active, :id, :name %>
-    <% end %>
 
     <div class="spacer">
       <%= submit_tag 'Save', :class=> 'btn positive' %>
       <%= link_to 'Cancel', courses_path, :class => 'btn standard' %>
+    <% end %>
       <%= button_to 'Delete Course', @course,
         :method   => :delete, :class => "btn negative",
         :confirm => "Are you sure you want to delete the '#{@course.name}' course?" %>
