@@ -9,6 +9,7 @@
       </thead>
       <tbody>
         <% @courses.each do |course| -%>
+          <% next if controller.controller_name == "assignments" && course.course_type.is_homeroom %>
           <% course.course_terms.active.sorted.each do |ct| -%>
             <tr class="<%= cycle('even', 'odd') -%>"
                 onclick="location.href='<%= url_for( :action => "show", :id => ct.id ) -%>'" >
