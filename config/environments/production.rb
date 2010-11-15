@@ -27,3 +27,6 @@ config.cache_store = :file_store, File.join(RAILS_ROOT, 'tmp', 'cache')
 
 # Enable threaded mode
 # config.threadsafe!
+
+# Default Attendance keywords
+ATTENDANCE_KEYS = ["Absent", "Tardy", "Early Dismissal"]

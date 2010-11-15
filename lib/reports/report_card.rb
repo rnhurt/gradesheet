@@ -413,19 +413,27 @@ class ReportCard
         attendance = Struct.new(:name, *(@terms.collect{|t| t.name} << :total))
 
         homeroom_course = student.courses.reject{|c| !c.course_type.is_homeroom?}.first
-        homeroom_course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each do |course_term|
+        if homeroom_course
+          # Found a "homeroom" course; build the attendance array
+          homeroom_course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each do |course_term|
 
-          # Only use *this* students assignments
-          evaluations = course_term.assignment_evaluations.reject{|i| i.student != student}
+            # Only use assignments for the current student
+            evaluations = course_term.assignment_evaluations.reject{|i| i.student != student}
 
-          # Collect the attendance "assignment" data
-          evaluations.each do |eval|
-            data_hash[eval.assignment.name] = attendance.new(eval.assignment.name) if data_hash[eval.assignment.name].blank?
-            data_hash[eval.assignment.name][course_term.term.name] = eval.points_earned
+            # Collect the attendance "assignment" data
+            evaluations.each do |eval|
+              data_hash[eval.assignment.name] = attendance.new(eval.assignment.name) if data_hash[eval.assignment.name].blank?
+              data_hash[eval.assignment.name][course_term.term.name] = eval.points_earned
 
-            # Aggregate the total attendance
-            data_hash[eval.assignment.name][:total] = 0 if !data_hash[eval.assignment.name][:total]
-            data_hash[eval.assignment.name][:total] += eval.points_earned.to_i unless eval.points_earned.blank?
+              # Aggregate the total attendance
+              data_hash[eval.assignment.name][:total] = 0 if !data_hash[eval.assignment.name][:total]
+              data_hash[eval.assignment.name][:total] += eval.points_earned.to_i unless eval.points_earned.blank?
+            end
+          end
+        else
+          # This student has no "homeroom" course defined; default an attendance array
+          ATTENDANCE_KEYS.each do |key|
+            data_hash[key] = attendance.new(key)
           end
         end
 

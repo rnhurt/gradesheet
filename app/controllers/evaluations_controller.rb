@@ -9,7 +9,7 @@ class EvaluationsController < ApplicationController
       format.html {
         if @course_term.course.course_type.is_homeroom? && @course_term.assignments.blank?
           # Add attendance "assignments"
-          ["Absent", "Tardy", "Early Dismissal"].each do |key|
+          ATTENDANCE_KEYS.each do |key|
             @course_term.assignments.build(:name => key, :possible_points => 0,
               :due_date => Date.today, :active => true, :assignment_category => AssignmentCategory.first)
           end

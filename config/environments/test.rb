@@ -30,3 +30,5 @@ config.action_mailer.delivery_method = :test
 config.gem "factory_girl", :lib => "factory_girl", :source => "http://gems.github.com"
 config.gem "shoulda", :lib => "shoulda"
 
+# Default Attendance keywords
+ATTENDANCE_KEYS = ["Absent", "Tardy", "Early Dismissal"]

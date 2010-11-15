@@ -18,3 +18,6 @@ config.cache_store = :file_store, File.join(RAILS_ROOT, 'tmp', 'cache')
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
+
+# Default Attendance keywords
+ATTENDANCE_KEYS = ["Absent", "Tardy", "Early Dismissal"]
