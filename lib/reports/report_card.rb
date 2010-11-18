@@ -359,7 +359,7 @@ class ReportCard
 
   def self.print_skills(skills)
     # Check for something to print...
-    return unless !skills.empty?
+    return if skills.blank?
 
     @pdf.instance_eval do
       # Set up the text options
@@ -382,12 +382,12 @@ class ReportCard
 
       # Print the "accommodations" box
       font "Helvetica", :size => 7, :align => :left
-      bounding_box([bounds.width-75, bounds.height-15], :width => 75, :height => 20) do
+      bounding_box([bounds.width-75, bounds.height-15], :width => 55, :height => 10) do
         fill_color "EEEEEE"
         fill_and_stroke_rectangle [bounds.left-2,bounds.top+2], bounds.width, bounds.height
 
         fill_color "000000"
-        text "* - Accommodations and/or modifications"
+        text "* - Modifications"
       end
           
       move_down GUTTER_SIZE + font.height
