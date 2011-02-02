@@ -423,11 +423,11 @@ class ReportCard
             # Collect the attendance "assignment" data
             evaluations.each do |eval|
               data_hash[eval.assignment.name] = attendance.new(eval.assignment.name) if data_hash[eval.assignment.name].blank?
-              data_hash[eval.assignment.name][course_term.term.name] = eval.points_earned
+              data_hash[eval.assignment.name][course_term.term.name] = eval.points_earned.to_f
 
               # Aggregate the total attendance
               data_hash[eval.assignment.name][:total] = 0 if !data_hash[eval.assignment.name][:total]
-              data_hash[eval.assignment.name][:total] += eval.points_earned.to_i unless eval.points_earned.blank?
+              data_hash[eval.assignment.name][:total] += eval.points_earned.to_f unless eval.points_earned.blank?
             end
           end
         end
