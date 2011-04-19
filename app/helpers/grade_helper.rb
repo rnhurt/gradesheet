@@ -95,7 +95,7 @@ module GradeHelper
           <td>
         }
         if assignment_evaluation
-          body += assignment_evaluation.points_earned
+          body += assignment_evaluation.points_earned unless assignment_evaluation.points_earned.blank?
         else
           body += '-'
         end
