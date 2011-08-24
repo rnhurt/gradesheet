@@ -26,10 +26,10 @@ class CoursesController < ApplicationController
 				value = params[:value].split('||')
 				if value.pop == 'H' then
 					# Find students by "Home Room"
-					@students = Student.find_all_by_homeroom(value[0])
+					@students = Student.active.find_all_by_homeroom(value[0])
 				else
 					# Find students by "Class Of"
-					@students = Student.find_all_by_class_of(value[0])
+					@students = Student.active.find_all_by_class_of(value[0])
 				end
 
 				render :partial => "student_list"
