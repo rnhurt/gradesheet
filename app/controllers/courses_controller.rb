@@ -100,6 +100,8 @@ class CoursesController < ApplicationController
       students.each do |student|
         begin
           @course.students << student
+          student.homeroom = @course.name if @course.is_homeroom?
+          student.save!
         rescue ActiveRecord::RecordInvalid
           # This is here to catch an existing student being added to a course
         end
@@ -113,6 +115,10 @@ class CoursesController < ApplicationController
    		if @course.students.index(@student) == nil
 	      @course.students << @student
 	      @course.save
+
+        # If this course is a homeroom then change this student's homeroom
+        @student.homeroom = @course.name if @course.is_homeroom?
+        @student.save!
       end
     end
     

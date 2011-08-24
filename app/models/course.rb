@@ -35,7 +35,11 @@ class Course < ActiveRecord::Base
   def school_year
     return self.terms.first.school_year
   end
-  
+
+  # Is this a "Homeroom" course?
+  def is_homeroom?
+    self.course_type.is_homeroom?
+  end  
   
   private
   
