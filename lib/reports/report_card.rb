@@ -412,7 +412,7 @@ class ReportCard
         data_hash = {}
         attendance = Struct.new(:name, *(@terms.collect{|t| t.name} << :total))
 
-        homeroom_course = student.courses.reject{|c| !c.course_type.is_homeroom?}.first
+        homeroom_course = student.courses.active.reject{|c| !c.course_type.is_homeroom?}.first
         if homeroom_course
           # Found a "homeroom" course; build the attendance array
           homeroom_course.course_terms.sort!{|a,b| a.term.end_date <=> b.term.end_date}.each do |course_term|
@@ -421,6 +421,7 @@ class ReportCard
             evaluations = course_term.assignment_evaluations.reject{|i| i.student != student}
 
             # Collect the attendance "assignment" data
+            debugger
             evaluations.each do |eval|
               data_hash[eval.assignment.name] = attendance.new(eval.assignment.name) if data_hash[eval.assignment.name].blank?
               data_hash[eval.assignment.name][course_term.term.name] = eval.points_earned.to_f

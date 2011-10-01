@@ -2,7 +2,9 @@ class Settings::SchoolYearsController < SettingsController
   after_filter :expire_cache, :only => [:create, :update, :destroy]
 
   def index
-    @years = SchoolYear.all(:order => "end_date DESC", :include => :terms)
+    # Due to the way SchoolYear objects are built, we have to sort them and limit them
+    # when they are used instead of in the Model where it should be.  :(
+    @years = SchoolYear.all(:include => :terms).sort! { |x,y| y.end_date <=> x.end_date } [0..5]
   end
 
   def show

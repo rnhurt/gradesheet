@@ -21,7 +21,7 @@ class Student < User
     :conditions => { :active => true }
 #    :conditions => ["active = ? AND homeroom != ''", true]
 
-  named_scope :sorted, :order => 'last_name ASC'
+  named_scope :sorted, :order => 'last_name ASC, first_name ASC'
 
   def current_course_terms
     return CourseTerm.all(:joins => :course)
