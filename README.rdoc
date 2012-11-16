@@ -1,4 +1,4 @@
-= Gradesheet
+= Gradesheet http://stillmaintained.com/rnhurt/gradesheet.png
 == Introduction
 GradeSheet has been designed to give teachers all the tools they need to record 
 student grades.  It is web based to make it easily accessible to everyone.  
