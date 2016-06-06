@@ -1,0 +1,88 @@
+Gradesheet 
+=
+[![Maintenance](https://img.shields.io/maintenance/no/2014.svg?maxAge=2592000?style=flat-square)](https://github.com/rnhurt/gradesheet)
+Introduction
+== 
+GradeSheet has been designed to give teachers all the tools they need to record 
+student grades.  It is web based to make it easily accessible to everyone.  
+Students and parents can log into the system to check on their grades and even 
+communicate with their teacher(s).
+
+Helpful links
+==
+* <b>Repository:</b> http://github.com/rnhurt/gradesheet
+* <b>Live example:</b> http://demo.KangarooBox.com
+* <b>Bugs / feature suggestions:</b> http://github.com/rnhurt/gradesheet/issues
+* <b>Professional support:</b> http://www.KangarooBox.com/kookaburra
+
+Requirements
+==
+* Ruby 1.8 (working on moving to v1.9)
+* Rails 2.3.5
+* Dependencies (aka Rails plugins):
+* will_paginate[http://github.com/mislav/will_paginate] - Most awesome pagination system for Ruby
+* Authlogic[http://github.com/binarylogic/authlogic] - A clean, simple, and unobtrusive ruby authentication solution.
+* validates_existence[http://github.com/joshsusser/validates_existence] - Rails plugin that provides a validates_existence_of method for ActiveRecord models to check existence of records referenced by belongs_to associations.
+* validates_date_time[http://svn.viney.net.nz/things/rails/plugins/validates_date_time/] - Rails plugin that provides an easy way to validate dates and times
+* livepipe_ui[http://livepipe.net/] -  A suite of high quality widgets and controls for web 2.0 applications built using the Prototype JavaScript Framework.
+* Prawn[http://prawn.majesticseacreature.com/] - PDF framework for report generation
+* Prawn-Layout[http://github.com/sandal/prawn-layout/tree/master/] - An extension to Prawn offering table support, grid layouts and other things.
+* Prawn-Format[http://github.com/jamis/prawn-format/tree/master] - An extension to the Prawn PDF generation library that allows you to use HTML-ish tags
+
+Installation
+==
+This is a typical Ruby on Rails project and it is installed just like any other RoR
+project.  Since most of the development/testing is done on Debian & Ubuntu, it 
+will be simpler to get up and running if you are using one of those OSs.  However,
+it should run on any system that runs Rails.
+
+1. Get the source code (http://github.com/rnhurt/gradesheet/tree/master)
+2. Add the dependencies noted in the Requirements section
+3. Modify <tt>database.yml</tt> to point to your database
+4. Run <tt>rake db:migrate</tt> to create the database schema
+5. Run <tt>rake fixtures:load</tt> to load the test data
+6. Run <tt>rake db:seed</tt> to load a bootstrap admin user
+7. Run <tt>./script/server</tt> to start the development web server
+8. Fire up your web browser and point it to http://localhost:3000
+9. Log in as <tt>admin</tt> with a password of <tt>password</tt> and enjoy!
+
+Building Documentation
+==
+Gradesheet is documented using the standard, built-in RDoc system.  To build 
+the documentation with the just run the command:
+  rake doc:app
+However, to build better looking documentation you might want to use this command: 
+  rake doc:app_horo
+which uses the Horo template and results in documentation that is much easier 
+on the eyes.
+
+Testing
+==
+Currently, Gradesheet tests are written using the standard, built-in test framework.
+However, RSpec looks very attractive and when I get a bit more time I might move
+them over to that.  In the meantime, just use the standard Rails testing commands
+to run the test (<tt>rails test:units</tt>, etc.)
+
+I've just been turned on to Webrat[http://gitrdoc.com/brynary/webrat/tree/master]
+and am very impressed with it and all of the integration tests (or the majority of them)
+will be soon converted to it.  So, if you want to run the full test suite, you'll
+have to install the Webrat gem.
+
+Performance testing is being implemented with the excellent JMeter[http://jakarta.apache.org/jmeter/] package.  This project
+uses Authlogic for user authentication and I have had no end of trouble trying to get
+some performance numbers out of the system.  However, a little time spent with JMeter
+has gotten me a least a little way toward being able to measure the speed of the system.
+This is becoming ever more important as the design solidifies and the optimization begins.
+
+Professional Support & Maintenance
+==
+If your interested in using Gradesheet in your school but don't want to install
+and maintain it yourself, consider using a KangarooBox[http://www.KangarooBox.com] 
+server appliance running Kookaburra[http://www.KangarooBox.com/kookaburra] 
+(the commercial version of Gradesheet).  
+
+Legal Information
+==
+Author:: Richard Hurt
+Copyright:: Copyright (c) 2008-2010 KangarooBox, LLC
+License:: GPL-2.  See LICENSE file in this directory.
